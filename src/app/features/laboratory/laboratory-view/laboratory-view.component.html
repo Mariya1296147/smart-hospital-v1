@@ -1,0 +1,179 @@
+<div class="container-fluid py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+      <h3 class="fw-bold mb-1">
+        Laboratory Test Details
+      </h3>
+
+      <p class="text-muted mb-0">
+        View laboratory test information
+      </p>
+    </div>
+
+    <div class="d-flex gap-2">
+
+      <a
+        [routerLink]="[
+          '/admin/laboratory/edit',
+          laboratory.id
+        ]"
+        class="btn btn-primary">
+
+        <i class="bi bi-pencil me-2"></i>
+        Edit
+
+      </a>
+
+      <a
+        routerLink="/admin/laboratory"
+        class="btn btn-secondary">
+
+        Back
+
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- Details -->
+  <div class="card shadow-sm border-0">
+
+    <div class="card-body p-4">
+
+      <div class="row g-4">
+
+        <!-- Test ID -->
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Test ID
+          </label>
+
+          <h6>
+            {{ laboratory.testId }}
+          </h6>
+
+        </div>
+
+
+        <!-- Patient -->
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Patient Name
+          </label>
+
+          <h6>
+            {{ laboratory.patientName }}
+          </h6>
+
+        </div>
+
+
+        <!-- Test Name -->
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Test Name
+          </label>
+
+          <h6>
+            {{ laboratory.testName }}
+          </h6>
+
+        </div>
+
+
+        <!-- Department -->
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Department
+          </label>
+
+          <h6>
+            {{ laboratory.department }}
+          </h6>
+
+        </div>
+
+
+        <!-- Doctor -->
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Doctor
+          </label>
+
+          <h6>
+            {{ laboratory.doctor }}
+          </h6>
+
+        </div>
+
+
+        <!-- Sample Date -->
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Sample Date
+          </label>
+
+          <h6>
+            {{ laboratory.sampleDate }}
+          </h6>
+
+        </div>
+
+
+        <!-- Result -->
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Result
+          </label>
+
+          <h6>
+            {{ laboratory.result }}
+          </h6>
+
+        </div>
+
+
+        <!-- Status -->
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Status
+          </label>
+
+          <div>
+
+            <span
+              class="badge"
+              [ngClass]="{
+                'bg-success': laboratory.status === 'Completed',
+                'bg-warning text-dark': laboratory.status === 'Pending',
+                'bg-danger': laboratory.status === 'Cancelled'
+              }">
+
+              {{ laboratory.status }}
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

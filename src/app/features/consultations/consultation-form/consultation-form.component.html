@@ -1,0 +1,458 @@
+<div class="consultation-form-page">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <div>
+      <span class="page-badge">
+        <i class="bi bi-clipboard2-pulse"></i>
+        Consultation Management
+      </span>
+
+      <h2>
+        {{ isEditMode ? 'Edit Consultation' : 'Add Consultation' }}
+      </h2>
+
+      <p>
+        {{
+          isEditMode
+            ? 'Update consultation information and clinical records.'
+            : 'Create a new patient consultation record.'
+        }}
+      </p>
+    </div>
+
+    <a
+      routerLink="/admin/consultations"
+      class="back-btn">
+
+      <i class="bi bi-arrow-left"></i>
+      Back to Consultations
+
+    </a>
+
+  </div>
+
+
+  <!-- FORM -->
+
+  <div class="form-card">
+
+    <form
+      #consultationForm="ngForm"
+      (ngSubmit)="saveConsultation()">
+
+
+      <!-- BASIC INFORMATION -->
+
+      <div class="form-section">
+
+        <div class="section-title">
+          <i class="bi bi-info-circle"></i>
+
+          <div>
+            <h5>Consultation Information</h5>
+            <span>Basic consultation details</span>
+          </div>
+        </div>
+
+
+        <div class="row g-4">
+
+          <!-- ID -->
+
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Consultation ID
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="consultationId"
+              [(ngModel)]="consultation.consultationId"
+              readonly>
+
+          </div>
+
+
+          <!-- TYPE -->
+
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Consultation Type
+              <span>*</span>
+            </label>
+
+            <select
+              class="form-select"
+              name="type"
+              [(ngModel)]="consultation.type"
+              required>
+
+              <option value="">
+                Select Type
+              </option>
+
+              <option
+                *ngFor="let type of consultationTypes"
+                [value]="type">
+
+                {{ type }}
+
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- STATUS -->
+
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Status
+            </label>
+
+            <select
+              class="form-select"
+              name="status"
+              [(ngModel)]="consultation.status">
+
+              <option value="Pending">
+                Pending
+              </option>
+
+              <option value="Completed">
+                Completed
+              </option>
+
+              <option value="Cancelled">
+                Cancelled
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- PATIENT -->
+
+      <div class="form-section">
+
+        <div class="section-title">
+
+          <i class="bi bi-person"></i>
+
+          <div>
+            <h5>Patient Information</h5>
+            <span>Select patient for consultation</span>
+          </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Patient
+              <span>*</span>
+            </label>
+
+            <select
+              class="form-select"
+              name="patientName"
+              [(ngModel)]="consultation.patientName"
+              (ngModelChange)="onPatientChange()"
+              required>
+
+              <option value="">
+                Select Patient
+              </option>
+
+              <option
+                *ngFor="let patient of patients"
+                [value]="patient.name">
+
+                {{ patient.name }}
+
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Patient ID
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="patientId"
+              [(ngModel)]="consultation.patientId"
+              readonly>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- DOCTOR -->
+
+      <div class="form-section">
+
+        <div class="section-title">
+
+          <i class="bi bi-person-badge"></i>
+
+          <div>
+            <h5>Doctor & Schedule</h5>
+            <span>Assign doctor and consultation schedule</span>
+          </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Doctor
+              <span>*</span>
+            </label>
+
+            <select
+              class="form-select"
+              name="doctorName"
+              [(ngModel)]="consultation.doctorName"
+              required>
+
+              <option value="">
+                Select Doctor
+              </option>
+
+              <option
+                *ngFor="let doctor of doctors"
+                [value]="doctor">
+
+                {{ doctor }}
+
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Department
+              <span>*</span>
+            </label>
+
+            <select
+              class="form-select"
+              name="department"
+              [(ngModel)]="consultation.department"
+              required>
+
+              <option value="">
+                Select Department
+              </option>
+
+              <option
+                *ngFor="let department of departments"
+                [value]="department">
+
+                {{ department }}
+
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="col-md-2">
+
+            <label class="form-label">
+              Date
+              <span>*</span>
+            </label>
+
+            <input
+              type="date"
+              class="form-control"
+              name="date"
+              [(ngModel)]="consultation.date"
+              required>
+
+          </div>
+
+
+          <div class="col-md-2">
+
+            <label class="form-label">
+              Time
+              <span>*</span>
+            </label>
+
+            <input
+              type="time"
+              class="form-control"
+              name="time"
+              [(ngModel)]="consultation.time"
+              required>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- CLINICAL INFORMATION -->
+
+      <div class="form-section">
+
+        <div class="section-title">
+
+          <i class="bi bi-heart-pulse"></i>
+
+          <div>
+            <h5>Clinical Information</h5>
+            <span>Symptoms, diagnosis and treatment details</span>
+          </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+          <div class="col-12">
+
+            <label class="form-label">
+              Symptoms
+            </label>
+
+            <textarea
+              class="form-control"
+              rows="3"
+              name="symptoms"
+              [(ngModel)]="consultation.symptoms"
+              placeholder="Enter patient symptoms...">
+            </textarea>
+
+          </div>
+
+
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Diagnosis
+            </label>
+
+            <textarea
+              class="form-control"
+              rows="4"
+              name="diagnosis"
+              [(ngModel)]="consultation.diagnosis"
+              placeholder="Enter diagnosis...">
+            </textarea>
+
+          </div>
+
+
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Prescription
+            </label>
+
+            <textarea
+              class="form-control"
+              rows="4"
+              name="prescription"
+              [(ngModel)]="consultation.prescription"
+              placeholder="Enter prescription...">
+            </textarea>
+
+          </div>
+
+
+          <div class="col-12">
+
+            <label class="form-label">
+              Doctor Notes
+            </label>
+
+            <textarea
+              class="form-control"
+              rows="4"
+              name="notes"
+              [(ngModel)]="consultation.notes"
+              placeholder="Enter consultation notes...">
+            </textarea>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- BUTTONS -->
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="btn btn-light cancel-btn"
+          (click)="cancel()">
+
+          <i class="bi bi-x-lg"></i>
+          Cancel
+
+        </button>
+
+
+        <button
+          type="submit"
+          class="btn btn-primary save-btn"
+          [disabled]="consultationForm.invalid">
+
+          <i
+            class="bi"
+            [class.bi-check-lg]="!isEditMode"
+            [class.bi-pencil-square]="isEditMode">
+          </i>
+
+          {{ isEditMode ? 'Update Consultation' : 'Save Consultation' }}
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

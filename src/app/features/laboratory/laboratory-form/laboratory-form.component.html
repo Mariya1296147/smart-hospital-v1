@@ -1,0 +1,270 @@
+<div class="container-fluid py-4">
+
+  <!-- Header -->
+  <div class="mb-4">
+
+    <h3 class="fw-bold mb-1">
+      {{ isEdit ? 'Edit Laboratory Test' : 'Add Laboratory Test' }}
+    </h3>
+
+    <p class="text-muted mb-0">
+      {{ isEdit
+        ? 'Update laboratory test information'
+        : 'Add a new laboratory test'
+      }}
+    </p>
+
+  </div>
+
+
+  <!-- Form Card -->
+  <div class="card shadow-sm border-0">
+
+    <div class="card-body p-4">
+
+      <form
+        #laboratoryForm="ngForm"
+        (ngSubmit)="saveLaboratory()">
+
+        <div class="row g-3">
+
+
+          <!-- Test ID -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Test ID
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="testId"
+              [(ngModel)]="laboratory.testId"
+              required>
+
+          </div>
+
+
+          <!-- Patient -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Patient Name
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="patientName"
+              [(ngModel)]="laboratory.patientName"
+              required>
+
+          </div>
+
+
+          <!-- Test Name -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Test Name
+            </label>
+
+            <select
+              class="form-select"
+              name="testName"
+              [(ngModel)]="laboratory.testName"
+              required>
+
+              <option value="">
+                Select Test
+              </option>
+
+              <option value="Complete Blood Count (CBC)">
+                Complete Blood Count (CBC)
+              </option>
+
+              <option value="Blood Glucose">
+                Blood Glucose
+              </option>
+
+              <option value="Liver Function Test">
+                Liver Function Test
+              </option>
+
+              <option value="Kidney Function Test">
+                Kidney Function Test
+              </option>
+
+              <option value="Urine Test">
+                Urine Test
+              </option>
+
+              <option value="X-Ray">
+                X-Ray
+              </option>
+
+              <option value="Ultrasound">
+                Ultrasound
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Department -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Department
+            </label>
+
+            <select
+              class="form-select"
+              name="department"
+              [(ngModel)]="laboratory.department"
+              required>
+
+              <option value="">
+                Select Department
+              </option>
+
+              <option value="Hematology">
+                Hematology
+              </option>
+
+              <option value="Biochemistry">
+                Biochemistry
+              </option>
+
+              <option value="Radiology">
+                Radiology
+              </option>
+
+              <option value="Cardiology">
+                Cardiology
+              </option>
+
+              <option value="Neurology">
+                Neurology
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Doctor -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Doctor
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="doctor"
+              [(ngModel)]="laboratory.doctor"
+              placeholder="Enter doctor name">
+
+          </div>
+
+
+          <!-- Sample Date -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Sample Date
+            </label>
+
+            <input
+              type="date"
+              class="form-control"
+              name="sampleDate"
+              [(ngModel)]="laboratory.sampleDate"
+              required>
+
+          </div>
+
+
+          <!-- Result -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Result
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="result"
+              [(ngModel)]="laboratory.result"
+              placeholder="Enter result">
+
+          </div>
+
+
+          <!-- Status -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Status
+            </label>
+
+            <select
+              class="form-select"
+              name="status"
+              [(ngModel)]="laboratory.status">
+
+              <option value="Pending">
+                Pending
+              </option>
+
+              <option value="Completed">
+                Completed
+              </option>
+
+              <option value="Cancelled">
+                Cancelled
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Buttons -->
+          <div class="col-12 mt-4">
+
+            <button
+              type="submit"
+              class="btn btn-primary me-2">
+
+              <i class="bi bi-check-lg me-2"></i>
+
+              {{ isEdit ? 'Update Test' : 'Save Test' }}
+
+            </button>
+
+
+            <a
+              routerLink="/admin/laboratory"
+              class="btn btn-secondary">
+
+              Cancel
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

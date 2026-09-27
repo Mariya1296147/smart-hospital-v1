@@ -1,0 +1,84 @@
+.settings-page {
+    max-width: 1000px;
+    padding: 5px
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px
+}
+
+.eyebrow {
+    color: #0d6efd;
+    font-size: 13px;
+    font-weight: 600
+}
+
+.page-header h2 {
+    margin: 5px 0;
+    font-size: 27px;
+    font-weight: 700
+}
+
+.page-header p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px
+}
+
+.settings-card {
+    padding: 24px;
+    margin-bottom: 20px;
+    background: #fff;
+    border: 1px solid #e7edf5;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .04)
+}
+
+.settings-card h4 {
+    font-size: 16px;
+    font-weight: 700
+}
+
+.settings-card h4 i {
+    color: #0d6efd
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 600
+}
+
+.form-control,
+.form-select {
+    min-height: 42px
+}
+
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-top: 1px solid #edf1f5;
+    font-size: 14px
+}
+
+.form-check-input {
+    width: 2.4em;
+    height: 1.25em
+}
+
+@media(max-width:576px) {
+    .page-header {
+        align-items: flex-start;
+        gap: 12px;
+        flex-direction: column
+    }
+
+    .page-header button {
+        width: 100%
+    }
+}

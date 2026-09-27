@@ -1,0 +1,101 @@
+<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+
+  <div class="container-fluid px-4">
+
+    <!-- BRAND -->
+    <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
+      <img src="assets/hospitalss.jpg" alt="Smart Hospital Logo" class="hospital-logo">
+    </a>
+
+
+    <!-- MOBILE BUTTON -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#publicNavbar"
+      aria-controls="publicNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <!-- NAVIGATION -->
+    <div class="collapse navbar-collapse" id="publicNavbar">
+
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+
+        <!-- HOME -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">
+            Home
+          </a>
+        </li>
+
+
+        <!-- ABOUT -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/about">
+            About Us
+          </a>
+        </li>
+
+
+        <!-- SERVICES -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/services">
+            Services
+          </a>
+        </li>
+
+
+        <!-- DOCTORS -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/doctors">
+            Doctors
+          </a>
+        </li>
+
+
+        <!-- DEPARTMENTS -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/departments">
+            Departments
+          </a>
+        </li>
+
+
+        <!-- CONTACT -->
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact">
+            Contact
+          </a>
+        </li>
+
+      </ul>
+
+
+      <!-- RIGHT BUTTONS -->
+      <!-- RIGHT BUTTONS -->
+      <div class="d-flex align-items-center gap-2">
+
+        <!-- ADMIN LOGIN -->
+        <a routerLink="/login" class="btn btn-outline-primary login-btn">
+          <i class="bi bi-person-lock me-1"></i>
+          Login
+        </a>
+
+        <!-- PATIENT SCAN -->
+        <a routerLink="/patient-scan" class="btn btn-outline-primary">
+          <i class="bi bi-qr-code-scan me-1"></i>
+          Patient Scan
+        </a>
+
+        <!-- BOOK APPOINTMENT -->
+        <a routerLink="/appointment" class="btn btn-primary appointment-btn">
+          <i class="bi bi-calendar-check me-1"></i>
+          Book Appointment
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</nav>

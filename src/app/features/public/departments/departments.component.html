@@ -1,0 +1,231 @@
+<!-- ================= DEPARTMENT HERO ================= -->
+
+<section class="departments-hero">
+
+  <img
+    src="assets/department.jpg"
+    alt="Hospital Departments"
+    class="hero-image"
+  >
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+
+    <span class="hero-badge">
+      <i class="bi bi-hospital-fill"></i>
+      Medical Departments
+    </span>
+
+    <h1>Our Departments</h1>
+
+    <p>
+      Explore our specialized medical departments and
+      find the right healthcare service for your needs.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- ================= INTRO ================= -->
+
+<section class="intro-section">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span>MEDICAL SPECIALTIES</span>
+
+      <h2>Comprehensive Medical Care</h2>
+
+      <p>
+        Our hospital brings together specialized departments
+        and experienced medical professionals to provide
+        quality healthcare under one roof.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= DEPARTMENTS ================= -->
+
+<section class="departments-section">
+
+  <div class="container">
+
+    <div class="departments-grid">
+
+      <div
+        class="department-card"
+        *ngFor="let department of departments"
+      >
+
+        <!-- Icon -->
+
+        <div class="department-icon">
+
+          <i [class]="department.icon"></i>
+
+        </div>
+
+
+        <!-- Content -->
+
+        <div class="department-content">
+
+          <h3>
+            {{ department.name }}
+          </h3>
+
+          <p>
+            {{ department.description }}
+          </p>
+
+          <div class="doctor-count">
+
+            <i class="bi bi-people-fill"></i>
+
+            <span>
+              {{ department.doctors }} Specialists
+            </span>
+
+          </div>
+
+          <a
+            routerLink="/doctors"
+            class="view-doctors"
+          >
+            View Doctors
+            <i class="bi bi-arrow-right"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= FEATURE ================= -->
+
+<section class="feature-section">
+
+  <div class="container">
+
+    <div class="feature-content">
+
+      <div class="feature-text">
+
+        <span class="section-label">
+          SPECIALIZED CARE
+        </span>
+
+        <h2>
+          Expert Care Across Multiple Specialties
+        </h2>
+
+        <p>
+          From emergency care to specialized treatments,
+          our departments work together to provide
+          coordinated and patient-focused healthcare.
+        </p>
+
+
+        <div class="feature-points">
+
+          <div class="feature-point">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Experienced specialist doctors</span>
+          </div>
+
+          <div class="feature-point">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Modern diagnostic facilities</span>
+          </div>
+
+          <div class="feature-point">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Patient-focused healthcare</span>
+          </div>
+
+          <div class="feature-point">
+            <i class="bi bi-check-circle-fill"></i>
+            <span>24/7 emergency support</span>
+          </div>
+
+        </div>
+
+        <a
+          routerLink="/appointment"
+          class="appointment-btn"
+        >
+          <i class="bi bi-calendar-check"></i>
+          Book an Appointment
+        </a>
+
+      </div>
+
+
+      <div class="feature-image">
+
+        <img
+          src="assets/department-doctor.jpg"
+          alt="Medical Specialist"
+        >
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta-section">
+
+  <div class="container">
+
+    <div class="cta-content">
+
+      <div>
+
+        <span>FIND THE RIGHT CARE</span>
+
+        <h2>
+          Your Health Deserves Specialized Care
+        </h2>
+
+        <p>
+          Choose a department and schedule an appointment
+          with our experienced medical team.
+        </p>
+
+      </div>
+
+      <a
+        routerLink="/appointment"
+        class="cta-button"
+      >
+        Book Appointment
+        <i class="bi bi-arrow-right"></i>
+      </a>
+
+    </div>
+
+  </div>
+
+</section>

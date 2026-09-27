@@ -1,0 +1,248 @@
+<div class="consultation-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div>
+      <span class="page-badge">
+        <i class="bi bi-clipboard2-pulse"></i>
+        Consultation Management
+      </span>
+
+      <h2>Consultations</h2>
+
+      <p>
+        Manage patient consultations, diagnosis and treatment records.
+      </p>
+    </div>
+
+    <a
+      routerLink="/admin/consultations/add"
+      class="btn btn-primary add-btn">
+      <i class="bi bi-plus-lg"></i>
+      Add Consultation
+    </a>
+  </div>
+
+
+  <!-- SUMMARY CARDS -->
+  <div class="row g-4 mb-4">
+
+    <div class="col-md-4">
+      <div class="summary-card">
+        <div class="summary-icon blue">
+          <i class="bi bi-clipboard2-pulse"></i>
+        </div>
+
+        <div>
+          <span>Total Consultations</span>
+          <h3>{{ totalConsultations }}</h3>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div class="summary-card">
+        <div class="summary-icon green">
+          <i class="bi bi-check-circle"></i>
+        </div>
+
+        <div>
+          <span>Completed</span>
+          <h3>{{ completedConsultations }}</h3>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-4">
+      <div class="summary-card">
+        <div class="summary-icon orange">
+          <i class="bi bi-clock-history"></i>
+        </div>
+
+        <div>
+          <span>Pending</span>
+          <h3>{{ pendingConsultations }}</h3>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- TABLE -->
+  <div class="table-card">
+
+    <div class="table-header">
+      <div>
+        <h5>Consultation Records</h5>
+        <span>Patient consultation history</span>
+      </div>
+
+      <span class="record-count">
+        {{ consultations.length }} Records
+      </span>
+    </div>
+
+
+    <div class="table-responsive">
+
+      <table class="table consultation-table">
+
+        <thead>
+          <tr>
+            <th>Consultation ID</th>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+
+        <tbody>
+
+          <tr *ngFor="let consultation of consultations">
+
+            <td>
+              <strong class="consultation-id">
+                {{ consultation.consultationId }}
+              </strong>
+            </td>
+
+
+            <td>
+              <div class="patient-info">
+                <div class="patient-avatar">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+
+                <div>
+                  <strong>{{ consultation.patientName }}</strong>
+                  <small>{{ consultation.patientId }}</small>
+                </div>
+              </div>
+            </td>
+
+
+            <td>
+              <strong>{{ consultation.doctorName }}</strong>
+            </td>
+
+
+            <td>
+              <span class="department">
+                {{ consultation.department }}
+              </span>
+            </td>
+
+
+            <td>
+              <div class="date-info">
+                <strong>{{ consultation.date }}</strong>
+                <small>{{ consultation.time }}</small>
+              </div>
+            </td>
+
+
+            <td>
+              {{ consultation.type }}
+            </td>
+
+
+            <td>
+
+              <span
+                class="status-badge"
+                [class.completed]="consultation.status === 'Completed'"
+                [class.pending]="consultation.status === 'Pending'"
+                [class.cancelled]="consultation.status === 'Cancelled'">
+
+                <i
+                  class="bi"
+                  [class.bi-check-circle-fill]="consultation.status === 'Completed'"
+                  [class.bi-clock-fill]="consultation.status === 'Pending'"
+                  [class.bi-x-circle-fill]="consultation.status === 'Cancelled'">
+                </i>
+
+                {{ consultation.status }}
+
+              </span>
+
+            </td>
+
+
+            <td>
+
+              <div class="action-buttons">
+
+                <a
+                  [routerLink]="[
+                    '/admin/consultations/view',
+                    consultation.id
+                  ]"
+                  class="action-btn view"
+                  title="View">
+
+                  <i class="bi bi-eye"></i>
+
+                </a>
+
+
+                <a
+                  [routerLink]="[
+                    '/admin/consultations/edit',
+                    consultation.id
+                  ]"
+                  class="action-btn edit"
+                  title="Edit">
+
+                  <i class="bi bi-pencil-square"></i>
+
+                </a>
+
+
+                <button
+                  type="button"
+                  class="action-btn delete"
+                  title="Delete"
+                  (click)="deleteConsultation(consultation.id)">
+
+                  <i class="bi bi-trash"></i>
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+
+          <tr *ngIf="consultations.length === 0">
+
+            <td colspan="8" class="empty-state">
+
+              <i class="bi bi-clipboard-x"></i>
+
+              <h5>No consultations found</h5>
+
+              <p>Add a consultation to see it here.</p>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,297 @@
+<div class="doctor-form-page">
+
+  <!-- Page Header -->
+  <div class="page-header">
+
+    <div>
+      <h1>
+        <i class="bi bi-person-plus-fill"></i>
+        Add New Doctor
+      </h1>
+
+      <p>
+        Add a new doctor to the hospital system
+      </p>
+    </div>
+
+    <a routerLink="/admin/doctors" class="back-btn">
+      <i class="bi bi-arrow-left"></i>
+      Back to Doctors
+    </a>
+
+  </div>
+
+
+  <!-- Form Card -->
+  <div class="form-card">
+
+    <div class="form-title">
+      <i class="bi bi-person-badge-fill"></i>
+
+      <div>
+        <h3>Doctor Information</h3>
+        <p>Enter the doctor's professional information below.</p>
+      </div>
+    </div>
+
+
+    <form (ngSubmit)="saveDoctor()">
+
+      <div class="row g-4">
+
+        <!-- Doctor Name -->
+        <div class="col-md-6">
+
+          <label>
+            Doctor Name <span>*</span>
+          </label>
+
+          <div class="input-group">
+            <span class="input-icon">
+              <i class="bi bi-person"></i>
+            </span>
+
+            <input
+              type="text"
+              name="name"
+              [(ngModel)]="doctor.name"
+              class="form-control"
+              placeholder="Enter doctor name"
+              required
+            >
+          </div>
+
+        </div>
+
+
+        <!-- Specialization -->
+        <div class="col-md-6">
+
+          <label>
+            Specialization <span>*</span>
+          </label>
+
+          <div class="input-group">
+            <span class="input-icon">
+              <i class="bi bi-heart-pulse"></i>
+            </span>
+
+            <input
+              type="text"
+              name="specialization"
+              [(ngModel)]="doctor.specialization"
+              class="form-control"
+              placeholder="e.g. Cardiologist"
+              required
+            >
+          </div>
+
+        </div>
+
+
+        <!-- Department -->
+        <div class="col-md-6">
+
+          <label>
+            Department <span>*</span>
+          </label>
+
+          <div class="input-group">
+            <span class="input-icon">
+              <i class="bi bi-building"></i>
+            </span>
+
+            <select
+              name="department"
+              [(ngModel)]="doctor.department"
+              class="form-select"
+              required
+            >
+
+              <option value="">Select Department</option>
+
+              <option
+                *ngFor="let department of departments"
+                [value]="department"
+              >
+                {{ department }}
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- Email -->
+        <div class="col-md-6">
+
+          <label>
+            Email <span>*</span>
+          </label>
+
+          <div class="input-group">
+            <span class="input-icon">
+              <i class="bi bi-envelope"></i>
+            </span>
+
+            <input
+              type="email"
+              name="email"
+              [(ngModel)]="doctor.email"
+              class="form-control"
+              placeholder="doctor@smarthospital.com"
+              required
+            >
+          </div>
+
+        </div>
+
+
+        <!-- Phone -->
+        <div class="col-md-6">
+
+          <label>
+            Phone <span>*</span>
+          </label>
+
+          <div class="input-group">
+            <span class="input-icon">
+              <i class="bi bi-telephone"></i>
+            </span>
+
+            <input
+              type="text"
+              name="phone"
+              [(ngModel)]="doctor.phone"
+              class="form-control"
+              placeholder="+880 1XXX-XXXXXX"
+              required
+            >
+          </div>
+
+        </div>
+
+
+        <!-- Qualification -->
+        <div class="col-md-6">
+
+          <label>
+            Qualification
+          </label>
+
+          <div class="input-group">
+            <span class="input-icon">
+              <i class="bi bi-mortarboard"></i>
+            </span>
+
+            <input
+              type="text"
+              name="qualification"
+              [(ngModel)]="doctor.qualification"
+              class="form-control"
+              placeholder="e.g. MBBS, FCPS"
+            >
+          </div>
+
+        </div>
+
+
+        <!-- Experience -->
+        <div class="col-md-6">
+
+          <label>
+            Experience
+          </label>
+
+          <div class="input-group">
+            <span class="input-icon">
+              <i class="bi bi-briefcase"></i>
+            </span>
+
+            <input
+              type="text"
+              name="experience"
+              [(ngModel)]="doctor.experience"
+              class="form-control"
+              placeholder="e.g. 8 Years"
+            >
+          </div>
+
+        </div>
+
+
+        <!-- Status -->
+        <div class="col-md-6">
+
+          <label>
+            Status
+          </label>
+
+          <div class="input-group">
+            <span class="input-icon">
+              <i class="bi bi-toggle-on"></i>
+            </span>
+
+            <select
+              name="status"
+              [(ngModel)]="doctor.status"
+              class="form-select"
+            >
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+
+          </div>
+
+        </div>
+
+
+        <!-- Address -->
+        <div class="col-12">
+
+          <label>
+            Address
+          </label>
+
+          <textarea
+            name="address"
+            [(ngModel)]="doctor.address"
+            class="form-control"
+            rows="4"
+            placeholder="Enter doctor's address"
+          ></textarea>
+
+        </div>
+
+      </div>
+
+
+      <!-- Buttons -->
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="cancel-btn"
+          (click)="cancel()"
+        >
+          <i class="bi bi-x-circle"></i>
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="save-btn"
+        >
+          <i class="bi bi-check-circle"></i>
+          Save Doctor
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

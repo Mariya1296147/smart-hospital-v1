@@ -1,0 +1,332 @@
+<div class="container-fluid py-4">
+
+  <!-- Header -->
+  <div class="mb-4">
+
+    <h3 class="fw-bold mb-1">
+      {{ isEdit ? 'Edit Nurse' : 'Add Nurse' }}
+    </h3>
+
+    <p class="text-muted mb-0">
+      {{ isEdit
+        ? 'Update nurse information'
+        : 'Add a new nurse to the hospital'
+      }}
+    </p>
+
+  </div>
+
+
+  <div class="card shadow-sm border-0">
+
+    <div class="card-body p-4">
+
+      <form
+        #nurseForm="ngForm"
+        (ngSubmit)="saveNurse()">
+
+
+        <div class="row g-3">
+
+
+          <!-- Nurse ID -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Nurse ID
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="nurseId"
+              [(ngModel)]="nurse.nurseId"
+              required>
+
+          </div>
+
+
+          <!-- Name -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Nurse Name
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              [(ngModel)]="nurse.name"
+              required>
+
+          </div>
+
+
+          <!-- Gender -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Gender
+            </label>
+
+            <select
+              class="form-select"
+              name="gender"
+              [(ngModel)]="nurse.gender">
+
+              <option value="">
+                Select Gender
+              </option>
+
+              <option value="Male">
+                Male
+              </option>
+
+              <option value="Female">
+                Female
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Phone -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Phone
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="phone"
+              [(ngModel)]="nurse.phone"
+              required>
+
+          </div>
+
+
+          <!-- Email -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Email
+            </label>
+
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              [(ngModel)]="nurse.email">
+
+          </div>
+
+
+          <!-- Department -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Department
+            </label>
+
+            <select
+              class="form-select"
+              name="department"
+              [(ngModel)]="nurse.department">
+
+              <option value="">
+                Select Department
+              </option>
+
+              <option value="Cardiology">
+                Cardiology
+              </option>
+
+              <option value="Neurology">
+                Neurology
+              </option>
+
+              <option value="Emergency">
+                Emergency
+              </option>
+
+              <option value="General Medicine">
+                General Medicine
+              </option>
+
+              <option value="ICU">
+                ICU
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Ward -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Ward
+            </label>
+
+            <select
+              class="form-select"
+              name="ward"
+              [(ngModel)]="nurse.ward">
+
+              <option value="">
+                Select Ward
+              </option>
+
+              <option value="General Ward">
+                General Ward
+              </option>
+
+              <option value="Private Ward">
+                Private Ward
+              </option>
+
+              <option value="ICU">
+                ICU
+              </option>
+
+              <option value="Emergency Ward">
+                Emergency Ward
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Shift -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Shift
+            </label>
+
+            <select
+              class="form-select"
+              name="shift"
+              [(ngModel)]="nurse.shift">
+
+              <option value="">
+                Select Shift
+              </option>
+
+              <option value="Morning">
+                Morning
+              </option>
+
+              <option value="Evening">
+                Evening
+              </option>
+
+              <option value="Night">
+                Night
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Qualification -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Qualification
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="qualification"
+              [(ngModel)]="nurse.qualification">
+
+          </div>
+
+
+          <!-- Joining Date -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Joining Date
+            </label>
+
+            <input
+              type="date"
+              class="form-control"
+              name="joiningDate"
+              [(ngModel)]="nurse.joiningDate">
+
+          </div>
+
+
+          <!-- Status -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Status
+            </label>
+
+            <select
+              class="form-select"
+              name="status"
+              [(ngModel)]="nurse.status">
+
+              <option value="Active">
+                Active
+              </option>
+
+              <option value="Inactive">
+                Inactive
+              </option>
+
+              <option value="On Leave">
+                On Leave
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Buttons -->
+          <div class="col-12 mt-4">
+
+            <button
+              type="submit"
+              class="btn btn-primary me-2">
+
+              <i class="bi bi-check-lg me-2"></i>
+
+              {{ isEdit ? 'Update Nurse' : 'Save Nurse' }}
+
+            </button>
+
+
+            <a
+              routerLink="/admin/nursing"
+              class="btn btn-secondary">
+
+              Cancel
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

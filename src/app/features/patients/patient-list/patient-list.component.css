@@ -1,0 +1,82 @@
+/* ================= FOOTER ================= */
+
+.table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding-top: 18px;
+
+  font-size: 11px;
+  color: #6c757d;
+}
+
+
+/* ================= PAGINATION ================= */
+
+.pagination-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+
+.page-btn {
+  min-width: 32px;
+  height: 32px;
+
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+
+  background: #ffffff;
+
+  color: #495057;
+
+  font-size: 12px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+
+.page-btn:hover:not(:disabled) {
+  background: #f1f6ff;
+  color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+
+.page-btn.active-page {
+  background: #0d6efd;
+  color: #ffffff;
+  border-color: #0d6efd;
+}
+
+
+.page-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+  .page-header,
+  .card-top,
+  .table-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .pagination-buttons {
+    width: 100%;
+  }
+
+}

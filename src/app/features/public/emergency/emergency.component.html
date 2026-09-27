@@ -1,0 +1,340 @@
+<!-- =========================================================
+     EMERGENCY CARE PAGE
+========================================================= -->
+
+<section class="emergency-page">
+
+  <!-- ================= HERO ================= -->
+  <section class="emergency-hero py-5">
+
+    <div class="container">
+
+      <div class="row align-items-center g-5">
+
+        <!-- ================= LEFT IMAGE ================= -->
+        <div class="col-lg-6">
+
+          <div class="emergency-image-wrapper position-relative">
+
+            <img
+              src="assets/Emarjency.jpg"
+              alt="Emergency Medical Care"
+              class="img-fluid emergency-image"
+            >
+
+            <!-- Floating 24/7 Badge -->
+            <div class="emergency-floating-card">
+
+              <div class="floating-icon">
+                <i class="bi bi-shield-check-fill"></i>
+              </div>
+
+              <div>
+                <strong>24/7 Available</strong>
+                <small>Emergency Medical Team</small>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================= RIGHT INFORMATION ================= -->
+        <div class="col-lg-6">
+
+          <div class="emergency-content">
+
+            <span class="emergency-badge">
+              <i class="bi bi-heart-pulse-fill"></i>
+              24/7 EMERGENCY CARE
+            </span>
+
+            <h1 class="emergency-title">
+              Emergency Care
+              <span>You Can Trust</span>
+            </h1>
+
+            <p class="emergency-description">
+              When every second matters, our emergency medical team
+              is ready to provide fast, professional and compassionate
+              care for you and your loved ones.
+            </p>
+
+
+            <!-- Emergency Information -->
+            <div class="emergency-info-box">
+
+              <div class="info-item">
+
+                <div class="info-icon">
+                  <i class="bi bi-clock-fill"></i>
+                </div>
+
+                <div>
+                  <h6>Available 24/7</h6>
+                  <p>Emergency services are available day and night.</p>
+                </div>
+
+              </div>
+
+
+              <div class="info-item">
+
+                <div class="info-icon">
+                  <i class="bi bi-person-heart"></i>
+                </div>
+
+                <div>
+                  <h6>Expert Medical Team</h6>
+                  <p>Experienced doctors and trained emergency staff.</p>
+                </div>
+
+              </div>
+
+
+              <div class="info-item">
+
+                <div class="info-icon">
+                  <i class="bi bi-lightning-charge-fill"></i>
+                </div>
+
+                <div>
+                  <h6>Fast Response</h6>
+                  <p>Quick assessment and immediate medical assistance.</p>
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="emergency-actions">
+
+              <a
+                href="tel:+8801000000000"
+                class="btn btn-danger btn-lg"
+              >
+                <i class="bi bi-telephone-fill me-2"></i>
+                Emergency Call
+              </a>
+
+
+              <a
+                routerLink="/appointment"
+                class="btn btn-outline-danger btn-lg"
+              >
+                <i class="bi bi-calendar-check me-2"></i>
+                Book Appointment
+              </a>
+
+            </div>
+
+
+            <!-- Hotline -->
+            <div class="emergency-number">
+
+              <div class="hotline-icon">
+                <i class="bi bi-telephone-fill"></i>
+              </div>
+
+              <div>
+                <span>Emergency Hotline</span>
+                <strong>+880 1000-000000</strong>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= EMERGENCY SERVICES ================= -->
+
+  <section class="services-section py-5">
+
+    <div class="container">
+
+      <div class="section-heading text-center mb-5">
+
+        <span class="section-label">
+          Emergency Services
+        </span>
+
+        <h2>
+          Immediate Medical Assistance
+        </h2>
+
+        <p>
+          Our emergency department provides quick and reliable
+          medical support whenever you need it.
+        </p>
+
+      </div>
+
+
+      <div class="row g-4">
+
+        @for (service of emergencyServices; track service.title) {
+
+          <div class="col-md-6 col-lg-3">
+
+            <div class="service-card h-100">
+
+              <div class="service-icon">
+
+                <i [class]="service.icon"></i>
+
+              </div>
+
+              <h4>
+                {{ service.title }}
+              </h4>
+
+              <p>
+                {{ service.description }}
+              </p>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= WHAT TO DO ================= -->
+
+  <section class="emergency-help py-5">
+
+    <div class="container">
+
+      <div class="row align-items-center g-5">
+
+        <!-- LEFT CONTENT -->
+
+        <div class="col-lg-6">
+
+          <span class="section-label">
+            Need Emergency Help?
+          </span>
+
+          <h2>
+            Don't Wait When It's an Emergency
+          </h2>
+
+          <p>
+            If you or someone around you needs immediate medical
+            attention, contact our emergency department or visit
+            the hospital immediately.
+          </p>
+
+
+          <ul class="emergency-list">
+
+            <li>
+              <i class="bi bi-check-circle-fill"></i>
+              Emergency service available 24/7
+            </li>
+
+            <li>
+              <i class="bi bi-check-circle-fill"></i>
+              Experienced emergency doctors
+            </li>
+
+            <li>
+              <i class="bi bi-check-circle-fill"></i>
+              Fast patient assessment
+            </li>
+
+            <li>
+              <i class="bi bi-check-circle-fill"></i>
+              Critical care support
+            </li>
+
+          </ul>
+
+
+          <a
+            href="tel:+8801000000000"
+            class="btn btn-danger btn-lg"
+          >
+            <i class="bi bi-telephone-fill me-2"></i>
+            Call Emergency Now
+          </a>
+
+        </div>
+
+
+        <!-- RIGHT IMAGE -->
+
+        <div class="col-lg-6">
+
+          <div class="help-image-wrapper">
+
+            <img
+              src="assets/Emarjency.jpg"
+              alt="Emergency Care"
+              class="img-fluid rounded-4 emergency-care-image"
+            >
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= BOTTOM CTA ================= -->
+
+  <section class="emergency-cta py-5">
+
+    <div class="container">
+
+      <div class="text-center">
+
+        <div class="cta-icon">
+          <i class="bi bi-ambulance-fill"></i>
+        </div>
+
+        <h2>
+          Emergency Assistance Is Available 24/7
+        </h2>
+
+        <p>
+          Our medical team is ready to help you whenever you need us.
+        </p>
+
+        <a
+          href="tel:+8801000000000"
+          class="btn btn-light btn-lg"
+        >
+          <i class="bi bi-telephone-fill me-2"></i>
+          Emergency Hotline
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>

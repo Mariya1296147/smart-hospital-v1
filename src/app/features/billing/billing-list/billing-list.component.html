@@ -1,0 +1,456 @@
+<div class="container-fluid py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+      <h3 class="fw-bold mb-1">
+        Billing
+      </h3>
+
+      <p class="text-muted mb-0">
+        Manage patient invoices, charges and payments
+      </p>
+    </div>
+
+    <a
+      routerLink="/admin/billing/add"
+      class="btn btn-primary">
+
+      <i class="bi bi-plus-lg me-2"></i>
+
+      Create Invoice
+
+    </a>
+
+  </div>
+
+
+  <!-- Summary Cards -->
+  <div class="row g-3 mb-4">
+
+    <!-- Total Bills -->
+    <div class="col-xl col-md-6">
+
+      <div class="card summary-card shadow-sm border-0">
+
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+
+              <p class="text-muted mb-1">
+                Total Bills
+              </p>
+
+              <h3 class="fw-bold mb-0">
+                {{ totalBills }}
+              </h3>
+
+            </div>
+
+            <div class="icon-box bg-primary-subtle text-primary">
+
+              <i class="bi bi-receipt"></i>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Total Amount -->
+    <div class="col-xl col-md-6">
+
+      <div class="card summary-card shadow-sm border-0">
+
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+
+              <p class="text-muted mb-1">
+                Total Amount
+              </p>
+
+              <h4 class="fw-bold mb-0">
+                ৳{{ totalAmount | number:'1.2-2' }}
+              </h4>
+
+            </div>
+
+            <div class="icon-box bg-info-subtle text-info">
+
+              <i class="bi bi-currency-dollar"></i>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Paid -->
+    <div class="col-xl col-md-6">
+
+      <div class="card summary-card shadow-sm border-0">
+
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+
+              <p class="text-muted mb-1">
+                Paid
+              </p>
+
+              <h3 class="fw-bold text-success mb-0">
+                {{ paidBills }}
+              </h3>
+
+            </div>
+
+            <div class="icon-box bg-success-subtle text-success">
+
+              <i class="bi bi-check-circle"></i>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Pending -->
+    <div class="col-xl col-md-6">
+
+      <div class="card summary-card shadow-sm border-0">
+
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+
+              <p class="text-muted mb-1">
+                Pending
+              </p>
+
+              <h3 class="fw-bold text-warning mb-0">
+                {{ pendingBills }}
+              </h3>
+
+            </div>
+
+            <div class="icon-box bg-warning-subtle text-warning">
+
+              <i class="bi bi-clock"></i>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Overdue -->
+    <div class="col-xl col-md-6">
+
+      <div class="card summary-card shadow-sm border-0">
+
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+
+              <p class="text-muted mb-1">
+                Overdue
+              </p>
+
+              <h3 class="fw-bold text-danger mb-0">
+                {{ overdueBills }}
+              </h3>
+
+            </div>
+
+            <div class="icon-box bg-danger-subtle text-danger">
+
+              <i class="bi bi-exclamation-circle"></i>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Billing Table -->
+  <div class="card shadow-sm border-0">
+
+    <div class="card-body">
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <div>
+
+          <h5 class="fw-bold mb-1">
+            Invoice List
+          </h5>
+
+          <p class="text-muted small mb-0">
+            Patient billing and payment information
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+          <thead class="table-light">
+
+            <tr>
+
+              <th>Invoice ID</th>
+
+              <th>Patient</th>
+
+              <th>Patient ID</th>
+
+              <th>Doctor</th>
+
+              <th>Service</th>
+
+              <th>Amount</th>
+
+              <th>Discount</th>
+
+              <th>Total</th>
+
+              <th>Status</th>
+
+              <th>Date</th>
+
+              <th>Actions</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            <tr
+              *ngFor="let bill of bills">
+
+              <!-- Invoice -->
+              <td>
+
+                <strong>
+                  {{ bill.invoiceId }}
+                </strong>
+
+              </td>
+
+
+              <!-- Patient -->
+              <td>
+                {{ bill.patientName }}
+              </td>
+
+
+              <!-- Patient ID -->
+              <td>
+                {{ bill.patientId }}
+              </td>
+
+
+              <!-- Doctor -->
+              <td>
+                {{ bill.doctor }}
+              </td>
+
+
+              <!-- Service -->
+              <td>
+                {{ bill.serviceName }}
+              </td>
+
+
+              <!-- Amount -->
+              <td>
+                ৳{{ bill.amount | number:'1.2-2' }}
+              </td>
+
+
+              <!-- Discount -->
+              <td>
+
+                <span
+                  *ngIf="bill.discount > 0"
+                  class="text-success">
+
+                  -৳{{ bill.discount | number:'1.2-2' }}
+
+                </span>
+
+                <span
+                  *ngIf="bill.discount === 0"
+                  class="text-muted">
+
+                  —
+
+                </span>
+
+              </td>
+
+
+              <!-- Total -->
+              <td>
+
+                <strong>
+                  ৳{{ bill.totalAmount | number:'1.2-2' }}
+                </strong>
+
+              </td>
+
+
+              <!-- Payment Status -->
+              <td>
+
+                <span
+                  class="badge"
+                  [ngClass]="{
+
+                    'bg-success':
+                      bill.paymentStatus === 'Paid',
+
+                    'bg-warning text-dark':
+                      bill.paymentStatus === 'Pending',
+
+                    'bg-danger':
+                      bill.paymentStatus === 'Overdue'
+
+                  }">
+
+                  {{ bill.paymentStatus }}
+
+                </span>
+
+              </td>
+
+
+              <!-- Date -->
+              <td>
+                {{ bill.invoiceDate }}
+              </td>
+
+
+              <!-- Actions -->
+              <td>
+
+                <div class="d-flex gap-2">
+
+                  <!-- View -->
+                  <a
+                    [routerLink]="[
+                      '/admin/billing/view',
+                      bill.id
+                    ]"
+                    class="btn btn-sm btn-outline-info"
+                    title="View">
+
+                    <i class="bi bi-eye"></i>
+
+                  </a>
+
+
+                  <!-- Edit -->
+                  <a
+                    [routerLink]="[
+                      '/admin/billing/edit',
+                      bill.id
+                    ]"
+                    class="btn btn-sm btn-outline-primary"
+                    title="Edit">
+
+                    <i class="bi bi-pencil"></i>
+
+                  </a>
+
+
+                  <!-- Delete -->
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-danger"
+                    title="Delete"
+                    (click)="deleteBill(bill.id)">
+
+                    <i class="bi bi-trash"></i>
+
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+
+            <!-- Empty -->
+            <tr
+              *ngIf="bills.length === 0">
+
+              <td
+                colspan="11"
+                class="text-center text-muted py-5">
+
+                <i class="bi bi-receipt fs-2 d-block mb-2"></i>
+
+                No invoices found.
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,102 @@
+<div class="patient-scan-page">
+
+  <div class="scan-card">
+
+    <!-- Header -->
+    <div class="scan-header">
+      <div class="scan-icon">
+        <i class="bi bi-qr-code-scan"></i>
+      </div>
+
+      <h2>Patient Scan</h2>
+
+      <p>
+        Scan your Patient QR Code to access
+        your hospital information and reports.
+      </p>
+    </div>
+
+    <!-- Scanner -->
+    <div class="scanner-box">
+
+      <div class="scanner-frame">
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+
+        <i class="bi bi-qr-code"></i>
+
+        <div class="scan-line"></div>
+      </div>
+
+      <p class="scanner-text">
+        Place your QR Code inside the frame
+      </p>
+
+      <button
+        type="button"
+        class="btn scan-btn"
+        (click)="startScanner()">
+
+        <i class="bi bi-camera me-2"></i>
+        Start Scanner
+      </button>
+
+    </div>
+
+    <!-- OR -->
+    <div class="divider">
+      <span>OR</span>
+    </div>
+
+    <!-- Patient ID -->
+    <div class="patient-id-section">
+
+      <label for="patientId">
+        Patient ID
+      </label>
+
+      <div class="input-group">
+        <span class="input-group-text">
+          <i class="bi bi-person-vcard"></i>
+        </span>
+
+        <input
+          id="patientId"
+          type="text"
+          class="form-control"
+          [(ngModel)]="patientId"
+          placeholder="Enter Patient ID e.g. P-1001">
+      </div>
+
+      <button
+        type="button"
+        class="btn search-btn"
+        (click)="searchPatient()">
+
+        <i class="bi bi-search me-2"></i>
+        Access Patient Information
+      </button>
+
+      <div
+        *ngIf="message"
+        class="alert alert-warning mt-3">
+        {{ message }}
+      </div>
+
+    </div>
+
+    <!-- Security -->
+    <div class="security-note">
+      <i class="bi bi-shield-check"></i>
+
+      <span>
+        Your information is protected and only
+        the selected patient's record can be accessed.
+      </span>
+    </div>
+
+  </div>
+
+</div>

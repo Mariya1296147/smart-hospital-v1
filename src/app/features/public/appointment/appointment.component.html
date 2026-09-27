@@ -1,0 +1,550 @@
+<!-- ================= APPOINTMENT HERO ================= -->
+
+<section class="appointment-hero">
+
+  <img
+    src="assets/appoitment.jpg"
+    alt="Book Hospital Appointment"
+    class="hero-image"
+  >
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+
+    <span class="hero-badge">
+      <i class="bi bi-calendar-check-fill"></i>
+      Online Appointment
+    </span>
+
+    <h1>Book an Appointment</h1>
+
+    <p>
+      Schedule an appointment with our experienced
+      doctors and get the care you need.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- ================= APPOINTMENT SECTION ================= -->
+
+<section class="appointment-section">
+
+  <div class="container">
+
+    <div class="appointment-grid">
+
+
+      <!-- ================= FORM ================= -->
+
+      <div class="form-wrapper">
+
+        <div class="form-heading">
+
+          <span class="section-label">
+            APPOINTMENT FORM
+          </span>
+
+          <h2>Schedule Your Visit</h2>
+
+          <p>
+            Please provide your information and preferred
+            appointment details.
+          </p>
+
+        </div>
+
+
+        <form (ngSubmit)="submitAppointment()">
+
+
+          <!-- Patient Name + Email -->
+
+          <div class="form-row">
+
+            <div class="form-group">
+
+              <label>
+                Patient Name <span>*</span>
+              </label>
+
+              <div class="input-wrapper">
+
+                <i class="bi bi-person-fill"></i>
+
+                <input
+                  type="text"
+                  name="patientName"
+                  [(ngModel)]="appointment.patientName"
+                  placeholder="Enter patient name"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Email Address <span>*</span>
+              </label>
+
+              <div class="input-wrapper">
+
+                <i class="bi bi-envelope-fill"></i>
+
+                <input
+                  type="email"
+                  name="email"
+                  [(ngModel)]="appointment.email"
+                  placeholder="Enter email address"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Phone + Department -->
+
+          <div class="form-row">
+
+            <div class="form-group">
+
+              <label>
+                Phone Number <span>*</span>
+              </label>
+
+              <div class="input-wrapper">
+
+                <i class="bi bi-telephone-fill"></i>
+
+                <input
+                  type="tel"
+                  name="phone"
+                  [(ngModel)]="appointment.phone"
+                  placeholder="Enter phone number"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Department <span>*</span>
+              </label>
+
+              <div class="input-wrapper">
+
+                <i class="bi bi-hospital-fill"></i>
+
+                <select
+                  name="department"
+                  [(ngModel)]="appointment.department"
+                  required
+                >
+
+                  <option value="">
+                    Select Department
+                  </option>
+
+                  <option
+                    *ngFor="let department of departments"
+                    [value]="department"
+                  >
+                    {{ department }}
+                  </option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Doctor + Date -->
+
+          <div class="form-row">
+
+            <div class="form-group">
+
+              <label>
+                Select Doctor <span>*</span>
+              </label>
+
+              <div class="input-wrapper">
+
+                <i class="bi bi-person-badge-fill"></i>
+
+                <select
+                  name="doctor"
+                  [(ngModel)]="appointment.doctor"
+                  required
+                >
+
+                  <option value="">
+                    Select Doctor
+                  </option>
+
+                  <option
+                    *ngFor="let doctor of doctors"
+                    [value]="doctor"
+                  >
+                    {{ doctor }}
+                  </option>
+
+                </select>
+
+              </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Appointment Date <span>*</span>
+              </label>
+
+              <div class="input-wrapper">
+
+                <i class="bi bi-calendar-date-fill"></i>
+
+                <input
+                  type="date"
+                  name="date"
+                  [(ngModel)]="appointment.date"
+                  required
+                >
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- Time -->
+
+          <div class="form-group">
+
+            <label>
+              Preferred Time <span>*</span>
+            </label>
+
+            <div class="time-options">
+
+              <label class="time-option">
+
+                <input
+                  type="radio"
+                  name="time"
+                  value="09:00 AM - 11:00 AM"
+                  [(ngModel)]="appointment.time"
+                >
+
+                <span>
+                  09:00 AM - 11:00 AM
+                </span>
+
+              </label>
+
+
+              <label class="time-option">
+
+                <input
+                  type="radio"
+                  name="time"
+                  value="11:00 AM - 01:00 PM"
+                  [(ngModel)]="appointment.time"
+                >
+
+                <span>
+                  11:00 AM - 01:00 PM
+                </span>
+
+              </label>
+
+
+              <label class="time-option">
+
+                <input
+                  type="radio"
+                  name="time"
+                  value="03:00 PM - 05:00 PM"
+                  [(ngModel)]="appointment.time"
+                >
+
+                <span>
+                  03:00 PM - 05:00 PM
+                </span>
+
+              </label>
+
+
+              <label class="time-option">
+
+                <input
+                  type="radio"
+                  name="time"
+                  value="06:00 PM - 08:00 PM"
+                  [(ngModel)]="appointment.time"
+                >
+
+                <span>
+                  06:00 PM - 08:00 PM
+                </span>
+
+              </label>
+
+            </div>
+
+          </div>
+
+
+          <!-- Message -->
+
+          <div class="form-group">
+
+            <label>
+              Message
+            </label>
+
+            <textarea
+              name="message"
+              [(ngModel)]="appointment.message"
+              rows="4"
+              placeholder="Describe your concern or additional information..."
+            ></textarea>
+
+          </div>
+
+
+          <!-- Submit -->
+
+          <button
+            type="submit"
+            class="submit-button"
+          >
+
+            <i class="bi bi-calendar-check-fill"></i>
+
+            Book Appointment
+
+          </button>
+
+        </form>
+
+      </div>
+
+
+      <!-- ================= SIDE INFO ================= -->
+
+      <div class="info-column">
+
+
+        <!-- Emergency Card -->
+
+        <div class="emergency-card">
+
+          <div class="emergency-icon">
+
+            <i class="bi bi-heart-pulse-fill"></i>
+
+          </div>
+
+          <div>
+
+            <span>EMERGENCY?</span>
+
+            <h3>Need Immediate Help?</h3>
+
+            <p>
+              For medical emergencies, contact our
+              emergency support immediately.
+            </p>
+
+            <a href="tel:999">
+
+              <i class="bi bi-telephone-fill"></i>
+
+              Call Emergency: 999
+
+            </a>
+
+          </div>
+
+        </div>
+
+
+        <!-- Information Card -->
+
+        <div class="info-card">
+
+          <span class="section-label">
+            APPOINTMENT INFORMATION
+          </span>
+
+          <h2>Before Your Visit</h2>
+
+
+          <div class="info-item">
+
+            <div class="info-icon">
+              <i class="bi bi-clock-fill"></i>
+            </div>
+
+            <div>
+
+              <h4>Hospital Hours</h4>
+
+              <p>
+                Emergency services are available 24/7.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <div class="info-icon">
+              <i class="bi bi-file-earmark-medical-fill"></i>
+            </div>
+
+            <div>
+
+              <h4>Bring Your Records</h4>
+
+              <p>
+                Bring previous prescriptions or medical
+                reports when available.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <div class="info-icon">
+              <i class="bi bi-person-check-fill"></i>
+            </div>
+
+            <div>
+
+              <h4>Arrive Early</h4>
+
+              <p>
+                Please arrive a few minutes before
+                your scheduled appointment.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="info-item">
+
+            <div class="info-icon">
+              <i class="bi bi-shield-check-fill"></i>
+            </div>
+
+            <div>
+
+              <h4>Patient Safety</h4>
+
+              <p>
+                Your information and privacy are
+                handled with care.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- Contact Card -->
+
+        <div class="contact-card">
+
+          <div class="contact-card-icon">
+            <i class="bi bi-headset"></i>
+          </div>
+
+          <div>
+
+            <h3>Need Help?</h3>
+
+            <p>
+              Contact our support team for assistance
+              with appointments.
+            </p>
+
+            <a href="tel:+8801712345678">
+              +880 1712-345678
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta-section">
+
+  <div class="container">
+
+    <div class="cta-content">
+
+      <div>
+
+        <span>QUALITY HEALTHCARE</span>
+
+        <h2>
+          Your Health Is Our Priority
+        </h2>
+
+        <p>
+          Let our experienced medical team take care of you.
+        </p>
+
+      </div>
+
+      <div class="cta-icon">
+        <i class="bi bi-heart-pulse-fill"></i>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

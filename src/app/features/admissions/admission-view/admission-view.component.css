@@ -1,0 +1,22 @@
+.card {
+  border-radius: 12px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+h6 {
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+.btn {
+  border-radius: 6px;
+}
+
+.badge {
+  padding: 7px 12px;
+}

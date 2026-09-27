@@ -1,0 +1,292 @@
+<div class="discharge-view-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <div>
+      <span class="page-badge">
+        <i class="bi bi-file-earmark-medical"></i>
+        Discharge Details
+      </span>
+
+      <h2>Discharge Information</h2>
+
+      <p>View complete patient discharge details.</p>
+    </div>
+
+    <div class="header-actions">
+
+      <a
+        [routerLink]="['/admin/discharge/edit', discharge.id]"
+        class="edit-btn"
+        *ngIf="discharge">
+
+        <i class="bi bi-pencil"></i>
+        Edit
+
+      </a>
+
+      <a
+        routerLink="/admin/discharge"
+        class="back-btn">
+
+        <i class="bi bi-arrow-left"></i>
+        Back
+
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- NOT FOUND -->
+
+  <div
+    class="not-found"
+    *ngIf="!discharge">
+
+    <i class="bi bi-exclamation-circle"></i>
+
+    <h4>Discharge record not found</h4>
+
+    <p>The requested discharge record does not exist.</p>
+
+    <a
+      routerLink="/admin/discharge"
+      class="btn btn-primary">
+
+      Back to Discharge
+
+    </a>
+
+  </div>
+
+
+  <!-- DETAILS -->
+
+  <div
+    class="details-card"
+    *ngIf="discharge">
+
+
+    <!-- TOP -->
+
+    <div class="details-top">
+
+      <div class="patient-section">
+
+        <div class="patient-avatar">
+          <i class="bi bi-person-fill"></i>
+        </div>
+
+        <div>
+
+          <h3>{{ discharge.patientName }}</h3>
+
+          <span>
+            Patient ID: {{ discharge.patientId }}
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="status-section">
+
+        <span
+          class="status-badge"
+          [class.discharged]="discharge.status === 'Discharged'"
+          [class.pending]="discharge.status === 'Pending'">
+
+          <i
+            class="bi"
+            [class.bi-check-circle-fill]="discharge.status === 'Discharged'"
+            [class.bi-clock-fill]="discharge.status === 'Pending'">
+          </i>
+
+          {{ discharge.status }}
+
+        </span>
+
+        <strong>
+          {{ discharge.dischargeId }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- PATIENT & DOCTOR -->
+
+    <div class="detail-section">
+
+      <div class="section-title">
+
+        <i class="bi bi-person-vcard"></i>
+
+        <div>
+          <h4>Patient & Doctor Information</h4>
+          <span>Basic patient and medical staff details</span>
+        </div>
+
+      </div>
+
+
+      <div class="info-grid">
+
+        <div class="info-item">
+          <label>Patient Name</label>
+          <strong>{{ discharge.patientName }}</strong>
+        </div>
+
+        <div class="info-item">
+          <label>Patient ID</label>
+          <strong>{{ discharge.patientId }}</strong>
+        </div>
+
+        <div class="info-item">
+          <label>Doctor</label>
+          <strong>{{ discharge.doctorName }}</strong>
+        </div>
+
+        <div class="info-item">
+          <label>Department</label>
+          <strong>{{ discharge.department }}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ADMISSION -->
+
+    <div class="detail-section">
+
+      <div class="section-title">
+
+        <i class="bi bi-hospital"></i>
+
+        <div>
+          <h4>Admission Details</h4>
+          <span>Hospital admission and discharge information</span>
+        </div>
+
+      </div>
+
+
+      <div class="info-grid">
+
+        <div class="info-item">
+          <label>Admission Date</label>
+          <strong>{{ discharge.admissionDate }}</strong>
+        </div>
+
+        <div class="info-item">
+          <label>Discharge Date</label>
+          <strong>{{ discharge.dischargeDate }}</strong>
+        </div>
+
+        <div class="info-item">
+          <label>Room</label>
+          <strong>{{ discharge.room }}</strong>
+        </div>
+
+        <div class="info-item">
+          <label>Bed</label>
+          <strong>{{ discharge.bed }}</strong>
+        </div>
+
+        <div class="info-item">
+          <label>Discharge Type</label>
+          <strong>{{ discharge.dischargeType }}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- MEDICAL -->
+
+    <div class="detail-section">
+
+      <div class="section-title">
+
+        <i class="bi bi-heart-pulse"></i>
+
+        <div>
+          <h4>Medical Information</h4>
+          <span>Diagnosis and treatment details</span>
+        </div>
+
+      </div>
+
+
+      <div class="medical-grid">
+
+        <div class="medical-box">
+
+          <label>
+            <i class="bi bi-clipboard2-pulse"></i>
+            Diagnosis
+          </label>
+
+          <p>
+            {{ discharge.diagnosis || 'No diagnosis provided.' }}
+          </p>
+
+        </div>
+
+
+        <div class="medical-box">
+
+          <label>
+            <i class="bi bi-bandaid"></i>
+            Treatment
+          </label>
+
+          <p>
+            {{ discharge.treatment || 'No treatment information provided.' }}
+          </p>
+
+        </div>
+
+
+        <div class="medical-box">
+
+          <label>
+            <i class="bi bi-capsule"></i>
+            Prescription
+          </label>
+
+          <p>
+            {{ discharge.prescription || 'No prescription provided.' }}
+          </p>
+
+        </div>
+
+
+        <div class="medical-box">
+
+          <label>
+            <i class="bi bi-info-circle"></i>
+            Discharge Instructions
+          </label>
+
+          <p>
+            {{ discharge.instructions || 'No instructions provided.' }}
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

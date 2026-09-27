@@ -1,0 +1,513 @@
+<div class="doctor-dashboard">
+
+  <!-- ================= HEADER ================= -->
+  <div class="dashboard-header">
+
+    <div>
+      <span class="welcome-label">
+        <i class="bi bi-heart-pulse-fill"></i>
+        DOCTOR PORTAL
+      </span>
+
+      <h2>Doctor Dashboard</h2>
+
+      <p>
+        Welcome back,
+        <strong>{{ currentUser?.name }}</strong>.
+        Here's your medical overview.
+      </p>
+    </div>
+
+    <a
+      routerLink="/doctor/consultations/add"
+      class="new-consultation-btn"
+    >
+      <i class="bi bi-plus-lg"></i>
+      New Consultation
+    </a>
+
+  </div>
+
+
+  <!-- ================= STATISTICS ================= -->
+  <div class="row g-4 stats-row">
+
+    <!-- Total Patients -->
+    <div class="col-md-6 col-xl-3">
+      <div class="stat-card">
+
+        <div class="stat-icon patients-icon">
+          <i class="bi bi-people-fill"></i>
+        </div>
+
+        <div class="stat-content">
+          <span>Total Patients</span>
+          <h3>248</h3>
+
+          <small>
+            <i class="bi bi-arrow-up"></i>
+            Active patients
+          </small>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- Today's Appointments -->
+    <div class="col-md-6 col-xl-3">
+      <div class="stat-card">
+
+        <div class="stat-icon appointment-icon">
+          <i class="bi bi-calendar2-check-fill"></i>
+        </div>
+
+        <div class="stat-content">
+          <span>Today's Appointments</span>
+          <h3>18</h3>
+
+          <small>
+            <i class="bi bi-clock"></i>
+            Scheduled today
+          </small>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- Consultations -->
+    <div class="col-md-6 col-xl-3">
+      <div class="stat-card">
+
+        <div class="stat-icon consultation-icon">
+          <i class="bi bi-clipboard2-pulse-fill"></i>
+        </div>
+
+        <div class="stat-content">
+          <span>Consultations</span>
+          <h3>12</h3>
+
+          <small>
+            <i class="bi bi-check-circle"></i>
+            Today's consultations
+          </small>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- New Patients -->
+    <div class="col-md-6 col-xl-3">
+      <div class="stat-card">
+
+        <div class="stat-icon new-patient-icon">
+          <i class="bi bi-person-plus-fill"></i>
+        </div>
+
+        <div class="stat-content">
+          <span>New Patients</span>
+          <h3>06</h3>
+
+          <small>
+            <i class="bi bi-graph-up-arrow"></i>
+            This week
+          </small>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <div class="row g-4 main-row">
+
+    <!-- ================= APPOINTMENTS ================= -->
+    <div class="col-lg-8">
+
+      <div class="dashboard-card">
+
+        <div class="card-header-custom">
+
+          <div class="header-title">
+
+            <div class="header-icon">
+              <i class="bi bi-calendar3"></i>
+            </div>
+
+            <div>
+              <h5>Today's Appointments</h5>
+              <span>Patients scheduled for today</span>
+            </div>
+
+          </div>
+
+          <a routerLink="/admin/appointments">
+            View All
+            <i class="bi bi-arrow-right"></i>
+          </a>
+
+        </div>
+
+
+        <!-- ================= APPOINTMENT TABLE ================= -->
+        <div class="table-responsive">
+
+          <table class="table appointment-table align-middle">
+
+            <thead>
+              <tr>
+                <th>Patient</th>
+                <th>Time</th>
+                <th>Department</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+
+            <tbody>
+
+              <!-- SARAH -->
+              <tr>
+
+                <td>
+                  <div class="patient-info">
+
+                    <div class="patient-avatar">
+                      SA
+                    </div>
+
+                    <div>
+                      <strong>Sarah Ahmed</strong>
+                      <small>Patient ID: P-1002</small>
+                    </div>
+
+                  </div>
+                </td>
+
+
+                <td>
+                  <span class="appointment-time">
+                    09:30 AM
+                  </span>
+                </td>
+
+
+                <td>
+                  <span class="department-name">
+                    Cardiology
+                  </span>
+                </td>
+
+
+                <td>
+                  <span class="status confirmed">
+                    <i class="bi bi-check-circle-fill"></i>
+                    Confirmed
+                  </span>
+                </td>
+
+
+                <td>
+                  <a
+                    routerLink="/admin/prescriptions/add/P-1002"
+                    class="prescription-btn"
+                  >
+                    <i class="bi bi-prescription2"></i>
+                    Prescription
+                  </a>
+                </td>
+
+              </tr>
+
+
+              <!-- MARIYA -->
+              <tr>
+
+                <td>
+                  <div class="patient-info">
+
+                    <div class="patient-avatar">
+                      MR
+                    </div>
+
+                    <div>
+                      <strong>Mariya Rahman</strong>
+                      <small>Patient ID: P-1001</small>
+                    </div>
+
+                  </div>
+                </td>
+
+
+                <td>
+                  <span class="appointment-time">
+                    11:00 AM
+                  </span>
+                </td>
+
+
+                <td>
+                  <span class="department-name">
+                    Cardiology
+                  </span>
+                </td>
+
+
+                <td>
+                  <span class="status pending">
+                    <i class="bi bi-clock-fill"></i>
+                    Pending
+                  </span>
+                </td>
+
+
+                <td>
+                  <a
+                    routerLink="/admin/prescriptions/add/P-1001"
+                    class="prescription-btn"
+                  >
+                    <i class="bi bi-prescription2"></i>
+                    Prescription
+                  </a>
+                </td>
+
+              </tr>
+
+
+              <!-- JOHN -->
+              <tr>
+
+                <td>
+                  <div class="patient-info">
+
+                    <div class="patient-avatar">
+                      JS
+                    </div>
+
+                    <div>
+                      <strong>John Smith</strong>
+                      <small>Patient ID: P-1003</small>
+                    </div>
+
+                  </div>
+                </td>
+
+
+                <td>
+                  <span class="appointment-time">
+                    02:30 PM
+                  </span>
+                </td>
+
+
+                <td>
+                  <span class="department-name">
+                    Medicine
+                  </span>
+                </td>
+
+
+                <td>
+                  <span class="status confirmed">
+                    <i class="bi bi-check-circle-fill"></i>
+                    Confirmed
+                  </span>
+                </td>
+
+
+                <td>
+                  <a
+                    routerLink="/admin/prescriptions/add/P-1003"
+                    class="prescription-btn"
+                  >
+                    <i class="bi bi-prescription2"></i>
+                    Prescription
+                  </a>
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================= QUICK ACTIONS ================= -->
+    <div class="col-lg-4">
+
+      <div class="dashboard-card quick-card">
+
+        <div class="card-header-custom">
+
+          <div class="header-title">
+
+            <div class="header-icon quick-header-icon">
+              <i class="bi bi-lightning-charge-fill"></i>
+            </div>
+
+            <div>
+              <h5>Quick Actions</h5>
+              <span>Common doctor tasks</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+          <!-- PRESCRIPTIONS -->
+          <a
+            routerLink="/admin/prescriptions"
+            class="quick-action"
+          >
+
+            <div class="quick-action-icon prescription">
+              <i class="bi bi-prescription2"></i>
+            </div>
+
+            <div class="quick-action-text">
+
+              <strong>Prescriptions</strong>
+
+              <span>
+                Create and manage prescriptions
+              </span>
+
+            </div>
+
+            <div class="quick-arrow">
+              <i class="bi bi-arrow-up-right"></i>
+            </div>
+
+          </a>
+
+
+          <!-- CONSULTATION -->
+          <a
+            routerLink="/admin/consultations/add"
+            class="quick-action"
+          >
+
+            <div class="quick-action-icon consultation">
+              <i class="bi bi-clipboard2-plus-fill"></i>
+            </div>
+
+            <div class="quick-action-text">
+
+              <strong>New Consultation</strong>
+
+              <span>
+                Start a patient consultation
+              </span>
+
+            </div>
+
+            <div class="quick-arrow">
+              <i class="bi bi-arrow-up-right"></i>
+            </div>
+
+          </a>
+
+
+          <!-- PATIENTS -->
+          <a
+            routerLink="/admin/patients"
+            class="quick-action"
+          >
+
+            <div class="quick-action-icon patient">
+              <i class="bi bi-people-fill"></i>
+            </div>
+
+            <div class="quick-action-text">
+
+              <strong>Patient Records</strong>
+
+              <span>
+                View patient information
+              </span>
+
+            </div>
+
+            <div class="quick-arrow">
+              <i class="bi bi-arrow-up-right"></i>
+            </div>
+
+          </a>
+
+
+          <!-- APPOINTMENTS -->
+          <a
+            routerLink="/admin/appointments"
+            class="quick-action"
+          >
+
+            <div class="quick-action-icon appointment">
+              <i class="bi bi-calendar2-event-fill"></i>
+            </div>
+
+            <div class="quick-action-text">
+
+              <strong>Appointments</strong>
+
+              <span>
+                Manage today's schedule
+              </span>
+
+            </div>
+
+            <div class="quick-arrow">
+              <i class="bi bi-arrow-up-right"></i>
+            </div>
+
+          </a>
+
+
+          <!-- LABORATORY -->
+          <a
+            routerLink="/admin/laboratory"
+            class="quick-action"
+          >
+
+            <div class="quick-action-icon laboratory">
+              <i class="bi bi-eyedropper"></i>
+            </div>
+
+            <div class="quick-action-text">
+
+              <strong>Laboratory</strong>
+
+              <span>
+                Check diagnostic reports
+              </span>
+
+            </div>
+
+            <div class="quick-arrow">
+              <i class="bi bi-arrow-up-right"></i>
+            </div>
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

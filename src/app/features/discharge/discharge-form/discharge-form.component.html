@@ -1,0 +1,463 @@
+<div class="discharge-form-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <div>
+      <span class="page-badge">
+        <i class="bi bi-box-arrow-right"></i>
+        Patient Discharge
+      </span>
+
+      <h2>
+        {{ isEditMode ? 'Edit Discharge' : 'Add Discharge' }}
+      </h2>
+
+      <p>
+        {{ isEditMode
+          ? 'Update patient discharge information.'
+          : 'Create a new patient discharge record.' }}
+      </p>
+    </div>
+
+    <a
+      routerLink="/admin/discharge"
+      class="back-btn">
+
+      <i class="bi bi-arrow-left"></i>
+      Back to Discharge
+    </a>
+
+  </div>
+
+
+  <!-- FORM -->
+  <div class="form-card">
+
+    <form
+      #dischargeForm="ngForm"
+      (ngSubmit)="saveDischarge()">
+
+
+      <!-- BASIC INFORMATION -->
+
+      <div class="form-section">
+
+        <div class="section-title">
+          <i class="bi bi-person-vcard"></i>
+          <div>
+            <h4>Patient Information</h4>
+            <span>Basic patient and discharge information</span>
+          </div>
+        </div>
+
+
+        <div class="row g-3">
+
+          <!-- DISCHARGE ID -->
+
+          <div class="col-md-6">
+
+            <label>Discharge ID</label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="dischargeId"
+              [(ngModel)]="discharge.dischargeId"
+              readonly>
+
+          </div>
+
+
+          <!-- PATIENT -->
+
+          <div class="col-md-6">
+
+            <label>
+              Patient <span>*</span>
+            </label>
+
+            <select
+              class="form-select"
+              name="patientId"
+              [(ngModel)]="discharge.patientId"
+              (change)="onPatientChange()"
+              required>
+
+              <option value="">
+                Select Patient
+              </option>
+
+              <option
+                *ngFor="let patient of patients"
+                [value]="patient.id">
+
+                {{ patient.name }} ({{ patient.id }})
+
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- PATIENT NAME -->
+
+          <div class="col-md-6">
+
+            <label>Patient Name</label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="patientName"
+              [(ngModel)]="discharge.patientName"
+              readonly>
+
+          </div>
+
+
+          <!-- DOCTOR -->
+
+          <div class="col-md-6">
+
+            <label>
+              Doctor <span>*</span>
+            </label>
+
+            <select
+              class="form-select"
+              name="doctorName"
+              [(ngModel)]="discharge.doctorName"
+              required>
+
+              <option value="">
+                Select Doctor
+              </option>
+
+              <option
+                *ngFor="let doctor of doctors"
+                [value]="doctor">
+
+                {{ doctor }}
+
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- DEPARTMENT -->
+
+          <div class="col-md-6">
+
+            <label>
+              Department <span>*</span>
+            </label>
+
+            <select
+              class="form-select"
+              name="department"
+              [(ngModel)]="discharge.department"
+              required>
+
+              <option value="">
+                Select Department
+              </option>
+
+              <option
+                *ngFor="let department of departments"
+                [value]="department">
+
+                {{ department }}
+
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ADMISSION DETAILS -->
+
+      <div class="form-section">
+
+        <div class="section-title">
+
+          <i class="bi bi-hospital"></i>
+
+          <div>
+            <h4>Admission Details</h4>
+            <span>Room, bed and admission information</span>
+          </div>
+
+        </div>
+
+
+        <div class="row g-3">
+
+          <!-- ADMISSION DATE -->
+
+          <div class="col-md-6">
+
+            <label>
+              Admission Date <span>*</span>
+            </label>
+
+            <input
+              type="date"
+              class="form-control"
+              name="admissionDate"
+              [(ngModel)]="discharge.admissionDate"
+              required>
+
+          </div>
+
+
+          <!-- DISCHARGE DATE -->
+
+          <div class="col-md-6">
+
+            <label>
+              Discharge Date <span>*</span>
+            </label>
+
+            <input
+              type="date"
+              class="form-control"
+              name="dischargeDate"
+              [(ngModel)]="discharge.dischargeDate"
+              required>
+
+          </div>
+
+
+          <!-- ROOM -->
+
+          <div class="col-md-6">
+
+            <label>
+              Room <span>*</span>
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="room"
+              [(ngModel)]="discharge.room"
+              placeholder="e.g. 101"
+              required>
+
+          </div>
+
+
+          <!-- BED -->
+
+          <div class="col-md-6">
+
+            <label>
+              Bed <span>*</span>
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="bed"
+              [(ngModel)]="discharge.bed"
+              placeholder="e.g. B-01"
+              required>
+
+          </div>
+
+
+          <!-- DISCHARGE TYPE -->
+
+          <div class="col-md-6">
+
+            <label>
+              Discharge Type
+            </label>
+
+            <select
+              class="form-select"
+              name="dischargeType"
+              [(ngModel)]="discharge.dischargeType">
+
+              <option
+                *ngFor="let type of dischargeTypes"
+                [value]="type">
+
+                {{ type }}
+
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- STATUS -->
+
+          <div class="col-md-6">
+
+            <label>Status</label>
+
+            <select
+              class="form-select"
+              name="status"
+              [(ngModel)]="discharge.status">
+
+              <option value="Discharged">
+                Discharged
+              </option>
+
+              <option value="Pending">
+                Pending
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- MEDICAL INFORMATION -->
+
+      <div class="form-section">
+
+        <div class="section-title">
+
+          <i class="bi bi-heart-pulse"></i>
+
+          <div>
+            <h4>Medical Information</h4>
+            <span>Diagnosis and treatment details</span>
+          </div>
+
+        </div>
+
+
+        <div class="row g-3">
+
+          <!-- DIAGNOSIS -->
+
+          <div class="col-12">
+
+            <label>
+              Diagnosis <span>*</span>
+            </label>
+
+            <textarea
+              class="form-control"
+              name="diagnosis"
+              [(ngModel)]="discharge.diagnosis"
+              rows="3"
+              placeholder="Enter diagnosis"
+              required>
+            </textarea>
+
+          </div>
+
+
+          <!-- TREATMENT -->
+
+          <div class="col-md-6">
+
+            <label>Treatment</label>
+
+            <textarea
+              class="form-control"
+              name="treatment"
+              [(ngModel)]="discharge.treatment"
+              rows="4"
+              placeholder="Enter treatment details">
+            </textarea>
+
+          </div>
+
+
+          <!-- PRESCRIPTION -->
+
+          <div class="col-md-6">
+
+            <label>Prescription</label>
+
+            <textarea
+              class="form-control"
+              name="prescription"
+              [(ngModel)]="discharge.prescription"
+              rows="4"
+              placeholder="Enter prescription">
+            </textarea>
+
+          </div>
+
+
+          <!-- INSTRUCTIONS -->
+
+          <div class="col-12">
+
+            <label>Discharge Instructions</label>
+
+            <textarea
+              class="form-control"
+              name="instructions"
+              [(ngModel)]="discharge.instructions"
+              rows="4"
+              placeholder="Enter instructions for patient">
+            </textarea>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- BUTTONS -->
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="btn btn-light cancel-btn"
+          (click)="cancel()">
+
+          <i class="bi bi-x-lg"></i>
+          Cancel
+
+        </button>
+
+
+        <button
+          type="submit"
+          class="btn btn-primary save-btn"
+          [disabled]="dischargeForm.invalid">
+
+          <i
+            class="bi"
+            [class.bi-check-lg]="!isEditMode"
+            [class.bi-pencil]="isEditMode">
+          </i>
+
+          {{ isEditMode ? 'Update Discharge' : 'Save Discharge' }}
+
+        </button>
+
+      </div>
+
+
+    </form>
+
+  </div>
+
+</div>

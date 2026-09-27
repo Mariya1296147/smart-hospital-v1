@@ -1,0 +1,232 @@
+<div class="container-fluid py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+      <h3 class="fw-bold mb-1">
+        Medicine Details
+      </h3>
+
+      <p class="text-muted mb-0">
+        View complete medicine information
+      </p>
+    </div>
+
+
+    <div class="d-flex gap-2">
+
+      <a
+        [routerLink]="[
+          '/admin/pharmacy/edit',
+          medicine.id
+        ]"
+        class="btn btn-primary">
+
+        <i class="bi bi-pencil me-2"></i>
+        Edit
+
+      </a>
+
+
+      <a
+        routerLink="/admin/pharmacy"
+        class="btn btn-secondary">
+
+        <i class="bi bi-arrow-left me-2"></i>
+        Back
+
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- Details Card -->
+  <div class="card shadow-sm border-0">
+
+    <div class="card-body p-4">
+
+      <!-- Medicine Header -->
+      <div class="medicine-header mb-4">
+
+        <div class="medicine-icon">
+
+          <i class="bi bi-capsule-pill"></i>
+
+        </div>
+
+        <div>
+
+          <h4 class="fw-bold mb-1">
+            {{ medicine.medicineName }}
+          </h4>
+
+          <p class="text-muted mb-0">
+            {{ medicine.medicineId }}
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <hr>
+
+
+      <!-- Information -->
+      <div class="row g-4 mt-2">
+
+        <div class="col-md-6">
+
+          <label>
+            Medicine ID
+          </label>
+
+          <h6>
+            {{ medicine.medicineId }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label>
+            Medicine Name
+          </label>
+
+          <h6>
+            {{ medicine.medicineName }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label>
+            Category
+          </label>
+
+          <h6>
+            {{ medicine.category }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label>
+            Manufacturer
+          </label>
+
+          <h6>
+            {{ medicine.manufacturer }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label>
+            Current Stock
+          </label>
+
+          <h6
+            [ngClass]="{
+              'text-success': medicine.quantity > 75,
+              'text-warning': medicine.quantity > 0 && medicine.quantity <= 75,
+              'text-danger': medicine.quantity === 0
+            }">
+
+            {{ medicine.quantity }} units
+
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label>
+            Unit Price
+          </label>
+
+          <h6>
+            ৳{{ medicine.unitPrice | number:'1.2-2' }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label>
+            Expiry Date
+          </label>
+
+          <h6>
+            {{ medicine.expiryDate }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label>
+            Supplier
+          </label>
+
+          <h6>
+            {{ medicine.supplier }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label>
+            Stock Status
+          </label>
+
+          <div>
+
+            <span
+              class="badge"
+              [ngClass]="{
+
+                'bg-success':
+                  medicine.status === 'Available',
+
+                'bg-warning text-dark':
+                  medicine.status === 'Low Stock',
+
+                'bg-danger':
+                  medicine.status === 'Out of Stock',
+
+                'bg-secondary':
+                  medicine.status === 'Expired'
+
+              }">
+
+              {{ medicine.status }}
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

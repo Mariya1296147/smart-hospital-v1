@@ -1,0 +1,209 @@
+
+<div class="dashboard-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <span class="page-label">
+        <i class="bi bi-heart-pulse"></i>
+        Nursing Department
+      </span>
+
+      <h2>Nurse Dashboard</h2>
+
+      <p>
+        Monitor patients, nursing activities and ward care.
+      </p>
+    </div>
+
+    <div class="header-date">
+      <i class="bi bi-calendar3"></i>
+      Today
+    </div>
+  </div>
+
+  <!-- Statistics -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-people"></i>
+      </div>
+      <div>
+        <span>Assigned Patients</span>
+        <h3>32</h3>
+        <small>Currently under care</small>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-hospital"></i>
+      </div>
+      <div>
+        <span>Occupied Beds</span>
+        <h3>24</h3>
+        <small>Across active wards</small>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-clipboard2-pulse"></i>
+      </div>
+      <div>
+        <span>Pending Tasks</span>
+        <h3>08</h3>
+        <small>Need attention</small>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-capsule"></i>
+      </div>
+      <div>
+        <span>Medication</span>
+        <h3>15</h3>
+        <small>Due today</small>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Main Content -->
+  <div class="content-grid">
+
+    <!-- Patient Care -->
+    <div class="dashboard-panel">
+
+      <div class="panel-header">
+        <div>
+          <h4>Patient Care</h4>
+          <p>Recently assigned patients</p>
+        </div>
+
+        <a routerLink="/admin/patients">View All</a>
+      </div>
+
+      <div class="patient-list">
+
+        <div class="patient-row">
+          <div class="patient-avatar">SA</div>
+
+          <div class="patient-info">
+            <strong>Sarah Ahmed</strong>
+            <span>Bed 204 · Neurology</span>
+          </div>
+
+          <span class="status stable">Stable</span>
+        </div>
+
+        <div class="patient-row">
+          <div class="patient-avatar">MR</div>
+
+          <div class="patient-info">
+            <strong>Mariya Rahman</strong>
+            <span>Bed 108 · Cardiology</span>
+          </div>
+
+          <span class="status attention">Attention</span>
+        </div>
+
+        <div class="patient-row">
+          <div class="patient-avatar">AH</div>
+
+          <div class="patient-info">
+            <strong>Ahmed Hasan</strong>
+            <span>Bed 305 · General Ward</span>
+          </div>
+
+          <span class="status stable">Stable</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="dashboard-panel">
+
+      <div class="panel-header">
+        <div>
+          <h4>Quick Actions</h4>
+          <p>Common nursing activities</p>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+
+        <a routerLink="/admin/patients">
+          <i class="bi bi-people"></i>
+          <span>Patients</span>
+        </a>
+
+        <a routerLink="/admin/nursing">
+          <i class="bi bi-heart-pulse"></i>
+          <span>Nursing Care</span>
+        </a>
+
+        <a routerLink="/admin/admissions">
+          <i class="bi bi-hospital"></i>
+          <span>Admissions</span>
+        </a>
+
+        <a routerLink="/admin/laboratory">
+          <i class="bi bi-eyedropper"></i>
+          <span>Lab Tests</span>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Nursing Tasks -->
+  <div class="dashboard-panel tasks-panel">
+
+    <div class="panel-header">
+      <div>
+        <h4>Today's Nursing Tasks</h4>
+        <p>Activities requiring attention</p>
+      </div>
+    </div>
+
+    <div class="task-list">
+
+      <div class="task-item">
+        <i class="bi bi-check-circle"></i>
+        <div>
+          <strong>Morning Patient Check</strong>
+          <span>Ward A · 08:00 AM</span>
+        </div>
+        <span class="task-done">Completed</span>
+      </div>
+
+      <div class="task-item">
+        <i class="bi bi-clock"></i>
+        <div>
+          <strong>Medication Round</strong>
+          <span>Ward B · 10:30 AM</span>
+        </div>
+        <span class="task-pending">Pending</span>
+      </div>
+
+      <div class="task-item">
+        <i class="bi bi-clipboard-check"></i>
+        <div>
+          <strong>Vital Signs Recording</strong>
+          <span>ICU · 12:00 PM</span>
+        </div>
+        <span class="task-pending">Pending</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

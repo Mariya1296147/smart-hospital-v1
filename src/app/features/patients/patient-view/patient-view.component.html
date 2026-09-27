@@ -1,0 +1,186 @@
+<div class="patient-view-page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+
+    <div>
+      <h2>Patient Details</h2>
+      <p>View complete patient information</p>
+    </div>
+
+    <a
+      routerLink="/admin/patients"
+      class="btn btn-outline-secondary">
+
+      <i class="bi bi-arrow-left"></i>
+      Back to Patients
+
+    </a>
+
+  </div>
+
+
+  <!-- PATIENT PROFILE -->
+  <div class="profile-card">
+
+    <div class="profile-top">
+
+      <div class="patient-avatar">
+        <i class="bi bi-person-fill"></i>
+      </div>
+
+      <div class="patient-title">
+
+        <h3>
+          {{ patient.firstName }} {{ patient.lastName }}
+        </h3>
+
+        <span>
+          Patient ID: {{ patient.patientId }}
+        </span>
+
+      </div>
+
+      <span class="status-badge">
+        {{ patient.status }}
+      </span>
+
+    </div>
+
+
+    <!-- PERSONAL INFORMATION -->
+
+    <div class="section-title">
+      <i class="bi bi-person"></i>
+      Personal Information
+    </div>
+
+    <div class="info-grid">
+
+      <div class="info-item">
+        <span>First Name</span>
+        <strong>{{ patient.firstName }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Last Name</span>
+        <strong>{{ patient.lastName }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Gender</span>
+        <strong>{{ patient.gender }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Date of Birth</span>
+        <strong>{{ patient.dateOfBirth }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Age</span>
+        <strong>{{ patient.age }} Years</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Blood Group</span>
+        <strong>{{ patient.bloodGroup }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Marital Status</span>
+        <strong>{{ patient.maritalStatus }}</strong>
+      </div>
+
+    </div>
+
+
+    <!-- CONTACT INFORMATION -->
+
+    <div class="section-title">
+      <i class="bi bi-telephone"></i>
+      Contact Information
+    </div>
+
+    <div class="info-grid">
+
+      <div class="info-item">
+        <span>Phone</span>
+        <strong>{{ patient.phone }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Email</span>
+        <strong>{{ patient.email }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Emergency Contact</span>
+        <strong>{{ patient.emergencyContact }}</strong>
+      </div>
+
+      <div class="info-item full-width">
+        <span>Address</span>
+        <strong>{{ patient.address }}</strong>
+      </div>
+
+    </div>
+
+
+    <!-- MEDICAL INFORMATION -->
+
+    <div class="section-title">
+      <i class="bi bi-heart-pulse"></i>
+      Medical Information
+    </div>
+
+    <div class="info-grid">
+
+      <div class="info-item">
+        <span>Department</span>
+        <strong>{{ patient.department }}</strong>
+      </div>
+
+      <div class="info-item">
+        <span>Assigned Doctor</span>
+        <strong>{{ patient.doctor }}</strong>
+      </div>
+
+      <div class="info-item full-width">
+        <span>Allergies</span>
+        <strong>{{ patient.allergies }}</strong>
+      </div>
+
+      <div class="info-item full-width">
+        <span>Medical History</span>
+        <strong>{{ patient.medicalHistory }}</strong>
+      </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="action-buttons">
+
+      <a
+        routerLink="/admin/patients"
+        class="btn btn-secondary">
+
+        <i class="bi bi-arrow-left"></i>
+        Back
+
+      </a>
+
+      <button class="btn btn-primary">
+
+        <i class="bi bi-pencil"></i>
+        Edit Patient
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

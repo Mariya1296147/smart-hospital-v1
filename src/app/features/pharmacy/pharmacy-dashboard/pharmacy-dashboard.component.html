@@ -1,0 +1,219 @@
+
+<div class="dashboard-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <span class="page-label">
+        <i class="bi bi-capsule"></i>
+        Pharmacy Department
+      </span>
+
+      <h2>Pharmacy Dashboard</h2>
+
+      <p>Manage prescriptions, medicines, stock and pharmacy activities.</p>
+    </div>
+
+    <div class="header-date">
+      <i class="bi bi-calendar3"></i>
+      Today
+    </div>
+  </div>
+
+  <!-- Statistics -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-prescription2"></i>
+      </div>
+      <div>
+        <span>Prescriptions</span>
+        <h3>56</h3>
+        <small>Today's prescriptions</small>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-hourglass-split"></i>
+      </div>
+      <div>
+        <span>Pending Orders</span>
+        <h3>14</h3>
+        <small>Waiting for processing</small>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-box-seam"></i>
+      </div>
+      <div>
+        <span>Total Medicines</span>
+        <h3>486</h3>
+        <small>Available medicines</small>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-exclamation-triangle"></i>
+      </div>
+      <div>
+        <span>Low Stock</span>
+        <h3>09</h3>
+        <small>Need restocking</small>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Main Content -->
+  <div class="content-grid">
+
+    <!-- Prescriptions -->
+    <div class="dashboard-panel">
+
+      <div class="panel-header">
+        <div>
+          <h4>Recent Prescriptions</h4>
+          <p>Latest prescription requests</p>
+        </div>
+
+        <a routerLink="/admin/pharmacy">View All</a>
+      </div>
+
+      <div class="prescription-list">
+
+        <div class="prescription-row">
+          <div class="medicine-icon">
+            <i class="bi bi-capsule"></i>
+          </div>
+
+          <div class="prescription-info">
+            <strong>Sarah Ahmed</strong>
+            <span>Amoxicillin · Paracetamol</span>
+          </div>
+
+          <span class="status pending">Pending</span>
+        </div>
+
+        <div class="prescription-row">
+          <div class="medicine-icon">
+            <i class="bi bi-capsule"></i>
+          </div>
+
+          <div class="prescription-info">
+            <strong>Mariya Rahman</strong>
+            <span>Aspirin · Atorvastatin</span>
+          </div>
+
+          <span class="status ready">Ready</span>
+        </div>
+
+        <div class="prescription-row">
+          <div class="medicine-icon">
+            <i class="bi bi-capsule"></i>
+          </div>
+
+          <div class="prescription-info">
+            <strong>Ahmed Hasan</strong>
+            <span>Metformin · Vitamin D</span>
+          </div>
+
+          <span class="status completed">Completed</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="dashboard-panel">
+
+      <div class="panel-header">
+        <div>
+          <h4>Quick Actions</h4>
+          <p>Pharmacy activities</p>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+
+        <a routerLink="/admin/pharmacy">
+          <i class="bi bi-prescription2"></i>
+          <span>Prescriptions</span>
+        </a>
+
+        <a routerLink="/admin/pharmacy">
+          <i class="bi bi-boxes"></i>
+          <span>Medicine Stock</span>
+        </a>
+
+        <a routerLink="/admin/patients">
+          <i class="bi bi-people"></i>
+          <span>Patients</span>
+        </a>
+
+        <a routerLink="/admin/pharmacy">
+          <i class="bi bi-search"></i>
+          <span>Search Medicine</span>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Stock Alerts -->
+  <div class="dashboard-panel">
+
+    <div class="panel-header">
+      <div>
+        <h4>Stock Alerts</h4>
+        <p>Medicines that need attention</p>
+      </div>
+    </div>
+
+    <div class="stock-list">
+
+      <div class="stock-item">
+        <i class="bi bi-exclamation-circle"></i>
+
+        <div>
+          <strong>Amoxicillin 500mg</strong>
+          <span>Only 12 units remaining</span>
+        </div>
+
+        <span class="stock-low">Low Stock</span>
+      </div>
+
+      <div class="stock-item">
+        <i class="bi bi-exclamation-circle"></i>
+
+        <div>
+          <strong>Insulin 100 IU</strong>
+          <span>Only 8 units remaining</span>
+        </div>
+
+        <span class="stock-low">Low Stock</span>
+      </div>
+
+      <div class="stock-item">
+        <i class="bi bi-check-circle"></i>
+
+        <div>
+          <strong>Paracetamol 500mg</strong>
+          <span>245 units available</span>
+        </div>
+
+        <span class="stock-ok">In Stock</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

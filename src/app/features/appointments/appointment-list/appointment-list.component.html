@@ -1,0 +1,352 @@
+<div class="appointment-page">
+
+  <!-- Page Header -->
+  <div class="page-header">
+
+    <div>
+      <div class="title-icon">
+        <i class="bi bi-calendar-check"></i>
+      </div>
+
+      <div class="title-content">
+        <h2>Appointments</h2>
+        <p>Manage and monitor hospital appointments</p>
+      </div>
+    </div>
+
+    <a routerLink="/admin/appointments/add" class="btn-add">
+
+      <i class="bi bi-plus-lg"></i>
+
+      Add Appointment
+
+    </a>
+
+  </div>
+
+
+  <!-- Search / Filter -->
+  <div class="filter-card">
+
+    <div class="filter-row">
+
+
+      <!-- Search -->
+      <div class="search-box">
+
+        <label>
+          Search Appointment
+        </label>
+
+        <div class="input-wrapper">
+
+          <i class="bi bi-search"></i>
+
+          <input type="text" [(ngModel)]="searchText" (input)="applyFilters()"
+            placeholder="Search patient, doctor, ID...">
+
+        </div>
+
+      </div>
+
+
+      <!-- Status -->
+      <div class="status-filter">
+
+        <label>
+          Status
+        </label>
+
+        <select [(ngModel)]="selectedStatus" (change)="applyFilters()">
+
+          <option value="">
+            All Status
+          </option>
+
+          <option value="Scheduled">
+            Scheduled
+          </option>
+
+          <option value="Pending">
+            Pending
+          </option>
+
+          <option value="Completed">
+            addmitted
+          </option>
+
+          <option value="Cancelled">
+            Cancelled
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- Clear -->
+      <div class="clear-box">
+
+        <button class="btn-clear" (click)="clearFilters()">
+
+          <i class="bi bi-arrow-counterclockwise"></i>
+
+          Clear
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Table -->
+  <div class="table-card">
+
+    <div class="table-responsive">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Appointment ID</th>
+
+            <th>Patient</th>
+
+            <th>Doctor</th>
+
+            <th>Department</th>
+
+            <th>Date & Time</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+          <!-- Data -->
+          <tr *ngFor="let appointment of paginatedAppointments">
+
+
+            <!-- ID -->
+            <td>
+
+              <span class="appointment-id">
+
+                {{ appointment.appointmentId }}
+
+              </span>
+
+            </td>
+
+
+            <!-- Patient -->
+            <td>
+
+              <div class="patient-info">
+
+                <div class="patient-icon">
+
+                  <i class="bi bi-person"></i>
+
+                </div>
+
+                <div>
+
+                  <strong>
+                    {{ appointment.patientName }}
+                  </strong>
+
+                  <small>
+                    {{ appointment.patientPhone }}
+                  </small>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- Doctor -->
+            <td>
+
+              <div class="doctor-name">
+
+                <i class="bi bi-person-badge"></i>
+
+                {{ appointment.doctorName }}
+
+              </div>
+
+            </td>
+
+
+            <!-- Department -->
+            <td>
+
+              <span class="department-badge">
+
+                {{ appointment.department }}
+
+              </span>
+
+            </td>
+
+
+            <!-- Date -->
+            <td>
+
+              <div class="date-time">
+
+                <strong>
+                  {{ appointment.appointmentDate }}
+                </strong>
+
+                <small>
+                  <i class="bi bi-clock"></i>
+                  {{ appointment.appointmentTime }}
+                </small>
+
+              </div>
+
+            </td>
+
+
+            <!-- Status -->
+            <td>
+
+              <span class="status-badge" [ngClass]="getStatusClass(appointment.status)">
+
+                {{ appointment.status }}
+
+              </span>
+
+            </td>
+
+       
+            <!-- Actions -->
+            <td>
+              <div class="action-buttons">
+
+                <!-- View -->
+                <button class="action-view" title="View" (click)="viewAppointment(appointment.id)">
+                  <i class="bi bi-eye"></i>
+                </button>
+
+                <!-- Edit -->
+                <button class="action-edit" title="Edit" (click)="editAppointment(appointment.id)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+
+               
+
+                <!-- Delete -->
+                <button class="action-delete" title="Delete" (click)="deleteAppointment(appointment.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+
+              </div>
+            </td>
+           
+          </tr>
+
+
+          <!-- Empty -->
+          <tr *ngIf="paginatedAppointments.length === 0">
+
+            <td colspan="7" class="empty-state">
+
+              <i class="bi bi-calendar-x"></i>
+
+              <h4>
+                No Appointments Found
+              </h4>
+
+              <p>
+                Try changing your search or filter.
+              </p>
+
+            </td>
+
+          </tr>
+
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- Footer -->
+    <div class="table-footer" *ngIf="filteredAppointments.length > 0">
+
+
+      <div class="showing-text">
+
+        Showing
+
+        {{
+        (currentPage - 1) * pageSize + 1
+        }}
+
+        -
+
+        {{
+        Math.min(
+        currentPage * pageSize,
+        filteredAppointments.length
+        )
+        }}
+
+        of
+
+        {{ filteredAppointments.length }}
+
+      </div>
+
+
+      <!-- Pagination -->
+      <div class="pagination" *ngIf="totalPages > 1">
+
+
+        <button [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+
+          <i class="bi bi-chevron-left"></i>
+
+        </button>
+
+
+        <button *ngFor="let page of pages" [class.active]="currentPage === page" (click)="goToPage(page)">
+
+          {{ page }}
+
+        </button>
+
+
+        <button [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+
+          <i class="bi bi-chevron-right"></i>
+
+        </button>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</div>

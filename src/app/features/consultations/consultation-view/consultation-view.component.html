@@ -1,0 +1,282 @@
+<div class="consultation-view-page">
+
+  <ng-container *ngIf="consultation; else notFound">
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+      <div>
+
+        <span class="page-badge">
+          <i class="bi bi-clipboard2-pulse"></i>
+          Consultation Details
+        </span>
+
+        <h2>{{ consultation.consultationId }}</h2>
+
+        <p>
+          Complete consultation and clinical information.
+        </p>
+
+      </div>
+
+
+      <div class="header-actions">
+
+        <a
+          [routerLink]="[
+            '/admin/consultations/edit',
+            consultation.id
+          ]"
+          class="btn btn-primary">
+
+          <i class="bi bi-pencil-square"></i>
+          Edit
+
+        </a>
+
+
+        <a
+          routerLink="/admin/consultations"
+          class="back-btn">
+
+          <i class="bi bi-arrow-left"></i>
+          Back
+
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div class="status-card">
+
+      <div class="status-left">
+
+        <div class="consultation-icon">
+          <i class="bi bi-clipboard2-pulse"></i>
+        </div>
+
+        <div>
+
+          <span>Consultation ID</span>
+
+          <h4>{{ consultation.consultationId }}</h4>
+
+        </div>
+
+      </div>
+
+
+      <span
+        class="status-badge"
+        [class.completed]="consultation.status === 'Completed'"
+        [class.pending]="consultation.status === 'Pending'"
+        [class.cancelled]="consultation.status === 'Cancelled'">
+
+        <i
+          class="bi"
+          [class.bi-check-circle-fill]="consultation.status === 'Completed'"
+          [class.bi-clock-fill]="consultation.status === 'Pending'"
+          [class.bi-x-circle-fill]="consultation.status === 'Cancelled'">
+        </i>
+
+        {{ consultation.status }}
+
+      </span>
+
+    </div>
+
+
+    <!-- PATIENT -->
+
+    <div class="info-card">
+
+      <div class="card-title">
+
+        <i class="bi bi-person"></i>
+
+        <div>
+          <h5>Patient Information</h5>
+          <span>Patient details</span>
+        </div>
+
+      </div>
+
+
+      <div class="info-grid">
+
+        <div class="info-item">
+          <span>Patient Name</span>
+          <strong>{{ consultation.patientName }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Patient ID</span>
+          <strong>{{ consultation.patientId }}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- CONSULTATION -->
+
+    <div class="info-card">
+
+      <div class="card-title">
+
+        <i class="bi bi-calendar-check"></i>
+
+        <div>
+          <h5>Consultation Information</h5>
+          <span>Doctor and schedule details</span>
+        </div>
+
+      </div>
+
+
+      <div class="info-grid">
+
+        <div class="info-item">
+          <span>Doctor</span>
+          <strong>{{ consultation.doctorName }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Department</span>
+          <strong>{{ consultation.department }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Date</span>
+          <strong>{{ consultation.date }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Time</span>
+          <strong>{{ consultation.time }}</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Consultation Type</span>
+          <strong>{{ consultation.type }}</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- CLINICAL -->
+
+    <div class="info-card">
+
+      <div class="card-title">
+
+        <i class="bi bi-heart-pulse"></i>
+
+        <div>
+          <h5>Clinical Information</h5>
+          <span>Medical consultation details</span>
+        </div>
+
+      </div>
+
+
+      <div class="clinical-content">
+
+        <div class="clinical-item">
+
+          <label>
+            <i class="bi bi-activity"></i>
+            Symptoms
+          </label>
+
+          <p>
+            {{ consultation.symptoms || 'No symptoms recorded.' }}
+          </p>
+
+        </div>
+
+
+        <div class="clinical-item">
+
+          <label>
+            <i class="bi bi-clipboard2-check"></i>
+            Diagnosis
+          </label>
+
+          <p>
+            {{ consultation.diagnosis || 'No diagnosis recorded.' }}
+          </p>
+
+        </div>
+
+
+        <div class="clinical-item">
+
+          <label>
+            <i class="bi bi-capsule"></i>
+            Prescription
+          </label>
+
+          <p>
+            {{ consultation.prescription || 'No prescription recorded.' }}
+          </p>
+
+        </div>
+
+
+        <div class="clinical-item">
+
+          <label>
+            <i class="bi bi-journal-text"></i>
+            Doctor Notes
+          </label>
+
+          <p>
+            {{ consultation.notes || 'No notes recorded.' }}
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </ng-container>
+
+
+  <!-- NOT FOUND -->
+
+  <ng-template #notFound>
+
+    <div class="not-found">
+
+      <i class="bi bi-clipboard-x"></i>
+
+      <h4>Consultation Not Found</h4>
+
+      <p>
+        The requested consultation could not be found.
+      </p>
+
+      <a
+        routerLink="/admin/consultations"
+        class="btn btn-primary">
+
+        Back to Consultations
+
+      </a>
+
+    </div>
+
+  </ng-template>
+
+</div>

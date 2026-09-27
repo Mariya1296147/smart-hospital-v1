@@ -1,0 +1,393 @@
+
+<div class="accounts-dashboard">
+
+  <!-- ========================================= -->
+  <!-- HEADER -->
+  <!-- ========================================= -->
+
+  <div class="page-header">
+
+    <div>
+      <div class="page-label">
+        <i class="bi bi-wallet2"></i>
+        ACCOUNTS & FINANCE
+      </div>
+
+      <h2>Accounts Dashboard</h2>
+
+      <p>
+        Manage hospital revenue, billing, payments and financial activities.
+      </p>
+    </div>
+
+    <div class="header-date">
+      <i class="bi bi-calendar3"></i>
+      24 September 2026
+    </div>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- SUMMARY CARDS -->
+  <!-- ========================================= -->
+
+  <div class="summary-grid">
+
+    <div class="summary-card revenue-card">
+
+      <div class="card-icon">
+        <i class="bi bi-cash-stack"></i>
+      </div>
+
+      <div class="card-content">
+        <span>Total Revenue</span>
+        <h3>{{ formatCurrency(totalRevenue) }}</h3>
+        <small>
+          <i class="bi bi-arrow-up"></i>
+          Hospital income
+        </small>
+      </div>
+
+    </div>
+
+
+    <div class="summary-card billing-card">
+
+      <div class="card-icon">
+        <i class="bi bi-receipt"></i>
+      </div>
+
+      <div class="card-content">
+        <span>Total Billing</span>
+        <h3>{{ formatCurrency(totalBilling) }}</h3>
+        <small>
+          <i class="bi bi-file-earmark-text"></i>
+          Generated bills
+        </small>
+      </div>
+
+    </div>
+
+
+    <div class="summary-card payment-card">
+
+      <div class="card-icon">
+        <i class="bi bi-credit-card"></i>
+      </div>
+
+      <div class="card-content">
+        <span>Total Payments</span>
+        <h3>{{ formatCurrency(totalPayments) }}</h3>
+        <small>
+          <i class="bi bi-check-circle"></i>
+          Received payments
+        </small>
+      </div>
+
+    </div>
+
+
+    <div class="summary-card pending-card">
+
+      <div class="card-icon">
+        <i class="bi bi-hourglass-split"></i>
+      </div>
+
+      <div class="card-content">
+        <span>Pending / Due</span>
+        <h3>{{ formatCurrency(pendingAmount) }}</h3>
+        <small>
+          <i class="bi bi-clock"></i>
+          Outstanding amount
+        </small>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- SECONDARY STATS -->
+  <!-- ========================================= -->
+
+  <div class="mini-grid">
+
+    <div class="mini-card">
+      <div class="mini-icon">
+        <i class="bi bi-calendar-day"></i>
+      </div>
+
+      <div>
+        <span>Today's Revenue</span>
+        <strong>{{ formatCurrency(todayRevenue) }}</strong>
+      </div>
+    </div>
+
+
+    <div class="mini-card">
+      <div class="mini-icon">
+        <i class="bi bi-calendar-month"></i>
+      </div>
+
+      <div>
+        <span>This Month</span>
+        <strong>{{ formatCurrency(monthlyRevenue) }}</strong>
+      </div>
+    </div>
+
+
+    <div class="mini-card">
+      <div class="mini-icon">
+        <i class="bi bi-arrow-counterclockwise"></i>
+      </div>
+
+      <div>
+        <span>Total Refunds</span>
+        <strong>{{ formatCurrency(totalRefunds) }}</strong>
+      </div>
+    </div>
+
+
+    <div class="mini-card">
+      <div class="mini-icon">
+        <i class="bi bi-people"></i>
+      </div>
+
+      <div>
+        <span>Patients Billed</span>
+        <strong>{{ totalPatients | number }}</strong>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- REVENUE + BREAKDOWN -->
+  <!-- ========================================= -->
+
+  <div class="main-grid">
+
+
+    <!-- MONTHLY REVENUE -->
+
+    <div class="dashboard-card">
+
+      <div class="section-header">
+
+        <div>
+          <h4>Monthly Revenue</h4>
+          <p>Hospital revenue overview</p>
+        </div>
+
+        <i class="bi bi-bar-chart-line"></i>
+
+      </div>
+
+
+      <div class="chart-area">
+
+        <div
+          class="bar-column"
+          *ngFor="let item of monthlyData"
+        >
+
+          <div class="bar-value">
+            {{ (item.amount / 1000) | number:'1.0-0' }}k
+          </div>
+
+          <div
+            class="bar"
+            [style.height.%]="(item.amount / 450000) * 100"
+          ></div>
+
+          <span>{{ item.month }}</span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- BILLING BREAKDOWN -->
+
+    <div class="dashboard-card">
+
+      <div class="section-header">
+
+        <div>
+          <h4>Billing Breakdown</h4>
+          <p>Revenue by service</p>
+        </div>
+
+        <i class="bi bi-pie-chart"></i>
+
+      </div>
+
+
+      <div class="breakdown-list">
+
+        <div
+          class="breakdown-item"
+          *ngFor="let item of billingBreakdown"
+        >
+
+          <div class="service-icon">
+            <i class="bi" [ngClass]="item.icon"></i>
+          </div>
+
+          <div class="service-info">
+
+            <span>{{ item.title }}</span>
+
+            <strong>
+              {{ formatCurrency(item.amount) }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- RECENT TRANSACTIONS -->
+  <!-- ========================================= -->
+
+  <div class="dashboard-card transactions-card">
+
+    <div class="section-header">
+
+      <div>
+        <h4>Recent Transactions</h4>
+        <p>Latest billing and payment activities</p>
+      </div>
+
+      <button class="view-all-btn">
+        View All
+        <i class="bi bi-arrow-right"></i>
+      </button>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Invoice</th>
+            <th>Patient</th>
+            <th>Service</th>
+            <th>Amount</th>
+            <th>Payment Status</th>
+            <th>Date</th>
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr *ngFor="let transaction of recentTransactions">
+
+            <td>
+              <strong class="invoice">
+                {{ transaction.invoice }}
+              </strong>
+            </td>
+
+            <td>
+              {{ transaction.patient }}
+            </td>
+
+            <td>
+              {{ transaction.service }}
+            </td>
+
+            <td>
+              <strong>
+                {{ formatCurrency(transaction.amount) }}
+              </strong>
+            </td>
+
+            <td>
+
+              <span
+                class="status"
+                [ngClass]="getStatusClass(transaction.payment)"
+              >
+                <i
+                  class="bi"
+                  [ngClass]="transaction.payment === 'Paid'
+                    ? 'bi-check-circle-fill'
+                    : 'bi-clock-fill'"
+                ></i>
+
+                {{ transaction.payment }}
+
+              </span>
+
+            </td>
+
+            <td>
+              {{ transaction.date }}
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================================= -->
+  <!-- QUICK ACTIONS -->
+  <!-- ========================================= -->
+
+  <div class="quick-section">
+
+    <h4>Financial Management</h4>
+
+    <div class="quick-grid">
+
+      <div class="quick-card">
+        <i class="bi bi-receipt"></i>
+        <span>Manage Billing</span>
+      </div>
+
+      <div class="quick-card">
+        <i class="bi bi-credit-card-2-front"></i>
+        <span>Payments</span>
+      </div>
+
+      <div class="quick-card">
+        <i class="bi bi-file-earmark-bar-graph"></i>
+        <span>Financial Reports</span>
+      </div>
+
+      <div class="quick-card">
+        <i class="bi bi-arrow-counterclockwise"></i>
+        <span>Refunds</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+

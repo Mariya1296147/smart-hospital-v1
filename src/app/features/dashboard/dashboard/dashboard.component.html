@@ -1,0 +1,99 @@
+<div class="dashboard-page">
+
+  <!-- Header -->
+  <div class="page-header mb-4">
+    <div>
+      <h2>Dashboard</h2>
+      <p class="text-muted">
+        Welcome to Smart Hospital Management System
+      </p>
+    </div>
+  </div>
+
+  <!-- Statistics -->
+  <div class="row g-4">
+
+    @for (item of stats; track item.title) {
+
+      <div class="col-lg-3 col-md-6">
+
+        <div class="stat-card">
+
+          <div>
+            <p>{{ item.title }}</p>
+            <h3>{{ item.value }}</h3>
+          </div>
+
+          <div class="stat-icon">
+            <i class="bi {{ item.icon }}"></i>
+          </div>
+
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+
+  <!-- Quick Information -->
+  <div class="row g-4 mt-2">
+
+    <div class="col-lg-8">
+
+      <div class="dashboard-card">
+
+        <h5>Today's Overview</h5>
+
+        <div class="overview-item">
+          <span>Appointments</span>
+          <strong>86</strong>
+        </div>
+
+        <div class="overview-item">
+          <span>New Patients</span>
+          <strong>24</strong>
+        </div>
+
+        <div class="overview-item">
+          <span>Laboratory Tests</span>
+          <strong>42</strong>
+        </div>
+
+        <div class="overview-item">
+          <span>Discharges</span>
+          <strong>12</strong>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-lg-4">
+
+      <div class="dashboard-card">
+
+        <h5>Hospital Status</h5>
+
+        <div class="status-item">
+          <span>Emergency</span>
+          <span class="badge bg-success">Available</span>
+        </div>
+
+        <div class="status-item">
+          <span>Laboratory</span>
+          <span class="badge bg-primary">Active</span>
+        </div>
+
+        <div class="status-item">
+          <span>Pharmacy</span>
+          <span class="badge bg-success">Open</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

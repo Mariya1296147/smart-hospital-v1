@@ -1,0 +1,329 @@
+<div class="container-fluid py-4">
+
+  <!-- Header -->
+  <div class="mb-4">
+
+    <h3 class="fw-bold mb-1">
+      {{ isEdit ? 'Edit Invoice' : 'Create Invoice' }}
+    </h3>
+
+    <p class="text-muted mb-0">
+      {{ isEdit
+        ? 'Update patient billing information'
+        : 'Create a new patient invoice'
+      }}
+    </p>
+
+  </div>
+
+
+  <div class="card shadow-sm border-0">
+
+    <div class="card-body p-4">
+
+      <form
+        #billingForm="ngForm"
+        (ngSubmit)="saveBill()">
+
+        <div class="row g-3">
+
+
+          <!-- Invoice ID -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Invoice ID
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="invoiceId"
+              [(ngModel)]="bill.invoiceId"
+              placeholder="Example: INV-1007"
+              required>
+
+          </div>
+
+
+          <!-- Invoice Date -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Invoice Date
+            </label>
+
+            <input
+              type="date"
+              class="form-control"
+              name="invoiceDate"
+              [(ngModel)]="bill.invoiceDate"
+              required>
+
+          </div>
+
+
+          <!-- Patient ID -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Patient ID
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="patientId"
+              [(ngModel)]="bill.patientId"
+              placeholder="Example: P-1001"
+              required>
+
+          </div>
+
+
+          <!-- Patient Name -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Patient Name
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="patientName"
+              [(ngModel)]="bill.patientName"
+              placeholder="Enter patient name"
+              required>
+
+          </div>
+
+
+          <!-- Doctor -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Doctor
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="doctor"
+              [(ngModel)]="bill.doctor"
+              placeholder="Enter doctor name"
+              required>
+
+          </div>
+
+
+          <!-- Department -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Department
+            </label>
+
+            <select
+              class="form-select"
+              name="department"
+              [(ngModel)]="bill.department"
+              required>
+
+              <option value="">
+                Select Department
+              </option>
+
+              <option value="Cardiology">
+                Cardiology
+              </option>
+
+              <option value="Neurology">
+                Neurology
+              </option>
+
+              <option value="Medicine">
+                Medicine
+              </option>
+
+              <option value="Orthopedics">
+                Orthopedics
+              </option>
+
+              <option value="Laboratory">
+                Laboratory
+              </option>
+
+              <option value="Radiology">
+                Radiology
+              </option>
+
+              <option value="Emergency">
+                Emergency
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Service -->
+          <div class="col-md-12">
+
+            <label class="form-label">
+              Service / Charge
+            </label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="serviceName"
+              [(ngModel)]="bill.serviceName"
+              placeholder="Example: Cardiology Consultation"
+              required>
+
+          </div>
+
+
+          <!-- Amount -->
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Amount (৳)
+            </label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="amount"
+              [(ngModel)]="bill.amount"
+              (ngModelChange)="calculateTotal()"
+              min="0"
+              step="0.01"
+              required>
+
+          </div>
+
+
+          <!-- Discount -->
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Discount (৳)
+            </label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="discount"
+              [(ngModel)]="bill.discount"
+              (ngModelChange)="calculateTotal()"
+              min="0"
+              step="0.01">
+
+          </div>
+
+
+          <!-- Tax -->
+          <div class="col-md-4">
+
+            <label class="form-label">
+              Tax (৳)
+            </label>
+
+            <input
+              type="number"
+              class="form-control"
+              name="tax"
+              [(ngModel)]="bill.tax"
+              (ngModelChange)="calculateTotal()"
+              min="0"
+              step="0.01">
+
+          </div>
+
+
+          <!-- Total -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Total Amount (৳)
+            </label>
+
+            <input
+              type="number"
+              class="form-control total-input"
+              name="totalAmount"
+              [(ngModel)]="bill.totalAmount"
+              readonly>
+
+          </div>
+
+
+          <!-- Payment Status -->
+          <div class="col-md-6">
+
+            <label class="form-label">
+              Payment Status
+            </label>
+
+            <select
+              class="form-select"
+              name="paymentStatus"
+              [(ngModel)]="bill.paymentStatus">
+
+              <option value="Paid">
+                Paid
+              </option>
+
+              <option value="Pending">
+                Pending
+              </option>
+
+              <option value="Overdue">
+                Overdue
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- Buttons -->
+          <div class="col-12 mt-4">
+
+            <button
+              type="submit"
+              class="btn btn-primary me-2">
+
+              <i class="bi bi-check-lg me-2"></i>
+
+              {{ isEdit
+                ? 'Update Invoice'
+                : 'Create Invoice'
+              }}
+
+            </button>
+
+
+            <a
+              routerLink="/admin/billing"
+              class="btn btn-secondary">
+
+              <i class="bi bi-x-lg me-2"></i>
+
+              Cancel
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

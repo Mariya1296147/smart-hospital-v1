@@ -1,0 +1,339 @@
+
+.my-patients {
+  width: 100%;
+}
+
+/* ================= PAGE HEADER ================= */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.page-header h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0b1f3a;
+}
+
+.page-header p {
+  margin: 6px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.doctor-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #0b1f3a;
+  font-weight: 600;
+}
+
+.doctor-name i {
+  font-size: 25px;
+}
+
+
+/* ================= SUMMARY ================= */
+
+.summary-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.summary-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid #e5e7eb;
+}
+
+.summary-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  background: #eef3f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary-icon i {
+  font-size: 24px;
+  color: #0b1f3a;
+}
+
+.summary-card span {
+  display: block;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.summary-card h3 {
+  margin: 4px 0 0;
+  color: #0b1f3a;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+
+/* ================= FILTER ================= */
+
+.filter-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+}
+
+.search-box i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #6b7280;
+}
+
+.search-box input {
+  width: 100%;
+  height: 45px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0 15px 0 40px;
+  outline: none;
+  font-size: 14px;
+}
+
+.search-box input:focus {
+  border-color: #0b1f3a;
+}
+
+.status-filter {
+  width: 180px;
+  height: 45px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0 12px;
+  outline: none;
+  background: #ffffff;
+}
+
+
+/* ================= TABLE ================= */
+
+.table-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.table-header {
+  padding: 20px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table-header h4 {
+  margin: 0;
+  color: #0b1f3a;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.table-header span {
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.patient-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.patient-table th {
+  background: #f8fafc;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 15px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.patient-table td {
+  padding: 15px;
+  border-top: 1px solid #eef0f3;
+  color: #374151;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.patient-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+/* ================= PATIENT ================= */
+
+.patient-name {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.patient-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #eef3f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.patient-avatar i {
+  color: #0b1f3a;
+  font-size: 20px;
+}
+
+.patient-name strong {
+  display: block;
+  color: #111827;
+}
+
+.patient-name small {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.patient-id {
+  font-weight: 600;
+  color: #0b1f3a;
+}
+
+.phone {
+  white-space: nowrap;
+}
+
+.phone i {
+  margin-right: 5px;
+}
+
+
+/* ================= STATUS ================= */
+
+.status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-admitted {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-discharged {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+
+/* ================= VIEW BUTTON ================= */
+
+.view-btn {
+  border: 0;
+  background: #eef3f9;
+  color: #0b1f3a;
+  border-radius: 7px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.view-btn:hover {
+  background: #0b1f3a;
+  color: #ffffff;
+}
+
+.view-btn i {
+  margin-right: 5px;
+}
+
+
+/* ================= NO DATA ================= */
+
+.no-data {
+  text-align: center;
+  padding: 50px !important;
+}
+
+.no-data i {
+  font-size: 45px;
+  color: #9ca3af;
+}
+
+.no-data h5 {
+  margin: 12px 0 5px;
+  color: #374151;
+}
+
+.no-data p {
+  margin: 0;
+  color: #9ca3af;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 992px) {
+
+  .summary-row {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    gap: 15px;
+    flex-direction: column;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .filter-card {
+    flex-direction: column;
+  }
+
+  .status-filter {
+    width: 100%;
+  }
+
+}

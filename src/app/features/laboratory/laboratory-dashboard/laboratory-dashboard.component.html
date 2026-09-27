@@ -1,0 +1,221 @@
+
+<div class="dashboard-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <span class="page-label">
+        <i class="bi bi-eyedropper"></i>
+        Laboratory Department
+      </span>
+
+      <h2>Laboratory Dashboard</h2>
+
+      <p>
+        Manage laboratory requests, tests and patient results.
+      </p>
+    </div>
+
+    <div class="header-date">
+      <i class="bi bi-calendar3"></i>
+      Today
+    </div>
+  </div>
+
+  <!-- Statistics -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-clipboard2-pulse"></i>
+      </div>
+      <div>
+        <span>Test Requests</span>
+        <h3>42</h3>
+        <small>Today's requests</small>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-hourglass-split"></i>
+      </div>
+      <div>
+        <span>Pending Tests</span>
+        <h3>12</h3>
+        <small>Awaiting processing</small>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-check-circle"></i>
+      </div>
+      <div>
+        <span>Completed Tests</span>
+        <h3>28</h3>
+        <small>Completed today</small>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-file-earmark-medical"></i>
+      </div>
+      <div>
+        <span>Reports Ready</span>
+        <h3>18</h3>
+        <small>Ready for review</small>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Main Content -->
+  <div class="content-grid">
+
+    <!-- Test Requests -->
+    <div class="dashboard-panel">
+
+      <div class="panel-header">
+        <div>
+          <h4>Recent Test Requests</h4>
+          <p>Latest laboratory requests</p>
+        </div>
+
+        <a routerLink="/admin/laboratory">View All</a>
+      </div>
+
+      <div class="test-list">
+
+        <div class="test-row">
+          <div class="test-icon">
+            <i class="bi bi-droplet"></i>
+          </div>
+
+          <div class="test-info">
+            <strong>Sarah Ahmed</strong>
+            <span>CBC · Blood Test</span>
+          </div>
+
+          <span class="status pending">Pending</span>
+        </div>
+
+        <div class="test-row">
+          <div class="test-icon">
+            <i class="bi bi-heart-pulse"></i>
+          </div>
+
+          <div class="test-info">
+            <strong>Mariya Rahman</strong>
+            <span>Cardiac Enzyme Test</span>
+          </div>
+
+          <span class="status processing">Processing</span>
+        </div>
+
+        <div class="test-row">
+          <div class="test-icon">
+            <i class="bi bi-eyedropper"></i>
+          </div>
+
+          <div class="test-info">
+            <strong>Ahmed Hasan</strong>
+            <span>Blood Glucose Test</span>
+          </div>
+
+          <span class="status completed">Completed</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="dashboard-panel">
+
+      <div class="panel-header">
+        <div>
+          <h4>Quick Actions</h4>
+          <p>Laboratory activities</p>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+
+        <a routerLink="/admin/laboratory">
+          <i class="bi bi-clipboard2-pulse"></i>
+          <span>Test Requests</span>
+        </a>
+
+        <a routerLink="/admin/laboratory">
+          <i class="bi bi-file-earmark-medical"></i>
+          <span>Test Results</span>
+        </a>
+
+        <a routerLink="/admin/patients">
+          <i class="bi bi-people"></i>
+          <span>Patients</span>
+        </a>
+
+        <a routerLink="/admin/laboratory">
+          <i class="bi bi-search"></i>
+          <span>View Tests</span>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Today's Work -->
+  <div class="dashboard-panel work-panel">
+
+    <div class="panel-header">
+      <div>
+        <h4>Today's Laboratory Work</h4>
+        <p>Current laboratory activities</p>
+      </div>
+    </div>
+
+    <div class="work-list">
+
+      <div class="work-item">
+        <i class="bi bi-check-circle"></i>
+
+        <div>
+          <strong>Blood Collection</strong>
+          <span>18 samples collected</span>
+        </div>
+
+        <span class="work-complete">Completed</span>
+      </div>
+
+      <div class="work-item">
+        <i class="bi bi-hourglass-split"></i>
+
+        <div>
+          <strong>Sample Processing</strong>
+          <span>12 samples waiting</span>
+        </div>
+
+        <span class="work-pending">In Progress</span>
+      </div>
+
+      <div class="work-item">
+        <i class="bi bi-file-earmark-check"></i>
+
+        <div>
+          <strong>Report Verification</strong>
+          <span>8 reports awaiting verification</span>
+        </div>
+
+        <span class="work-pending">Pending</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

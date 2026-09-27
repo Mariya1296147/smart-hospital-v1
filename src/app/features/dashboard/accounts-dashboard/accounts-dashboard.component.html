@@ -1,0 +1,225 @@
+
+<div class="dashboard-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <span class="page-label">
+        <i class="bi bi-calculator"></i>
+        Accounts Department
+      </span>
+
+      <h2>Accounts Dashboard</h2>
+
+      <p>Manage billing, payments, invoices and hospital finances.</p>
+    </div>
+
+    <div class="header-date">
+      <i class="bi bi-calendar3"></i>
+      Today
+    </div>
+  </div>
+
+  <!-- Statistics -->
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-receipt"></i>
+      </div>
+      <div>
+        <span>Total Bills</span>
+        <h3>128</h3>
+        <small>This month</small>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-cash-stack"></i>
+      </div>
+      <div>
+        <span>Total Revenue</span>
+        <h3>৳2.45M</h3>
+        <small>This month</small>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-hourglass-split"></i>
+      </div>
+      <div>
+        <span>Pending Payments</span>
+        <h3>24</h3>
+        <small>Need attention</small>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="bi bi-credit-card"></i>
+      </div>
+      <div>
+        <span>Today's Payments</span>
+        <h3>৳86K</h3>
+        <small>Collected today</small>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Main Content -->
+  <div class="content-grid">
+
+    <!-- Recent Transactions -->
+    <div class="dashboard-panel">
+
+      <div class="panel-header">
+        <div>
+          <h4>Recent Transactions</h4>
+          <p>Latest billing transactions</p>
+        </div>
+
+        <a routerLink="/admin/billing">View All</a>
+      </div>
+
+      <div class="transaction-list">
+
+        <div class="transaction-row">
+          <div class="transaction-icon">
+            <i class="bi bi-arrow-down-circle"></i>
+          </div>
+
+          <div class="transaction-info">
+            <strong>Sarah Ahmed</strong>
+            <span>Consultation · INV-10245</span>
+          </div>
+
+          <div class="amount">
+            +৳2,500
+          </div>
+        </div>
+
+        <div class="transaction-row">
+          <div class="transaction-icon">
+            <i class="bi bi-arrow-down-circle"></i>
+          </div>
+
+          <div class="transaction-info">
+            <strong>Mariya Rahman</strong>
+            <span>Admission · INV-10246</span>
+          </div>
+
+          <div class="amount">
+            +৳12,000
+          </div>
+        </div>
+
+        <div class="transaction-row">
+          <div class="transaction-icon">
+            <i class="bi bi-arrow-down-circle"></i>
+          </div>
+
+          <div class="transaction-info">
+            <strong>Ahmed Hasan</strong>
+            <span>Laboratory · INV-10247</span>
+          </div>
+
+          <div class="amount">
+            +৳3,200
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="dashboard-panel">
+
+      <div class="panel-header">
+        <div>
+          <h4>Quick Actions</h4>
+          <p>Accounts activities</p>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+
+        <a routerLink="/admin/billing">
+          <i class="bi bi-receipt"></i>
+          <span>Billing</span>
+        </a>
+
+        <a routerLink="/admin/billing">
+          <i class="bi bi-credit-card"></i>
+          <span>Payments</span>
+        </a>
+
+        <a routerLink="/admin/billing">
+          <i class="bi bi-file-earmark-text"></i>
+          <span>Invoices</span>
+        </a>
+
+        <a routerLink="/admin/reports">
+          <i class="bi bi-bar-chart"></i>
+          <span>Reports</span>
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Payment Summary -->
+  <div class="dashboard-panel">
+
+    <div class="panel-header">
+      <div>
+        <h4>Payment Summary</h4>
+        <p>Current payment status</p>
+      </div>
+    </div>
+
+    <div class="payment-list">
+
+      <div class="payment-item">
+        <i class="bi bi-check-circle"></i>
+
+        <div>
+          <strong>Paid Invoices</strong>
+          <span>104 invoices completed</span>
+        </div>
+
+        <span class="paid">Paid</span>
+      </div>
+
+      <div class="payment-item">
+        <i class="bi bi-clock"></i>
+
+        <div>
+          <strong>Pending Invoices</strong>
+          <span>24 invoices awaiting payment</span>
+        </div>
+
+        <span class="pending">Pending</span>
+      </div>
+
+      <div class="payment-item">
+        <i class="bi bi-exclamation-circle"></i>
+
+        <div>
+          <strong>Overdue Payments</strong>
+          <span>7 payments are overdue</span>
+        </div>
+
+        <span class="overdue">Overdue</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

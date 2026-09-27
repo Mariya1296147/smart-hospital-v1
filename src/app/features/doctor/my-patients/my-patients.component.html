@@ -1,0 +1,184 @@
+
+<div class="my-patients">
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h2>My Patients</h2>
+      <p>View and manage patients assigned to you</p>
+    </div>
+
+    <div class="doctor-name">
+      <i class="bi bi-person-circle"></i>
+      Dr. Amina Rahman
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary-row">
+
+    <div class="summary-card">
+      <div class="summary-icon">
+        <i class="bi bi-people"></i>
+      </div>
+      <div>
+        <span>Total Patients</span>
+        <h3>{{ patients.length }}</h3>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-icon">
+        <i class="bi bi-heart-pulse"></i>
+      </div>
+      <div>
+        <span>Active Patients</span>
+        <h3>{{ activePatients }}</h3>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="summary-icon">
+        <i class="bi bi-hospital"></i>
+      </div>
+      <div>
+        <span>Admitted</span>
+        <h3>{{ admittedPatients }}</h3>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Search -->
+  <div class="filter-card">
+
+    <div class="search-box">
+      <i class="bi bi-search"></i>
+
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        placeholder="Search patient by name, ID or phone..."
+      />
+    </div>
+
+    <select [(ngModel)]="statusFilter" class="status-filter">
+      <option value="All">All Status</option>
+      <option value="Active">Active</option>
+      <option value="Admitted">Admitted</option>
+      <option value="Discharged">Discharged</option>
+    </select>
+
+  </div>
+
+  <!-- Patient Table -->
+  <div class="table-card">
+
+    <div class="table-header">
+      <div>
+        <h4>Patient List</h4>
+        <span>{{ filteredPatients.length }} patients found</span>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+
+      <table class="patient-table">
+
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Patient ID</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Department</th>
+            <th>Phone</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let patient of filteredPatients">
+
+            <td>
+              <div class="patient-name">
+                <div class="patient-avatar">
+                  <i class="bi bi-person"></i>
+                </div>
+
+                <div>
+                  <strong>{{ patient.name }}</strong>
+                  <small>{{ patient.bloodGroup }}</small>
+                </div>
+              </div>
+            </td>
+
+            <td>
+              <span class="patient-id">
+                {{ patient.id }}
+              </span>
+            </td>
+
+            <td>{{ patient.age }}</td>
+
+            <td>{{ patient.gender }}</td>
+
+            <td>{{ patient.department }}</td>
+
+            <td>
+              <span class="phone">
+                <i class="bi bi-telephone"></i>
+                {{ patient.phone }}
+              </span>
+            </td>
+
+            <td>
+              <span
+                class="status"
+                [ngClass]="getStatusClass(patient.status)"
+              >
+                {{ patient.status }}
+              </span>
+            </td>
+
+            <td>
+              <button
+                type="button"
+                class="view-btn"
+                (click)="viewPatient(patient)"
+              >
+                <i class="bi bi-eye"></i>
+                View
+              </button>
+            </td>
+
+          </tr>
+
+          <!-- No Data -->
+          <tr *ngIf="filteredPatients.length === 0">
+
+            <td colspan="8" class="no-data">
+
+              <i class="bi bi-person-x"></i>
+
+              <h5>No patients found</h5>
+
+              <p>
+                No patients match your search or filter.
+              </p>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

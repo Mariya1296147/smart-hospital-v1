@@ -1,0 +1,240 @@
+<!-- ================= SERVICES HERO ================= -->
+
+<section class="services-hero">
+
+  <img
+    src="assets/service.jpg"
+    alt="Hospital Services"
+    class="hero-image"
+  >
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <span class="hero-badge">
+      <i class="bi bi-heart-pulse-fill"></i>
+      Professional Healthcare
+    </span>
+
+    <h1>Our Healthcare Services</h1>
+
+    <p>
+      Quality medical services designed to provide safe,
+      reliable and compassionate care for every patient.
+    </p>
+  </div>
+
+</section>
+
+
+<!-- ================= INTRO ================= -->
+
+<section class="intro-section">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span>WHAT WE OFFER</span>
+
+      <h2>Comprehensive Healthcare Services</h2>
+
+      <p>
+        Our hospital provides a wide range of medical services
+        supported by experienced healthcare professionals and
+        modern facilities.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= SERVICES CARDS ================= -->
+
+<section class="services-section">
+
+  <div class="container">
+
+    <div class="services-grid">
+
+      <div
+        class="service-card"
+        *ngFor=" let service of services"
+      >
+
+        <div class="service-icon">
+          <i [class]="service.icon"></i>
+        </div>
+
+        <div class="service-content">
+
+          <h3>{{ service.title }}</h3>
+
+          <p>
+            {{ service.description }}
+          </p>
+
+          <a
+            routerLink="/appointment"
+            class="service-link"
+          >
+            Learn More
+            <i class="bi bi-arrow-right"></i>
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= WHY CHOOSE US ================= -->
+
+<section class="why-section">
+
+  <div class="container">
+
+    <div class="why-content">
+
+      <div class="why-image">
+
+        <img
+          src="assets/MR4.avif"
+          alt="Professional Doctor"
+        >
+
+      </div>
+
+
+      <div class="why-text">
+
+        <span class="section-label">
+          WHY CHOOSE US
+        </span>
+
+        <h2>
+          Healthcare You Can Trust
+        </h2>
+
+        <p>
+          We are committed to delivering quality healthcare
+          with modern facilities, experienced doctors and
+          patient-focused services.
+        </p>
+
+
+        <div class="benefit-list">
+
+          <div class="benefit-item">
+
+            <div class="benefit-icon">
+              <i class="bi bi-check-lg"></i>
+            </div>
+
+            <div>
+              <h4>Experienced Medical Team</h4>
+              <p>
+                Qualified healthcare professionals dedicated
+                to providing excellent patient care.
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="benefit-item">
+
+            <div class="benefit-icon">
+              <i class="bi bi-check-lg"></i>
+            </div>
+
+            <div>
+              <h4>Modern Medical Facilities</h4>
+              <p>
+                Well-equipped facilities supporting accurate
+                diagnosis and effective treatment.
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="benefit-item">
+
+            <div class="benefit-icon">
+              <i class="bi bi-check-lg"></i>
+            </div>
+
+            <div>
+              <h4>24/7 Emergency Support</h4>
+              <p>
+                Emergency healthcare support available
+                whenever you need it.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <a
+          routerLink="/appointment"
+          class="appointment-btn"
+        >
+          <i class="bi bi-calendar-check"></i>
+          Book an Appointment
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta-section">
+
+  <div class="container">
+
+    <div class="cta-content">
+
+      <div>
+
+        <span>NEED MEDICAL ASSISTANCE?</span>
+
+        <h2>
+          Your Health Is Our Priority
+        </h2>
+
+        <p>
+          Contact our healthcare team or book an appointment today.
+        </p>
+
+      </div>
+
+      <a
+        routerLink="/appointment"
+        class="cta-button"
+      >
+        Book Appointment
+        <i class="bi bi-arrow-right"></i>
+      </a>
+
+    </div>
+
+  </div>
+
+</section>

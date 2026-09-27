@@ -1,0 +1,130 @@
+<div class="login-page">
+
+  <div class="auth-card">
+
+    <!-- LEFT : HOSPITAL BRAND -->
+    <div class="hospital-brand">
+
+      <div class="hospital-logo">
+        <i class="bi bi-hospital-fill"></i>
+      </div>
+
+      <h2>Smart Hospital</h2>
+
+      <p>Hospital Management System</p>
+
+      <div class="brand-line"></div>
+
+      <span>
+        Smart Healthcare<br>
+        Better Patient Care
+      </span>
+
+    </div>
+
+
+    <!-- RIGHT : LOGIN -->
+    <div class="login-section">
+
+      <div class="section-heading">
+        <h3>
+          <i class="bi bi-box-arrow-in-right me-2"></i>
+          Login
+        </h3>
+
+        <p>Login to access your dashboard</p>
+      </div>
+
+
+      <form (ngSubmit)="login()">
+
+        <!-- EMAIL -->
+        <div class="mb-3">
+
+          <label class="form-label">
+            Email Address
+          </label>
+
+          <div class="input-group">
+
+            <span class="input-group-text">
+              <i class="bi bi-envelope"></i>
+            </span>
+
+            <input
+              type="email"
+              class="form-control"
+              name="email"
+              [(ngModel)]="email"
+              placeholder="Enter your email"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- PASSWORD -->
+        <div class="mb-3">
+
+          <label class="form-label">
+            Password
+          </label>
+
+          <div class="input-group">
+
+            <span class="input-group-text">
+              <i class="bi bi-lock"></i>
+            </span>
+
+            <input
+              type="password"
+              class="form-control"
+              name="password"
+              [(ngModel)]="password"
+              placeholder="Enter your password"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- MESSAGE -->
+        <p
+          *ngIf="message"
+          class="small text-danger mb-3">
+          {{ message }}
+        </p>
+
+
+        <!-- LOGIN BUTTON -->
+        <button
+          type="submit"
+          class="btn btn-primary w-100 login-btn">
+
+          <i class="bi bi-box-arrow-in-right me-2"></i>
+          Login
+
+        </button>
+
+      </form>
+
+
+     
+
+    </div>
+
+
+    <!-- FOOTER -->
+    <div class="auth-footer">
+      <small>
+        © 2026 Smart Hospital Management System
+      </small>
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,408 @@
+
+/* =================================
+   DOCTOR SIDEBAR
+================================= */
+
+.doctor-sidebar {
+  position: relative;
+  width: 260px;
+  min-height: 100vh;
+  flex-shrink: 0;
+
+  background: #0b1f3a;
+  color: #ffffff;
+
+  padding: 20px 15px;
+  box-sizing: border-box;
+
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.12);
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  transition: width 0.3s ease;
+}
+
+
+/* =================================
+   TOGGLE BUTTON
+================================= */
+
+.sidebar-toggle {
+  position: absolute;
+  top: 20px;
+  right: 8px;
+
+  width: 28px;
+  height: 28px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #ffffff;
+  color: #0b1f3a;
+
+  cursor: pointer;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+
+  transition: all 0.2s ease;
+}
+
+.sidebar-toggle:hover {
+  transform: scale(1.08);
+}
+
+.sidebar-toggle i {
+  font-size: 14px;
+  line-height: 1;
+}
+
+
+/* =================================
+   LOGO
+================================= */
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 5px 40px 22px 10px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+  overflow: hidden;
+}
+
+.sidebar-logo i {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.sidebar-logo span {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+
+  white-space: nowrap;
+}
+
+
+/* =================================
+   DOCTOR INFORMATION
+================================= */
+
+.doctor-info {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 20px 10px;
+  margin-bottom: 10px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.doctor-avatar {
+  flex-shrink: 0;
+}
+
+.doctor-avatar i {
+  font-size: 42px;
+}
+
+.doctor-details {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.doctor-info h6 {
+  margin: 0;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.doctor-info small {
+  display: block;
+
+  margin-top: 4px;
+
+  font-size: 12px;
+  color: #b9c7d9;
+}
+
+
+/* =================================
+   MENU
+================================= */
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.sidebar-menu a {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 11px 13px;
+
+  color: #d8e2ef;
+
+  text-decoration: none;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition: all 0.2s ease;
+
+  box-sizing: border-box;
+}
+
+.sidebar-menu a i {
+  width: 20px;
+  flex-shrink: 0;
+
+  font-size: 17px;
+
+  text-align: center;
+}
+
+.sidebar-menu a span {
+  white-space: nowrap;
+}
+
+
+/* =================================
+   HOVER
+================================= */
+
+.sidebar-menu a:hover {
+  background: rgba(255, 255, 255, 0.10);
+  color: #ffffff;
+
+  transform: translateX(2px);
+}
+
+
+/* =================================
+   ACTIVE
+================================= */
+
+.sidebar-menu a.active {
+  background: #ffffff;
+  color: #0b1f3a;
+
+  font-weight: 600;
+}
+
+
+/* =================================
+   LOGOUT
+================================= */
+
+.sidebar-menu .logout-link {
+  margin-top: 12px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 0 0 8px 8px;
+
+  padding-top: 16px;
+}
+
+.sidebar-menu .logout-link:hover {
+  background: rgba(220, 53, 69, 0.15);
+  color: #ffffff;
+}
+
+
+/* =================================
+   COLLAPSED SIDEBAR
+================================= */
+
+.doctor-sidebar.collapsed {
+  width: 75px;
+}
+
+
+/* Logo when collapsed */
+
+.doctor-sidebar.collapsed .sidebar-logo {
+  justify-content: center;
+
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.doctor-sidebar.collapsed .sidebar-logo span {
+  display: none;
+}
+
+
+/* Doctor info when collapsed */
+
+.doctor-sidebar.collapsed .doctor-info {
+  justify-content: center;
+
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.doctor-sidebar.collapsed .doctor-details {
+  display: none;
+}
+
+
+/* Menu when collapsed */
+
+.doctor-sidebar.collapsed .sidebar-menu a {
+  justify-content: center;
+
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.doctor-sidebar.collapsed .sidebar-menu a span {
+  display: none;
+}
+
+.doctor-sidebar.collapsed .sidebar-menu a i {
+  width: auto;
+}
+
+
+/* Toggle stays inside sidebar */
+
+.doctor-sidebar.collapsed .sidebar-toggle {
+  right: 8px;
+}
+
+
+/* =================================
+   SCROLLBAR
+================================= */
+
+.doctor-sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.doctor-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+}
+
+
+/* =================================
+   MOBILE RESPONSIVE
+================================= */
+
+@media (max-width: 768px) {
+
+  .doctor-sidebar {
+    width: 75px;
+  }
+
+  /* Mobile: text hidden */
+
+  .doctor-sidebar .sidebar-logo span,
+  .doctor-sidebar .doctor-details,
+  .doctor-sidebar .sidebar-menu a span {
+    display: none;
+  }
+
+  /* Logo */
+
+  .doctor-sidebar .sidebar-logo {
+    justify-content: center;
+
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  /* Doctor information */
+
+  .doctor-sidebar .doctor-info {
+    justify-content: center;
+
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  /* Menu */
+
+  .doctor-sidebar .sidebar-menu a {
+    justify-content: center;
+
+    padding: 12px 8px;
+  }
+
+  .doctor-sidebar .sidebar-menu a i {
+    width: auto;
+    font-size: 18px;
+  }
+
+  /* Toggle */
+
+  .doctor-sidebar .sidebar-toggle {
+    right: 8px;
+  }
+
+  /* If manually opened on mobile */
+
+  .doctor-sidebar:not(.collapsed) {
+    width: 260px;
+  }
+
+  .doctor-sidebar:not(.collapsed) .sidebar-logo {
+    justify-content: flex-start;
+
+    padding-left: 10px;
+    padding-right: 40px;
+  }
+
+  .doctor-sidebar:not(.collapsed) .sidebar-logo span,
+  .doctor-sidebar:not(.collapsed) .doctor-details,
+  .doctor-sidebar:not(.collapsed) .sidebar-menu a span {
+    display: block;
+  }
+
+  .doctor-sidebar:not(.collapsed) .doctor-info {
+    justify-content: flex-start;
+
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .doctor-sidebar:not(.collapsed) .sidebar-menu a {
+    justify-content: flex-start;
+
+    padding: 11px 13px;
+  }
+
+  .doctor-sidebar:not(.collapsed) .sidebar-menu a i {
+    width: 20px;
+  }
+}

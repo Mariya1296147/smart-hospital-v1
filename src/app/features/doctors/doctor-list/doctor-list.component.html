@@ -1,0 +1,263 @@
+<div class="doctor-page">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+
+    <div>
+      <h2>
+        <i class="bi bi-person-badge-fill me-2"></i>
+        Doctors
+      </h2>
+
+      <p>
+        Manage hospital doctors and their information
+      </p>
+    </div>
+
+    <!-- ADD DOCTOR -->
+    <a
+      routerLink="/admin/doctors/add"
+      class="btn btn-primary add-doctor-btn">
+
+      <i class="bi bi-plus-lg me-1"></i>
+      Add Doctor
+
+    </a>
+
+  </div>
+
+
+<!-- SUMMARY CARDS -->
+<div class="summary-row">
+
+  <!-- Total -->
+  <div class="summary-card">
+
+    <div class="summary-icon blue">
+      <i class="bi bi-people-fill"></i>
+    </div>
+
+    <div>
+      <span>Total Doctors</span>
+      <strong>{{ doctors.length }}</strong>
+    </div>
+
+  </div>
+
+
+  <!-- Active -->
+  <div class="summary-card">
+
+    <div class="summary-icon green">
+      <i class="bi bi-person-check-fill"></i>
+    </div>
+
+    <div>
+      <span>Active Doctors</span>
+      <strong>{{ activeDoctors }}</strong>
+    </div>
+
+  </div>
+
+
+  <!-- Inactive -->
+  <div class="summary-card">
+
+    <div class="summary-icon red">
+      <i class="bi bi-person-x-fill"></i>
+    </div>
+
+    <div>
+      <span>Inactive Doctors</span>
+      <strong>{{ inactiveDoctors }}</strong>
+    </div>
+
+  </div>
+
+</div>
+
+
+  <!-- DOCTOR TABLE -->
+  <div class="doctor-card">
+
+    <div class="card-header">
+
+      <div>
+        <h5>Doctor List</h5>
+        <span>All registered doctors</span>
+      </div>
+
+    </div>
+
+
+    <div class="table-responsive">
+
+      <table class="table doctor-table">
+
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Doctor</th>
+            <th>Specialization</th>
+            <th>Department</th>
+            <th>Contact</th>
+            <th>Status</th>
+            <th class="text-center">Actions</th>
+          </tr>
+        </thead>
+
+
+        <tbody>
+
+          <tr *ngFor="let doctor of doctors; let i = index">
+
+            <td>
+              {{ i + 1 }}
+            </td>
+
+
+            <!-- DOCTOR -->
+            <td>
+
+              <div class="doctor-info">
+
+                <div class="doctor-avatar">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+
+                <div>
+                  <strong>{{ doctor.name }}</strong>
+                  <small>{{ doctor.email }}</small>
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- SPECIALIZATION -->
+            <td>
+              {{ doctor.specialization }}
+            </td>
+
+
+            <!-- DEPARTMENT -->
+            <td>
+
+              <span class="department-badge">
+                {{ doctor.department }}
+              </span>
+
+            </td>
+
+
+            <!-- CONTACT -->
+            <td>
+
+              <div class="contact-info">
+
+                <span>
+                  <i class="bi bi-telephone me-1"></i>
+                  {{ doctor.phone }}
+                </span>
+
+                <span>
+                  <i class="bi bi-envelope me-1"></i>
+                  {{ doctor.email }}
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- STATUS -->
+            <td>
+
+              <span
+                class="status-badge"
+                [class.active]="doctor.status === 'Active'"
+                [class.inactive]="doctor.status === 'Inactive'">
+
+                <span class="status-dot"></span>
+
+                {{ doctor.status }}
+
+              </span>
+
+            </td>
+
+
+            <!-- ACTIONS -->
+            <td>
+
+              <div class="action-buttons">
+
+                <!-- VIEW -->
+                <a
+                  [routerLink]="['/admin/doctors/view', doctor.id]"
+                  class="action-btn view"
+                  title="View Doctor">
+
+                  <i class="bi bi-eye"></i>
+
+                </a>
+
+
+                <!-- EDIT -->
+                <a
+                  [routerLink]="['/admin/doctors/edit', doctor.id]"
+                  class="action-btn edit"
+                  title="Edit Doctor">
+
+                  <i class="bi bi-pencil"></i>
+
+                </a>
+
+
+                <!-- DELETE -->
+                <button
+                  type="button"
+                  class="action-btn delete"
+                  title="Delete Doctor"
+                  (click)="deleteDoctor(doctor.id)">
+
+                  <i class="bi bi-trash"></i>
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+
+          <!-- EMPTY -->
+          <tr *ngIf="doctors.length === 0">
+
+            <td
+              colspan="7"
+              class="empty-state">
+
+              <i class="bi bi-person-x"></i>
+
+              <h5>No Doctors Found</h5>
+
+              <p>
+                Add a new doctor to get started.
+              </p>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

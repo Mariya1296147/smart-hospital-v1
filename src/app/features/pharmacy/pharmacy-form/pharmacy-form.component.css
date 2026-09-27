@@ -1,0 +1,23 @@
+.card {
+  border-radius: 12px;
+}
+
+.form-label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-control,
+.form-select {
+  border-radius: 7px;
+  padding: 10px 12px;
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: none;
+}
+
+.btn {
+  border-radius: 6px;
+}

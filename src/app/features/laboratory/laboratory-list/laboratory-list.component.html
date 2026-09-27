@@ -1,0 +1,179 @@
+<div class="container-fluid py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+      <h3 class="fw-bold mb-1">
+        Laboratory
+      </h3>
+
+      <p class="text-muted mb-0">
+        Manage laboratory tests and results
+      </p>
+    </div>
+
+    <a
+      routerLink="/admin/laboratory/add"
+      class="btn btn-primary">
+
+      <i class="bi bi-plus-lg me-2"></i>
+      Add Laboratory Test
+
+    </a>
+
+  </div>
+
+
+  <!-- Table -->
+  <div class="card shadow-sm border-0">
+
+    <div class="card-body">
+
+      <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+          <thead class="table-light">
+
+            <tr>
+              <th>Test ID</th>
+              <th>Patient</th>
+              <th>Test Name</th>
+              <th>Department</th>
+              <th>Doctor</th>
+              <th>Sample Date</th>
+              <th>Result</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            <tr
+              *ngFor="let test of laboratoryTests">
+
+              <td>
+                <strong>
+                  {{ test.testId }}
+                </strong>
+              </td>
+
+              <td>
+                {{ test.patientName }}
+              </td>
+
+              <td>
+                {{ test.testName }}
+              </td>
+
+              <td>
+                {{ test.department }}
+              </td>
+
+              <td>
+                {{ test.doctor }}
+              </td>
+
+              <td>
+                {{ test.sampleDate }}
+              </td>
+
+              <td>
+                {{ test.result }}
+              </td>
+
+              <td>
+
+                <span
+                  class="badge"
+                  [ngClass]="{
+                    'bg-success': test.status === 'Completed',
+                    'bg-warning text-dark': test.status === 'Pending',
+                    'bg-danger': test.status === 'Cancelled'
+                  }">
+
+                  {{ test.status }}
+
+                </span>
+
+              </td>
+
+
+              <td>
+
+                <div class="d-flex gap-2">
+
+                  <!-- View -->
+                  <a
+                    [routerLink]="[
+                      '/admin/laboratory/view',
+                      test.id
+                    ]"
+                    class="btn btn-sm btn-outline-info"
+                    title="View">
+
+                    <i class="bi bi-eye"></i>
+
+                  </a>
+
+
+                  <!-- Edit -->
+                  <a
+                    [routerLink]="[
+                      '/admin/laboratory/edit',
+                      test.id
+                    ]"
+                    class="btn btn-sm btn-outline-primary"
+                    title="Edit">
+
+                    <i class="bi bi-pencil"></i>
+
+                  </a>
+
+
+                  <!-- Delete -->
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-danger"
+                    title="Delete"
+                    (click)="deleteLaboratory(test.id)">
+
+                    <i class="bi bi-trash"></i>
+
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+
+            <!-- Empty -->
+            <tr *ngIf="laboratoryTests.length === 0">
+
+              <td
+                colspan="9"
+                class="text-center text-muted py-4">
+
+                No laboratory tests found.
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

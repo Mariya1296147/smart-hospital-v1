@@ -1,0 +1,210 @@
+<div class="container-fluid py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+      <h3 class="fw-bold mb-1">
+        Nurse Details
+      </h3>
+
+      <p class="text-muted mb-0">
+        View nurse information
+      </p>
+
+    </div>
+
+
+    <div class="d-flex gap-2">
+
+      <a
+        [routerLink]="[
+          '/admin/nursing/edit',
+          nurse.id
+        ]"
+        class="btn btn-primary">
+
+        <i class="bi bi-pencil me-2"></i>
+        Edit
+
+      </a>
+
+
+      <a
+        routerLink="/admin/nursing"
+        class="btn btn-secondary">
+
+        Back
+
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- Details -->
+  <div class="card shadow-sm border-0">
+
+    <div class="card-body p-4">
+
+      <div class="row g-4">
+
+
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Nurse ID
+          </label>
+
+          <h6>
+            {{ nurse.nurseId }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Nurse Name
+          </label>
+
+          <h6>
+            {{ nurse.name }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Gender
+          </label>
+
+          <h6>
+            {{ nurse.gender }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Phone
+          </label>
+
+          <h6>
+            {{ nurse.phone }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Email
+          </label>
+
+          <h6>
+            {{ nurse.email }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Department
+          </label>
+
+          <h6>
+            {{ nurse.department }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Ward
+          </label>
+
+          <h6>
+            {{ nurse.ward }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Shift
+          </label>
+
+          <h6>
+            {{ nurse.shift }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Qualification
+          </label>
+
+          <h6>
+            {{ nurse.qualification }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Joining Date
+          </label>
+
+          <h6>
+            {{ nurse.joiningDate }}
+          </h6>
+
+        </div>
+
+
+        <div class="col-md-6">
+
+          <label class="text-muted">
+            Status
+          </label>
+
+          <div>
+
+            <span
+              class="badge bg-success">
+
+              {{ nurse.status }}
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,205 @@
+<div class="about-page">
+
+  <!-- ================= HERO ================= -->
+
+  <section class="about-hero">
+
+    <img
+      src="assets/about1.jpg"
+      alt="Smart Hospital"
+      class="hero-image">
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+      <span class="hero-badge">
+        <i class="bi bi-hospital"></i>
+        Smart Hospital
+      </span>
+
+      <h1>About Our Hospital</h1>
+
+      <p>
+        Providing trusted, compassionate and modern healthcare
+        for patients and families.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= ABOUT CONTENT ================= -->
+
+  <section class="about-content">
+
+    <div class="container-fluid">
+
+      <div class="row align-items-center g-5">
+
+        <!-- IMAGE -->
+
+        <div class="col-lg-6">
+
+          <div class="about-image-wrapper">
+
+            <img
+              src="assets/abouttttt.jpg"
+              alt="Professional Doctor"
+              class="about-image">
+
+            <div class="experience-box">
+
+              <i class="bi bi-award-fill"></i>
+
+              <div>
+                <strong>Trusted Care</strong>
+                <span>For Every Patient</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- TEXT -->
+
+        <div class="col-lg-6">
+
+          <span class="section-label">
+            ABOUT SMART HOSPITAL
+          </span>
+
+          <h2>
+            Your Health Is Our
+            <span>Top Priority</span>
+          </h2>
+
+          <p class="lead-text">
+            Smart Hospital is a modern healthcare management system
+            designed to connect patients, doctors and hospital staff
+            through a simple and efficient digital platform.
+          </p>
+
+          <p>
+            Our goal is to make healthcare services more organized,
+            accessible and patient-friendly. From appointments and
+            consultations to laboratory services and billing,
+            everything can be managed efficiently.
+          </p>
+
+          <div class="about-points">
+
+            <div>
+              <i class="bi bi-check-circle-fill"></i>
+              Experienced healthcare professionals
+            </div>
+
+            <div>
+              <i class="bi bi-check-circle-fill"></i>
+              Modern healthcare facilities
+            </div>
+
+            <div>
+              <i class="bi bi-check-circle-fill"></i>
+              Patient-focused services
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= FEATURES ================= -->
+
+  <section class="features-section">
+
+    <div class="section-heading">
+
+      <span>WHY CHOOSE US</span>
+
+      <h2>
+        Healthcare You Can Trust
+      </h2>
+
+      <p>
+        We focus on providing a better healthcare experience
+        through quality service and modern technology.
+      </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+      <div
+        class="col-md-6 col-xl-3"
+        *ngFor="let feature of features">
+
+        <div class="feature-card">
+
+          <div class="feature-icon">
+
+            <i [class]="feature.icon"></i>
+
+          </div>
+
+          <h4>
+            {{ feature.title }}
+          </h4>
+
+          <p>
+            {{ feature.text }}
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= MISSION ================= -->
+
+  <section class="mission-section">
+
+    <div class="mission-content">
+
+      <span>OUR MISSION</span>
+
+      <h2>
+        Making Healthcare
+        <strong>Smarter & Better</strong>
+      </h2>
+
+      <p>
+        We aim to combine medical expertise with modern technology
+        to create a healthcare experience that is efficient,
+        transparent and focused on every patient's needs.
+      </p>
+
+      <a
+        routerLink="/appointment"
+        class="mission-btn">
+
+        <i class="bi bi-calendar-check"></i>
+        Book an Appointment
+
+      </a>
+
+    </div>
+
+  </section>
+
+</div>

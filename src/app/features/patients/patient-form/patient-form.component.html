@@ -1,0 +1,379 @@
+<div class="patient-form-page">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+
+    <div>
+      <h2>
+        {{ isEditMode ? 'Edit Patient' : 'Add New Patient' }}
+      </h2>
+
+      <p>
+        {{ isEditMode
+          ? 'Update patient information'
+          : 'Register a new patient in the hospital system'
+        }}
+      </p>
+    </div>
+
+    <a
+      routerLink="/admin/patients"
+      class="btn btn-outline-secondary">
+
+      <i class="bi bi-arrow-left"></i>
+      Back to Patients
+
+    </a>
+
+  </div>
+
+
+  <!-- FORM CARD -->
+  <div class="form-card">
+
+    <form
+      #patientForm="ngForm"
+      (ngSubmit)="savePatient()">
+
+      <!-- ================= PERSONAL INFORMATION ================= -->
+
+      <div class="section-title">
+        <i class="bi bi-person"></i>
+        Personal Information
+      </div>
+
+      <div class="form-grid">
+
+        <!-- First Name -->
+        <div class="form-group">
+
+          <label>First Name *</label>
+
+          <input
+            type="text"
+            class="form-control"
+            name="firstName"
+            [(ngModel)]="patient.firstName"
+            required
+            placeholder="Enter first name">
+
+        </div>
+
+
+        <!-- Last Name -->
+        <div class="form-group">
+
+          <label>Last Name *</label>
+
+          <input
+            type="text"
+            class="form-control"
+            name="lastName"
+            [(ngModel)]="patient.lastName"
+            required
+            placeholder="Enter last name">
+
+        </div>
+
+
+        <!-- Gender -->
+        <div class="form-group">
+
+          <label>Gender *</label>
+
+          <select
+            class="form-select"
+            name="gender"
+            [(ngModel)]="patient.gender"
+            required>
+
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+
+          </select>
+
+        </div>
+
+
+        <!-- Age -->
+        <div class="form-group">
+
+          <label>Age *</label>
+
+          <input
+            type="number"
+            class="form-control"
+            name="age"
+            [(ngModel)]="patient.age"
+            min="0"
+            max="150"
+            required
+            placeholder="Enter age">
+
+        </div>
+
+
+        <!-- Date of Birth -->
+        <div class="form-group">
+
+          <label>Date of Birth *</label>
+
+          <input
+            type="date"
+            class="form-control"
+            name="dateOfBirth"
+            [(ngModel)]="patient.dateOfBirth"
+            required>
+
+        </div>
+
+
+        <!-- Blood Group -->
+        <div class="form-group">
+
+          <label>Blood Group</label>
+
+          <select
+            class="form-select"
+            name="bloodGroup"
+            [(ngModel)]="patient.bloodGroup">
+
+            <option value="">Select Blood Group</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+
+          </select>
+
+        </div>
+
+
+        <!-- Marital Status -->
+        <div class="form-group">
+
+          <label>Marital Status</label>
+
+          <select
+            class="form-select"
+            name="maritalStatus"
+            [(ngModel)]="patient.maritalStatus">
+
+            <option value="">Select Status</option>
+            <option value="Single">Single</option>
+            <option value="Married">Married</option>
+            <option value="Divorced">Divorced</option>
+            <option value="Widowed">Widowed</option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= CONTACT INFORMATION ================= -->
+
+      <div class="section-title">
+
+        <i class="bi bi-telephone"></i>
+        Contact Information
+
+      </div>
+
+      <div class="form-grid">
+
+        <!-- Phone -->
+        <div class="form-group">
+
+          <label>Phone Number *</label>
+
+          <input
+            type="tel"
+            class="form-control"
+            name="phone"
+            [(ngModel)]="patient.phone"
+            required
+            placeholder="01XXXXXXXXX">
+
+        </div>
+
+
+        <!-- Email -->
+        <div class="form-group">
+
+          <label>Email</label>
+
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            [(ngModel)]="patient.email"
+            placeholder="example@email.com">
+
+        </div>
+
+
+        <!-- Emergency Contact -->
+        <div class="form-group">
+
+          <label>Emergency Contact</label>
+
+          <input
+            type="tel"
+            class="form-control"
+            name="emergencyContact"
+            [(ngModel)]="patient.emergencyContact"
+            placeholder="Emergency phone number">
+
+        </div>
+
+
+        <!-- Address -->
+        <div class="form-group full-width">
+
+          <label>Address</label>
+
+          <textarea
+            class="form-control"
+            name="address"
+            [(ngModel)]="patient.address"
+            rows="3"
+            placeholder="Enter patient's address">
+          </textarea>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= MEDICAL INFORMATION ================= -->
+
+      <div class="section-title">
+
+        <i class="bi bi-heart-pulse"></i>
+        Medical Information
+
+      </div>
+
+      <div class="form-grid">
+
+        <!-- Department -->
+        <div class="form-group">
+
+          <label>Department *</label>
+
+          <select
+            class="form-select"
+            name="department"
+            [(ngModel)]="patient.department"
+            required>
+
+            <option value="">Select Department</option>
+            <option value="Cardiology">Cardiology</option>
+            <option value="Neurology">Neurology</option>
+            <option value="Orthopedics">Orthopedics</option>
+            <option value="Pediatrics">Pediatrics</option>
+            <option value="Gynecology">Gynecology</option>
+            <option value="Medicine">Medicine</option>
+            <option value="Surgery">Surgery</option>
+            <option value="Dermatology">Dermatology</option>
+
+          </select>
+
+        </div>
+
+
+        <!-- Doctor -->
+        <div class="form-group">
+
+          <label>Assigned Doctor</label>
+
+          <select
+            class="form-select"
+            name="doctor"
+            [(ngModel)]="patient.doctor">
+
+            <option value="">Select Doctor</option>
+            <option value="Dr. Ahmed">Dr. Ahmed</option>
+            <option value="Dr. Rahman">Dr. Rahman</option>
+            <option value="Dr. Karim">Dr. Karim</option>
+            <option value="Dr. Fatima">Dr. Fatima</option>
+
+          </select>
+
+        </div>
+
+
+        <!-- Allergies -->
+        <div class="form-group full-width">
+
+          <label>Allergies</label>
+
+          <textarea
+            class="form-control"
+            name="allergies"
+            [(ngModel)]="patient.allergies"
+            rows="2"
+            placeholder="Enter known allergies">
+          </textarea>
+
+        </div>
+
+
+        <!-- Medical History -->
+        <div class="form-group full-width">
+
+          <label>Medical History</label>
+
+          <textarea
+            class="form-control"
+            name="medicalHistory"
+            [(ngModel)]="patient.medicalHistory"
+            rows="3"
+            placeholder="Enter previous medical history">
+          </textarea>
+
+        </div>
+
+      </div>
+
+
+      <!-- ================= BUTTONS ================= -->
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="btn btn-light"
+          (click)="resetForm()">
+
+          <i class="bi bi-arrow-counterclockwise"></i>
+          Reset
+
+        </button>
+
+
+        <button
+          type="submit"
+          class="btn btn-primary">
+
+          <i class="bi bi-check-circle"></i>
+
+          {{ isEditMode ? 'Update Patient' : 'Save Patient' }}
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>

@@ -1,0 +1,241 @@
+
+.patient-scan-page {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+  background: #f5f9fc;
+}
+
+.scan-card {
+  width: 100%;
+  max-width: 560px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 40px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e8eef3;
+}
+
+/* HEADER */
+
+.scan-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.scan-icon {
+  width: 65px;
+  height: 65px;
+  margin: 0 auto 15px;
+  border-radius: 16px;
+  background: #e9f7f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scan-icon i {
+  font-size: 32px;
+  color: #0b28c8;
+}
+
+.scan-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.scan-header p {
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* SCANNER */
+
+.scanner-box {
+  text-align: center;
+}
+
+.scanner-frame {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 15px;
+  border: 2px dashed #a9cbd0;
+  border-radius: 15px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #f8fcfd;
+}
+
+.scanner-frame > i {
+  font-size: 75px;
+  color: #9bbfc4;
+}
+
+.corner {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  border-color: #1111a4;
+  border-style: solid;
+}
+
+.top-left {
+  top: 12px;
+  left: 12px;
+  border-width: 4px 0 0 4px;
+}
+
+.top-right {
+  top: 12px;
+  right: 12px;
+  border-width: 4px 4px 0 0;
+}
+
+.bottom-left {
+  bottom: 12px;
+  left: 12px;
+  border-width: 0 0 4px 4px;
+}
+
+.bottom-right {
+  bottom: 12px;
+  right: 12px;
+  border-width: 0 4px 4px 0;
+}
+
+.scan-line {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  background: #341bd8;
+  top: 50%;
+  opacity: 0.8;
+}
+
+.scanner-text {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+
+/* BUTTON */
+
+.scan-btn,
+.search-btn {
+  border: none;
+  background: #1d20d8;
+  color: white;
+  font-weight: 600;
+  padding: 11px 22px;
+  border-radius: 8px;
+}
+
+.scan-btn:hover,
+.search-btn:hover {
+  background: #1823c4;
+  color: white;
+}
+
+/* DIVIDER */
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 30px 0;
+  color: #9ca3af;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.divider span {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* PATIENT ID */
+
+.patient-id-section label {
+  display: block;
+  font-weight: 600;
+  color: #1863da;
+  margin-bottom: 8px;
+}
+
+.input-group-text {
+  background: #f8fafc;
+  color: #4035d4;
+}
+
+.form-control {
+  height: 46px;
+  border-left: none;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #473ad4;
+}
+
+.search-btn {
+  width: 100%;
+  margin-top: 15px;
+}
+
+/* SECURITY */
+
+.security-note {
+  margin-top: 28px;
+  padding: 13px 15px;
+  background: #f0f9f8;
+  border-radius: 9px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: #483ed2;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.security-note i {
+  color: #2948b0;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* MOBILE */
+
+@media (max-width: 576px) {
+
+  .patient-scan-page {
+    padding: 30px 15px;
+  }
+
+  .scan-card {
+    padding: 25px 20px;
+  }
+
+  .scan-header h2 {
+    font-size: 24px;
+  }
+
+  .scanner-frame {
+    width: 190px;
+    height: 190px;
+  }
+}

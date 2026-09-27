@@ -1,0 +1,34 @@
+<div
+  class="admin-layout"
+  [class.sidebar-open]="sidebarOpen">
+
+  <!-- Sidebar -->
+  <app-sidebar
+    [isOpen]="sidebarOpen"
+    (toggle)="toggleSidebar()">
+  </app-sidebar>
+
+
+  <!-- Main Area -->
+  <div class="main-area">
+
+    <!-- Topbar -->
+    <app-topbar
+      (menuToggle)="toggleSidebar()">
+    </app-topbar>
+
+
+    <!-- Page Content -->
+    <main class="page-content">
+
+      <router-outlet></router-outlet>
+
+    </main>
+
+
+    <!-- Footer -->
+    <app-footer></app-footer>
+
+  </div>
+
+</div>

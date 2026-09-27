@@ -1,0 +1,521 @@
+<div class="patient-page">
+
+  <!-- ================= PAGE HEADER ================= -->
+
+  <div class="page-header">
+
+    <div>
+      <h2>Patients</h2>
+
+      <p>
+        Manage hospital patients and their information.
+      </p>
+    </div>
+
+    <a
+      routerLink="/admin/patients/add"
+      class="btn btn-primary">
+
+      <i class="bi bi-plus-lg"></i>
+
+      Add Patient
+
+    </a>
+
+  </div>
+
+
+  <!-- ================= SUMMARY CARDS ================= -->
+
+  <div class="row g-4 mb-4">
+
+    <!-- Total -->
+
+    <div class="col-xl-3 col-md-6">
+
+      <div class="summary-card">
+
+        <div class="summary-icon">
+          <i class="bi bi-people-fill"></i>
+        </div>
+
+        <div>
+          <span>Total Patients</span>
+          <h3>1,248</h3>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Active -->
+
+    <div class="col-xl-3 col-md-6">
+
+      <div class="summary-card">
+
+        <div class="summary-icon active-icon">
+          <i class="bi bi-person-check-fill"></i>
+        </div>
+
+        <div>
+          <span>Active Patients</span>
+          <h3>984</h3>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Pending -->
+
+    <div class="col-xl-3 col-md-6">
+
+      <div class="summary-card">
+
+        <div class="summary-icon pending-icon">
+          <i class="bi bi-clock-fill"></i>
+        </div>
+
+        <div>
+          <span>Pending</span>
+          <h3>142</h3>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- New -->
+
+    <div class="col-xl-3 col-md-6">
+
+      <div class="summary-card">
+
+        <div class="summary-icon male-icon">
+          <i class="bi bi-person-fill"></i>
+        </div>
+
+        <div>
+          <span>New This Month</span>
+          <h3>122</h3>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================= PATIENT CARD ================= -->
+
+  <div class="patient-card">
+
+
+    <!-- ================= CARD HEADER ================= -->
+
+    <div class="card-top">
+
+      <div>
+
+        <h5>Patient List</h5>
+
+        <p>
+          All registered patients
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================= SEARCH & FILTER ================= -->
+
+    <div class="card border-0 shadow-sm mb-4">
+
+      <div class="card-body">
+
+        <div class="row g-3">
+
+
+          <!-- SEARCH -->
+
+          <div class="col-md-7">
+
+            <label class="form-label fw-semibold">
+              Search Patient
+            </label>
+
+            <div class="input-group">
+
+              <span class="input-group-text">
+                <i class="bi bi-search"></i>
+              </span>
+
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search by name, phone or patient ID..."
+                [(ngModel)]="searchText"
+                (input)="filterPatients()">
+
+            </div>
+
+          </div>
+
+
+          <!-- DEPARTMENT -->
+
+          <div class="col-md-5">
+
+            <label class="form-label fw-semibold">
+              Department
+            </label>
+
+            <select
+              class="form-select"
+              [(ngModel)]="selectedDepartment"
+              (change)="filterPatients()">
+
+              <option value="">
+                All Departments
+              </option>
+
+              <option value="Cardiology">
+                Cardiology
+              </option>
+
+              <option value="Neurology">
+                Neurology
+              </option>
+
+              <option value="Orthopedics">
+                Orthopedics
+              </option>
+
+              <option value="Pediatrics">
+                Pediatrics
+              </option>
+
+              <option value="Medicine">
+                Medicine
+              </option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================= TABLE ================= -->
+
+    <div class="table-responsive">
+
+      <table class="table align-middle">
+
+        <thead>
+
+          <tr>
+
+            <th>Patient</th>
+
+            <th>Patient ID</th>
+
+            <th>Age</th>
+
+            <th>Gender</th>
+
+            <th>Phone</th>
+
+            <th>Department</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <!-- IMPORTANT:
+               paginatedPatients ব্যবহার করা হয়েছে -->
+
+          @for (
+            patient of paginatedPatients;
+            track patient.id
+          ) {
+
+            <tr>
+
+
+              <!-- PATIENT -->
+
+              <td>
+
+                <div class="patient-info">
+
+                  <div class="patient-avatar">
+
+                    {{ patient.name.charAt(0) }}
+
+                  </div>
+
+                  <div>
+
+                    <strong>
+                      {{ patient.name }}
+                    </strong>
+
+                    <small>
+                      Patient
+                    </small>
+
+                  </div>
+
+                </div>
+
+              </td>
+
+
+              <!-- PATIENT ID -->
+
+              <td>
+
+                <span class="patient-id">
+                  {{ patient.patientId }}
+                </span>
+
+              </td>
+
+
+              <!-- AGE -->
+
+              <td>
+                {{ patient.age }}
+              </td>
+
+
+              <!-- GENDER -->
+
+              <td>
+                {{ patient.gender }}
+              </td>
+
+
+              <!-- PHONE -->
+
+              <td>
+                {{ patient.phone }}
+              </td>
+
+
+              <!-- DEPARTMENT -->
+
+              <td>
+
+                <span class="department">
+                  {{ patient.department }}
+                </span>
+
+              </td>
+
+
+              <!-- STATUS -->
+
+              <td>
+
+                <span
+                  class="status"
+                  [class.active]="patient.status === 'Active'"
+                  [class.pending]="patient.status === 'Pending'"
+                  [class.inactive]="patient.status === 'Inactive'">
+
+                  {{ patient.status }}
+
+                </span>
+
+              </td>
+
+
+              <!-- ACTION -->
+
+              <td>
+
+                <!-- VIEW -->
+
+                <a
+                  [routerLink]="[
+                    '/admin/patients/view',
+                    patient.id
+                  ]"
+                  class="btn btn-sm btn-outline-primary me-1">
+
+                  <i class="bi bi-eye"></i>
+                  view
+
+                </a>
+
+
+                <!-- EDIT -->
+
+                <a
+                  [routerLink]="[
+                    '/admin/patients/edit',
+                    patient.id
+                  ]"
+                  class="btn btn-sm btn-outline-warning me-1">
+
+                  <i class="bi bi-pencil"></i>
+                  edit
+
+                </a>
+
+
+                <!-- DELETE -->
+
+                <button
+                  type="button"
+                  (click)="deletePatient(patient.id)"
+                  class="btn btn-sm btn-outline-danger">
+
+                  <i class="bi bi-trash"></i>
+                  delete
+
+                </button>
+
+              </td>
+
+            </tr>
+
+          }
+
+
+          <!-- ================= NO RESULT ================= -->
+
+          @if (paginatedPatients.length === 0) {
+
+            <tr>
+
+              <td
+                colspan="8"
+                class="text-center py-4">
+
+                <i class="bi bi-search fs-3 text-muted"></i>
+
+                <p class="mb-0 mt-2 text-muted">
+                  No patients found.
+                </p>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+    <!-- ================= PAGINATION ================= -->
+
+    <div class="table-footer">
+
+
+      <!-- SHOWING -->
+
+      <span>
+
+        Showing
+        <strong>
+          {{ startItem }}
+        </strong>
+
+        to
+
+        <strong>
+          {{ endItem }}
+        </strong>
+
+        of
+
+        <strong>
+          {{ patients.length }}
+        </strong>
+
+        patients
+
+      </span>
+
+
+      <!-- PAGINATION BUTTONS -->
+
+      <div class="pagination-buttons">
+
+
+        <!-- PREVIOUS -->
+
+        <button
+          type="button"
+          class="page-btn"
+          [disabled]="currentPage === 1"
+          (click)="previousPage()">
+
+          <i class="bi bi-chevron-left"></i>
+
+        </button>
+
+
+        <!-- PAGE NUMBERS -->
+
+        @for (
+          page of pages;
+          track page
+        ) {
+
+          <button
+            type="button"
+            class="page-btn"
+            [class.active-page]="currentPage === page"
+            (click)="goToPage(page)">
+
+            {{ page }}
+
+          </button>
+
+        }
+
+
+        <!-- NEXT -->
+
+        <button
+          type="button"
+          class="page-btn"
+          [disabled]="currentPage === totalPages"
+          (click)="nextPage()">
+
+          <i class="bi bi-chevron-right"></i>
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

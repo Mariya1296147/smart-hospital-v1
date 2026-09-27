@@ -1,0 +1,299 @@
+.dashboard {
+  padding: 5px;
+}
+
+
+/* ================= HEADER ================= */
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 700;
+  color: #212529;
+}
+
+.dashboard-header p {
+  margin: 5px 0 0;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+
+/* ================= STAT CARDS ================= */
+
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+
+  min-height: 125px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  transition: 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+
+.stat-icon {
+  width: 55px;
+  height: 55px;
+
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 23px;
+
+  margin-right: 15px;
+}
+
+.patients {
+  background: #e8f1ff;
+  color: #0d6efd;
+}
+
+.doctors {
+  background: #e9f8ef;
+  color: #198754;
+}
+
+.appointments {
+  background: #fff3cd;
+  color: #f0ad00;
+}
+
+.admissions {
+  background: #f8e8ff;
+  color: #9c36b5;
+}
+
+
+.stat-content span {
+  display: block;
+  color: #6c757d;
+  font-size: 13px;
+}
+
+.stat-content h3 {
+  margin: 4px 0;
+
+  font-size: 25px;
+  font-weight: 700;
+
+  color: #212529;
+}
+
+.stat-content small {
+  color: #198754;
+  font-size: 11px;
+}
+
+
+/* ================= DASHBOARD CARD ================= */
+
+.dashboard-card {
+  background: #ffffff;
+
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+
+  padding: 20px;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 18px;
+}
+
+.card-header h5 {
+  margin: 0;
+
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.card-header span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #6c757d;
+  font-size: 12px;
+}
+
+
+/* ================= TABLE ================= */
+
+.table {
+  margin-bottom: 0;
+}
+
+.table th {
+  color: #6c757d;
+  font-size: 12px;
+  font-weight: 600;
+
+  border-bottom: 1px solid #e9ecef;
+}
+
+.table td {
+  font-size: 13px;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+
+/* Patient */
+
+.patient-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.patient-avatar {
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+
+  background: #e8f1ff;
+  color: #0d6efd;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.patient-info strong {
+  display: block;
+  font-size: 12px;
+}
+
+.patient-info small {
+  color: #6c757d;
+  font-size: 10px;
+}
+
+
+/* ================= STATUS ================= */
+
+.status {
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.confirmed {
+  background: #d1e7dd;
+  color: #146c43;
+}
+
+.pending {
+  background: #fff3cd;
+  color: #997404;
+}
+
+.completed {
+  background: #cff4fc;
+  color: #087990;
+}
+
+
+/* ================= OVERVIEW ================= */
+
+.overview-item {
+  display: flex;
+  align-items: center;
+
+  padding: 14px 0;
+
+  border-bottom: 1px solid #f1f3f5;
+}
+
+.overview-item:last-child {
+  border-bottom: none;
+}
+
+.overview-icon {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 8px;
+
+  background: #e8f1ff;
+  color: #0d6efd;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 12px;
+}
+
+.overview-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.overview-text span {
+  color: #6c757d;
+  font-size: 12px;
+}
+
+.overview-text strong {
+  margin-top: 2px;
+
+  font-size: 16px;
+  color: #212529;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 22px;
+  }
+
+  .stat-card {
+    min-height: 110px;
+  }
+
+}

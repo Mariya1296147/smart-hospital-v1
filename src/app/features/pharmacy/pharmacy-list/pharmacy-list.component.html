@@ -1,0 +1,398 @@
+<div class="container-fluid py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+      <h3 class="fw-bold mb-1">
+        Pharmacy
+      </h3>
+
+      <p class="text-muted mb-0">
+        Manage medicines, stock and pharmacy inventory
+      </p>
+    </div>
+
+    <a
+      routerLink="/admin/pharmacy/add"
+      class="btn btn-primary">
+
+      <i class="bi bi-plus-lg me-2"></i>
+
+      Add Medicine
+
+    </a>
+
+  </div>
+
+
+  <!-- Summary Cards -->
+  <div class="row g-3 mb-4">
+
+    <!-- Total -->
+    <div class="col-xl col-md-6">
+
+      <div class="card summary-card shadow-sm border-0">
+
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+              <p class="text-muted mb-1">
+                Total Medicines
+              </p>
+
+              <h3 class="fw-bold mb-0">
+                {{ totalMedicines }}
+              </h3>
+            </div>
+
+            <div class="icon-box bg-primary-subtle text-primary">
+              <i class="bi bi-capsule-pill"></i>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Available -->
+    <div class="col-xl col-md-6">
+
+      <div class="card summary-card shadow-sm border-0">
+
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+              <p class="text-muted mb-1">
+                Available
+              </p>
+
+              <h3 class="fw-bold text-success mb-0">
+                {{ availableMedicines }}
+              </h3>
+            </div>
+
+            <div class="icon-box bg-success-subtle text-success">
+              <i class="bi bi-check-circle"></i>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Low Stock -->
+    <div class="col-xl col-md-6">
+
+      <div class="card summary-card shadow-sm border-0">
+
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+              <p class="text-muted mb-1">
+                Low Stock
+              </p>
+
+              <h3 class="fw-bold text-warning mb-0">
+                {{ lowStockMedicines }}
+              </h3>
+            </div>
+
+            <div class="icon-box bg-warning-subtle text-warning">
+              <i class="bi bi-exclamation-triangle"></i>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Out of Stock -->
+    <div class="col-xl col-md-6">
+
+      <div class="card summary-card shadow-sm border-0">
+
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+              <p class="text-muted mb-1">
+                Out of Stock
+              </p>
+
+              <h3 class="fw-bold text-danger mb-0">
+                {{ outOfStockMedicines }}
+              </h3>
+            </div>
+
+            <div class="icon-box bg-danger-subtle text-danger">
+              <i class="bi bi-x-circle"></i>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- Expired -->
+    <div class="col-xl col-md-6">
+
+      <div class="card summary-card shadow-sm border-0">
+
+        <div class="card-body">
+
+          <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+              <p class="text-muted mb-1">
+                Expired
+              </p>
+
+              <h3 class="fw-bold text-secondary mb-0">
+                {{ expiredMedicines }}
+              </h3>
+            </div>
+
+            <div class="icon-box bg-secondary-subtle text-secondary">
+              <i class="bi bi-calendar-x"></i>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Medicine Table -->
+  <div class="card shadow-sm border-0">
+
+    <div class="card-body">
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <div>
+          <h5 class="fw-bold mb-1">
+            Medicine Inventory
+          </h5>
+
+          <p class="text-muted small mb-0">
+            Current medicine stock information
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+          <thead class="table-light">
+
+            <tr>
+
+              <th>Medicine ID</th>
+
+              <th>Medicine</th>
+
+              <th>Category</th>
+
+              <th>Manufacturer</th>
+
+              <th>Quantity</th>
+
+              <th>Unit Price</th>
+
+              <th>Expiry Date</th>
+
+              <th>Status</th>
+
+              <th>Actions</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            <tr
+              *ngFor="let medicine of medicines">
+
+              <td>
+                <strong>
+                  {{ medicine.medicineId }}
+                </strong>
+              </td>
+
+              <td>
+                {{ medicine.medicineName }}
+              </td>
+
+              <td>
+                {{ medicine.category }}
+              </td>
+
+              <td>
+                {{ medicine.manufacturer }}
+              </td>
+
+              <td>
+
+                <span
+                  [class.text-danger]="medicine.quantity === 0"
+                  [class.text-warning]="
+                    medicine.quantity > 0 &&
+                    medicine.quantity <= 75
+                  "
+                  [class.fw-bold]="
+                    medicine.quantity === 0 ||
+                    medicine.quantity <= 75
+                  ">
+
+                  {{ medicine.quantity }}
+
+                </span>
+
+              </td>
+
+              <td>
+                ৳{{ medicine.unitPrice | number:'1.2-2' }}
+              </td>
+
+              <td>
+                {{ medicine.expiryDate }}
+              </td>
+
+              <td>
+
+                <span
+                  class="badge"
+                  [ngClass]="{
+
+                    'bg-success':
+                      medicine.status === 'Available',
+
+                    'bg-warning text-dark':
+                      medicine.status === 'Low Stock',
+
+                    'bg-danger':
+                      medicine.status === 'Out of Stock',
+
+                    'bg-secondary':
+                      medicine.status === 'Expired'
+
+                  }">
+
+                  {{ medicine.status }}
+
+                </span>
+
+              </td>
+
+
+              <td>
+
+                <div class="d-flex gap-2">
+
+                  <!-- View -->
+                  <a
+                    [routerLink]="[
+                      '/admin/pharmacy/view',
+                      medicine.id
+                    ]"
+                    class="btn btn-sm btn-outline-info"
+                    title="View">
+
+                    <i class="bi bi-eye"></i>
+
+                  </a>
+
+
+                  <!-- Edit -->
+                  <a
+                    [routerLink]="[
+                      '/admin/pharmacy/edit',
+                      medicine.id
+                    ]"
+                    class="btn btn-sm btn-outline-primary"
+                    title="Edit">
+
+                    <i class="bi bi-pencil"></i>
+
+                  </a>
+
+
+                  <!-- Delete -->
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-danger"
+                    title="Delete"
+                    (click)="deleteMedicine(medicine.id)">
+
+                    <i class="bi bi-trash"></i>
+
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+
+            <!-- Empty -->
+            <tr
+              *ngIf="medicines.length === 0">
+
+              <td
+                colspan="9"
+                class="text-center text-muted py-5">
+
+                <i class="bi bi-capsule fs-2 d-block mb-2"></i>
+
+                No medicines found.
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,315 @@
+<div class="prescription-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <span class="page-label">
+        <i class="bi bi-prescription2"></i>
+        DOCTOR PORTAL
+      </span>
+
+      <h2>Write Prescription</h2>
+      <p>Create a prescription for your patient.</p>
+    </div>
+
+    <a
+      routerLink="/admin/dashboard"
+      class="btn btn-outline-secondary"
+    >
+      <i class="bi bi-arrow-left"></i>
+      Back
+    </a>
+  </div>
+
+
+  <!-- Prescription Card -->
+  <div class="prescription-card">
+
+    <!-- ================= PATIENT INFORMATION ================= -->
+    <div class="section-title">
+      <i class="bi bi-person-vcard"></i>
+
+      <div>
+        <h5>Patient Information</h5>
+        <small>Enter patient details</small>
+      </div>
+    </div>
+
+
+    <div class="row g-3">
+
+      <!-- Patient Name -->
+      <div class="col-md-6">
+        <label class="form-label">
+          Patient Name <span class="text-danger">*</span>
+        </label>
+
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter patient name"
+          [(ngModel)]="prescription.patientName"
+        >
+      </div>
+
+
+      <!-- Patient ID -->
+      <div class="col-md-3">
+        <label class="form-label">
+          Patient ID <span class="text-danger">*</span>
+        </label>
+
+        <input
+          type="text"
+          class="form-control"
+          placeholder="P-1001"
+          [(ngModel)]="prescription.patientId"
+        >
+      </div>
+
+
+      <!-- Age -->
+      <div class="col-md-3">
+        <label class="form-label">Age</label>
+
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Age"
+          [(ngModel)]="prescription.age"
+        >
+      </div>
+
+    </div>
+
+
+    <hr>
+
+
+    <!-- ================= DOCTOR INFORMATION ================= -->
+    <div class="section-title">
+      <i class="bi bi-person-badge"></i>
+
+      <div>
+        <h5>Doctor Information</h5>
+        <small>Prescription issued by</small>
+      </div>
+    </div>
+
+
+    <div class="row g-3">
+
+      <!-- Doctor Name -->
+      <div class="col-md-6">
+        <label class="form-label">Doctor Name</label>
+
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Dr. Amina Rahman"
+          [(ngModel)]="prescription.doctorName"
+        >
+      </div>
+
+
+      <!-- Department -->
+      <div class="col-md-6">
+        <label class="form-label">Department</label>
+
+        <select
+          class="form-select"
+          [(ngModel)]="prescription.department"
+        >
+          <option value="">Select Department</option>
+          <option value="Cardiology">Cardiology</option>
+          <option value="Medicine">Medicine</option>
+          <option value="Neurology">Neurology</option>
+          <option value="Orthopedics">Orthopedics</option>
+          <option value="General Surgery">General Surgery</option>
+        </select>
+      </div>
+
+    </div>
+
+
+    <hr>
+
+
+    <!-- ================= DIAGNOSIS ================= -->
+    <div class="section-title">
+      <i class="bi bi-clipboard2-pulse"></i>
+
+      <div>
+        <h5>Diagnosis</h5>
+        <small>Patient's diagnosis</small>
+      </div>
+    </div>
+
+
+    <div class="mb-4">
+
+      <label class="form-label">
+        Diagnosis <span class="text-danger">*</span>
+      </label>
+
+      <textarea
+        class="form-control"
+        rows="3"
+        placeholder="Enter diagnosis..."
+        [(ngModel)]="prescription.diagnosis"
+      ></textarea>
+
+    </div>
+
+
+    <!-- ================= MEDICINE ================= -->
+    <div class="section-title">
+      <i class="bi bi-capsule"></i>
+
+      <div>
+        <h5>Medicine</h5>
+        <small>Prescribed medicine details</small>
+      </div>
+    </div>
+
+
+    <div class="medicine-box">
+
+      <div class="row g-3">
+
+        <!-- Medicine Name -->
+        <div class="col-md-4">
+
+          <label class="form-label">
+            Medicine Name <span class="text-danger">*</span>
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            placeholder="e.g. Napa"
+            [(ngModel)]="prescription.medicineName"
+          >
+
+        </div>
+
+
+        <!-- Dosage -->
+        <div class="col-md-2">
+
+          <label class="form-label">Dosage</label>
+
+          <input
+            type="text"
+            class="form-control"
+            placeholder="500 mg"
+            [(ngModel)]="prescription.dosage"
+          >
+
+        </div>
+
+
+        <!-- Frequency -->
+        <div class="col-md-2">
+
+          <label class="form-label">Frequency</label>
+
+          <select
+            class="form-select"
+            [(ngModel)]="prescription.frequency"
+          >
+            <option value="1+0+1">1+0+1</option>
+            <option value="1+1+1">1+1+1</option>
+            <option value="0+0+1">0+0+1</option>
+            <option value="1+1+0">1+1+0</option>
+          </select>
+
+        </div>
+
+
+        <!-- Duration -->
+        <div class="col-md-2">
+
+          <label class="form-label">Duration</label>
+
+          <input
+            type="text"
+            class="form-control"
+            placeholder="5 Days"
+            [(ngModel)]="prescription.duration"
+          >
+
+        </div>
+
+
+        <!-- Instruction -->
+        <div class="col-md-2">
+
+          <label class="form-label">Instruction</label>
+
+          <select
+            class="form-select"
+            [(ngModel)]="prescription.instruction"
+          >
+            <option value="After Meal">After Meal</option>
+            <option value="Before Meal">Before Meal</option>
+            <option value="With Food">With Food</option>
+          </select>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================= ADDITIONAL ADVICE ================= -->
+    <div class="section-title mt-4">
+
+      <i class="bi bi-chat-left-text"></i>
+
+      <div>
+        <h5>Additional Advice</h5>
+        <small>Instructions for the patient</small>
+      </div>
+
+    </div>
+
+
+    <textarea
+      class="form-control"
+      rows="4"
+      placeholder="Enter additional advice..."
+      [(ngModel)]="prescription.advice"
+    ></textarea>
+
+
+    <!-- ================= ACTION BUTTONS ================= -->
+    <div class="form-actions">
+
+      <!-- Cancel -->
+      <button
+        type="button"
+        class="btn btn-light"
+        (click)="cancel()"
+      >
+        <i class="bi bi-x-circle"></i>
+        Cancel
+      </button>
+
+
+      <!-- Save -->
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="savePrescription()"
+      >
+        <i class="bi bi-check-circle"></i>
+        Save Prescription
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

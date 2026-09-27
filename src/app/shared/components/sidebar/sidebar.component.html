@@ -1,0 +1,334 @@
+<aside class="sidebar" [class.open]="isOpen">
+
+  <!-- ================= SIDEBAR CONTENT ================= -->
+  <div class="sidebar-content">
+
+    <div class="welcome-user">
+
+      <div class="welcome-title">
+        Welcome,
+         {{ userName }}
+      </div>
+
+      <div class="online-status">
+        <span class="online-dot"></span>
+        <span>{{ roleLabel }} · Online</span>
+      </div>
+
+    </div>
+
+    <!-- ================= SIDEBAR MENU ================= -->
+    <nav class="sidebar-menu">
+
+      <!-- ================= 01 MAIN ================= -->
+      <div class="menu-section-title">
+        MAIN
+      </div>
+
+      <a [routerLink]="dashboardLink" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+        class="menu-item">
+
+        <span class="menu-number">01</span>
+
+        <i class="bi bi-grid-1x2-fill"></i>
+
+        <span class="menu-text">
+          Dashboard
+        </span>
+
+      </a>
+
+
+      <!-- ================= 02 ADMINISTRATION ================= -->
+      <div *ngIf="role === 'admin'" class="menu-section-title">
+
+        ADMINISTRATION
+
+      </div>
+
+
+      <!-- USER MANAGEMENT -->
+      <details *ngIf="role === 'admin'" class="menu-group">
+
+        <summary class="menu-item menu-parent">
+
+          <span class="menu-number">02</span>
+
+          <i class="bi bi-person-gear"></i>
+
+          <span class="menu-text">
+            User Management
+          </span>
+
+          <i class="bi bi-chevron-down submenu-arrow"></i>
+
+        </summary>
+
+
+        <!-- USER MANAGEMENT SUBMENU -->
+        <div class="submenu">
+
+          <a routerLink="/admin/users" [queryParams]="{ tab: 'all' }" routerLinkActive="active-submenu"
+            class="submenu-item">
+
+            <i class="bi bi-people"></i>
+            <span>All Users</span>
+
+          </a>
+
+
+          <a routerLink="/admin/users" [queryParams]="{ tab: 'add' }" class="submenu-item">
+
+            <i class="bi bi-person-plus"></i>
+            <span>Add New User</span>
+
+          </a>
+
+
+          <a routerLink="/admin/users" [queryParams]="{ tab: 'pending' }" class="submenu-item">
+
+            <i class="bi bi-person-check"></i>
+            <span>Pending Approval</span>
+
+          </a>
+
+
+          <a routerLink="/admin/users" [queryParams]="{ tab: 'roles' }" class="submenu-item">
+
+            <i class="bi bi-shield-lock"></i>
+            <span>Roles &amp; Permissions</span>
+
+          </a>
+
+        </div>
+
+      </details>
+
+
+      <!-- ================= 03-05 PATIENT MANAGEMENT ================= -->
+      <div class="menu-section-title">
+        PATIENT MANAGEMENT
+      </div>
+
+
+      <!-- 03 PATIENTS -->
+      <a *ngIf="canSee('admin', 'doctor', 'receptionist', 'nurse')" routerLink="/admin/patients"
+        routerLinkActive="active" class="menu-item">
+
+        <span class="menu-number">03</span>
+
+        <i class="bi bi-people-fill"></i>
+
+        <span class="menu-text">
+          Patients
+        </span>
+
+      </a>
+
+
+      <!-- 04 DOCTORS -->
+      <a *ngIf="canSee('admin', 'doctor', 'receptionist')" routerLink="/admin/doctors" routerLinkActive="active"
+        class="menu-item">
+
+        <span class="menu-number">04</span>
+
+        <i class="bi bi-person-badge-fill"></i>
+
+        <span class="menu-text">
+          Doctors
+        </span>
+
+      </a>
+
+
+      <!-- 08 NURSING -->
+      <a *ngIf="canSee('admin', 'doctor', 'nurse')" routerLink="/admin/nursing" routerLinkActive="active"
+        class="menu-item">
+
+        <span class="menu-number">08</span>
+
+        <i class="bi bi-heart-pulse-fill"></i>
+
+        <span class="menu-text">
+          Nursing
+        </span>
+
+      </a>
+
+
+
+      <!-- 05 APPOINTMENTS -->
+      <a *ngIf="canSee('admin', 'doctor', 'receptionist')" routerLink="/admin/appointments" routerLinkActive="active"
+        class="menu-item">
+
+        <span class="menu-number">05</span>
+
+        <i class="bi bi-calendar-check"></i>
+
+        <span class="menu-text">
+          Appointments
+        </span>
+
+      </a>
+
+
+      <!-- ================= 06-10 CLINICAL ================= -->
+      <div class="menu-section-title">
+        CLINICAL SERVICES
+      </div>
+
+
+      <!-- 06 CONSULTATIONS -->
+      <a *ngIf="canSee('admin', 'doctor', 'nurse')" routerLink="/admin/consultations" routerLinkActive="active"
+        class="menu-item">
+
+        <span class="menu-number">06</span>
+
+        <i class="bi bi-chat-left-text-fill"></i>
+
+        <span class="menu-text">
+          Consultations
+        </span>
+
+      </a>
+
+
+      <!-- 07 ADMISSIONS -->
+
+      <a *ngIf="canSee('admin', 'doctor', 'receptionist', 'nurse')" routerLink="/admin/admissions"
+        routerLinkActive="active" class="menu-item">
+
+        <span class="menu-number">07</span>
+
+        <i class="bi bi-door-open-fill"></i>
+
+        <span class="menu-text">
+          Admissions
+        </span>
+
+      </a>
+
+      <!-- 09 LABORATORY -->
+      <a *ngIf="canSee('admin', 'doctor', 'nurse', 'laboratory_staff')" routerLink="/admin/laboratory"
+        routerLinkActive="active" class="menu-item">
+
+        <span class="menu-number">09</span>
+
+        <i class="bi bi-eyedropper"></i>
+
+        <span class="menu-text">
+          Laboratory
+        </span>
+
+      </a>
+
+
+      <!-- 10 PHARMACY -->
+      <a *ngIf="canSee('admin', 'doctor', 'nurse', 'pharmacy_staff')" routerLink="/admin/pharmacy"
+        routerLinkActive="active" class="menu-item">
+
+        <span class="menu-number">10</span>
+
+        <i class="bi bi-capsule"></i>
+
+        <span class="menu-text">
+          Pharmacy
+        </span>
+
+      </a>
+
+
+      <!-- ================= 11-12 FINANCE ================= -->
+      <div class="menu-section-title">
+        FINANCE
+      </div>
+
+
+      <!-- 11 BILLING -->
+      <a *ngIf="canSee('admin', 'accounts_staff', 'receptionist')" routerLink="/admin/billing" routerLinkActive="active"
+        class="menu-item">
+
+        <span class="menu-number">11</span>
+
+        <i class="bi bi-receipt-cutoff"></i>
+
+        <span class="menu-text">
+          Billing
+        </span>
+
+      </a>
+
+
+      <!-- 12 DISCHARGE -->
+      <a *ngIf="canSee('admin', 'doctor', 'receptionist', 'nurse')" routerLink="/admin/discharge"
+        routerLinkActive="active" class="menu-item">
+
+        <span class="menu-number">12</span>
+
+        <i class="bi bi-box-arrow-right"></i>
+
+        <span class="menu-text">
+          Discharge
+        </span>
+
+      </a>
+
+
+      <!-- ================= 13-14 SYSTEM ================= -->
+      <div *ngIf="role === 'admin'" class="menu-section-title">
+
+        REPORTING &amp; SYSTEM
+
+      </div>
+
+
+      <!-- 13 REPORTS -->
+      <a *ngIf="role === 'admin'" routerLink="/admin/reports" routerLinkActive="active" class="menu-item">
+
+        <span class="menu-number">13</span>
+
+        <i class="bi bi-bar-chart-fill"></i>
+
+        <span class="menu-text">
+          Reports
+        </span>
+
+      </a>
+
+
+      <!-- 14 SETTINGS -->
+      <a *ngIf="role === 'admin'" routerLink="/admin/settings" routerLinkActive="active" class="menu-item">
+
+        <span class="menu-number">14</span>
+
+        <i class="bi bi-gear-fill"></i>
+
+        <span class="menu-text">
+          Settings
+        </span>
+
+      </a>
+
+    </nav>
+
+
+    <!-- ================= LOGOUT ================= -->
+    <div class="sidebar-bottom">
+
+      <button type="button" class="menu-item logout" (click)="logout()">
+
+        <span class="menu-number"></span>
+
+        <i class="bi bi-box-arrow-left"></i>
+
+        <span class="menu-text">
+          Logout
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</aside>

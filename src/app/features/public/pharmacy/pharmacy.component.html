@@ -1,0 +1,368 @@
+<section class="pharmacy-page">
+
+  <!-- HERO -->
+  <section class="pharmacy-hero">
+
+    <div class="container">
+
+      <div class="row align-items-center g-5">
+
+        <div class="col-lg-6">
+
+          <div class="hero-content">
+
+            <span class="hero-badge">
+              <i class="bi bi-capsule-fill me-2"></i>
+              HOSPITAL PHARMACY
+            </span>
+
+            <h1>
+              Safe Medicines
+              <span>Trusted Care</span>
+            </h1>
+
+            <p>
+              Our hospital pharmacy provides quality medicines,
+              professional pharmacist support and convenient
+              medication services for patients.
+            </p>
+
+            <div class="hero-buttons">
+
+              <a
+                routerLink="/appointment"
+                class="btn btn-success btn-lg"
+              >
+                <i class="bi bi-calendar-check me-2"></i>
+                Book Appointment
+              </a>
+
+              <a
+                href="#pharmacy-services"
+                class="btn btn-outline-success btn-lg"
+              >
+                <i class="bi bi-arrow-down-circle me-2"></i>
+                Explore Services
+              </a>
+
+            </div>
+
+            <div class="hero-features">
+
+              <div>
+                <i class="bi bi-shield-check-fill"></i>
+                <span>Quality Medicines</span>
+              </div>
+
+              <div>
+                <i class="bi bi-clock-fill"></i>
+                <span>24/7 Service</span>
+              </div>
+
+              <div>
+                <i class="bi bi-person-check-fill"></i>
+                <span>Expert Support</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="col-lg-6">
+
+          <div class="hero-image-wrapper">
+
+            <img
+              src="assets/pharmacy.jpg"
+              alt="Hospital Pharmacy"
+              class="img-fluid"
+            >
+
+            <div class="floating-card">
+
+              <div class="floating-icon">
+                <i class="bi bi-capsule-fill"></i>
+              </div>
+
+              <div>
+                <strong>Pharmacy Care</strong>
+                <small>Safe & Reliable Medicines</small>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SERVICES -->
+  <section
+    class="pharmacy-services py-5"
+    id="pharmacy-services"
+  >
+
+    <div class="container">
+
+      <div class="section-heading text-center mb-5">
+
+        <span class="section-label">
+          Pharmacy Services
+        </span>
+
+        <h2>
+          Complete Pharmacy Support
+        </h2>
+
+        <p>
+          Convenient and reliable pharmacy services for patients,
+          families and hospital departments.
+        </p>
+
+      </div>
+
+
+      <div class="row g-4">
+
+        @for (service of pharmacyServices; track service.title) {
+
+          <div class="col-md-6 col-lg-4">
+
+            <div class="service-card h-100">
+
+              <div class="service-icon">
+
+                <i [class]="service.icon"></i>
+
+              </div>
+
+              <h4>
+                {{ service.title }}
+              </h4>
+
+              <p>
+                {{ service.description }}
+              </p>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- MEDICINE CATEGORIES -->
+  <section class="medicine-section py-5">
+
+    <div class="container">
+
+      <div class="row align-items-center g-5">
+
+        <div class="col-lg-6">
+
+          <span class="section-label">
+            Medicine Categories
+          </span>
+
+          <h2>
+            Medicines & Healthcare Products
+          </h2>
+
+          <p class="section-description">
+            Our pharmacy supports patients with commonly required
+            medicines and healthcare products under professional
+            pharmacy supervision.
+          </p>
+
+          <div class="category-grid">
+
+            @for (category of categories; track category) {
+
+              <div class="category-item">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                <span>
+                  {{ category }}
+                </span>
+
+              </div>
+
+            }
+
+          </div>
+
+        </div>
+
+
+        <div class="col-lg-6">
+
+          <div class="pharmacy-info-box">
+
+            <div class="info-icon">
+              <i class="bi bi-person-badge-fill"></i>
+            </div>
+
+            <h3>
+              Professional Pharmacist Support
+            </h3>
+
+            <p>
+              Our pharmacy team helps patients understand their
+              prescribed medicines, dosage instructions and
+              medication-related information.
+            </p>
+
+            <div class="info-list">
+
+              <div>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Prescription-based medicine dispensing</span>
+              </div>
+
+              <div>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Professional pharmacist assistance</span>
+              </div>
+
+              <div>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Proper medicine storage</span>
+              </div>
+
+              <div>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Patient-focused pharmacy service</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SAFETY -->
+  <section class="pharmacy-safety py-5">
+
+    <div class="container">
+
+      <div class="row g-4">
+
+        <div class="col-md-4">
+
+          <div class="safety-card">
+
+            <i class="bi bi-shield-check-fill"></i>
+
+            <h4>
+              Safe Medicines
+            </h4>
+
+            <p>
+              Medicines are handled with proper care and attention.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+          <div class="safety-card">
+
+            <i class="bi bi-person-check-fill"></i>
+
+            <h4>
+              Expert Guidance
+            </h4>
+
+            <p>
+              Get support from trained pharmacy professionals.
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+          <div class="safety-card">
+
+            <i class="bi bi-clock-history"></i>
+
+            <h4>
+              Convenient Service
+            </h4>
+
+            <p>
+              Pharmacy services are available to support patients.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CTA -->
+  <section class="pharmacy-cta py-5">
+
+    <div class="container">
+
+      <div class="cta-box text-center">
+
+        <div class="cta-icon">
+          <i class="bi bi-capsule-fill"></i>
+        </div>
+
+        <h2>
+          Need Medical Care?
+        </h2>
+
+        <p>
+          Book an appointment with our medical team for
+          professional healthcare support.
+        </p>
+
+        <a
+          routerLink="/appointment"
+          class="btn btn-light btn-lg"
+        >
+          <i class="bi bi-calendar-check me-2"></i>
+          Book Appointment
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>

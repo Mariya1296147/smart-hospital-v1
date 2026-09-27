@@ -1,0 +1,306 @@
+<section class="laboratory-page">
+
+  <!-- HERO -->
+  <section class="lab-hero">
+
+    <div class="container">
+
+      <div class="row align-items-center g-5">
+
+        <div class="col-lg-6">
+
+          <div class="hero-content">
+
+            <span class="hero-badge">
+              <i class="bi bi-eyedropper me-2"></i>
+              MODERN DIAGNOSTIC LABORATORY
+            </span>
+
+            <h1>
+              Accurate Testing
+              <span>You Can Trust</span>
+            </h1>
+
+            <p>
+              Our laboratory provides reliable diagnostic testing
+              with modern technology, experienced professionals
+              and accurate reporting.
+            </p>
+
+            <div class="hero-buttons">
+
+              <a
+                routerLink="/appointment"
+                class="btn btn-primary btn-lg"
+              >
+                <i class="bi bi-calendar-check me-2"></i>
+                Book Appointment
+              </a>
+
+              <a
+                href="#tests"
+                class="btn btn-outline-primary btn-lg"
+              >
+                <i class="bi bi-list-check me-2"></i>
+                View Tests
+              </a>
+
+            </div>
+
+            <div class="hero-features">
+
+              <div>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Accurate Results</span>
+              </div>
+
+              <div>
+                <i class="bi bi-clock-fill"></i>
+                <span>Fast Reports</span>
+              </div>
+
+              <div>
+                <i class="bi bi-shield-check-fill"></i>
+                <span>Trusted Service</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+          <div class="hero-image-wrapper">
+
+            <img
+              src="assets/lab.png"
+              alt="Hospital Laboratory"
+              class="img-fluid"
+            >
+
+            <div class="floating-card">
+
+              <div class="floating-icon">
+                <i class="bi bi-clipboard2-pulse-fill"></i>
+              </div>
+
+              <div>
+                <strong>Reliable Reports</strong>
+                <small>Modern Diagnostic Care</small>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- SERVICES -->
+  <section class="lab-services py-5">
+
+    <div class="container">
+
+      <div class="section-heading text-center mb-5">
+
+        <span class="section-label">
+          Laboratory Services
+        </span>
+
+        <h2>
+          Complete Diagnostic Services
+        </h2>
+
+        <p>
+          Professional laboratory services designed to support
+          accurate diagnosis and better healthcare decisions.
+        </p>
+
+      </div>
+
+
+      <div class="row g-4">
+
+        @for (service of laboratoryServices; track service.title) {
+
+          <div class="col-md-6 col-lg-4">
+
+            <div class="service-card h-100">
+
+              <div class="service-icon">
+
+                <i [class]="service.icon"></i>
+
+              </div>
+
+              <h4>
+                {{ service.title }}
+              </h4>
+
+              <p>
+                {{ service.description }}
+              </p>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- TESTS -->
+  <section
+    class="lab-tests py-5"
+    id="tests"
+  >
+
+    <div class="container">
+
+      <div class="row align-items-center g-5">
+
+        <div class="col-lg-6">
+
+          <span class="section-label">
+            Popular Tests
+          </span>
+
+          <h2>
+            Laboratory Tests We Provide
+          </h2>
+
+          <p class="section-description">
+            Our laboratory offers a wide range of routine and
+            specialized diagnostic tests to help doctors make
+            informed treatment decisions.
+          </p>
+
+          <div class="tests-grid">
+
+            @for (test of tests; track test) {
+
+              <div class="test-item">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                <span>
+                  {{ test }}
+                </span>
+
+              </div>
+
+            }
+
+          </div>
+
+          <a
+            routerLink="/appointment"
+            class="btn btn-primary mt-4"
+          >
+            <i class="bi bi-calendar-check me-2"></i>
+            Book Laboratory Appointment
+          </a>
+
+        </div>
+
+
+        <div class="col-lg-6">
+
+          <div class="lab-info-box">
+
+            <div class="info-icon">
+              <i class="bi bi-clock-history"></i>
+            </div>
+
+            <h3>
+              Fast & Reliable Results
+            </h3>
+
+            <p>
+              Our laboratory team focuses on accurate testing,
+              proper sample handling and timely reporting.
+            </p>
+
+            <div class="info-list">
+
+              <div>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Experienced laboratory professionals</span>
+              </div>
+
+              <div>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Modern diagnostic equipment</span>
+              </div>
+
+              <div>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Accurate laboratory reports</span>
+              </div>
+
+              <div>
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Patient-focused service</span>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CTA -->
+  <section class="lab-cta py-5">
+
+    <div class="container">
+
+      <div class="cta-box text-center">
+
+        <div class="cta-icon">
+          <i class="bi bi-eyedropper"></i>
+        </div>
+
+        <h2>
+          Need a Laboratory Test?
+        </h2>
+
+        <p>
+          Book an appointment and get professional diagnostic
+          services from our laboratory team.
+        </p>
+
+        <a
+          routerLink="/appointment"
+          class="btn btn-light btn-lg"
+        >
+          <i class="bi bi-calendar-check me-2"></i>
+          Book Appointment
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>

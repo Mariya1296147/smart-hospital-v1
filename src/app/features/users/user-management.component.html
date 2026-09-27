@@ -1,0 +1,475 @@
+<div class="container-fluid py-2">
+
+    <!-- ================= HEADER ================= -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="h3 mb-1 fw-bold">User Management</h2>
+            <p class="text-muted mb-0">
+                Approve staff accounts and manage access roles.
+            </p>
+        </div>
+
+        <div class="d-flex align-items-center gap-2">
+
+            <span class="badge bg-primary px-3 py-2">
+                {{ users.length }} accounts
+            </span>
+
+            <button
+                *ngIf="!showAddForm"
+                type="button"
+                class="btn btn-primary px-3"
+                (click)="openAddForm()">
+
+                <i class="bi bi-person-plus me-1"></i>
+                Add New User
+
+            </button>
+
+        </div>
+    </div>
+
+
+    <!-- ================= ADD NEW USER FORM ================= -->
+    <div *ngIf="showAddForm" class="card border-0 shadow-sm mb-4">
+
+        <div class="card-header bg-primary text-white py-3">
+            <h5 class="mb-0 fw-semibold">
+                <i class="bi bi-person-plus me-2"></i>
+                Add New User
+            </h5>
+        </div>
+
+        <div class="card-body p-4">
+
+            <form #userForm="ngForm" (ngSubmit)="createUser()">
+
+                <div class="row g-3">
+
+                    <!-- NAME -->
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="name"
+                            [(ngModel)]="newUser.name"
+                            placeholder="Enter full name"
+                            required>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            class="form-control"
+                            name="email"
+                            [(ngModel)]="newUser.email"
+                            placeholder="Enter email address"
+                            required>
+
+                    </div>
+
+
+                    <!-- PHONE -->
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            class="form-control"
+                            name="phone"
+                            [(ngModel)]="newUser.phone"
+                            placeholder="017XXXXXXXX"
+                            required>
+
+                    </div>
+
+
+                    <!-- ROLE -->
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Position / Role
+                        </label>
+
+                        <select
+                            class="form-select"
+                            name="role"
+                            [(ngModel)]="newUser.role"
+                            required>
+
+                            <option value="" disabled>
+                                Select Role
+                            </option>
+
+                            <option
+                                *ngFor="let role of roles"
+                                [value]="role">
+
+                                {{ labels[role] }}
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- DEPARTMENT -->
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Department
+                        </label>
+
+                        <select
+                            class="form-select"
+                            name="department"
+                            [(ngModel)]="newUser.department"
+                            required>
+
+                            <option value="" disabled>
+                                Select Department
+                            </option>
+
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Neurology">Neurology</option>
+                            <option value="General Medicine">General Medicine</option>
+                            <option value="Surgery">Surgery</option>
+                            <option value="Pediatrics">Pediatrics</option>
+                            <option value="Gynecology">Gynecology</option>
+                            <option value="Orthopedics">Orthopedics</option>
+                            <option value="Emergency">Emergency</option>
+                            <option value="Nursing">Nursing</option>
+                            <option value="Laboratory">Laboratory</option>
+                            <option value="Pharmacy">Pharmacy</option>
+                            <option value="Accounts">Accounts</option>
+                            <option value="Reception">Reception</option>
+                            <option value="Administration">Administration</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- EDUCATION -->
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Educational Qualification
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="education"
+                            [(ngModel)]="newUser.education"
+                            placeholder="e.g. MBBS, BSc in Nursing, B.Pharm"
+                            required>
+
+                    </div>
+
+
+                    <!-- EXPERIENCE -->
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Work Experience
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="experience"
+                            [(ngModel)]="newUser.experience"
+                            placeholder="e.g. 5 Years"
+                            required>
+
+                    </div>
+
+
+                    <!-- NID -->
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            NID Number
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="nid"
+                            [(ngModel)]="newUser.nid"
+                            placeholder="Enter NID number"
+                            required>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            class="form-control"
+                            name="password"
+                            [(ngModel)]="newUser.password"
+                            placeholder="Create password"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FORM BUTTONS -->
+                <div class="d-flex justify-content-end gap-2 mt-4">
+
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary px-4"
+                        (click)="closeAddForm()">
+
+                        Cancel
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary px-4"
+                        [disabled]="userForm.invalid">
+
+                        <i class="bi bi-person-check me-1"></i>
+                        Create User
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= STAFF ACCOUNTS ================= -->
+    <div class="card border-0 shadow-sm">
+
+        <!-- CARD HEADER -->
+        <div class="card-header bg-white border-bottom py-3 px-4">
+
+            <div class="d-flex align-items-center">
+
+                <div
+                    class="rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center me-3"
+                    style="width: 40px; height: 40px;">
+
+                    <i class="bi bi-people fs-5"></i>
+
+                </div>
+
+                <div>
+
+                    <h5 class="mb-0 fw-semibold">
+                        Staff Accounts
+                    </h5>
+
+                    <small class="text-muted">
+                        Manage hospital staff access
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- TABLE -->
+        <div class="table-responsive">
+
+            <table class="table table-hover align-middle mb-0">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th class="ps-4 py-3 text-nowrap">
+                            Staff Member
+                        </th>
+
+                        <th class="py-3 text-nowrap">
+                            Role
+                        </th>
+
+                        <th class="py-3 text-nowrap">
+                            Status
+                        </th>
+
+                        <th class="py-3 text-nowrap">
+                            Created
+                        </th>
+
+                        <th class="py-3 text-center text-nowrap">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    <tr *ngFor="let user of users">
+
+                        <!-- STAFF MEMBER -->
+                        <td class="ps-4 py-3">
+
+                            <div class="d-flex align-items-center">
+
+                                <div
+                                    class="rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center me-3 flex-shrink-0"
+                                    style="width: 42px; height: 42px;">
+
+                                    <i class="bi bi-person-fill fs-5"></i>
+
+                                </div>
+
+                                <div>
+
+                                    <div class="fw-semibold text-dark">
+                                        {{ user.name }}
+                                    </div>
+
+                                    <small class="text-muted">
+                                        {{ user.email }}
+                                    </small>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- ROLE -->
+                        <td class="py-3">
+
+                            <select
+                                class="form-select form-select-sm"
+                                [ngModel]="user.role"
+                                (ngModelChange)="update(user.id, { role: $event })"
+                                [disabled]="user.role === 'admin'"
+                                style="width: 150px;">
+
+                                <option
+                                    *ngFor="let role of roles"
+                                    [value]="role">
+
+                                    {{ labels[role] }}
+
+                                </option>
+
+                            </select>
+
+                        </td>
+
+
+                        <!-- STATUS -->
+                        <td class="py-3">
+
+                            <span
+                                class="badge rounded-pill px-3 py-2"
+                                [class]="statusClass(user.status)">
+
+                                {{ user.status | titlecase }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- CREATED -->
+                        <td class="py-3 text-muted text-nowrap">
+
+                            {{ user.createdAt | date:'mediumDate' }}
+
+                        </td>
+
+
+                        <!-- ACTIONS -->
+                        <td class="py-3 text-center text-nowrap">
+
+                            <!-- APPROVE -->
+                            <button
+                                *ngIf="user.status === 'pending'"
+                                type="button"
+                                class="btn btn-sm btn-success me-1"
+                                (click)="update(user.id, { status: 'approved' })">
+
+                                <i class="bi bi-check-circle me-1"></i>
+                                Approve
+
+                            </button>
+
+
+                            <!-- ACTIVATE -->
+                            <button
+                                *ngIf="user.role !== 'admin' && user.status === 'inactive'"
+                                type="button"
+                                class="btn btn-sm btn-outline-success me-1"
+                                (click)="update(user.id, { status: 'approved' })">
+
+                                <i class="bi bi-person-check me-1"></i>
+                                Activate
+
+                            </button>
+
+
+                            <!-- DEACTIVATE -->
+                            <button
+                                *ngIf="user.role !== 'admin' && user.status !== 'inactive'"
+                                type="button"
+                                class="btn btn-sm btn-outline-danger"
+                                (click)="update(user.id, { status: 'inactive' })">
+
+                                <i class="bi bi-person-x me-1"></i>
+                                Deactivate
+
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

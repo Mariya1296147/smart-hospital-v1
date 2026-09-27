@@ -1,0 +1,241 @@
+<div class="doctor-view-page">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+
+    <div>
+      <h1>
+        <i class="bi bi-person-vcard-fill"></i>
+        Doctor Details
+      </h1>
+
+      <p>
+        View complete doctor information
+      </p>
+    </div>
+
+    <a
+      routerLink="/admin/doctors"
+      class="back-btn">
+
+      <i class="bi bi-arrow-left"></i>
+      Back to Doctors
+
+    </a>
+
+  </div>
+
+
+  <!-- DOCTOR PROFILE -->
+  <div class="profile-card">
+
+    <!-- PROFILE HEADER -->
+    <div class="profile-header">
+
+      <div class="doctor-avatar">
+        <i class="bi bi-person-fill"></i>
+      </div>
+
+      <div class="doctor-title">
+
+        <h2>
+          {{ doctor?.name || 'Doctor Name' }}
+        </h2>
+
+        <p>
+          {{ doctor?.specialization || 'Specialization' }}
+        </p>
+
+        <span
+          class="status-badge"
+          [class.active]="doctor?.status === 'Active'"
+          [class.inactive]="doctor?.status === 'Inactive'">
+
+          <span class="status-dot"></span>
+
+          {{ doctor?.status || 'Active' }}
+
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- INFORMATION -->
+    <div class="information-section">
+
+      <h3>
+        <i class="bi bi-person-lines-fill"></i>
+        Personal & Professional Information
+      </h3>
+
+
+      <div class="info-grid">
+
+        <!-- NAME -->
+        <div class="info-item">
+
+          <span class="info-label">
+            <i class="bi bi-person"></i>
+            Doctor Name
+          </span>
+
+          <strong>
+            {{ doctor?.name || 'Not available' }}
+          </strong>
+
+        </div>
+
+
+        <!-- SPECIALIZATION -->
+        <div class="info-item">
+
+          <span class="info-label">
+            <i class="bi bi-heart-pulse"></i>
+            Specialization
+          </span>
+
+          <strong>
+            {{ doctor?.specialization || 'Not available' }}
+          </strong>
+
+        </div>
+
+
+        <!-- DEPARTMENT -->
+        <div class="info-item">
+
+          <span class="info-label">
+            <i class="bi bi-building"></i>
+            Department
+          </span>
+
+          <strong>
+            {{ doctor?.department || 'Not available' }}
+          </strong>
+
+        </div>
+
+
+        <!-- EMAIL -->
+        <div class="info-item">
+
+          <span class="info-label">
+            <i class="bi bi-envelope"></i>
+            Email
+          </span>
+
+          <strong>
+            {{ doctor?.email || 'Not available' }}
+          </strong>
+
+        </div>
+
+
+        <!-- PHONE -->
+        <div class="info-item">
+
+          <span class="info-label">
+            <i class="bi bi-telephone"></i>
+            Phone
+          </span>
+
+          <strong>
+            {{ doctor?.phone || 'Not available' }}
+          </strong>
+
+        </div>
+
+
+        <!-- QUALIFICATION -->
+        <div class="info-item">
+
+          <span class="info-label">
+            <i class="bi bi-mortarboard"></i>
+            Qualification
+          </span>
+
+          <strong>
+            {{ doctor?.qualification || 'Not available' }}
+          </strong>
+
+        </div>
+
+
+        <!-- EXPERIENCE -->
+        <div class="info-item">
+
+          <span class="info-label">
+            <i class="bi bi-briefcase"></i>
+            Experience
+          </span>
+
+          <strong>
+            {{ doctor?.experience || 'Not available' }}
+          </strong>
+
+        </div>
+
+
+        <!-- STATUS -->
+        <div class="info-item">
+
+          <span class="info-label">
+            <i class="bi bi-toggle-on"></i>
+            Status
+          </span>
+
+          <strong>
+            {{ doctor?.status || 'Not available' }}
+          </strong>
+
+        </div>
+
+
+        <!-- ADDRESS -->
+        <div class="info-item full-width">
+
+          <span class="info-label">
+            <i class="bi bi-geo-alt"></i>
+            Address
+          </span>
+
+          <strong>
+            {{ doctor?.address || 'Not available' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+    <div class="profile-actions">
+
+      <a
+        routerLink="/admin/doctors"
+        class="cancel-btn">
+
+        <i class="bi bi-arrow-left"></i>
+        Back
+
+      </a>
+
+      <button
+        type="button"
+        class="edit-btn"
+        (click)="editDoctor()">
+
+        <i class="bi bi-pencil"></i>
+        Edit Doctor
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

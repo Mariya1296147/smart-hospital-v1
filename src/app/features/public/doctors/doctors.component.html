@@ -1,0 +1,169 @@
+<!-- ================= DOCTORS HERO ================= -->
+
+<section class="doctors-hero">
+
+  <img
+    src="assets/ddss.jpg"
+    alt="Our Doctors"
+    class="hero-image"
+  >
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+
+    <span class="hero-badge">
+      <i class="bi bi-person-badge-fill"></i>
+      Our Medical Team
+    </span>
+
+    <h1>Meet Our Doctors</h1>
+
+    <p>
+      Experienced and dedicated medical professionals
+      committed to providing quality healthcare.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- ================= INTRO ================= -->
+
+<section class="intro-section">
+
+  <div class="container">
+
+    <div class="section-heading">
+
+      <span>OUR SPECIALISTS</span>
+
+      <h2>Experienced Medical Professionals</h2>
+
+      <p>
+        Our team of qualified doctors provides specialized
+        medical care across different departments.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= DOCTORS ================= -->
+
+<section class="doctors-section">
+
+  <div class="container">
+
+    <div class="doctors-grid">
+
+      <div
+        class="doctor-card"
+        *ngFor="let doctor of doctors"
+      >
+
+        <!-- Doctor Image -->
+
+        <div class="doctor-image">
+
+          <img
+            [src]="doctor.image"
+            [alt]="doctor.name"
+          >
+
+          <span class="available-badge">
+            <span class="online-dot"></span>
+            Available
+          </span>
+
+        </div>
+
+
+        <!-- Doctor Info -->
+
+        <div class="doctor-info">
+
+          <h3>{{ doctor.name }}</h3>
+
+          <span class="specialty">
+            {{ doctor.specialty }}
+          </span>
+
+          <div class="doctor-details">
+
+            <div>
+              <i class="bi bi-hospital"></i>
+              {{ doctor.department }}
+            </div>
+
+            <div>
+              <i class="bi bi-mortarboard-fill"></i>
+              {{ doctor.qualification }}
+            </div>
+
+            <div>
+              <i class="bi bi-clock-history"></i>
+              {{ doctor.experience }}
+            </div>
+
+          </div>
+
+
+          <a
+            routerLink="/appointment"
+            class="appointment-btn"
+          >
+            <i class="bi bi-calendar-check"></i>
+            Book Appointment
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="doctor-cta">
+
+  <div class="container">
+
+    <div class="cta-content">
+
+      <div>
+
+        <span>NEED MEDICAL CONSULTATION?</span>
+
+        <h2>
+          Get the Right Care From the Right Doctor
+        </h2>
+
+        <p>
+          Schedule an appointment with one of our specialists today.
+        </p>
+
+      </div>
+
+      <a
+        routerLink="/appointment"
+        class="cta-button"
+      >
+        Book Appointment
+        <i class="bi bi-arrow-right"></i>
+      </a>
+
+    </div>
+
+  </div>
+
+</section>

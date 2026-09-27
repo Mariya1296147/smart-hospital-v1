@@ -1,0 +1,156 @@
+<div class="container-fluid py-4">
+
+  <div class="mb-4">
+    <h3 class="fw-bold">
+      {{ isEdit ? 'Edit Admission' : 'Add Admission' }}
+    </h3>
+
+    <p class="text-muted">
+      {{ isEdit
+        ? 'Update admission information'
+        : 'Create a new patient admission'
+      }}
+    </p>
+  </div>
+
+  <div class="card shadow-sm border-0">
+
+    <div class="card-body p-4">
+
+      <form (ngSubmit)="saveAdmission()">
+
+        <div class="row g-3">
+
+          <div class="col-md-6">
+            <label class="form-label">Admission ID</label>
+            <input
+              type="text"
+              class="form-control"
+              name="admissionId"
+              [(ngModel)]="admission.admissionId"
+              required>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Patient Name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="patientName"
+              [(ngModel)]="admission.patientName"
+              required>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Department</label>
+            <select
+              class="form-select"
+              name="department"
+              [(ngModel)]="admission.department"
+              required>
+
+              <option value="">Select Department</option>
+              <option>Cardiology</option>
+              <option>Neurology</option>
+              <option>Orthopedics</option>
+              <option>Medicine</option>
+              <option>Surgery</option>
+
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Doctor</label>
+            <input
+              type="text"
+              class="form-control"
+              name="doctor"
+              [(ngModel)]="admission.doctor"
+              required>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Admission Date</label>
+            <input
+              type="date"
+              class="form-control"
+              name="admissionDate"
+              [(ngModel)]="admission.admissionDate"
+              required>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Ward</label>
+            <select
+              class="form-select"
+              name="ward"
+              [(ngModel)]="admission.ward">
+
+              <option value="">Select Ward</option>
+              <option>General Ward</option>
+              <option>Private Ward</option>
+              <option>ICU</option>
+              <option>CCU</option>
+
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Bed Number</label>
+            <input
+              type="text"
+              class="form-control"
+              name="bed"
+              [(ngModel)]="admission.bed">
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Status</label>
+            <select
+              class="form-select"
+              name="status"
+              [(ngModel)]="admission.status">
+
+              <option>Admitted</option>
+              <option>Discharged</option>
+              <option>Transferred</option>
+
+            </select>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Reason for Admission</label>
+            <textarea
+              class="form-control"
+              rows="4"
+              name="reason"
+              [(ngModel)]="admission.reason">
+            </textarea>
+          </div>
+
+        </div>
+
+        <div class="mt-4 d-flex gap-2">
+
+          <button
+            type="submit"
+            class="btn btn-primary">
+            <i class="bi bi-check-lg me-2"></i>
+            {{ isEdit ? 'Update Admission' : 'Save Admission' }}
+          </button>
+
+          <a
+            routerLink="/admin/admissions"
+            class="btn btn-secondary">
+            Cancel
+          </a>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

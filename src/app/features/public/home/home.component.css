@@ -1,0 +1,1729 @@
+/* =========================================================
+   SMART HOSPITAL - PROFESSIONAL LANDING PAGE
+========================================================= */
+
+:host {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: 80px;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.page-container {
+  width: 100%;
+  max-width: 1500px;
+  margin: auto;
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+.section {
+  padding: 85px 0;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero-section {
+  min-height: 690px;
+  padding: 65px 0;
+
+  display: flex;
+  align-items: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f2f7ff 0%,
+      #ffffff 55%,
+      #edf6ff 100%
+    );
+
+  overflow: hidden;
+}
+
+.hero-content {
+  padding-left: 15px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 9px 18px;
+
+  background: #e7f0ff;
+  color: #0d6efd;
+
+  border-radius: 30px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  margin-bottom: 20px;
+}
+
+.hero-section h1 {
+  max-width: 700px;
+
+  color: #172033;
+
+  font-size: clamp(46px, 5vw, 70px);
+
+  line-height: 1.06;
+
+  font-weight: 800;
+
+  margin-bottom: 22px;
+}
+
+.hero-section h1 span {
+  display: block;
+  color: #0d6efd;
+}
+
+.hero-text {
+  max-width: 670px;
+
+  color: #667085;
+
+  font-size: 17px;
+
+  line-height: 1.8;
+
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
+
+.hero-buttons {
+  display: flex;
+
+  gap: 14px;
+
+  margin-top: 28px;
+
+  flex-wrap: wrap;
+}
+
+.hero-buttons .btn {
+  padding: 13px 25px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   HERO TRUST
+========================================================= */
+
+.hero-trust {
+  display: flex;
+
+  gap: 25px;
+
+  margin-top: 30px;
+
+  flex-wrap: wrap;
+}
+
+.hero-trust div {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #526071;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.hero-trust i {
+  color: #ff3131;
+
+  font-size: 20px;
+}
+
+
+/* =========================================================
+   HERO IMAGE
+========================================================= */
+
+.hero-image-wrapper {
+  position: relative;
+
+  padding: 15px 8px 15px 15px;
+}
+
+.hero-image {
+  display: block;
+
+  width: 100%;
+
+  height: 590px;
+
+  object-fit: cover;
+
+  border-radius: 30px;
+
+  box-shadow:
+    0 25px 70px
+    rgba(13, 110, 253, 0.20);
+}
+
+
+/* =========================================================
+   FLOATING CARDS
+========================================================= */
+
+.floating-card {
+  position: absolute;
+
+  z-index: 5;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 14px 18px;
+
+  background: #ffffff;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 18px 40px
+    rgba(0, 0, 0, 0.13);
+}
+
+.doctor-floating {
+  right: -5px;
+  top: 55px;
+}
+
+.emergency-floating {
+  left: -5px;
+  bottom: 55px;
+}
+
+.floating-icon {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: #e8f1ff;
+
+  color: #0d6efd;
+
+  border-radius: 11px;
+
+  font-size: 19px;
+}
+
+.floating-card small {
+  display: block;
+
+  color: #7a8494;
+
+  font-size: 10px;
+}
+
+.floating-card strong {
+  display: block;
+
+  color: #172033;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.stats-section {
+  position: relative;
+
+  z-index: 10;
+
+  margin-top: -30px;
+}
+
+.stat-card {
+  height: 100%;
+
+  padding: 27px 18px;
+
+  text-align: center;
+
+  background: #ffffff;
+
+  border-radius: 17px;
+
+  box-shadow:
+    0 15px 40px
+    rgba(0, 0, 0, 0.08);
+
+  transition: 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+}
+
+.stat-card i {
+  color: #0d6efd;
+
+  font-size: 27px;
+}
+
+.stat-card h3 {
+  color: #172033;
+
+  font-size: 32px;
+
+  font-weight: 800;
+
+  margin: 9px 0 3px;
+}
+
+.stat-card p {
+  color: #667085;
+
+  margin: 0;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   SECTION HEADING
+========================================================= */
+
+.section-heading {
+  max-width: 750px;
+
+  margin: 0 auto;
+}
+
+.section-badge {
+  display: inline-block;
+
+  padding: 8px 16px;
+
+  background: #e8f1ff;
+
+  color: #0d6efd;
+
+  border-radius: 30px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  margin-bottom: 15px;
+}
+
+.section-heading h2,
+.about-section h2,
+.carousel-heading h2 {
+  color: #172033;
+
+  font-size: 42px;
+
+  line-height: 1.2;
+
+  font-weight: 800;
+
+  margin-bottom: 14px;
+}
+
+.section-heading h2 span,
+.about-section h2 span,
+.carousel-heading h2 span {
+  color: #0d6efd;
+}
+
+.section-heading p,
+.carousel-heading p {
+  color: #667085;
+
+  line-height: 1.7;
+
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   ABOUT
+========================================================= */
+
+.about-section {
+  background: #ffffff;
+}
+
+.about-section p {
+  color: #667085;
+
+  font-size: 15px;
+
+  line-height: 1.8;
+}
+
+.about-features {
+  margin-top: 22px;
+}
+
+.about-features div {
+  margin-bottom: 12px;
+
+  color: #344054;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.about-features i {
+  color: #0d6efd;
+
+  margin-right: 9px;
+}
+
+.about-box {
+  min-height: 400px;
+
+  padding: 50px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  color: #ffffff;
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0d6efd,
+      #084298
+    );
+
+  box-shadow:
+    0 25px 55px
+    rgba(13, 110, 253, 0.20);
+}
+
+.about-box > i {
+  font-size: 52px;
+
+  margin-bottom: 20px;
+}
+
+.about-box h3 {
+  font-size: 30px;
+
+  font-weight: 800;
+}
+
+.about-box p {
+  color: rgba(255,255,255,0.85);
+}
+
+.about-number {
+  font-size: 52px;
+
+  font-weight: 800;
+
+  margin-top: 15px;
+}
+
+
+/* =========================================================
+   SERVICES
+========================================================= */
+
+.services-section {
+  background: #f7faff;
+}
+
+.service-card {
+  height: 100%;
+
+  padding: 30px 25px;
+
+  background: #ffffff;
+
+  border-radius: 17px;
+
+  box-shadow:
+    0 10px 35px
+    rgba(0, 0, 0, 0.06);
+
+  transition: 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-7px);
+
+  box-shadow:
+    0 20px 45px
+    rgba(13, 110, 253, 0.12);
+}
+
+.service-icon {
+  width: 62px;
+  height: 62px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #e8f1ff;
+
+  color: #0d6efd;
+
+  border-radius: 14px;
+
+  font-size: 27px;
+
+  margin-bottom: 20px;
+}
+
+.service-card h4 {
+  color: #172033;
+
+  font-size: 18px;
+
+  font-weight: 700;
+}
+
+.service-card p {
+  min-height: 65px;
+
+  color: #667085;
+
+  line-height: 1.7;
+
+  font-size: 14px;
+}
+
+.service-card a {
+  color: #0d6efd;
+
+  text-decoration: none;
+
+  font-weight: 700;
+
+  font-size: 13px;
+}
+
+.service-card a i {
+  margin-left: 5px;
+}
+
+
+/* =========================================================
+   DOCTORS
+========================================================= */
+
+.doctors-section {
+  background: #ffffff;
+}
+
+.carousel-heading {
+  display: flex;
+
+  align-items: end;
+
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 25px;
+}
+
+.carousel-heading h2 {
+  margin-bottom: 8px;
+}
+
+
+/* =========================================================
+   SINGLE DOCTOR CAROUSEL
+========================================================= */
+
+.single-doctor-carousel {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  min-height: 370px;
+
+  margin-top: 25px;
+}
+
+
+/* =========================================================
+   DOCTOR CARD
+========================================================= */
+
+.single-doctor-carousel .doctor-card-box {
+  width: 390px;
+
+  max-width: 100%;
+
+  padding: 35px 28px;
+
+  text-align: center;
+
+  background: #f8fbff;
+
+  border: 1px solid #e1eaf5;
+
+  border-radius: 23px;
+
+  box-shadow:
+    0 15px 40px
+    rgba(13, 110, 253, 0.10);
+
+  animation: doctorFade 0.5s ease;
+}
+
+@keyframes doctorFade {
+
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+.single-doctor-carousel .doctor-card-box:hover {
+  transform: translateY(-6px);
+
+  box-shadow:
+    0 22px 50px
+    rgba(13, 110, 253, 0.15);
+}
+
+
+/* =========================================================
+   DOCTOR AVATAR
+========================================================= */
+
+.single-doctor-carousel .doctor-avatar {
+  width: 105px;
+  height: 105px;
+
+  margin: 0 auto 18px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #e5f0ff;
+
+  color: #0d6efd;
+
+  border-radius: 50%;
+
+  font-size: 52px;
+}
+
+
+/* =========================================================
+   DOCTOR TEXT
+========================================================= */
+
+.single-doctor-carousel .doctor-card-box h4 {
+  color: #172033;
+
+  font-size: 21px;
+
+  font-weight: 800;
+
+  margin-bottom: 7px;
+}
+
+.single-doctor-carousel .doctor-card-box p {
+  color: #0d6efd;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  margin-bottom: 7px;
+}
+
+.single-doctor-carousel .doctor-card-box small {
+  color: #7a8494;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   DOCTOR RATING
+========================================================= */
+
+.single-doctor-carousel .doctor-rating {
+  margin: 17px 0;
+
+  color: #0d6efd;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.single-doctor-carousel .doctor-rating i {
+  margin-right: 5px;
+}
+
+
+/* =========================================================
+   DOCTOR BUTTON
+========================================================= */
+
+.single-doctor-carousel .doctor-button {
+  display: inline-block;
+
+  padding: 10px 20px;
+
+  background: #0d6efd;
+
+  color: #ffffff;
+
+  border-radius: 9px;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  transition: 0.3s ease;
+}
+
+.single-doctor-carousel .doctor-button:hover {
+  background: #084298;
+}
+
+
+/* =========================================================
+   DOCTOR INDICATORS
+========================================================= */
+
+.doctor-indicators {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 15px;
+}
+
+.doctor-indicators span {
+  width: 8px;
+  height: 8px;
+
+  display: block;
+
+  background: #cbd5e1;
+
+  border-radius: 50%;
+
+  transition: 0.3s ease;
+}
+
+.doctor-indicators span.active {
+  width: 24px;
+
+  background: #0d6efd;
+
+  border-radius: 10px;
+}
+/* =========================================================
+   DOCTOR CAROUSEL
+========================================================= */
+
+.doctor-carousel-wrapper {
+  width: 100%;
+  overflow: hidden;
+  margin-top: 30px;
+}
+
+.doctor-carousel-track {
+  display: flex;
+  transition: transform 1s ease-in-out;
+}
+
+.doctor-slide {
+  flex: 0 0 33.333333%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.doctor-card-box {
+  height: 100%;
+  padding: 28px 22px;
+  text-align: center;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+
+.doctor-avatar {
+  width: 85px;
+  height: 85px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eaf4ff;
+  font-size: 42px;
+}
+
+.doctor-card-box h4 {
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.doctor-card-box p {
+  margin-bottom: 8px;
+}
+
+.doctor-card-box small {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.doctor-rating {
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+
+.doctor-rating i {
+  margin-right: 5px;
+}
+
+.doctor-button {
+  display: inline-block;
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   DOCTOR INDICATORS
+========================================================= */
+
+.doctor-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 25px;
+}
+
+.doctor-indicators span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #ced4da;
+  transition: 0.3s;
+}
+
+.doctor-indicators span.active {
+  width: 25px;
+  border-radius: 10px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 991px) {
+
+  .doctor-slide {
+    flex: 0 0 50%;
+  }
+
+}
+
+@media (max-width: 575px) {
+
+  .doctor-slide {
+    flex: 0 0 100%;
+  }
+
+}
+
+
+/* =========================================================
+   DEPARTMENTS
+========================================================= */
+
+.departments-section {
+  background: #f7faff;
+}
+
+
+/* =========================================================
+   DEPARTMENT BUTTONS
+========================================================= */
+
+.carousel-buttons {
+  display: flex;
+
+  gap: 10px;
+
+  flex-shrink: 0;
+}
+
+.carousel-btn {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #d8e2ef;
+
+  background: #ffffff;
+
+  color: #0d6efd;
+
+  border-radius: 50%;
+
+  font-size: 17px;
+
+  transition: 0.3s ease;
+}
+
+.carousel-btn:hover {
+  background: #0d6efd;
+
+  color: #ffffff;
+
+  border-color: #0d6efd;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   DEPARTMENT CAROUSEL
+========================================================= */
+
+.department-carousel {
+  display: flex;
+
+  gap: 20px;
+
+  overflow-x: auto;
+
+  scroll-behavior: smooth;
+
+  scrollbar-width: none;
+
+  padding: 5px 3px 20px;
+
+  scroll-snap-type: x proximity;
+}
+
+.department-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* =========================================================
+   DEPARTMENT SLIDE
+========================================================= */
+
+.department-slide {
+  flex: 0 0 270px;
+
+  scroll-snap-align: start;
+}
+
+
+/* =========================================================
+   DEPARTMENT CARD
+========================================================= */
+
+.department-card {
+  height: 100%;
+
+  min-height: 245px;
+
+  padding: 27px 22px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e1eaf5;
+
+  border-radius: 19px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.06);
+
+  transition: all 0.3s ease;
+}
+
+.department-card:hover {
+  transform: translateY(-7px);
+
+  border-color: #0d6efd;
+
+  box-shadow:
+    0 18px 40px
+    rgba(13, 110, 253, 0.13);
+}
+
+
+/* =========================================================
+   DEPARTMENT ICON
+========================================================= */
+
+.department-icon {
+  width: 62px;
+  height: 62px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #e8f1ff;
+
+  color: #0d6efd;
+
+  border-radius: 15px;
+
+  font-size: 27px;
+
+  margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   DEPARTMENT TEXT
+========================================================= */
+
+.department-card h5 {
+  color: #172033;
+
+  font-size: 18px;
+
+  font-weight: 800;
+
+  margin-bottom: 6px;
+}
+
+.department-card p {
+  color: #667085;
+
+  font-size: 13px;
+
+  margin-bottom: 17px;
+}
+
+.department-card a {
+  color: #0d6efd;
+
+  text-decoration: none;
+
+  font-size: 13px;
+
+  font-weight: 700;
+}
+
+.department-card a i {
+  margin-left: 5px;
+}
+
+
+/* =========================================================
+   APPOINTMENT
+========================================================= */
+
+.appointment-section {
+  padding: 55px 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0d6efd,
+      #084298
+    );
+
+  color: #ffffff;
+}
+
+.appointment-badge {
+  display: inline-block;
+
+  padding: 7px 14px;
+
+  background: rgba(255,255,255,0.14);
+
+  border-radius: 30px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  margin-bottom: 12px;
+}
+
+.appointment-section h2 {
+  color: #ffffff;
+
+  font-size: 38px;
+
+  line-height: 1.15;
+
+  font-weight: 800;
+
+  margin-bottom: 13px;
+}
+
+.appointment-section h2 span {
+  display: block;
+
+  color: #ffffff;
+}
+
+.appointment-text {
+  max-width: 570px;
+
+  color: rgba(255,255,255,0.84);
+
+  font-size: 14px;
+
+  line-height: 1.7;
+
+  margin-bottom: 13px;
+}
+
+
+/* =========================================================
+   APPOINTMENT FEATURES
+========================================================= */
+
+.appointment-features {
+  margin-top: 15px;
+}
+
+.appointment-features div {
+  margin-bottom: 7px;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.appointment-features i {
+  margin-right: 7px;
+}
+
+
+/* =========================================================
+   EMERGENCY
+========================================================= */
+
+.emergency-call {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  margin-top: 13px;
+
+  padding: 10px 15px;
+
+  background: rgba(255,255,255,0.12);
+
+  border-radius: 12px;
+
+  color: #ffffff;
+
+  text-decoration: none;
+}
+
+.emergency-call-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  color: #0d6efd;
+
+  border-radius: 50%;
+}
+
+.emergency-call small {
+  display: block;
+
+  font-size: 9px;
+
+  opacity: 0.75;
+}
+
+.emergency-call strong {
+  display: block;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   APPOINTMENT FORM
+========================================================= */
+
+.appointment-form-card {
+  padding: 21px;
+
+  background: #ffffff;
+
+  color: #172033;
+
+  border-radius: 17px;
+
+  box-shadow:
+    0 20px 50px
+    rgba(0,0,0,0.18);
+}
+
+.form-heading {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-bottom: 14px;
+}
+
+.form-icon {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #e8f1ff;
+
+  color: #0d6efd;
+
+  border-radius: 9px;
+
+  font-size: 17px;
+}
+
+.form-heading h4 {
+  margin: 0;
+
+  color: #172033;
+
+  font-size: 17px;
+
+  font-weight: 800;
+}
+
+.form-heading p {
+  margin: 2px 0 0;
+
+  color: #7a8494;
+
+  font-size: 10px;
+}
+
+.appointment-form-card label {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #344054;
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+.appointment-form-card .input-group-text {
+  background: #f8faff;
+
+  border-color: #dce4ef;
+
+  color: #0d6efd;
+}
+
+.appointment-form-card .form-control,
+.appointment-form-card .form-select {
+  min-height: 39px;
+
+  border-color: #dce4ef;
+
+  font-size: 12px;
+}
+
+.appointment-form-card .form-control:focus,
+.appointment-form-card .form-select:focus {
+  border-color: #0d6efd;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(13,110,253,0.10);
+}
+
+.appointment-submit {
+  min-height: 41px;
+
+  margin-top: 2px;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.secure-note {
+  margin-top: 9px;
+
+  text-align: center;
+
+  color: #7a8494;
+
+  font-size: 9px;
+}
+
+.secure-note i {
+  color: #0d6efd;
+
+  margin-right: 4px;
+}
+
+
+/* =========================================================
+   LOCATION
+========================================================= */
+
+.location-section {
+  padding: 85px 0;
+
+  background: #f7faff;
+}
+
+.map-card {
+  height: 100%;
+
+  min-height: 450px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border-radius: 21px;
+
+  box-shadow:
+    0 15px 40px
+    rgba(0,0,0,0.08);
+}
+
+.map-card iframe {
+  display: block;
+
+  width: 100%;
+
+  height: 450px;
+
+  border: 0;
+}
+
+
+/* =========================================================
+   LOCATION INFO
+========================================================= */
+
+.location-info {
+  height: 100%;
+
+  padding: 32px;
+
+  background: #ffffff;
+
+  border-radius: 21px;
+
+  box-shadow:
+    0 15px 40px
+    rgba(0,0,0,0.07);
+}
+
+.location-small-title {
+  color: #0d6efd;
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+.location-info h3 {
+  margin-top: 9px;
+
+  color: #172033;
+
+  font-size: 28px;
+
+  font-weight: 800;
+}
+
+.location-info > p {
+  color: #667085;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+
+  margin-bottom: 22px;
+}
+
+.location-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 18px;
+}
+
+.location-icon {
+  width: 44px;
+  height: 44px;
+
+  min-width: 44px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #e8f1ff;
+
+  color: #0d6efd;
+
+  border-radius: 11px;
+}
+
+.location-item strong {
+  display: block;
+
+  color: #344054;
+
+  font-size: 12px;
+}
+
+.location-item span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #667085;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   RESPONSIVE - 1199px
+========================================================= */
+
+@media (max-width: 1199px) {
+
+  .page-container {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .hero-section h1 {
+    font-size: 55px;
+  }
+
+  .hero-image {
+    height: 530px;
+  }
+
+  .department-slide {
+    flex-basis: 255px;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 991px
+========================================================= */
+
+@media (max-width: 991px) {
+
+  .hero-section {
+    padding: 60px 0;
+  }
+
+  .hero-content {
+    padding-left: 0;
+  }
+
+  .hero-image-wrapper {
+    padding: 12px;
+  }
+
+  .hero-image {
+    height: 520px;
+  }
+
+  .stats-section {
+    margin-top: 0;
+
+    padding: 25px 0;
+
+    background: #f7faff;
+  }
+
+  .section {
+    padding: 70px 0;
+  }
+
+  .appointment-section {
+    padding: 50px 0;
+  }
+
+  .location-section {
+    padding: 70px 0;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 767px
+========================================================= */
+
+@media (max-width: 767px) {
+
+  .page-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .hero-section {
+    padding: 45px 0;
+  }
+
+  .hero-section h1 {
+    font-size: 43px;
+  }
+
+  .hero-text {
+    font-size: 15px;
+  }
+
+  .hero-image {
+    height: 450px;
+  }
+
+  .section-heading h2,
+  .about-section h2,
+  .carousel-heading h2 {
+    font-size: 33px;
+  }
+
+  .carousel-heading {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .carousel-buttons {
+    align-self: flex-end;
+  }
+
+  .single-doctor-carousel {
+    min-height: 350px;
+  }
+
+  .appointment-section h2 {
+    font-size: 34px;
+  }
+
+  .appointment-form-card {
+    padding: 19px;
+  }
+
+  .map-card,
+  .map-card iframe {
+    height: 370px;
+
+    min-height: 370px;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 576px
+========================================================= */
+
+@media (max-width: 576px) {
+
+  .hero-section h1 {
+    font-size: 37px;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+  }
+
+  .hero-trust {
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .hero-image {
+    height: 390px;
+  }
+
+  .floating-card {
+    transform: scale(0.82);
+  }
+
+  .doctor-floating {
+    right: -15px;
+
+    top: 30px;
+  }
+
+  .emergency-floating {
+    left: -15px;
+
+    bottom: 30px;
+  }
+
+  .section {
+    padding: 58px 0;
+  }
+
+  .section-heading h2,
+  .about-section h2,
+  .carousel-heading h2 {
+    font-size: 29px;
+  }
+
+  .single-doctor-carousel {
+    min-height: 350px;
+  }
+
+  .single-doctor-carousel .doctor-card-box {
+    width: 100%;
+
+    padding: 30px 20px;
+  }
+
+  .department-slide {
+    flex-basis: 245px;
+  }
+
+  .department-card {
+    min-height: 230px;
+  }
+
+  .appointment-section {
+    padding: 45px 0;
+  }
+
+  .appointment-section h2 {
+    font-size: 30px;
+  }
+
+  .location-info {
+    padding: 24px;
+  }
+
+}

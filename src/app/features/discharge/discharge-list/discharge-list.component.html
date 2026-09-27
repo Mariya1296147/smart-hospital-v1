@@ -1,0 +1,244 @@
+<div class="discharge-page">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+
+    <div>
+      <span class="page-badge">
+        <i class="bi bi-box-arrow-right"></i>
+        Patient Discharge
+      </span>
+
+      <h2>Discharge Management</h2>
+
+      <p>
+        Manage patient discharge records and details.
+      </p>
+    </div>
+
+    <a
+      routerLink="/admin/discharge/add"
+      class="btn btn-primary add-btn">
+
+      <i class="bi bi-plus-lg"></i>
+      Add Discharge
+    </a>
+
+  </div>
+
+
+  <!-- SUMMARY CARDS -->
+  <div class="summary-grid">
+
+    <div class="summary-card">
+      <div class="summary-icon blue">
+        <i class="bi bi-file-earmark-medical"></i>
+      </div>
+
+      <div>
+        <span>Total Discharges</span>
+        <h3>{{ totalDischarges }}</h3>
+      </div>
+    </div>
+
+
+    <div class="summary-card">
+      <div class="summary-icon green">
+        <i class="bi bi-check-circle"></i>
+      </div>
+
+      <div>
+        <span>Discharged</span>
+        <h3>{{ dischargedCount }}</h3>
+      </div>
+    </div>
+
+
+    <div class="summary-card">
+      <div class="summary-icon orange">
+        <i class="bi bi-clock"></i>
+      </div>
+
+      <div>
+        <span>Pending</span>
+        <h3>{{ pendingCount }}</h3>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- TABLE -->
+  <div class="table-card">
+
+    <div class="table-header">
+
+      <div>
+        <h4>Discharge Records</h4>
+        <span>Recent patient discharge information</span>
+      </div>
+
+    </div>
+
+
+    <div class="table-responsive">
+
+      <table class="table discharge-table">
+
+        <thead>
+          <tr>
+            <th>Discharge ID</th>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Department</th>
+            <th>Admission</th>
+            <th>Discharge</th>
+            <th>Room / Bed</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+
+        <tbody>
+
+          <tr *ngFor="let discharge of discharges">
+
+            <td>
+              <strong class="discharge-id">
+                {{ discharge.dischargeId }}
+              </strong>
+            </td>
+
+
+            <td>
+              <div class="patient-info">
+                <div class="patient-icon">
+                  <i class="bi bi-person-fill"></i>
+                </div>
+
+                <div>
+                  <strong>{{ discharge.patientName }}</strong>
+                  <small>{{ discharge.patientId }}</small>
+                </div>
+              </div>
+            </td>
+
+
+            <td>
+              {{ discharge.doctorName }}
+            </td>
+
+
+            <td>
+              <span class="department">
+                {{ discharge.department }}
+              </span>
+            </td>
+
+
+            <td>
+              {{ discharge.admissionDate }}
+            </td>
+
+
+            <td>
+              {{ discharge.dischargeDate }}
+            </td>
+
+
+            <td>
+              <div class="room-bed">
+                <span>Room {{ discharge.room }}</span>
+                <small>Bed {{ discharge.bed }}</small>
+              </div>
+            </td>
+
+
+            <td>
+
+              <span
+                class="status-badge"
+                [class.discharged]="discharge.status === 'Discharged'"
+                [class.pending]="discharge.status === 'Pending'">
+
+                <i
+                  class="bi"
+                  [class.bi-check-circle-fill]="discharge.status === 'Discharged'"
+                  [class.bi-clock-fill]="discharge.status === 'Pending'">
+                </i>
+
+                {{ discharge.status }}
+
+              </span>
+
+            </td>
+
+
+            <td>
+
+              <div class="action-buttons">
+
+                <a
+                  [routerLink]="['/admin/discharge/view', discharge.id]"
+                  class="action-btn view"
+                  title="View">
+
+                  <i class="bi bi-eye"></i>
+
+                </a>
+
+
+                <a
+                  [routerLink]="['/admin/discharge/edit', discharge.id]"
+                  class="action-btn edit"
+                  title="Edit">
+
+                  <i class="bi bi-pencil"></i>
+
+                </a>
+
+
+                <button
+                  type="button"
+                  class="action-btn delete"
+                  title="Delete"
+                  (click)="deleteDischarge(discharge.id)">
+
+                  <i class="bi bi-trash"></i>
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+
+          <!-- EMPTY -->
+          <tr *ngIf="discharges.length === 0">
+
+            <td
+              colspan="9"
+              class="empty-state">
+
+              <i class="bi bi-inbox"></i>
+
+              <h5>No discharge records found</h5>
+
+              <p>Add a new discharge record to get started.</p>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
