@@ -12,7 +12,7 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
-          "options": {
+          "options": {"baseHref": "/smart-hospital-v1/",
             "outputPath": "dist/hsp",
             "index": "src/index.html",
             "browser": "src/main.ts",
