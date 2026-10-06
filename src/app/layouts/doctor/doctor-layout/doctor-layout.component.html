@@ -1,12 +1,21 @@
+<div class="doctor-layout" [class.sidebar-open]="sidebarOpen">
+  <app-doctor-sidebar
+    [isOpen]="sidebarOpen"
+    (toggle)="toggleSidebar()">
+  </app-doctor-sidebar>
 
-<div class="doctor-layout">
+  <button
+    type="button"
+    class="mobile-toggle"
+    (click)="toggleSidebar()"
+    [attr.aria-expanded]="sidebarOpen"
+    aria-label="Toggle doctor sidebar">
+    <i class="bi" [class.bi-list]="!sidebarOpen" [class.bi-x-lg]="sidebarOpen"></i>
+  </button>
 
-  <!-- Doctor Sidebar -->
-  <app-doctor-sidebar></app-doctor-sidebar>
-
-  <!-- Main Content -->
-  <main class="doctor-main-content">
-    <router-outlet></router-outlet>
-  </main>
-
+  <div class="main-area">
+    <main class="page-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 </div>

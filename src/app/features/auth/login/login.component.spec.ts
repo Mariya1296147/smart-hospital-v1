@@ -20,4 +20,12 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('requires a role before submitting credentials', () => {
+    component.email = 'admin@gmail.com';
+    component.password = '123456';
+    component.login();
+
+    expect(component.message).toBe('Please select your role to continue.');
+  });
 });

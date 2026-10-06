@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { Doctor, DoctorService } from '../../../core/services/doctor.service';
 
 @Component({
   selector: 'app-home',
@@ -33,67 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   // DOCTORS
   // =========================================================
 
-  doctors = [
-    {
-      name: 'Dr. Sarah Ahmed',
-      specialty: 'Cardiologist',
-      department: 'Cardiology',
-      experience: '12 Years Experience',
-      qualification: 'MBBS, FCPS',
-      image: 'assets/doctor 4.jpg',
-      rating: 4.9
-    },
-
-    {
-      name: 'Dr. Rahim Khan',
-      specialty: 'Neurologist',
-      department: 'Neurology',
-      experience: '10 Years Experience',
-      qualification: 'MBBS, MD',
-      image: 'assets/doctor11.jpg',
-      rating: 4.8
-    },
-
-    {
-      name: 'Dr. Nusrat Jahan',
-      specialty: 'Pediatrician',
-      department: 'Pediatrics',
-      experience: '8 Years Experience',
-      qualification: 'MBBS, DCH',
-      image: 'assets/doctor 9.jpeg',
-      rating: 4.9
-    },
-
-    {
-      name: 'Dr. Tanvir Hasan',
-      specialty: 'Orthopedic Surgeon',
-      department: 'Orthopedics',
-      experience: '11 Years Experience',
-      qualification: 'MBBS, MS',
-      image: 'assets/doctorss.avif',
-      rating: 4.7
-    },
-
-    {
-      name: 'Dr. Maria Akter',
-      specialty: 'Dermatologist',
-      department: 'Dermatology',
-      experience: '9 Years Experience',
-      qualification: 'MBBS, DDV',
-      image: 'assets/doctor10.avif',
-      rating: 4.8
-    },
-
-    {
-      name: 'Dr. Farhan Ahmed',
-      specialty: 'General Physician',
-      department: 'General Medicine',
-      experience: '7 Years Experience',
-      qualification: 'MBBS, FCPS',
-      image: 'assets/images (6).jpg',
-      rating: 4.6
-    }
-  ];
+  doctors: Doctor[] = [];
 
   // =========================================================
   // DOCTOR AUTO CAROUSEL
@@ -101,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   currentDoctor: number = 0;
 
-  private doctorInterval: any;
+  private doctorInterval?: ReturnType<typeof setInterval>;
 
   // =========================================================
   // DEPARTMENTS
@@ -183,17 +124,25 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ];
 
+  constructor(private doctorService: DoctorService) {}
+
   // =========================================================
   // INITIALIZE
   // =========================================================
 
   ngOnInit(): void {
 
+    this.doctors = this.doctorService
+      .getDoctors()
+      .filter(doctor => doctor.status === 'Active');
+
+    if (this.doctors.length < 2) return;
+
     this.doctorInterval = setInterval(() => {
 
       this.nextDoctor();
 
-    }, 8000);
+    }, 4500);
 
   }
 
@@ -202,6 +151,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   // =========================================================
 
   nextDoctor(): void {
+
+    if (this.doctors.length < 2) return;
 
     this.currentDoctor =
       (this.currentDoctor + 1) %

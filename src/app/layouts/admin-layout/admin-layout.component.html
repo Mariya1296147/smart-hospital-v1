@@ -2,11 +2,20 @@
   class="admin-layout"
   [class.sidebar-open]="sidebarOpen">
 
-  <!-- Sidebar -->
-  <app-sidebar
+  <!-- Admin Sidebar -->
+  <app-admin-sidebar
     [isOpen]="sidebarOpen"
     (toggle)="toggleSidebar()">
-  </app-sidebar>
+  </app-admin-sidebar>
+
+  <button
+    type="button"
+    class="mobile-toggle"
+    (click)="toggleSidebar()"
+    [attr.aria-expanded]="sidebarOpen"
+    aria-label="Toggle admin sidebar">
+    <i class="bi" [class.bi-list]="!sidebarOpen" [class.bi-x-lg]="sidebarOpen"></i>
+  </button>
 
 
   <!-- Main Area -->

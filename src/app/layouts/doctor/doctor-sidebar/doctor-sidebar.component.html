@@ -1,151 +1,138 @@
+<div class="doctor-sidebar" [class.open]="isOpen">
 
-<div class="doctor-sidebar" [class.collapsed]="isCollapsed">
-
-  <!-- Toggle Button -->
+  <!-- TOGGLE BUTTON -->
   <button
-    type="button"
-    class="sidebar-toggle"
-    (click)="toggleSidebar()"
-    aria-label="Toggle Sidebar"
-  >
-    <i class="bi bi-list"></i>
-  </button>
+  type="button"
+  class="sidebar-toggle"
+  (click)="toggleSidebar()"
+  title="Toggle Sidebar">
 
+  <i class="bi bi-list"></i>
 
-  <!-- Logo -->
-  <div class="sidebar-logo">
-    <i class="bi bi-hospital"></i>
-    <span>Hospital Management</span>
-  </div>
+</button>
 
+  <!-- WELCOME -->
+  <div class="welcome-user">
 
-  <!-- Doctor Info -->
-  <div class="doctor-info">
-
-    <div class="doctor-avatar">
-      <i class="bi bi-person-circle"></i>
+    <div class="welcome-title">
+      Welcome,
+      {{ userName }}
     </div>
 
-    <div class="doctor-details">
-      <h6>Dr. Amina Rahman</h6>
-      <small>Doctor</small>
+    <div class="online-status">
+      <span class="online-dot"></span>
+      <span>{{ roleLabel }} · Online</span>
     </div>
 
   </div>
 
 
-  <!-- Menu -->
+  <!-- MENU -->
   <nav class="sidebar-menu">
 
-    <!-- Dashboard -->
+    <!-- MAIN -->
+    <div class="menu-section-title">
+      MAIN
+    </div>
+
     <a
       routerLink="/doctor/dashboard"
       routerLinkActive="active"
-    >
-      <i class="bi bi-speedometer2"></i>
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="menu-item">
+
+      <i class="bi bi-grid-1x2-fill"></i>
       <span>Dashboard</span>
+
     </a>
 
 
-    <!-- My Profile -->
+    <!-- MY WORK -->
+    <div class="menu-section-title">
+      MY WORK
+    </div>
+
     <a
       routerLink="/doctor/profile"
       routerLinkActive="active"
-    >
-      <i class="bi bi-person"></i>
+      class="menu-item">
+
+      <i class="bi bi-person-badge-fill"></i>
       <span>My Profile</span>
+
     </a>
 
-
-    <!-- My Patients -->
     <a
       routerLink="/doctor/patients"
       routerLinkActive="active"
-    >
-      <i class="bi bi-people"></i>
+      class="menu-item">
+
+      <i class="bi bi-people-fill"></i>
       <span>My Patients</span>
+
     </a>
 
-
-    <!-- Appointments -->
     <a
       routerLink="/doctor/appointments"
       routerLinkActive="active"
-    >
-      <i class="bi bi-calendar-check"></i>
+      class="menu-item">
+
+      <i class="bi bi-calendar-check-fill"></i>
       <span>Appointments</span>
+
     </a>
 
-
-    <!-- Consultations -->
     <a
       routerLink="/doctor/consultations"
       routerLinkActive="active"
-    >
-      <i class="bi bi-chat-left-medical"></i>
+      class="menu-item">
+
+      <i class="bi bi-chat-left-text-fill"></i>
       <span>Consultations</span>
+
     </a>
 
-
-    <!-- Prescriptions -->
     <a
       routerLink="/doctor/prescriptions"
       routerLinkActive="active"
-    >
-      <i class="bi bi-prescription2"></i>
+      class="menu-item">
+
+      <i class="bi bi-file-medical-fill"></i>
       <span>Prescriptions</span>
-    </a>
 
-
-    <!-- Laboratory -->
-    <a
-      routerLink="/doctor/laboratory"
-      routerLinkActive="active"
-    >
-      <i class="bi bi-eyedropper"></i>
-      <span>Laboratory</span>
-    </a>
-
-
-    <!-- Admissions -->
-    <a
-      routerLink="/doctor/admissions"
-      routerLinkActive="active"
-    >
-      <i class="bi bi-hospital"></i>
-      <span>Admissions</span>
-    </a>
-
-
-    <!-- Discharge -->
-    <a
-      routerLink="/doctor/discharge"
-      routerLinkActive="active"
-    >
-      <i class="bi bi-box-arrow-right"></i>
-      <span>Discharge</span>
-    </a>
-
-
-    <!-- Notifications -->
-    <a
-      routerLink="/doctor/notifications"
-      routerLinkActive="active"
-    >
-      <i class="bi bi-bell"></i>
-      <span>Notifications</span>
-    </a>
-
-
-    <!-- Logout -->
-    <a
-      routerLink="/login"
-      class="logout-link"
-    >
-      <i class="bi bi-box-arrow-left"></i>
-      <span>Logout</span>
     </a>
 
   </nav>
+
+
+  <!-- USER INFO -->
+  <div class="sidebar-footer">
+
+    <div class="user-icon">
+      <i class="bi bi-person-circle"></i>
+    </div>
+
+    <div class="user-details">
+      <strong>{{ userName }}</strong>
+      <small>{{ roleLabel }}</small>
+    </div>
+
+  </div>
+
+
+  <!-- LOGOUT -->
+  <div class="sidebar-logout">
+
+    <button
+      type="button"
+      class="logout-button"
+      (click)="logout()">
+
+      <i class="bi bi-box-arrow-left"></i>
+      <span>Logout</span>
+
+    </button>
+
+  </div>
 
 </div>

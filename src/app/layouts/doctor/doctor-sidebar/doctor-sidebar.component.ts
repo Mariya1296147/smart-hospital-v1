@@ -1,6 +1,6 @@
-
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-doctor-sidebar',
@@ -14,10 +14,29 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class DoctorSidebarComponent {
 
-  isCollapsed = false;
+  @Input() isOpen = false;
 
-  toggleSidebar(): void {
-    this.isCollapsed = !this.isCollapsed;
+  @Output() toggle = new EventEmitter<void>();
+
+  userName = 'Dr. Amina Rahman';
+  roleLabel = 'Doctor';
+
+  constructor(
+    private authService: AuthService
+  ) {
+    const user = this.authService.getCurrentUser();
+
+    if (user) {
+      this.userName = user.name;
+      this.roleLabel = 'Doctor';
+    }
   }
 
+  toggleSidebar(): void {
+    this.toggle.emit();
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
 }

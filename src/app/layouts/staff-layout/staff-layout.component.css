@@ -1,0 +1,121 @@
+/* Shared Nurse / Laboratory / Pharmacy / Accounts layout */
+.staff-shell {
+  min-height: 100vh;
+  color: var(--hospital-text);
+  background: var(--hospital-page);
+  overflow-x: hidden;
+}
+
+.staff-sidebar {
+  position: fixed;
+  z-index: 1050;
+  inset: 0 auto 0 0;
+  display: flex;
+  width: 72px;
+  flex-direction: column;
+  padding: 20px 8px 14px;
+  color: #e7f0fb;
+  background: var(--hospital-navy);
+  box-shadow: 8px 0 24px rgba(23,54,95,.1);
+  transition: width .3s ease, transform .3s ease;
+}
+
+.staff-sidebar.sidebar-open { width: 258px; }
+
+.sidebar-toggle {
+  position: absolute;
+  top: 18px;
+  right: -15px;
+  z-index: 1100;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid #d6e4f2;
+  border-radius: 50%;
+  color: #17365f;
+  background: #e2f0ff;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(15,23,42,.12);
+}
+
+.staff-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  min-height: 55px;
+  padding: 0 4px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.staff-sidebar.sidebar-open .staff-brand { justify-content: flex-start; padding-left: 9px; }
+.brand-mark { display: grid; width: 39px; height: 39px; flex: 0 0 39px; place-items: center; border-radius: 12px; color: #17365f; background: #e2f0ff; font-size: 19px; }
+.brand-text { display: none; }
+.staff-sidebar.sidebar-open .brand-text { display: block; }
+.staff-brand strong, .staff-brand small, .account-name strong, .account-name small { display: block; }
+.staff-brand strong { font-size: 13px; }
+.staff-brand small { margin-top: 3px; color: #afc4dd; font-size: 11px; }
+
+.staff-section-label { display: none; margin: 26px 10px 9px; color: #9fb6d1; font-size: 9px; font-weight: 700; letter-spacing: 1.2px; }
+.staff-sidebar.sidebar-open .staff-section-label { display: block; }
+
+.staff-nav { display: grid; gap: 5px; margin-top: 20px; }
+.staff-nav a { display: flex; min-height: 43px; align-items: center; justify-content: center; gap: 12px; padding: 0 12px; border-radius: 9px; color: #ccdaea; font-size: 12px; text-decoration: none; transition: color .16s ease, background-color .16s ease; }
+.staff-sidebar.sidebar-open .staff-nav a { justify-content: flex-start; }
+.staff-nav a i { width: 18px; flex: 0 0 18px; color: #b3c8df; font-size: 15px; text-align: center; }
+.staff-nav a span { display: none; }
+.staff-sidebar.sidebar-open .staff-nav a span { display: inline; }
+.staff-nav a:hover, .staff-nav a.active { color: #fff; background: rgba(220,238,255,.14); }
+.staff-nav a.active { box-shadow: inset 3px 0 #a9d5ff; }
+
+.staff-account { display: flex; align-items: center; justify-content: center; gap: 9px; margin-top: auto; padding: 13px 4px 2px; border-top: 1px solid rgba(255,255,255,.12); }
+.staff-sidebar.sidebar-open .staff-account { justify-content: flex-start; }
+.account-avatar { display: grid; width: 34px; height: 34px; flex: 0 0 34px; place-items: center; border-radius: 50%; color: #17365f; background: #d7e8f9; }
+.account-name { display: none; min-width: 0; flex: 1; }
+.staff-sidebar.sidebar-open .account-name { display: block; }
+.account-name strong { overflow: hidden; color: #f4f8fd; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.account-name small { margin-top: 3px; color: #a9bfd7; font-size: 10px; }
+.staff-account button { display: grid; width: 34px; height: 34px; place-items: center; border: 0; border-radius: 8px; color: #dce9f7; background: transparent; cursor: pointer; }
+.staff-sidebar:not(.sidebar-open) .staff-account button { display: none; }
+.staff-account button:hover { color: #fff; background: rgba(255,255,255,.12); }
+
+.staff-main { min-height: 100vh; margin-left: 72px; transition: margin-left .3s ease; }
+.staff-shell.sidebar-open .staff-main { margin-left: 258px; }
+.staff-topbar { position: sticky; z-index: 10; top: 0; display: flex; height: 66px; align-items: center; gap: 12px; padding: 0 28px; border-bottom: 1px solid var(--hospital-border); color: var(--hospital-text); background: var(--hospital-surface); font-size: 13px; font-weight: 600; backdrop-filter: blur(10px); }
+.availability { display: inline-flex; align-items: center; gap: 7px; margin-left: auto; color: var(--hospital-muted); font-size: 11px; font-weight: 500; }
+.availability i { width: 7px; height: 7px; border-radius: 50%; background: #63a98b; }
+.staff-content { max-width: 1600px; min-height: calc(100vh - 66px); margin: 0 auto; padding: 27px; }
+.mobile-menu-toggle { display: none; }
+
+@media (max-width: 850px) {
+  .staff-sidebar, .staff-sidebar.sidebar-open {
+    width: 258px;
+    transform: translateX(-100%);
+  }
+  .staff-sidebar.mobile-open { transform: translateX(0); }
+  .staff-shell .staff-main, .staff-shell.sidebar-open .staff-main { margin-left: 0; }
+  .staff-topbar { padding: 0 16px 0 66px; }
+  .mobile-menu-toggle {
+    display: grid;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border: 0;
+    border-radius: 10px;
+    color: #fff;
+    background: var(--hospital-navy);
+    cursor: pointer;
+    z-index: 1200;
+    box-shadow: 0 5px 16px rgba(16,42,72,.2);
+  }
+  .sidebar-toggle { display: none; }
+  .staff-content { padding: 18px 14px; }
+}

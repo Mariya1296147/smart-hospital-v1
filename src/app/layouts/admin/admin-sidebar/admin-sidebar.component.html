@@ -1,0 +1,235 @@
+<div class="admin-sidebar" [class.open]="isOpen">
+
+  <!-- SIDEBAR TOGGLE BUTTON -->
+  <button
+    type="button"
+    class="sidebar-toggle"
+    (click)="toggleSidebar()"
+    title="Toggle Sidebar">
+
+    <i
+      class="bi"
+      [class.bi-chevron-left]="isOpen"
+      [class.bi-chevron-right]="!isOpen">
+    </i>
+
+  </button>
+
+
+  <!-- WELCOME USER -->
+  <div class="welcome-user">
+
+    <div class="welcome-title">
+      Welcome,
+      {{ userName }}
+    </div>
+
+    <div class="online-status">
+      <span class="online-dot"></span>
+      <span>{{ roleLabel }} · Online</span>
+    </div>
+
+  </div>
+
+
+  <!-- SIDEBAR MENU -->
+  <nav class="sidebar-menu">
+
+    <!-- MAIN -->
+    <div class="menu-section-title">
+      MAIN
+    </div>
+
+    <a
+      routerLink="/admin/dashboard"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="menu-item">
+
+      <i class="bi bi-grid-1x2-fill"></i>
+      <span>Dashboard</span>
+
+    </a>
+
+
+    <!-- MANAGEMENT -->
+    <div class="menu-section-title">
+      MANAGEMENT
+    </div>
+
+    <a
+      routerLink="/admin/users"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-people-fill"></i>
+      <span>User Management</span>
+
+    </a>
+
+    <a
+      routerLink="/admin/patients"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-person-heart"></i>
+      <span>Patients</span>
+
+    </a>
+
+    <a
+      routerLink="/admin/doctors"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-person-badge-fill"></i>
+      <span>Doctors</span>
+
+    </a>
+
+    <a
+      routerLink="/admin/appointments"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-calendar-check-fill"></i>
+      <span>Appointments</span>
+
+    </a>
+
+    <a
+      routerLink="/admin/consultations"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-chat-left-text-fill"></i>
+      <span>Consultations</span>
+
+    </a>
+
+
+    <!-- HOSPITAL SERVICES -->
+    <div class="menu-section-title">
+      HOSPITAL SERVICES
+    </div>
+
+    <a
+      routerLink="/admin/admissions"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-hospital-fill"></i>
+      <span>Admissions</span>
+
+    </a>
+
+    <a
+      routerLink="/admin/nursing"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-heart-pulse-fill"></i>
+      <span>Nursing</span>
+
+    </a>
+
+    <a
+      routerLink="/admin/laboratory"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-eyedropper"></i>
+      <span>Laboratory</span>
+
+    </a>
+
+    <a
+      routerLink="/admin/pharmacy"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-capsule"></i>
+      <span>Pharmacy</span>
+
+    </a>
+
+    <a
+      routerLink="/admin/billing"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-receipt"></i>
+      <span>Billing</span>
+
+    </a>
+
+    <a
+      routerLink="/admin/discharge"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-box-arrow-right"></i>
+      <span>Discharge</span>
+
+    </a>
+
+
+    <!-- REPORTS & SETTINGS -->
+    <div class="menu-section-title">
+      REPORTS & SETTINGS
+    </div>
+
+    <a
+      routerLink="/admin/reports"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-bar-chart-fill"></i>
+      <span>Reports</span>
+
+    </a>
+
+    <a
+      routerLink="/admin/settings"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-gear-fill"></i>
+      <span>Settings</span>
+
+    </a>
+
+  </nav>
+
+
+  <!-- BOTTOM USER INFO -->
+  <div class="sidebar-footer">
+
+    <div class="user-icon">
+      <i class="bi bi-person-circle"></i>
+    </div>
+
+    <div class="user-details">
+      <strong>{{ userName }}</strong>
+      <small>{{ roleLabel }}</small>
+    </div>
+
+  </div>
+
+
+  <!-- LOGOUT - ALWAYS AT BOTTOM -->
+  <div class="sidebar-logout">
+
+    <button
+      type="button"
+      class="logout-button"
+      (click)="logout()">
+
+      <i class="bi bi-box-arrow-left"></i>
+      <span>Logout</span>
+
+    </button>
+
+  </div>
+
+</div>

@@ -1,1 +1,11 @@
-/* You can add global styles to this file, and also import other style files */
+/* Shared hospital palette and base page surface. */
+:root {
+  --hospital-navy: #17365f;
+  --hospital-blue: #315f91;
+  --hospital-blue-soft: #e8f1fb;
+  --hospital-surface: #ffffff;
+  --hospital-page: #f3f7fb;
+  --hospital-text: #23344d;
+  --hospital-muted: #718096;
+  --hospital-border: #e1eaf3;
+}

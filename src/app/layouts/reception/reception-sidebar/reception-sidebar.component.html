@@ -1,0 +1,158 @@
+<aside
+  class="reception-sidebar"
+  [class.open]="isOpen"
+  [class.closed]="!isOpen">
+
+
+  <!-- Toggle Button -->
+
+  <button
+    type="button"
+    class="toggle-btn"
+    (click)="toggleSidebar()">
+
+    <i
+      class="bi"
+      [class.bi-chevron-left]="isOpen"
+      [class.bi-chevron-right]="!isOpen">
+    </i>
+
+  </button>
+
+
+  <!-- Welcome Header -->
+
+  <div class="sidebar-header">
+
+    <div class="hospital-icon">
+      <i class="bi bi-person-circle"></i>
+    </div>
+
+    <div class="header-text">
+
+      <h5>Welcome Reception</h5>
+
+      <span>{{ userName }}</span>
+
+    </div>
+
+  </div>
+
+
+  <!-- Menu -->
+
+  <nav class="sidebar-menu">
+
+    <a
+      routerLink="/reception/dashboard"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      class="menu-item">
+
+      <i class="bi bi-speedometer2"></i>
+
+      <span>Dashboard</span>
+
+    </a>
+
+
+    <a
+      routerLink="/reception/patients"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-people"></i>
+
+      <span>Patients</span>
+
+    </a>
+
+
+    <a
+      routerLink="/reception/appointments"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-calendar-check"></i>
+
+      <span>Appointments</span>
+
+    </a>
+
+
+    <a
+      routerLink="/reception/admissions"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-hospital"></i>
+
+      <span>Admissions</span>
+
+    </a>
+
+
+    <a
+      routerLink="/reception/discharge"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-box-arrow-right"></i>
+
+      <span>Discharge</span>
+
+    </a>
+
+
+    <a
+      routerLink="/reception/billing"
+      routerLinkActive="active"
+      class="menu-item">
+
+      <i class="bi bi-receipt"></i>
+
+      <span>Billing</span>
+
+    </a>
+
+  </nav>
+
+
+  <!-- Footer -->
+
+  <div class="sidebar-footer">
+
+    <div class="user-info">
+
+      <div class="user-icon">
+        <i class="bi bi-person-circle"></i>
+      </div>
+
+      <div class="footer-text">
+
+        <strong>Receptionist</strong>
+
+        <small>Staff Account</small>
+
+      </div>
+
+    </div>
+
+
+    <!-- Logout -->
+
+    <button
+      type="button"
+      class="logout-button"
+      (click)="logout()">
+
+      <i class="bi bi-box-arrow-right"></i>
+
+      <span>Logout</span>
+
+    </button>
+
+  </div>
+
+
+</aside>

@@ -1,0 +1,55 @@
+.ambulance-arrival {
+  position: relative;
+  width: min(290px, 75%);
+  height: 42px;
+  margin: 0 auto 16px;
+  overflow: hidden;
+  color: #dceeff;
+}
+
+.ambulance-road {
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  left: 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.38);
+}
+
+.ambulance-arrival .bi-ambulance-fill {
+  position: absolute;
+  bottom: 11px;
+  left: 0;
+  font-size: 27px;
+  animation: ambulance-arrive 5.5s ease-in-out infinite;
+}
+
+@keyframes ambulance-arrive {
+  0% {
+    opacity: 0;
+    transform: translateX(-55px);
+  }
+
+  12%,
+  55% {
+    opacity: 1;
+    transform: translateX(105px);
+  }
+
+  64%,
+  80% {
+    opacity: 1;
+    transform: translateX(105px);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(355px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambulance-arrival .bi-ambulance-fill {
+    animation: none;
+    left: 38%;
+  }
+}

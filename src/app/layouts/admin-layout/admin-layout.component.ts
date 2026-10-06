@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SidebarComponent } from '../../shared/components/sidebar/sidebar.component';
+
 import { TopbarComponent } from '../../shared/components/topbar/topbar.component';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
+import { AdminSidebarComponent } from '../admin/admin-sidebar/admin-sidebar.component';
 
 @Component({
   selector: 'app-admin-layout',
   standalone: true,
   imports: [
     RouterOutlet,
-    SidebarComponent,
+    AdminSidebarComponent,
     TopbarComponent,
     FooterComponent
   ],
@@ -18,7 +19,7 @@ import { FooterComponent } from '../../shared/components/footer/footer.component
 })
 export class AdminLayoutComponent {
 
-  sidebarOpen: boolean = false;
+  sidebarOpen = false;
 
   toggleSidebar(): void {
     this.sidebarOpen = !this.sidebarOpen;

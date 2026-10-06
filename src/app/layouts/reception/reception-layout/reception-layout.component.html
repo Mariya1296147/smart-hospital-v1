@@ -1,0 +1,22 @@
+<div class="reception-layout">
+  <app-reception-sidebar
+    [isOpen]="sidebarOpen"
+    (toggle)="toggleSidebar()">
+  </app-reception-sidebar>
+
+  <button
+    type="button"
+    class="mobile-toggle"
+    (click)="toggleSidebar()"
+    [attr.aria-expanded]="sidebarOpen"
+    aria-label="Toggle reception sidebar">
+    <i class="bi" [class.bi-list]="!sidebarOpen" [class.bi-x-lg]="sidebarOpen"></i>
+  </button>
+
+  <main
+    class="main-content"
+    [class.sidebar-open]="sidebarOpen"
+    [class.sidebar-closed]="!sidebarOpen">
+    <router-outlet></router-outlet>
+  </main>
+</div>

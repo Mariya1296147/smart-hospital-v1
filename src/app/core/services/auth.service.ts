@@ -32,7 +32,11 @@ export class AuthService {
     this.seedAdmin();
   }
 
-  login(email: string, password: string): AuthResult {
+  // =====================================================
+  // LOGIN
+  // =====================================================
+
+  login(email: string, password: string, expectedRole?: UserRole): AuthResult {
 
     const user = this.getUsers().find(
       item =>
@@ -44,6 +48,13 @@ export class AuthService {
       return {
         success: false,
         message: 'Invalid email or password.'
+      };
+    }
+
+    if (expectedRole && user.role !== expectedRole) {
+      return {
+        success: false,
+        message: 'Invalid email, password, or selected role.'
       };
     }
 
@@ -72,6 +83,11 @@ export class AuthService {
       user
     };
   }
+
+
+  // =====================================================
+  // REGISTER
+  // =====================================================
 
   register(input: RegistrationInput): AuthResult {
 
@@ -116,14 +132,29 @@ export class AuthService {
     };
   }
 
+
+  // =====================================================
+  // LOGOUT
+  // =====================================================
+
   logout(): void {
     localStorage.removeItem(this.sessionKey);
     this.router.navigate(['/login']);
   }
 
+
+  // =====================================================
+  // AUTH STATUS
+  // =====================================================
+
   isLoggedIn(): boolean {
     return !!this.getCurrentUser();
   }
+
+
+  // =====================================================
+  // CURRENT USER
+  // =====================================================
 
   getCurrentUser(): HospitalUser | null {
 
@@ -134,6 +165,11 @@ export class AuthService {
       : null;
   }
 
+
+  // =====================================================
+  // GET ALL USERS
+  // =====================================================
+
   getUsers(): HospitalUser[] {
 
     const savedUsers = localStorage.getItem(this.usersKey);
@@ -142,6 +178,11 @@ export class AuthService {
       ? JSON.parse(savedUsers) as HospitalUser[]
       : [];
   }
+
+
+  // =====================================================
+  // UPDATE USER
+  // =====================================================
 
   updateUser(
     id: string,
@@ -159,14 +200,24 @@ export class AuthService {
     const currentUser = this.getCurrentUser();
 
     if (currentUser?.id === id) {
-      localStorage.setItem(
-        this.sessionKey,
-        JSON.stringify(
-          users.find(user => user.id === id)!
-        )
+
+      const updatedUser = users.find(
+        user => user.id === id
       );
+
+      if (updatedUser) {
+        localStorage.setItem(
+          this.sessionKey,
+          JSON.stringify(updatedUser)
+        );
+      }
     }
   }
+
+
+  // =====================================================
+  // ROLE CHECK
+  // =====================================================
 
   hasAnyRole(roles: UserRole[]): boolean {
 
@@ -176,12 +227,22 @@ export class AuthService {
       (user.role === 'admin' || roles.includes(user.role));
   }
 
+
+  // =====================================================
+  // URL ACCESS CONTROL
+  // =====================================================
+
   canAccessUrl(url: string): boolean {
 
     const user = this.getCurrentUser();
 
-    if (!user || user.role === 'admin') {
-      return !!user;
+    if (!user) {
+      return false;
+    }
+
+    // Admin can access admin area
+    if (user.role === 'admin') {
+      return true;
     }
 
     const path = url.split('?')[0];
@@ -191,87 +252,70 @@ export class AuthService {
       roles: UserRole[];
     }> = [
 
-        {
-          prefix: '/doctor',
-          roles: ['doctor']
-        },
+      // =================================================
+      // DOCTOR
+      // =================================================
 
-        {
-          prefix: '/admin/reception-dashboard',
-          roles: ['receptionist']
-        },
+      {
+        prefix: '/doctor',
+        roles: ['doctor']
+      },
 
-        {
-          prefix: '/admin/nurse-dashboard',
-          roles: ['nurse']
-        },
+      // =================================================
+      // RECEPTIONIST
+      // =================================================
 
-        {
-          prefix: '/admin/laboratory-dashboard',
-          roles: ['laboratory_staff']
-        },
+      {
+        prefix: '/reception',
+        roles: ['receptionist']
+      },
 
-        {
-          prefix: '/admin/pharmacy-dashboard',
-          roles: ['pharmacy_staff']
-        },
+      // =================================================
+      // NURSE
+      // =================================================
 
-        {
-          prefix: '/admin/accounts-dashboard',
-          roles: ['accounts_staff']
-        },
+      {
+        prefix: '/nurse',
+        roles: ['nurse']
+      },
 
-        {
-          prefix: '/admin/patients',
-          roles: ['doctor', 'receptionist', 'nurse']
-        },
+      // =================================================
+      // LABORATORY
+      // =================================================
 
-        {
-          prefix: '/admin/doctors',
-          roles: ['doctor', 'receptionist']
-        },
+      {
+        prefix: '/laboratory',
+        roles: ['laboratory_staff']
+      },
 
-        {
-          prefix: '/admin/appointments',
-          roles: ['doctor', 'receptionist']
-        },
+      // =================================================
+      // PHARMACY
+      // =================================================
 
-        {
-          prefix: '/admin/consultations',
-          roles: ['doctor', 'nurse']
-        },
+      {
+        prefix: '/pharmacy',
+        roles: ['pharmacy_staff']
+      },
 
-        {
-          prefix: '/admin/admissions',
-          roles: ['doctor', 'receptionist', 'nurse']
-        },
+      // =================================================
+      // ACCOUNTS
+      // =================================================
 
-        {
-          prefix: '/admin/nursing',
-          roles: ['doctor', 'nurse']
-        },
+      {
+        prefix: '/accounts',
+        roles: ['accounts_staff']
+      },
 
-        {
-          prefix: '/admin/laboratory',
-          roles: ['doctor', 'nurse', 'laboratory_staff']
-        },
+      // =================================================
+      // PATIENT
+      // =================================================
 
-        {
-          prefix: '/admin/pharmacy',
-          roles: ['doctor', 'nurse', 'pharmacy_staff']
-        },
+      // {
+      //   prefix: '/patient',
+      //   roles: ['patient']
+      // },
 
-        {
-          prefix: '/admin/billing',
-          roles: ['accounts_staff', 'receptionist']
-        },
-
-        {
-          prefix: '/admin/discharge',
-          roles: ['doctor', 'receptionist', 'nurse']
-        }
-
-      ];
+    ];
 
     const permission = permissions.find(
       item => path.startsWith(item.prefix)
@@ -280,6 +324,11 @@ export class AuthService {
     return !!permission &&
       permission.roles.includes(user.role);
   }
+
+
+  // =====================================================
+  // DASHBOARD ROUTE
+  // =====================================================
 
   dashboardRoute(
     role = this.getCurrentUser()?.role
@@ -291,15 +340,17 @@ export class AuthService {
 
       doctor: '/doctor/dashboard',
 
-      receptionist: '/admin/reception-dashboard',
+      receptionist: '/reception/dashboard',
 
-      nurse: '/admin/nurse-dashboard',
+      nurse: '/nurse/dashboard',
 
-      laboratory_staff: '/admin/laboratory-dashboard',
+      laboratory_staff: '/laboratory/dashboard',
 
-      pharmacy_staff: '/admin/pharmacy-dashboard',
+      pharmacy_staff: '/pharmacy/dashboard',
 
-      accounts_staff: '/admin/accounts-dashboard'
+      accounts_staff: '/accounts/dashboard',
+
+      // patient: '/patient/dashboard'
 
     };
 
@@ -307,6 +358,11 @@ export class AuthService {
       ? routes[role]
       : '/login';
   }
+
+
+  // =====================================================
+  // DEFAULT USERS
+  // =====================================================
 
   private seedAdmin(): void {
 
@@ -432,6 +488,11 @@ export class AuthService {
     ]);
   }
 
+
+  // =====================================================
+  // SAVE USERS
+  // =====================================================
+
   private saveUsers(users: HospitalUser[]): void {
 
     localStorage.setItem(
@@ -439,4 +500,5 @@ export class AuthService {
       JSON.stringify(users)
     );
   }
+
 }

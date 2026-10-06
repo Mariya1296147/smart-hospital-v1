@@ -421,14 +421,21 @@
          DOCTOR CAROUSEL
     ====================================================== -->
 
-    <div class="doctor-carousel-wrapper">
+    <ng-template #noActiveDoctors>
+      <p class="doctor-empty-state">Our medical team is updating its availability. Please check back soon.</p>
+    </ng-template>
 
-      <div class="doctor-carousel-track" [style.transform]="
-          'translateX(-' + (currentDoctor * 33.333333) + '%)'
-        ">
+    <div class="doctor-carousel-wrapper" *ngIf="doctors.length; else noActiveDoctors">
+
+      <div
+        class="doctor-carousel-track">
 
         <!-- DOCTOR 1 -->
-        <div class="doctor-slide" *ngFor="let doctor of doctors">
+        <div
+          class="doctor-slide"
+          *ngFor="let doctor of doctors; let i = index"
+          [class.active]="currentDoctor === i"
+          [attr.aria-hidden]="currentDoctor !== i">
 
           <div class="doctor-card-box">
 
@@ -444,20 +451,19 @@
 
             <!-- SPECIALTY -->
             <p>
-              {{ doctor.specialty }}
+              {{ doctor.specialization }}
             </p>
 
             <!-- EXPERIENCE -->
             <small>
-              {{ doctor.experience }}
+              {{ doctor.experience || doctor.department }}
             </small>
 
             <!-- RATING -->
             <div class="doctor-rating">
 
-              <i class="bi bi-star-fill"></i>
-
-              {{ doctor.rating }} Rating
+              <i class="bi bi-hospital"></i>
+              {{ doctor.qualification || doctor.department }}
 
             </div>
 
@@ -485,8 +491,14 @@
 
     <div class="doctor-indicators">
 
-      <span *ngFor="let doctor of doctors; let i = index" [class.active]="i === currentDoctor">
-      </span>
+      <button
+        *ngFor="let doctor of doctors; let i = index"
+        type="button"
+        [class.active]="i === currentDoctor"
+        [attr.aria-label]="'Show ' + doctor.name"
+        [attr.aria-current]="i === currentDoctor ? 'true' : null"
+        (click)="currentDoctor = i">
+      </button>
 
     </div>
 

@@ -1,0 +1,62 @@
+<div class="staff-shell" [class.sidebar-open]="sidebarOpen">
+  <aside class="staff-sidebar" [class.mobile-open]="mobileMenuOpen" [class.sidebar-open]="sidebarOpen">
+    <button
+      type="button"
+      class="sidebar-toggle"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="sidebarOpen"
+      aria-label="Toggle sidebar">
+      <i class="bi" [class.bi-chevron-left]="sidebarOpen" [class.bi-chevron-right]="!sidebarOpen"></i>
+    </button>
+
+    <a class="staff-brand" [routerLink]="menuItems[0].route">
+      <span class="brand-mark"><i class="bi bi-hospital"></i></span>
+      <span class="brand-text">
+        <strong>Smart Hospital</strong>
+        <small>{{ roleLabel }} workspace</small>
+      </span>
+    </a>
+
+    <div class="staff-section-label">WORKSPACE</div>
+    <nav class="staff-nav" aria-label="Role workspace">
+      <a
+        *ngFor="let item of menuItems"
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        (click)="sidebarOpen = false; mobileMenuOpen = false">
+        <i class="bi" [ngClass]="item.icon"></i>
+        <span>{{ item.label }}</span>
+      </a>
+    </nav>
+
+    <div class="staff-account">
+      <div class="account-avatar"><i class="bi bi-person"></i></div>
+      <div class="account-name">
+        <strong>{{ user?.name || roleLabel }}</strong>
+        <small>{{ roleLabel }}</small>
+      </div>
+      <button type="button" (click)="logout()" aria-label="Log out">
+        <i class="bi bi-box-arrow-right"></i>
+      </button>
+    </div>
+  </aside>
+
+  <button
+    type="button"
+    class="mobile-menu-toggle"
+    (click)="toggleMenu()"
+    [attr.aria-expanded]="sidebarOpen"
+    aria-label="Toggle navigation">
+    <i class="bi" [class.bi-list]="!sidebarOpen" [class.bi-x-lg]="sidebarOpen"></i>
+  </button>
+
+  <div class="staff-main">
+    <header class="staff-topbar">
+      <span>{{ roleLabel }} workspace</span>
+      <span class="availability"><i></i> On duty</span>
+    </header>
+    <main class="staff-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

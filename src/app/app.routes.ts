@@ -2,6 +2,9 @@ import { Routes } from '@angular/router';
 
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { DoctorLayoutComponent } from './layouts/doctor/doctor-layout/doctor-layout.component';
+import { ReceptionLayoutComponent } from './layouts/reception/reception-layout/reception-layout.component';
+import { StaffLayoutComponent } from './layouts/staff-layout/staff-layout.component';
 
 // Public
 import { HomeComponent } from './features/public/home/home.component';
@@ -11,7 +14,6 @@ import { PharmacyComponent } from './features/public/pharmacy/pharmacy.component
 
 // Auth
 import { LoginComponent } from './features/auth/login/login.component';
-
 
 // Guards
 import { authGuard } from './core/guards/auth.guard';
@@ -72,7 +74,6 @@ import { DischargeViewComponent } from './features/discharge/discharge-view/disc
 
 // Prescriptions
 import { PrescriptionAddComponent } from './features/prescriptions/prescription-add/prescription-add.component';
-import { DoctorLayoutComponent } from './layouts/doctor/doctor-layout/doctor-layout.component';
 
 
 export const routes: Routes = [
@@ -84,6 +85,7 @@ export const routes: Routes = [
   {
     path: '',
     component: PublicLayoutComponent,
+
     children: [
 
       {
@@ -147,12 +149,14 @@ export const routes: Routes = [
 
       {
         path: 'laboratory',
-        component: LaboratoryComponent
+        component: LaboratoryComponent,
+        pathMatch: 'full'
       },
 
       {
         path: 'pharmacy',
-        component: PharmacyComponent
+        component: PharmacyComponent,
+        pathMatch: 'full'
       }
 
     ]
@@ -160,7 +164,7 @@ export const routes: Routes = [
 
 
   // =====================================================
-  // AUTH
+  // LOGIN
   // =====================================================
 
   {
@@ -169,10 +173,9 @@ export const routes: Routes = [
   },
 
 
-
-
   // =====================================================
-  // ADMIN / STAFF PANEL
+  // ADMIN PANEL
+  // Topbar থাকবে
   // =====================================================
 
   {
@@ -182,22 +185,13 @@ export const routes: Routes = [
 
     children: [
 
-      // =================================================
-      // DEFAULT ADMIN ROUTE
-      // =================================================
-
       {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
       },
 
-
-      // =================================================
-      // DASHBOARDS
-      // =================================================
-
-      // ADMIN
+      // ADMIN DASHBOARD
       {
         path: 'dashboard',
         component: AdminDashboardComponent,
@@ -207,83 +201,7 @@ export const routes: Routes = [
         }
       },
 
-      // DOCTOR
-      {
-        path: 'doctor-dashboard',
-        loadComponent: () =>
-          import('./features/dashboard/doctor-dashboard/doctor-dashboard.component')
-            .then(m => m.DoctorDashboardComponent),
-        canActivate: [roleGuard],
-        data: {
-          roles: ['doctor']
-        }
-      },
-
-      // RECEPTIONIST
-      {
-        path: 'reception-dashboard',
-        loadComponent: () =>
-          import('./features/dashboard/reception-dashboard/reception-dashboard.component')
-            .then(m => m.ReceptionDashboardComponent),
-        canActivate: [roleGuard],
-        data: {
-          roles: ['receptionist']
-        }
-      },
-
-      // NURSE
-      {
-        path: 'nurse-dashboard',
-        loadComponent: () =>
-          import('./features/dashboard/nurse-dashboard/nurse-dashboard.component')
-            .then(m => m.NurseDashboardComponent),
-        canActivate: [roleGuard],
-        data: {
-          roles: ['nurse']
-        }
-      },
-
-      // LABORATORY STAFF
-      {
-        path: 'laboratory-dashboard',
-        loadComponent: () =>
-          import('./features/laboratory/laboratory-dashboard/laboratory-dashboard.component')
-            .then(m => m.LaboratoryDashboardComponent),
-        canActivate: [roleGuard],
-        data: {
-          roles: ['laboratory_staff']
-        }
-      },
-
-      // PHARMACY STAFF
-      {
-        path: 'pharmacy-dashboard',
-        loadComponent: () =>
-          import('./features/pharmacy/pharmacy-dashboard/pharmacy-dashboard.component')
-            .then(m => m.PharmacyDashboardComponent),
-        canActivate: [roleGuard],
-        data: {
-          roles: ['pharmacy_staff']
-        }
-      },
-
-      // ACCOUNTS STAFF
-      {
-        path: 'accounts-dashboard',
-        loadComponent: () =>
-          import('./features/dashboard/billing-dashboard/billing-dashboard.component')
-            .then(m => m.BillingDashboardComponent),
-        canActivate: [roleGuard],
-        data: {
-          roles: ['accounts_staff']
-        }
-      },
-
-
-      // =================================================
       // USER MANAGEMENT
-      // =================================================
-
       {
         path: 'users',
         loadComponent: () =>
@@ -295,11 +213,7 @@ export const routes: Routes = [
         }
       },
 
-
-      // =================================================
       // REPORTS
-      // =================================================
-
       {
         path: 'reports',
         loadComponent: () =>
@@ -311,11 +225,7 @@ export const routes: Routes = [
         }
       },
 
-
-      // =================================================
       // SETTINGS
-      // =================================================
-
       {
         path: 'settings',
         loadComponent: () =>
@@ -327,261 +237,377 @@ export const routes: Routes = [
         }
       },
 
-
-      // =================================================
       // PATIENTS
-      // =================================================
-
       {
         path: 'patients',
-        component: PatientListComponent
+        component: PatientListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'patients/add',
-        component: PatientFormComponent
+        component: PatientFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'patients/edit/:id',
-        component: PatientFormComponent
+        component: PatientFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'patients/view/:id',
-        component: PatientViewComponent
+        component: PatientViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
-
-      // =================================================
       // DOCTORS
-      // =================================================
-
       {
         path: 'doctors',
-        component: DoctorListComponent
+        component: DoctorListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'doctors/add',
-        component: DoctorFormComponent
+        component: DoctorFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'doctors/edit/:id',
-        component: DoctorFormComponent
+        component: DoctorFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'doctors/view/:id',
-        component: DoctorViewComponent
+        component: DoctorViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
-
-      // =================================================
       // APPOINTMENTS
-      // =================================================
-
       {
         path: 'appointments',
-        component: AppointmentListComponent
+        component: AppointmentListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'appointments/add',
-        component: AppointmentFormComponent
+        component: AppointmentFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'appointments/edit/:id',
-        component: AppointmentFormComponent
+        component: AppointmentFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'appointments/view/:id',
-        component: AppointmentViewComponent
+        component: AppointmentViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
-
-      // =================================================
       // CONSULTATIONS
-      // =================================================
-
       {
         path: 'consultations',
-        component: ConsultationListComponent
+        component: ConsultationListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'consultations/add',
-        component: ConsultationFormComponent
+        component: ConsultationFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'consultations/edit/:id',
-        component: ConsultationFormComponent
+        component: ConsultationFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'consultations/view/:id',
-        component: ConsultationViewComponent
+        component: ConsultationViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
-
-      // =================================================
       // ADMISSIONS
-      // =================================================
-
       {
         path: 'admissions',
-        component: AdmissionListComponent
+        component: AdmissionListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'admissions/add',
-        component: AdmissionFormComponent
+        component: AdmissionFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'admissions/edit/:id',
-        component: AdmissionFormComponent
+        component: AdmissionFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'admissions/view/:id',
-        component: AdmissionViewComponent
+        component: AdmissionViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
-
-      // =================================================
       // NURSING
-      // =================================================
-
       {
         path: 'nursing',
-        component: NurseListComponent
+        component: NurseListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'nursing/add',
-        component: NurseFormComponent
+        component: NurseFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'nursing/edit/:id',
-        component: NurseFormComponent
+        component: NurseFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'nursing/view/:id',
-        component: NurseViewComponent
+        component: NurseViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
-
-      // =================================================
       // LABORATORY
-      // =================================================
-
       {
         path: 'laboratory',
-        component: LaboratoryListComponent
+        component: LaboratoryListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'laboratory/add',
-        component: LaboratoryFormComponent
+        component: LaboratoryFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'laboratory/edit/:id',
-        component: LaboratoryFormComponent
+        component: LaboratoryFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'laboratory/view/:id',
-        component: LaboratoryViewComponent
+        component: LaboratoryViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
-
-      // =================================================
       // PHARMACY
-      // =================================================
-
       {
         path: 'pharmacy',
-        component: PharmacyListComponent
+        component: PharmacyListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'pharmacy/add',
-        component: PharmacyFormComponent
+        component: PharmacyFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'pharmacy/edit/:id',
-        component: PharmacyFormComponent
+        component: PharmacyFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'pharmacy/view/:id',
-        component: PharmacyViewComponent
+        component: PharmacyViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
-
-      // =================================================
       // BILLING
-      // =================================================
-
       {
         path: 'billing',
-        component: BillingListComponent
+        component: BillingListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'billing/add',
-        component: BillingFormComponent
+        component: BillingFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'billing/edit/:id',
-        component: BillingFormComponent
+        component: BillingFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'billing/view/:id',
-        component: BillingViewComponent
+        component: BillingViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
-
-      // =================================================
       // DISCHARGE
-      // =================================================
-
       {
         path: 'discharge',
-        component: DischargeListComponent
+        component: DischargeListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'discharge/add',
-        component: DischargeFormComponent
+        component: DischargeFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'discharge/edit/:id',
-        component: DischargeFormComponent
+        component: DischargeFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
       {
         path: 'discharge/view/:id',
-        component: DischargeViewComponent
+        component: DischargeViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['admin']
+        },
       },
 
-
-      // =================================================
-      // PRESCRIPTIONS
-      // =================================================
-
+      // PRESCRIPTION
       {
         path: 'prescriptions/add/:patientId',
         component: PrescriptionAddComponent,
@@ -589,14 +615,23 @@ export const routes: Routes = [
         data: {
           roles: ['doctor']
         }
-      }
+      },
 
     ]
   },
+
+
+  // =====================================================
+  // DOCTOR PANEL
+  // Sidebar থাকবে
+  // Topbar থাকবে না
+  // =====================================================
+
   {
     path: 'doctor',
     component: DoctorLayoutComponent,
     canActivate: [authGuard],
+
     children: [
 
       {
@@ -605,51 +640,445 @@ export const routes: Routes = [
         pathMatch: 'full'
       },
 
+      // DOCTOR DASHBOARD
       {
         path: 'dashboard',
         loadComponent: () =>
           import('./features/dashboard/doctor-dashboard/doctor-dashboard.component')
             .then(m => m.DoctorDashboardComponent),
         canActivate: [roleGuard],
-        data: { roles: ['doctor'] }
+        data: {
+          roles: ['doctor']
+        }
       },
 
+      // DOCTOR PROFILE
       {
         path: 'profile',
         loadComponent: () =>
           import('./features/doctor/profile/profile.component')
             .then(m => m.ProfileComponent),
         canActivate: [roleGuard],
-        data: { roles: ['doctor'] }
+        data: {
+          roles: ['doctor']
+        }
+      },
+
+      // MY PATIENTS
+      {
+        path: 'patients',
+        component: PatientListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['doctor']
+        }
+      },
+
+      // APPOINTMENTS
+      {
+        path: 'appointments',
+        component: AppointmentListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['doctor']
+        }
+      },
+
+      // CONSULTATIONS
+      {
+        path: 'consultations',
+        component: ConsultationListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['doctor']
+        }
+      },
+{
+        path: 'consultations/add',
+        component: ConsultationFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['doctor']
+        }
+      },
+
+      {
+        path: 'laboratory',
+        component: LaboratoryListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['doctor']
+        }
       }
 
     ]
   },
 
- 
 
-{
-  path: 'accounts',
-  component: AdminLayoutComponent,
-  canActivate: [authGuard],
-  children: [
-    {
-      path: '',
-      redirectTo: 'dashboard',
-      pathMatch: 'full'
-    },
-    {
-      path: 'dashboard',
-      loadComponent: () =>
-        import('./features/dashboard/accounts-dashboard/accounts-dashboard.component')
-          .then(m => m.AccountsDashboardComponent),
-      canActivate: [roleGuard],
-      data: {
-        roles: ['accounts_staff']
+  // =====================================================
+  // RECEPTION PANEL
+  // Sidebar থাকবে
+  // Topbar থাকবে না
+  // =====================================================
+
+  {
+    path: 'reception',
+    component: ReceptionLayoutComponent,
+    canActivate: [authGuard],
+
+    children: [
+
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+
+      // RECEPTION DASHBOARD
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/dashboard/reception-dashboard/reception-dashboard.component')
+            .then(m => m.ReceptionDashboardComponent),
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      // PATIENTS
+      {
+        path: 'patients',
+        component: PatientListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      {
+        path: 'patients/add',
+        component: PatientFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      {
+        path: 'patients/edit/:id',
+        component: PatientFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      {
+        path: 'patients/view/:id',
+        component: PatientViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      // APPOINTMENTS
+      {
+        path: 'appointments',
+        component: AppointmentListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      {
+        path: 'appointments/add',
+        component: AppointmentFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      {
+        path: 'appointments/edit/:id',
+        component: AppointmentFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      {
+        path: 'appointments/view/:id',
+        component: AppointmentViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      // ADMISSIONS
+      {
+        path: 'admissions',
+        component: AdmissionListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      {
+        path: 'admissions/add',
+        component: AdmissionFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      {
+        path: 'admissions/view/:id',
+        component: AdmissionViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      // DISCHARGE
+      {
+        path: 'discharge',
+        component: DischargeListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      {
+        path: 'discharge/add',
+        component: DischargeFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      {
+        path: 'discharge/view/:id',
+        component: DischargeViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      // BILLING
+      {
+        path: 'billing',
+        component: BillingListComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      {
+        path: 'billing/add',
+        component: BillingFormComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
+      },
+
+      {
+        path: 'billing/view/:id',
+        component: BillingViewComponent,
+        canActivate: [roleGuard],
+        data: {
+          roles: ['receptionist']
+        }
       }
-    }
-  ]
-},
+
+    ]
+  },
+
+
+  // =====================================================
+  // NURSE WORKSPACE
+  // =====================================================
+
+  {
+    path: 'nurse',
+    component: StaffLayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/dashboard/nurse-dashboard/nurse-dashboard.component')
+            .then(m => m.NurseDashboardComponent),
+        canActivate: [roleGuard],
+        data: { roles: ['nurse'] }
+      },
+      {
+        path: 'patients',
+        component: PatientListComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['nurse'] }
+      },
+      {
+        path: 'nursing',
+        component: NurseListComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['nurse'] }
+      },
+      {
+        path: 'admissions',
+        component: AdmissionListComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['nurse'] }
+      },
+      {
+        path: 'consultations',
+        component: ConsultationListComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['nurse'] }
+      },
+      {
+        path: 'laboratory',
+        component: LaboratoryListComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['nurse'] }
+      },
+      {
+        path: 'patients/add',
+        component: PatientFormComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['nurse'] }
+      },
+      {
+        path: 'nursing/add',
+        component: NurseFormComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['nurse'] }
+      }
+    ]
+  },
+
+  // LABORATORY WORKSPACE
+  {
+    path: 'laboratory',
+    component: StaffLayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/laboratory/laboratory-dashboard/laboratory-dashboard.component')
+            .then(m => m.LaboratoryDashboardComponent),
+        canActivate: [roleGuard],
+        data: { roles: ['laboratory_staff'] }
+      },
+      {
+        path: 'tests',
+        component: LaboratoryListComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['laboratory_staff'] }
+      },
+      {
+        path: 'tests/add',
+        component: LaboratoryFormComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['laboratory_staff'] }
+      },
+      {
+        path: 'patients',
+        component: PatientListComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['laboratory_staff'] }
+      }
+    ]
+  },
+
+  // PHARMACY WORKSPACE
+  {
+    path: 'pharmacy',
+    component: StaffLayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/pharmacy/pharmacy-dashboard/pharmacy-dashboard.component')
+            .then(m => m.PharmacyDashboardComponent),
+        canActivate: [roleGuard],
+        data: { roles: ['pharmacy_staff'] }
+      },
+      {
+        path: 'stock',
+        component: PharmacyListComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['pharmacy_staff'] }
+      },
+      {
+        path: 'stock/add',
+        component: PharmacyFormComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['pharmacy_staff'] }
+      },
+      {
+        path: 'patients',
+        component: PatientListComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['pharmacy_staff'] }
+      }
+    ]
+  },
+
+  // ACCOUNTS WORKSPACE
+  {
+    path: 'accounts',
+    component: StaffLayoutComponent,
+    canActivate: [authGuard],
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./features/dashboard/accounts-dashboard/accounts-dashboard.component')
+            .then(m => m.AccountsDashboardComponent),
+        canActivate: [roleGuard],
+        data: { roles: ['accounts_staff'] }
+      },
+      {
+        path: 'billing',
+        component: BillingListComponent,
+        canActivate: [roleGuard],
+        data: { roles: ['accounts_staff'] }
+      },
+      {
+        path: 'reports',
+        loadComponent: () =>
+          import('./features/reports/reports-dashboard/reports-dashboard.component')
+            .then(m => m.ReportsDashboardComponent),
+        canActivate: [roleGuard],
+        data: { roles: ['accounts_staff'] }
+      }
+    ]
+  },
+
 
   // =====================================================
   // INVALID URL

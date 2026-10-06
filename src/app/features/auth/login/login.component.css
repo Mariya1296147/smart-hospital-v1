@@ -63,7 +63,7 @@
 
   margin-bottom: 20px;
 
-  background: #0d6efd;
+  background: #477dad;
 
   color: #ffffff;
 
@@ -75,7 +75,7 @@
 
   font-size: 40px;
 
-  box-shadow: 0 8px 25px rgba(13, 110, 253, 0.30);
+  box-shadow: 0 8px 25px rgba(71, 125, 173, 0.24);
 }
 
 .hospital-brand h2 {
@@ -125,6 +125,74 @@
   justify-content: center;
 }
 
+.role-picker {
+  border: 0;
+  margin: 0 0 20px;
+  padding: 0;
+}
+
+.role-picker legend {
+  float: none;
+  width: auto;
+  margin-bottom: 9px;
+  color: #34445b;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.role-option {
+  min-height: 65px;
+  padding: 8px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid #dce5ef;
+  border-radius: 9px;
+  background: #f8fbff;
+  color: #53657c;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease,
+    color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.role-option i {
+  color: #52769e;
+  font-size: 17px;
+}
+
+.role-option:hover {
+  transform: translateY(-1px);
+  border-color: #8bb4dc;
+  background: #eff6fd;
+  color: #17365f;
+}
+
+.role-option.selected {
+  border-color: var(--hospital-blue);
+  background: var(--hospital-blue-soft);
+  color: #17365f;
+  box-shadow: inset 0 0 0 1px rgba(57, 121, 185, 0.12);
+}
+
+.role-option.selected i {
+  color: #2867a5;
+}
+
+.role-option:focus-visible {
+  outline: 3px solid rgba(57, 121, 185, 0.25);
+  outline-offset: 2px;
+}
 
 /* =========================================
    SECTION HEADING
@@ -228,10 +296,14 @@
   box-shadow: 0 5px 15px rgba(13, 110, 253, 0.16);
 
   transition: all 0.2s ease;
+  background: var(--hospital-blue);
+  border-color: var(--hospital-blue);
 }
 
 .login-btn:hover {
   transform: translateY(-1px);
+  background: #244c78;
+  border-color: #244c78;
 }
 
 
@@ -316,6 +388,10 @@
     padding: 35px 35px 45px;
   }
 
+  .role-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .auth-footer {
     position: static;
 
@@ -359,6 +435,10 @@
 
   .login-section {
     padding: 30px 22px 40px;
+  }
+
+  .role-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .section-heading {

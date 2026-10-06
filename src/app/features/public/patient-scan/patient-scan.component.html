@@ -20,27 +20,37 @@
     <div class="scanner-box">
 
       <div class="scanner-frame">
+        <video
+          #cameraFeed
+          class="camera-preview"
+          [hidden]="!scannerActive"
+          autoplay
+          muted
+          aria-label="Live QR code camera preview"
+          playsinline>
+        </video>
         <div class="corner top-left"></div>
         <div class="corner top-right"></div>
         <div class="corner bottom-left"></div>
         <div class="corner bottom-right"></div>
 
-        <i class="bi bi-qr-code"></i>
+        <i *ngIf="!scannerActive" class="bi bi-qr-code"></i>
 
         <div class="scan-line"></div>
       </div>
 
       <p class="scanner-text">
-        Place your QR Code inside the frame
+        {{ scannerActive ? 'Hold the QR code steady inside the frame' : 'Place your QR Code inside the frame' }}
       </p>
 
       <button
         type="button"
         class="btn scan-btn"
-        (click)="startScanner()">
+        [disabled]="scannerStarting"
+        (click)="scannerActive ? stopScanner() : startScanner()">
 
-        <i class="bi bi-camera me-2"></i>
-        Start Scanner
+        <i class="bi me-2" [ngClass]="scannerActive ? 'bi-camera-video-off' : 'bi-camera'"></i>
+        {{ scannerStarting ? 'Starting camera…' : scannerActive ? 'Stop Scanner' : 'Start Scanner' }}
       </button>
 
     </div>
@@ -81,7 +91,14 @@
 
       <div
         *ngIf="message"
-        class="alert alert-warning mt-3">
+        class="alert mt-3"
+        role="status"
+        aria-live="polite"
+        [ngClass]="{
+          'alert-success': messageType === 'success',
+          'alert-danger': messageType === 'error',
+          'alert-info': messageType === 'info'
+        }">
         {{ message }}
       </div>
 

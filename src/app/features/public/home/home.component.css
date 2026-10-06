@@ -800,21 +800,57 @@ section {
   width: 100%;
   overflow: hidden;
   margin-top: 30px;
+  min-height: 350px;
+  position: relative;
 }
 
 .doctor-carousel-track {
-  display: flex;
-  transition: transform 1s ease-in-out;
+  position: relative;
+  min-height: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doctor-carousel-track {
+    transition: none;
+  }
+
+  .doctor-slide {
+    transition: none;
+  }
 }
 
 .doctor-slide {
-  flex: 0 0 33.333333%;
+  position: absolute;
+  inset: 0;
   padding: 0 10px;
   box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 420ms ease, transform 420ms ease, visibility 420ms;
+  pointer-events: none;
+}
+
+.doctor-slide.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.doctor-empty-state {
+  margin: 30px 0;
+  padding: 28px;
+  border: 1px solid #e1eaf5;
+  border-radius: 14px;
+  color: #66788f;
+  background: #f8fbff;
+  text-align: center;
 }
 
 .doctor-card-box {
   height: 100%;
+  min-height: 315px;
   padding: 28px 22px;
   text-align: center;
   background: #ffffff;
@@ -875,40 +911,27 @@ section {
   margin-top: 25px;
 }
 
-.doctor-indicators span {
+.doctor-indicators button {
   width: 9px;
   height: 9px;
+  padding: 0;
+  border: 0;
   border-radius: 50%;
   background: #ced4da;
-  transition: 0.3s;
+  cursor: pointer;
+  transition: width 220ms ease, background-color 220ms ease;
 }
 
-.doctor-indicators span.active {
+.doctor-indicators button:focus-visible {
+  outline: 2px solid #315f91;
+  outline-offset: 3px;
+}
+
+.doctor-indicators button.active {
   width: 25px;
   border-radius: 10px;
+  background: #315f91;
 }
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width: 991px) {
-
-  .doctor-slide {
-    flex: 0 0 50%;
-  }
-
-}
-
-@media (max-width: 575px) {
-
-  .doctor-slide {
-    flex: 0 0 100%;
-  }
-
-}
-
 
 /* =========================================================
    DEPARTMENTS

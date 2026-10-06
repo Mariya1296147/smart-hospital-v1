@@ -38,6 +38,22 @@
 
       <form (ngSubmit)="login()">
 
+        <fieldset class="role-picker">
+          <legend>Choose your role</legend>
+          <div class="role-grid">
+            <button
+              *ngFor="let role of roles"
+              type="button"
+              class="role-option"
+              [class.selected]="selectedRole === role.value"
+              [attr.aria-pressed]="selectedRole === role.value"
+              (click)="selectedRole = role.value; message = ''">
+              <i class="bi" [ngClass]="role.icon"></i>
+              <span>{{ roleLabels[role.value] }}</span>
+            </button>
+          </div>
+        </fieldset>
+
         <!-- EMAIL -->
         <div class="mb-3">
 

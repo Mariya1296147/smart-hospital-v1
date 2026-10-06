@@ -1,24 +1,49 @@
-
+/* Doctor layout */
 .doctor-layout {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--hospital-page);
+  overflow-x: hidden;
+}
+
+.main-area {
+  min-height: 100vh;
   display: flex;
-  min-height: 100vh;
-  background: #f5f7fb;
+  flex-direction: column;
+  margin-left: 72px;
+  transition: margin-left .3s ease;
 }
 
-.doctor-main-content {
+.doctor-layout.sidebar-open .main-area { margin-left: 270px; }
+
+.page-content {
   flex: 1;
-  min-width: 0;
-  min-height: 100vh;
-  padding: 25px;
-  transition: all 0.3s ease;
+  padding: 24px;
+  background: var(--hospital-page);
 }
 
-/* Mobile */
-@media (max-width: 768px) {
+.mobile-toggle { display: none; }
 
-  .doctor-main-content {
+@media (max-width: 991px) {
+  .main-area,
+  .doctor-layout.sidebar-open .main-area {
     width: 100%;
-    padding: 15px;
+    margin-left: 0;
   }
-
+  .page-content { padding: 16px 12px; }
+  .mobile-toggle {
+    display: grid;
+    position: fixed;
+    top: 12px;
+    left: 12px;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border: 0;
+    border-radius: 10px;
+    background: var(--hospital-navy);
+    color: #fff;
+    z-index: 1200;
+    box-shadow: 0 5px 16px rgba(16,42,72,.2);
+  }
 }

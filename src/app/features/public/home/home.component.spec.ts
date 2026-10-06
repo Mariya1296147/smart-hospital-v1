@@ -20,4 +20,11 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('shows active doctors from the shared doctor list', () => {
+    expect(component.doctors.map(doctor => doctor.name)).toEqual([
+      'Dr. Ahmed Rahman',
+      'Dr. Nusrat Jahan'
+    ]);
+  });
 });
