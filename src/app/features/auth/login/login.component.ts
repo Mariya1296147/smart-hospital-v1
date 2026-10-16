@@ -1,9 +1,10 @@
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-import { ROLE_LABELS, UserRole } from '../../../models/user';
+import { LoginRequest } from '../../../models/user';
 
 @Component({
   selector: 'app-login',
@@ -13,23 +14,11 @@ import { ROLE_LABELS, UserRole } from '../../../models/user';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-
   email = '';
   password = '';
   message = '';
-  selectedRole: UserRole | null = null;
-
-  readonly roles: Array<{ value: UserRole; icon: string }> = [
-    { value: 'admin', icon: 'bi-shield-lock' },
-    { value: 'doctor', icon: 'bi-person-badge' },
-    { value: 'receptionist', icon: 'bi-person-lines-fill' },
-    { value: 'nurse', icon: 'bi-heart-pulse' },
-    { value: 'laboratory_staff', icon: 'bi-eyedropper' },
-    { value: 'pharmacy_staff', icon: 'bi-capsule' },
-    { value: 'accounts_staff', icon: 'bi-wallet2' }
-  ];
-
-  readonly roleLabels = ROLE_LABELS;
+  loading = false;
+  showPassword = false;
 
   constructor(
     private authService: AuthService,
@@ -37,29 +26,39 @@ export class LoginComponent {
   ) {}
 
   login(): void {
+    this.message = '';
 
-    if (!this.selectedRole) {
-      this.message = 'Please select your role to continue.';
-      return;
-    }
-
-    if (!this.email || !this.password) {
+    if (!this.email.trim() || !this.password) {
       this.message = 'Please enter your email and password.';
       return;
     }
 
-    const result = this.authService.login(
-      this.email,
-      this.password,
-      this.selectedRole
-    );
+    this.loading = true;
 
-    this.message = result.message;
+    const request: LoginRequest = {
+      email: this.email.trim(),
+      password: this.password
+    };
 
-    if (result.success && result.user) {
-      this.router.navigateByUrl(
-        this.authService.dashboardRoute(result.user.role)
-      );
-    }
+    this.authService.login(request).subscribe({
+      next: (response) => {
+        this.loading = false;
+
+        // The user's role comes from the backend response.
+        this.authService.redirectToDashboard();
+      },
+      error: (error) => {
+        this.loading = false;
+
+        if (error.status === 401 || error.status === 403) {
+          this.message = 'Invalid email or password.';
+        } else if (error.status === 0) {
+          this.message = 'Unable to connect to the server.';
+        } else {
+          this.message =
+            error.error?.message || 'Login failed. Please try again.';
+        }
+      }
+    });
   }
 }

@@ -27,7 +27,7 @@ export class ReceptionSidebarComponent {
     const user = this.authService.getCurrentUser();
 
     if (user) {
-      this.userName = user.name;
+      this.userName = user.userName;
       this.roleLabel = 'Receptionist';
     }
   }

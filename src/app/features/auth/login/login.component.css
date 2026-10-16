@@ -1,463 +1,677 @@
+
 /* =========================================
-   LOGIN PAGE
+   SMART HOSPITAL LOGIN PAGE
 ========================================= */
+
+:host {
+  display: block;
+  min-height: 100vh;
+  --hospital-blue: #12345a;
+  --hospital-blue-dark: #0a1d35;
+  --hospital-blue-light: #eaf3fc;
+  --hospital-accent: #65b5ed;
+  --hospital-text: #1b2b42;
+}
+
+* {
+  box-sizing: border-box;
+}
 
 .login-page {
   min-height: 100vh;
-  background: #f4f7fb;
-
+  padding: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  padding: 25px 15px;
+  background:
+    radial-gradient(circle at 10% 10%, #e1effd 0, transparent 32%),
+    radial-gradient(circle at 90% 90%, #dceaf9 0, transparent 32%),
+    #f5f8fc;
 }
 
-
 /* =========================================
-   MAIN LOGIN CARD
+   MAIN CONTAINER
 ========================================= */
 
-.auth-card {
+.login-wrapper {
   width: 100%;
-  max-width: 820px;
-
-  background: #ffffff;
-
-  border-radius: 18px;
-
-  overflow: hidden;
-
+  max-width: 1120px;
+  min-height: 650px;
   display: grid;
-  grid-template-columns: 42% 58%;
-
-  position: relative;
-
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.10);
+  grid-template-columns: 46% 54%;
+  overflow: hidden;
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 24px 70px rgba(17, 45, 78, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
-
 /* =========================================
-   LEFT - HOSPITAL BRAND
+   LEFT BRAND PANEL
 ========================================= */
 
-.hospital-brand {
-  background: #0b1f3a;
-
-  color: #ffffff;
-
-  padding: 55px 35px;
-
+.brand-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 65px 48px 30px;
   display: flex;
   flex-direction: column;
-
-  align-items: center;
-  justify-content: center;
-
-  text-align: center;
+  justify-content: space-between;
+  color: #ffffff;
+  background: linear-gradient(
+    145deg,
+    #173e69 0%,
+    #102e50 48%,
+    #081b32 100%
+  );
 }
 
+.brand-panel::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 330px;
+  height: 330px;
+  top: -145px;
+  right: -130px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 35px rgba(255, 255, 255, 0.025),
+    0 0 0 70px rgba(255, 255, 255, 0.02);
+}
+
+.brand-panel::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 260px;
+  height: 260px;
+  left: -140px;
+  bottom: 60px;
+  border-radius: 50%;
+  background: rgba(77, 153, 222, 0.09);
+}
+
+.brand-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================
+   HOSPITAL LOGO
+========================================= */
+
 .hospital-logo {
-  width: 82px;
-  height: 82px;
-
-  margin-bottom: 20px;
-
-  background: #477dad;
-
-  color: #ffffff;
-
-  border-radius: 18px;
-
+  position: relative;
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 25px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  font-size: 40px;
-
-  box-shadow: 0 8px 25px rgba(71, 125, 173, 0.24);
+  color: #ffffff;
+  background: linear-gradient(145deg, #70c3f5, #3686c5);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 27px;
+  font-size: 53px;
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.hospital-brand h2 {
+.logo-cross {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #15375c;
+  background: #ffffff;
+  border: 3px solid #173e69;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.brand-content h1 {
   margin: 0;
-
-  font-size: 25px;
-  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  font-size: clamp(27px, 3vw, 36px);
+  font-weight: 800;
+  letter-spacing: -0.8px;
 }
 
-.hospital-brand p {
-  margin: 7px 0 0;
-
-  color: #cbd5e1;
-
-  font-size: 13px;
+.brand-content h1 span {
+  color: #83cdfa;
 }
 
 .brand-line {
-  width: 55px;
-  height: 3px;
-
-  margin: 25px 0;
-
-  background: #0d6efd;
-
+  width: 58px;
+  height: 4px;
+  margin: 23px auto 35px;
+  background: #70c3f5;
   border-radius: 10px;
 }
 
-.hospital-brand span {
-  color: #dbeafe;
-
-  font-size: 13px;
-
-  line-height: 1.8;
-}
-
-
-/* =========================================
-   RIGHT - LOGIN
-========================================= */
-
-.login-section {
-  padding: 50px 55px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.role-picker {
-  border: 0;
-  margin: 0 0 20px;
-  padding: 0;
-}
-
-.role-picker legend {
-  float: none;
-  width: auto;
-  margin-bottom: 9px;
-  color: #34445b;
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.role-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.role-option {
-  min-height: 65px;
-  padding: 8px 5px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  border: 1px solid #dce5ef;
-  border-radius: 9px;
-  background: #f8fbff;
-  color: #53657c;
-  font-size: 10px;
-  font-weight: 600;
-  line-height: 1.2;
-  cursor: pointer;
-  transition: background-color 160ms ease, border-color 160ms ease,
-    color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
-}
-
-.role-option i {
-  color: #52769e;
-  font-size: 17px;
-}
-
-.role-option:hover {
-  transform: translateY(-1px);
-  border-color: #8bb4dc;
-  background: #eff6fd;
-  color: #17365f;
-}
-
-.role-option.selected {
-  border-color: var(--hospital-blue);
-  background: var(--hospital-blue-soft);
-  color: #17365f;
-  box-shadow: inset 0 0 0 1px rgba(57, 121, 185, 0.12);
-}
-
-.role-option.selected i {
-  color: #2867a5;
-}
-
-.role-option:focus-visible {
-  outline: 3px solid rgba(57, 121, 185, 0.25);
-  outline-offset: 2px;
-}
-
-/* =========================================
-   SECTION HEADING
-========================================= */
-
-.section-heading {
-  margin-bottom: 25px;
-}
-
-.section-heading h3 {
-  margin: 0;
-
+.brand-content h2 {
+  margin: 0 0 15px;
+  color: #ffffff;
   font-size: 24px;
-
   font-weight: 700;
-
-  color: #212529;
+  line-height: 1.4;
 }
 
-.section-heading h3 i {
-  color: #0d6efd;
-}
-
-.section-heading p {
-  margin: 7px 0 0;
-
-  font-size: 13px;
-
-  color: #6c757d;
-}
-
-
-/* =========================================
-   FORM LABEL
-========================================= */
-
-.form-label {
-  font-size: 13px;
-
-  font-weight: 600;
-
-  color: #343a40;
-
-  margin-bottom: 7px;
-}
-
-
-/* =========================================
-   INPUT GROUP
-========================================= */
-
-.input-group-text {
-  min-width: 44px;
-
-  justify-content: center;
-
-  background: #f8f9fa;
-
-  border-color: #dee2e6;
-
-  color: #6c757d;
-}
-
-
-/* =========================================
-   INPUT
-========================================= */
-
-.form-control {
-  height: 44px;
-
-  border-color: #dee2e6;
-
-  font-size: 13px;
-}
-
-.form-control::placeholder {
-  color: #adb5bd;
-}
-
-.form-control:focus {
-  border-color: #0d6efd;
-
-  box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.12);
-}
-
-
-/* =========================================
-   LOGIN BUTTON
-========================================= */
-
-.login-btn {
-  height: 45px;
-
-  border-radius: 8px;
-
+.brand-content > p {
+  margin: 0;
+  max-width: 360px;
+  color: #c5d5e8;
   font-size: 14px;
-
-  font-weight: 600;
-
-  box-shadow: 0 5px 15px rgba(13, 110, 253, 0.16);
-
-  transition: all 0.2s ease;
-  background: var(--hospital-blue);
-  border-color: var(--hospital-blue);
+  line-height: 1.9;
 }
-
-.login-btn:hover {
-  transform: translateY(-1px);
-  background: #244c78;
-  border-color: #244c78;
-}
-
 
 /* =========================================
-   CREATE ACCOUNT LINK
+   BRAND FEATURES
 ========================================= */
 
-.forgot-link {
-  color: #0d6efd;
+.brand-features {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 35px;
+}
 
-  text-decoration: none;
-
+.brand-feature {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: #e8f2ff;
+  font-size: 13px;
   font-weight: 500;
 }
 
-.forgot-link:hover {
+.brand-feature i {
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8dd2ff;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  font-size: 17px;
+}
+
+.brand-footer {
+  position: relative;
+  z-index: 1;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+  color: #b7cbe0;
+  font-size: 11px;
+}
+
+.brand-footer i {
+  margin-right: 7px;
+  color: #83cdfa;
+}
+
+.decoration {
+  display: none;
+}
+
+/* =========================================
+   RIGHT FORM PANEL
+========================================= */
+
+.form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 65px 70px;
+  background: #ffffff;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 390px;
+}
+
+/* =========================================
+   FORM ICON
+========================================= */
+
+.form-top-icon {
+  width: 58px;
+  height: 58px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--hospital-blue);
+  background: #eaf3fc;
+  border: 1px solid #dceaf9;
+  border-radius: 17px;
+  font-size: 27px;
+}
+
+/* =========================================
+   FORM HEADING
+========================================= */
+
+.form-heading {
+  margin-bottom: 33px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #397eb7;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.form-heading h2 {
+  margin: 0;
+  color: #132b47;
+  font-size: 35px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.form-heading p {
+  margin: 10px 0 0;
+  color: #78879a;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* =========================================
+   ERROR MESSAGE
+========================================= */
+
+.alert-danger {
+  margin-bottom: 22px;
+  padding: 12px 14px;
+  border: 1px solid #f5c6cb;
+  border-radius: 10px;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+/* =========================================
+   FORM FIELDS
+========================================= */
+
+.form-field {
+  margin-bottom: 24px;
+}
+
+.form-field > label {
+  display: block;
+  margin-bottom: 10px;
+  color: #263c56;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.input-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-box > i:first-child {
+  position: absolute;
+  left: 16px;
+  z-index: 2;
+  color: #7890aa;
+  font-size: 17px;
+  pointer-events: none;
+}
+
+.input-box .form-control {
+  width: 100%;
+  height: 53px;
+  padding: 12px 16px 12px 47px;
+  color: #1b2b42;
+  background: #f8fafd;
+  border: 1px solid #dce5ef;
+  border-radius: 11px;
+  outline: none;
+  font-size: 13px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.input-box .form-control::placeholder {
+  color: #a3afbe;
+}
+
+.input-box .form-control:focus {
+  background: #ffffff;
+  border-color: #4e94d0;
+  box-shadow: 0 0 0 4px rgba(65, 139, 200, 0.12);
+}
+
+.input-box .form-control.is-invalid {
+  border-color: #dc3545;
+}
+
+.input-box .password-input {
+  padding-right: 48px;
+}
+.form-field > label {
+  display: block;
+  margin-bottom: 10px;
+  color: #263c56;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.input-box .form-control {
+  padding-left: 16px;
+}
+
+.input-box .password-input {
+  padding-right: 48px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 7px;
+  z-index: 3;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #75879b;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.password-toggle:hover {
+  color: var(--hospital-blue);
+  background: #edf4fb;
+}
+
+.error-text {
+  margin-top: 7px;
+  color: #dc3545;
+  font-size: 11px;
+}
+
+/* =========================================
+   SIGN IN BUTTON
+========================================= */
+
+.login-button {
+  width: 100%;
+  min-height: 53px;
+  margin-top: 4px;
+  padding: 13px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: linear-gradient(100deg, #173f6a, #245b91);
+  border: 0;
+  border-radius: 11px;
+  box-shadow: 0 8px 20px rgba(22, 65, 108, 0.19);
+  font-size: 14px;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.login-button:hover:not(:disabled) {
+  color: #ffffff;
+  background: linear-gradient(100deg, #102f51, #1a4979);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(22, 65, 108, 0.24);
+}
+
+.login-button:disabled {
+  color: #ffffff;
+  background: #8297ae;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+/* =========================================
+   REGISTER
+========================================= */
+
+.register-area {
+  margin-top: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  color: #7b899a;
+  font-size: 12px;
+}
+
+.register-area a {
+  color: #20588b;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.register-area a:hover {
+  color: #3686c5;
   text-decoration: underline;
 }
 
-
 /* =========================================
-   FOOTER
+   SECURITY MESSAGE
 ========================================= */
 
-.auth-footer {
-  position: absolute;
-
-  bottom: 0;
-  left: 0;
-
-  width: 42%;
-
-  padding: 10px;
-
-  text-align: center;
-
-  background: rgba(0, 0, 0, 0.12);
-}
-
-.auth-footer small {
-  color: #cbd5e1;
-
+.secure-message {
+  margin-top: 35px;
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-top: 1px solid #edf1f6;
+  color: #91a0b1;
   font-size: 10px;
+  text-align: center;
 }
 
+.secure-message i {
+  color: #3e91bd;
+  font-size: 14px;
+}
 
 /* =========================================
    TABLET
 ========================================= */
 
-@media (max-width: 768px) {
-
-  .auth-card {
-    max-width: 520px;
-
-    grid-template-columns: 1fr;
+@media (max-width: 900px) {
+  .login-page {
+    padding: 25px;
   }
 
-  .hospital-brand {
-    padding: 30px 25px;
+  .login-wrapper {
+    max-width: 760px;
+    grid-template-columns: 42% 58%;
+    min-height: 600px;
   }
 
-  .hospital-logo {
-    width: 65px;
-    height: 65px;
-
-    font-size: 31px;
-
-    margin-bottom: 12px;
+  .brand-panel {
+    padding: 48px 30px 25px;
   }
 
-  .hospital-brand h2 {
-    font-size: 22px;
+  .brand-content h1 {
+    font-size: 29px;
   }
 
-  .brand-line,
-  .hospital-brand span {
-    display: none;
+  .brand-content h2 {
+    font-size: 21px;
   }
 
-  .login-section {
-    padding: 35px 35px 45px;
-  }
-
-  .role-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .auth-footer {
-    position: static;
-
-    width: 100%;
+  .form-panel {
+    padding: 45px 35px;
   }
 }
-
 
 /* =========================================
    MOBILE
 ========================================= */
 
-@media (max-width: 576px) {
-
+@media (max-width: 650px) {
   .login-page {
-    padding: 15px 10px;
+    padding: 18px 12px;
+    align-items: flex-start;
   }
 
-  .auth-card {
-    border-radius: 14px;
+  .login-wrapper {
+    max-width: 460px;
+    grid-template-columns: 1fr;
+    border-radius: 19px;
   }
 
-  .hospital-brand {
-    padding: 25px 15px;
+  .brand-panel {
+    min-height: auto;
+    padding: 30px 24px 23px;
+    text-align: center;
   }
 
   .hospital-logo {
-    width: 58px;
-    height: 58px;
+    width: 68px;
+    height: 68px;
+    margin-bottom: 14px;
+    border-radius: 20px;
+    font-size: 38px;
+  }
 
+  .logo-cross {
+    width: 25px;
+    height: 25px;
+    font-size: 16px;
+  }
+
+  .brand-content h1 {
     font-size: 27px;
   }
 
-  .hospital-brand h2 {
-    font-size: 20px;
+  .brand-line {
+    margin: 15px auto;
   }
 
-  .hospital-brand p {
+  .brand-content h2 {
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
+
+  .brand-content > p {
+    max-width: 340px;
+    margin: 0 auto;
     font-size: 12px;
   }
 
-  .login-section {
-    padding: 30px 22px 40px;
+  .brand-features {
+    display: none;
   }
 
-  .role-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .brand-footer {
+    margin-top: 20px;
+    padding-top: 13px;
+    font-size: 10px;
   }
 
-  .section-heading {
+  .form-panel {
+    padding: 35px 25px 30px;
+  }
+
+  .login-card {
+    max-width: 390px;
+  }
+
+  .form-top-icon {
+    width: 49px;
+    height: 49px;
+    margin-bottom: 20px;
+    font-size: 23px;
+  }
+
+  .form-heading {
+    margin-bottom: 26px;
+  }
+
+  .form-heading h2 {
+    font-size: 30px;
+  }
+
+  .form-heading p {
+    font-size: 12px;
+  }
+
+  .form-field {
     margin-bottom: 20px;
   }
 
-  .section-heading h3 {
-    font-size: 21px;
+  .input-box .form-control {
+    height: 49px;
   }
 
-  .section-heading p {
-    font-size: 12px;
+  .login-button {
+    min-height: 49px;
   }
 
-  .form-control {
-    height: 42px;
+  .register-area {
+    margin-top: 23px;
   }
 
-  .login-btn {
-    height: 43px;
+  .secure-message {
+    margin-top: 25px;
+    padding-top: 16px;
+  }
+}
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 360px) {
+  .login-page {
+    padding: 10px 7px;
+  }
+
+  .brand-panel {
+    padding: 25px 17px 20px;
+  }
+
+  .form-panel {
+    padding: 28px 18px;
+  }
+
+  .brand-content h1 {
+    font-size: 24px;
+  }
+
+  .form-heading h2 {
+    font-size: 27px;
+  }
+
+  .register-area {
+    font-size: 11px;
   }
 }

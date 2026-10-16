@@ -17,7 +17,6 @@ import { LoginComponent } from './features/auth/login/login.component';
 
 // Guards
 import { authGuard } from './core/guards/auth.guard';
-import { roleGuard } from './core/guards/role.guard';
 
 // Admin Dashboard
 import { AdminDashboardComponent } from './features/dashboard/admin-dashboard/admin-dashboard.component';
@@ -135,6 +134,14 @@ export const routes: Routes = [
             .then(m => m.PatientScanComponent)
       },
 
+{
+  path: 'patient-profile',
+  loadComponent: () =>
+    import('./features/patient-profile/patient-profile.component')
+      .then(m => m.PatientProfileComponent)
+},
+
+
       {
         path: 'appointment',
         loadComponent: () =>
@@ -195,7 +202,6 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: AdminDashboardComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         }
@@ -207,7 +213,6 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/users/user-management.component')
             .then(m => m.UserManagementComponent),
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         }
@@ -219,7 +224,6 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/reports/reports-dashboard/reports-dashboard.component')
             .then(m => m.ReportsDashboardComponent),
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         }
@@ -231,7 +235,6 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/settings/settings.component')
             .then(m => m.SettingsComponent),
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         }
@@ -241,7 +244,6 @@ export const routes: Routes = [
       {
         path: 'patients',
         component: PatientListComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -250,7 +252,6 @@ export const routes: Routes = [
       {
         path: 'patients/add',
         component: PatientFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -259,7 +260,6 @@ export const routes: Routes = [
       {
         path: 'patients/edit/:id',
         component: PatientFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -268,7 +268,6 @@ export const routes: Routes = [
       {
         path: 'patients/view/:id',
         component: PatientViewComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -278,7 +277,6 @@ export const routes: Routes = [
       {
         path: 'doctors',
         component: DoctorListComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -287,7 +285,7 @@ export const routes: Routes = [
       {
         path: 'doctors/add',
         component: DoctorFormComponent,
-        canActivate: [roleGuard],
+        
         data: {
           roles: ['admin']
         },
@@ -296,7 +294,7 @@ export const routes: Routes = [
       {
         path: 'doctors/edit/:id',
         component: DoctorFormComponent,
-        canActivate: [roleGuard],
+        
         data: {
           roles: ['admin']
         },
@@ -305,7 +303,7 @@ export const routes: Routes = [
       {
         path: 'doctors/view/:id',
         component: DoctorViewComponent,
-        canActivate: [roleGuard],
+       
         data: {
           roles: ['admin']
         },
@@ -315,7 +313,7 @@ export const routes: Routes = [
       {
         path: 'appointments',
         component: AppointmentListComponent,
-        canActivate: [roleGuard],
+       
         data: {
           roles: ['admin']
         },
@@ -324,7 +322,6 @@ export const routes: Routes = [
       {
         path: 'appointments/add',
         component: AppointmentFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -333,7 +330,6 @@ export const routes: Routes = [
       {
         path: 'appointments/edit/:id',
         component: AppointmentFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -342,7 +338,6 @@ export const routes: Routes = [
       {
         path: 'appointments/view/:id',
         component: AppointmentViewComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -352,7 +347,6 @@ export const routes: Routes = [
       {
         path: 'consultations',
         component: ConsultationListComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -361,7 +355,6 @@ export const routes: Routes = [
       {
         path: 'consultations/add',
         component: ConsultationFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -370,7 +363,6 @@ export const routes: Routes = [
       {
         path: 'consultations/edit/:id',
         component: ConsultationFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -379,7 +371,6 @@ export const routes: Routes = [
       {
         path: 'consultations/view/:id',
         component: ConsultationViewComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -389,7 +380,6 @@ export const routes: Routes = [
       {
         path: 'admissions',
         component: AdmissionListComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -398,7 +388,6 @@ export const routes: Routes = [
       {
         path: 'admissions/add',
         component: AdmissionFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -407,7 +396,6 @@ export const routes: Routes = [
       {
         path: 'admissions/edit/:id',
         component: AdmissionFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -416,7 +404,6 @@ export const routes: Routes = [
       {
         path: 'admissions/view/:id',
         component: AdmissionViewComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -426,7 +413,6 @@ export const routes: Routes = [
       {
         path: 'nursing',
         component: NurseListComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -435,7 +421,6 @@ export const routes: Routes = [
       {
         path: 'nursing/add',
         component: NurseFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -444,7 +429,6 @@ export const routes: Routes = [
       {
         path: 'nursing/edit/:id',
         component: NurseFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -453,7 +437,6 @@ export const routes: Routes = [
       {
         path: 'nursing/view/:id',
         component: NurseViewComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -463,7 +446,6 @@ export const routes: Routes = [
       {
         path: 'laboratory',
         component: LaboratoryListComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -472,7 +454,6 @@ export const routes: Routes = [
       {
         path: 'laboratory/add',
         component: LaboratoryFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -481,7 +462,6 @@ export const routes: Routes = [
       {
         path: 'laboratory/edit/:id',
         component: LaboratoryFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -490,7 +470,6 @@ export const routes: Routes = [
       {
         path: 'laboratory/view/:id',
         component: LaboratoryViewComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -500,7 +479,6 @@ export const routes: Routes = [
       {
         path: 'pharmacy',
         component: PharmacyListComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -509,7 +487,6 @@ export const routes: Routes = [
       {
         path: 'pharmacy/add',
         component: PharmacyFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -518,7 +495,6 @@ export const routes: Routes = [
       {
         path: 'pharmacy/edit/:id',
         component: PharmacyFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -527,7 +503,6 @@ export const routes: Routes = [
       {
         path: 'pharmacy/view/:id',
         component: PharmacyViewComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -537,7 +512,6 @@ export const routes: Routes = [
       {
         path: 'billing',
         component: BillingListComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -546,7 +520,6 @@ export const routes: Routes = [
       {
         path: 'billing/add',
         component: BillingFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -555,7 +528,6 @@ export const routes: Routes = [
       {
         path: 'billing/edit/:id',
         component: BillingFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -564,7 +536,6 @@ export const routes: Routes = [
       {
         path: 'billing/view/:id',
         component: BillingViewComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -574,7 +545,6 @@ export const routes: Routes = [
       {
         path: 'discharge',
         component: DischargeListComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -583,7 +553,7 @@ export const routes: Routes = [
       {
         path: 'discharge/add',
         component: DischargeFormComponent,
-        canActivate: [roleGuard],
+      
         data: {
           roles: ['admin']
         },
@@ -592,7 +562,6 @@ export const routes: Routes = [
       {
         path: 'discharge/edit/:id',
         component: DischargeFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -601,7 +570,6 @@ export const routes: Routes = [
       {
         path: 'discharge/view/:id',
         component: DischargeViewComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['admin']
         },
@@ -611,7 +579,6 @@ export const routes: Routes = [
       {
         path: 'prescriptions/add/:patientId',
         component: PrescriptionAddComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['doctor']
         }
@@ -646,7 +613,6 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/dashboard/doctor-dashboard/doctor-dashboard.component')
             .then(m => m.DoctorDashboardComponent),
-        canActivate: [roleGuard],
         data: {
           roles: ['doctor']
         }
@@ -658,7 +624,6 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/doctor/profile/profile.component')
             .then(m => m.ProfileComponent),
-        canActivate: [roleGuard],
         data: {
           roles: ['doctor']
         }
@@ -668,7 +633,6 @@ export const routes: Routes = [
       {
         path: 'patients',
         component: PatientListComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['doctor']
         }
@@ -678,7 +642,6 @@ export const routes: Routes = [
       {
         path: 'appointments',
         component: AppointmentListComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['doctor']
         }
@@ -688,15 +651,21 @@ export const routes: Routes = [
       {
         path: 'consultations',
         component: ConsultationListComponent,
-        canActivate: [roleGuard],
+        data: {
+          roles: ['doctor']
+        }
+
+      },
+      {
+        path: 'consultations/add',
+        component: ConsultationFormComponent,
         data: {
           roles: ['doctor']
         }
       },
-{
-        path: 'consultations/add',
-        component: ConsultationFormComponent,
-        canActivate: [roleGuard],
+      {
+        path: 'prescriptions/add/:patientId',
+        component: PrescriptionAddComponent,
         data: {
           roles: ['doctor']
         }
@@ -705,7 +674,6 @@ export const routes: Routes = [
       {
         path: 'laboratory',
         component: LaboratoryListComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['doctor']
         }
@@ -740,7 +708,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/dashboard/reception-dashboard/reception-dashboard.component')
             .then(m => m.ReceptionDashboardComponent),
-        canActivate: [roleGuard],
+        
         data: {
           roles: ['receptionist']
         }
@@ -750,7 +718,7 @@ export const routes: Routes = [
       {
         path: 'patients',
         component: PatientListComponent,
-        canActivate: [roleGuard],
+       
         data: {
           roles: ['receptionist']
         }
@@ -759,7 +727,7 @@ export const routes: Routes = [
       {
         path: 'patients/add',
         component: PatientFormComponent,
-        canActivate: [roleGuard],
+      
         data: {
           roles: ['receptionist']
         }
@@ -768,7 +736,7 @@ export const routes: Routes = [
       {
         path: 'patients/edit/:id',
         component: PatientFormComponent,
-        canActivate: [roleGuard],
+      
         data: {
           roles: ['receptionist']
         }
@@ -777,7 +745,7 @@ export const routes: Routes = [
       {
         path: 'patients/view/:id',
         component: PatientViewComponent,
-        canActivate: [roleGuard],
+       
         data: {
           roles: ['receptionist']
         }
@@ -787,7 +755,7 @@ export const routes: Routes = [
       {
         path: 'appointments',
         component: AppointmentListComponent,
-        canActivate: [roleGuard],
+        
         data: {
           roles: ['receptionist']
         }
@@ -796,7 +764,7 @@ export const routes: Routes = [
       {
         path: 'appointments/add',
         component: AppointmentFormComponent,
-        canActivate: [roleGuard],
+       
         data: {
           roles: ['receptionist']
         }
@@ -805,7 +773,7 @@ export const routes: Routes = [
       {
         path: 'appointments/edit/:id',
         component: AppointmentFormComponent,
-        canActivate: [roleGuard],
+        
         data: {
           roles: ['receptionist']
         }
@@ -814,7 +782,7 @@ export const routes: Routes = [
       {
         path: 'appointments/view/:id',
         component: AppointmentViewComponent,
-        canActivate: [roleGuard],
+       
         data: {
           roles: ['receptionist']
         }
@@ -824,7 +792,7 @@ export const routes: Routes = [
       {
         path: 'admissions',
         component: AdmissionListComponent,
-        canActivate: [roleGuard],
+      
         data: {
           roles: ['receptionist']
         }
@@ -833,7 +801,7 @@ export const routes: Routes = [
       {
         path: 'admissions/add',
         component: AdmissionFormComponent,
-        canActivate: [roleGuard],
+       
         data: {
           roles: ['receptionist']
         }
@@ -842,7 +810,7 @@ export const routes: Routes = [
       {
         path: 'admissions/view/:id',
         component: AdmissionViewComponent,
-        canActivate: [roleGuard],
+       
         data: {
           roles: ['receptionist']
         }
@@ -852,7 +820,7 @@ export const routes: Routes = [
       {
         path: 'discharge',
         component: DischargeListComponent,
-        canActivate: [roleGuard],
+       
         data: {
           roles: ['receptionist']
         }
@@ -861,7 +829,7 @@ export const routes: Routes = [
       {
         path: 'discharge/add',
         component: DischargeFormComponent,
-        canActivate: [roleGuard],
+       
         data: {
           roles: ['receptionist']
         }
@@ -870,7 +838,7 @@ export const routes: Routes = [
       {
         path: 'discharge/view/:id',
         component: DischargeViewComponent,
-        canActivate: [roleGuard],
+       
         data: {
           roles: ['receptionist']
         }
@@ -880,7 +848,7 @@ export const routes: Routes = [
       {
         path: 'billing',
         component: BillingListComponent,
-        canActivate: [roleGuard],
+       
         data: {
           roles: ['receptionist']
         }
@@ -889,7 +857,6 @@ export const routes: Routes = [
       {
         path: 'billing/add',
         component: BillingFormComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['receptionist']
         }
@@ -898,7 +865,6 @@ export const routes: Routes = [
       {
         path: 'billing/view/:id',
         component: BillingViewComponent,
-        canActivate: [roleGuard],
         data: {
           roles: ['receptionist']
         }
@@ -927,49 +893,41 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/dashboard/nurse-dashboard/nurse-dashboard.component')
             .then(m => m.NurseDashboardComponent),
-        canActivate: [roleGuard],
         data: { roles: ['nurse'] }
       },
       {
         path: 'patients',
         component: PatientListComponent,
-        canActivate: [roleGuard],
         data: { roles: ['nurse'] }
       },
       {
         path: 'nursing',
         component: NurseListComponent,
-        canActivate: [roleGuard],
         data: { roles: ['nurse'] }
       },
       {
         path: 'admissions',
         component: AdmissionListComponent,
-        canActivate: [roleGuard],
         data: { roles: ['nurse'] }
       },
       {
         path: 'consultations',
         component: ConsultationListComponent,
-        canActivate: [roleGuard],
         data: { roles: ['nurse'] }
       },
       {
         path: 'laboratory',
         component: LaboratoryListComponent,
-        canActivate: [roleGuard],
         data: { roles: ['nurse'] }
       },
       {
         path: 'patients/add',
         component: PatientFormComponent,
-        canActivate: [roleGuard],
         data: { roles: ['nurse'] }
       },
       {
         path: 'nursing/add',
         component: NurseFormComponent,
-        canActivate: [roleGuard],
         data: { roles: ['nurse'] }
       }
     ]
@@ -987,25 +945,21 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/laboratory/laboratory-dashboard/laboratory-dashboard.component')
             .then(m => m.LaboratoryDashboardComponent),
-        canActivate: [roleGuard],
         data: { roles: ['laboratory_staff'] }
       },
       {
         path: 'tests',
         component: LaboratoryListComponent,
-        canActivate: [roleGuard],
         data: { roles: ['laboratory_staff'] }
       },
       {
         path: 'tests/add',
         component: LaboratoryFormComponent,
-        canActivate: [roleGuard],
         data: { roles: ['laboratory_staff'] }
       },
       {
         path: 'patients',
         component: PatientListComponent,
-        canActivate: [roleGuard],
         data: { roles: ['laboratory_staff'] }
       }
     ]
@@ -1023,25 +977,25 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/pharmacy/pharmacy-dashboard/pharmacy-dashboard.component')
             .then(m => m.PharmacyDashboardComponent),
-        canActivate: [roleGuard],
+        
         data: { roles: ['pharmacy_staff'] }
       },
       {
         path: 'stock',
         component: PharmacyListComponent,
-        canActivate: [roleGuard],
+      
         data: { roles: ['pharmacy_staff'] }
       },
       {
         path: 'stock/add',
         component: PharmacyFormComponent,
-        canActivate: [roleGuard],
+      
         data: { roles: ['pharmacy_staff'] }
       },
       {
         path: 'patients',
         component: PatientListComponent,
-        canActivate: [roleGuard],
+      
         data: { roles: ['pharmacy_staff'] }
       }
     ]
@@ -1059,13 +1013,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/dashboard/accounts-dashboard/accounts-dashboard.component')
             .then(m => m.AccountsDashboardComponent),
-        canActivate: [roleGuard],
+       
         data: { roles: ['accounts_staff'] }
       },
       {
         path: 'billing',
         component: BillingListComponent,
-        canActivate: [roleGuard],
+       
         data: { roles: ['accounts_staff'] }
       },
       {
@@ -1073,7 +1027,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/reports/reports-dashboard/reports-dashboard.component')
             .then(m => m.ReportsDashboardComponent),
-        canActivate: [roleGuard],
+        
         data: { roles: ['accounts_staff'] }
       }
     ]

@@ -48,12 +48,10 @@ section {
   align-items: center;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #f2f7ff 0%,
       #ffffff 55%,
-      #edf6ff 100%
-    );
+      #edf6ff 100%);
 
   overflow: hidden;
 }
@@ -193,8 +191,7 @@ section {
   border-radius: 30px;
 
   box-shadow:
-    0 25px 70px
-    rgba(13, 110, 253, 0.20);
+    0 25px 70px rgba(13, 110, 253, 0.20);
 }
 
 
@@ -220,8 +217,7 @@ section {
   border-radius: 15px;
 
   box-shadow:
-    0 18px 40px
-    rgba(0, 0, 0, 0.13);
+    0 18px 40px rgba(0, 0, 0, 0.13);
 }
 
 .doctor-floating {
@@ -295,8 +291,7 @@ section {
   border-radius: 17px;
 
   box-shadow:
-    0 15px 40px
-    rgba(0, 0, 0, 0.08);
+    0 15px 40px rgba(0, 0, 0, 0.08);
 
   transition: 0.3s ease;
 }
@@ -440,18 +435,15 @@ section {
   border-radius: 28px;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #0d6efd,
-      #084298
-    );
+      #084298);
 
   box-shadow:
-    0 25px 55px
-    rgba(13, 110, 253, 0.20);
+    0 25px 55px rgba(13, 110, 253, 0.20);
 }
 
-.about-box > i {
+.about-box>i {
   font-size: 52px;
 
   margin-bottom: 20px;
@@ -464,7 +456,7 @@ section {
 }
 
 .about-box p {
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .about-number {
@@ -494,8 +486,7 @@ section {
   border-radius: 17px;
 
   box-shadow:
-    0 10px 35px
-    rgba(0, 0, 0, 0.06);
+    0 10px 35px rgba(0, 0, 0, 0.06);
 
   transition: 0.3s ease;
 }
@@ -504,8 +495,7 @@ section {
   transform: translateY(-7px);
 
   box-shadow:
-    0 20px 45px
-    rgba(13, 110, 253, 0.12);
+    0 20px 45px rgba(13, 110, 253, 0.12);
 }
 
 .service-icon {
@@ -623,8 +613,7 @@ section {
   border-radius: 23px;
 
   box-shadow:
-    0 15px 40px
-    rgba(13, 110, 253, 0.10);
+    0 15px 40px rgba(13, 110, 253, 0.10);
 
   animation: doctorFade 0.5s ease;
 }
@@ -647,8 +636,7 @@ section {
   transform: translateY(-6px);
 
   box-shadow:
-    0 22px 50px
-    rgba(13, 110, 253, 0.15);
+    0 22px 50px rgba(13, 110, 253, 0.15);
 }
 
 
@@ -792,6 +780,7 @@ section {
 
   border-radius: 10px;
 }
+
 /* =========================================================
    DOCTOR CAROUSEL
 ========================================================= */
@@ -1047,8 +1036,7 @@ section {
   border-radius: 19px;
 
   box-shadow:
-    0 10px 30px
-    rgba(0, 0, 0, 0.06);
+    0 10px 30px rgba(0, 0, 0, 0.06);
 
   transition: all 0.3s ease;
 }
@@ -1059,8 +1047,7 @@ section {
   border-color: #0d6efd;
 
   box-shadow:
-    0 18px 40px
-    rgba(13, 110, 253, 0.13);
+    0 18px 40px rgba(13, 110, 253, 0.13);
 }
 
 
@@ -1134,11 +1121,9 @@ section {
   padding: 55px 0;
 
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #0d6efd,
-      #084298
-    );
+      #084298);
 
   color: #ffffff;
 }
@@ -1148,7 +1133,7 @@ section {
 
   padding: 7px 14px;
 
-  background: rgba(255,255,255,0.14);
+  background: rgba(255, 255, 255, 0.14);
 
   border-radius: 30px;
 
@@ -1180,7 +1165,7 @@ section {
 .appointment-text {
   max-width: 570px;
 
-  color: rgba(255,255,255,0.84);
+  color: rgba(255, 255, 255, 0.84);
 
   font-size: 14px;
 
@@ -1228,7 +1213,7 @@ section {
 
   padding: 10px 15px;
 
-  background: rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.12);
 
   border-radius: 12px;
 
@@ -1282,8 +1267,7 @@ section {
   border-radius: 17px;
 
   box-shadow:
-    0 20px 50px
-    rgba(0,0,0,0.18);
+    0 20px 50px rgba(0, 0, 0, 0.18);
 }
 
 .form-heading {
@@ -1366,8 +1350,7 @@ section {
   border-color: #0d6efd;
 
   box-shadow:
-    0 0 0 3px
-    rgba(13,110,253,0.10);
+    0 0 0 3px rgba(13, 110, 253, 0.10);
 }
 
 .appointment-submit {
@@ -1421,8 +1404,7 @@ section {
   border-radius: 21px;
 
   box-shadow:
-    0 15px 40px
-    rgba(0,0,0,0.08);
+    0 15px 40px rgba(0, 0, 0, 0.08);
 }
 
 .map-card iframe {
@@ -1450,8 +1432,7 @@ section {
   border-radius: 21px;
 
   box-shadow:
-    0 15px 40px
-    rgba(0,0,0,0.07);
+    0 15px 40px rgba(0, 0, 0, 0.07);
 }
 
 .location-small-title {
@@ -1472,7 +1453,7 @@ section {
   font-weight: 800;
 }
 
-.location-info > p {
+.location-info>p {
   color: #667085;
 
   font-size: 13px;
@@ -1749,4 +1730,329 @@ section {
     padding: 24px;
   }
 
+}
+
+
+.doctors-section {
+  padding: 65px 0;
+  background: #f1f7fd;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.section-heading span {
+  color: #1685c5;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.section-heading h2 {
+  margin: 12px 0;
+  color: #17365d;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.section-heading p {
+  color: #64748b;
+}
+
+.doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.doctor-card {
+  background: #fff;
+  border: 1px solid #e0eaf5;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 5px 18px rgba(23, 54, 93, .08);
+  transition: transform .3s ease;
+}
+
+.doctor-card:hover {
+  transform: translateY(-5px);
+}
+
+.doctor-image {
+  height: 225px;
+  position: relative;
+  background: #e4effb;
+  overflow: hidden;
+}
+
+.doctor-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.available-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #fff;
+  color: #168553;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.doctor-info {
+  padding: 20px;
+}
+
+.doctor-info h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #17365d;
+}
+
+.specialty {
+  color: #1685c5;
+  font-weight: 600;
+}
+
+.doctor-details {
+  margin: 18px 0;
+}
+
+.doctor-details p {
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+.doctor-details i {
+  color: #1685c5;
+  margin-right: 8px;
+}
+
+.appointment-btn {
+  display: block;
+  padding: 11px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background: #17365d;
+  border-radius: 7px;
+  font-weight: 600;
+}
+
+.appointment-btn:hover {
+  background: #1685c5;
+}
+
+@media (max-width: 992px) {
+  .doctors-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .doctors-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading h2 {
+    font-size: 25px;
+  }
+}
+
+/* =========================================
+   SMART HOSPITAL - DOCTORS SECTION
+========================================= */
+
+.doctors-section {
+  padding: 70px 0;
+  background: #f1f7fd;
+}
+
+.doctors-section .section-heading {
+  text-align: center;
+  margin: 0 auto 35px;
+}
+
+.doctors-section .section-heading span {
+  display: inline-block;
+  color: #1685c5;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.doctors-section .section-heading h2 {
+  margin: 12px 0;
+  color: #17365d;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.doctors-section .section-heading p {
+  color: #64748b;
+  margin-bottom: 0;
+}
+
+.doctors-grid {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+  width: 100%;
+}
+
+.doctors-grid .doctor-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e0eaf5;
+  border-radius: 15px;
+  box-shadow: 0 5px 18px rgba(23, 54, 93, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.doctors-grid .doctor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(23, 54, 93, 0.14);
+}
+
+.doctors-grid .doctor-image {
+  height: 225px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  background: #e4effb;
+}
+
+.doctors-grid .doctor-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.doctors-grid .available-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #fff;
+  color: #168553;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.doctors-grid .doctor-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.doctors-grid .doctor-info h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #17365d;
+  margin-bottom: 8px;
+}
+
+.doctors-grid .specialty {
+  color: #1685c5;
+  font-weight: 600;
+}
+
+.doctors-grid .doctor-details {
+  margin: 18px 0;
+}
+
+.doctors-grid .doctor-details p {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #64748b;
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+}
+
+.doctors-grid .doctor-details i {
+  color: #1685c5;
+  flex-shrink: 0;
+}
+
+.doctors-grid .appointment-btn {
+  display: block;
+  margin-top: auto;
+  padding: 11px;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background: #17365d;
+  border-radius: 7px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.doctors-grid .appointment-btn:hover {
+  background: #1685c5;
+}
+
+.doctors-section .doctor-indicators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 25px;
+}
+
+.doctors-section .doctor-indicators button {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #ced4da;
+  cursor: pointer;
+  transition: width 0.2s ease, background 0.2s ease;
+}
+
+.doctors-section .doctor-indicators button.active {
+  width: 25px;
+  border-radius: 10px;
+  background: #315f91;
+}
+
+@media (max-width: 992px) {
+  .doctors-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .doctors-section {
+    padding: 50px 0;
+  }
+
+  .doctors-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .doctors-section .section-heading h2 {
+    font-size: 27px;
+  }
+
+  .doctors-grid .doctor-image {
+    height: 250px;
+  }
 }

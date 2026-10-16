@@ -3,90 +3,55 @@
 
     <!-- BRAND -->
     <a class="navbar-brand d-flex align-items-center gap-2" routerLink="/">
-      <img
-        src="assets/hospitalss.jpg"
-        alt="Smart Hospital Logo"
-        class="hospital-logo">
+      <img src="assets/hospitalss.jpg" alt="Smart Hospital Logo" class="hospital-logo">
     </a>
 
     <!-- MOBILE MENU BUTTON -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      (click)="toggleMenu()"
-      [attr.aria-expanded]="isMenuOpen"
-      aria-controls="publicNavbar"
-      aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()" [attr.aria-expanded]="isMenuOpen"
+      aria-controls="publicNavbar" aria-label="Toggle navigation">
 
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- NAVIGATION -->
-    <div
-      class="navbar-collapse"
-      [class.show]="isMenuOpen"
-      id="publicNavbar">
+    <div class="navbar-collapse" [class.show]="isMenuOpen" id="publicNavbar">
 
       <!-- MAIN MENU -->
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
 
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
             (click)="closeMenu()">
             Home
           </a>
         </li>
 
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/about"
-            routerLinkActive="active"
-            (click)="closeMenu()">
+          <a class="nav-link" routerLink="/about" routerLinkActive="active" (click)="closeMenu()">
             About Us
           </a>
         </li>
 
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/services"
-            routerLinkActive="active"
-            (click)="closeMenu()">
+          <a class="nav-link" routerLink="/services" routerLinkActive="active" (click)="closeMenu()">
             Services
           </a>
         </li>
 
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/doctors"
-            routerLinkActive="active"
-            (click)="closeMenu()">
+          <a class="nav-link" routerLink="/doctors" routerLinkActive="active" (click)="closeMenu()">
             Doctors
           </a>
         </li>
 
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/departments"
-            routerLinkActive="active"
-            (click)="closeMenu()">
+          <a class="nav-link" routerLink="/departments" routerLinkActive="active" (click)="closeMenu()">
             Departments
           </a>
         </li>
 
         <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLink="/contact"
-            routerLinkActive="active"
-            (click)="closeMenu()">
+          <a class="nav-link" routerLink="/contact" routerLinkActive="active" (click)="closeMenu()">
             Contact
           </a>
         </li>
@@ -96,26 +61,16 @@
       <!-- RIGHT BUTTONS -->
       <div class="navbar-buttons">
 
-        <a
-          routerLink="/login"
-          (click)="closeMenu()"
-          class="btn btn-outline-primary login-btn">
+        <a routerLink="/login" (click)="closeMenu()" class="btn btn-outline-primary login-btn">
           <i class="bi bi-person-lock me-1"></i>
           Login
         </a>
 
-        <a
-          routerLink="/patient-scan"
-          (click)="closeMenu()"
-          class="btn btn-outline-primary">
-          <i class="bi bi-qr-code-scan me-1"></i>
-          Patient Scan
+        <a routerLink="/patient-profile" (click)="closeMenu()" class="btn btn-outline-primary">
+          <i class="bi bi-person-circle me-1"></i>
+          My Profile
         </a>
-
-        <a
-          routerLink="/appointment"
-          (click)="closeMenu()"
-          class="btn btn-primary appointment-btn">
+        <a routerLink="/appointment" (click)="closeMenu()" class="btn btn-primary appointment-btn">
           <i class="bi bi-calendar-check me-1"></i>
           Book Appointment
         </a>

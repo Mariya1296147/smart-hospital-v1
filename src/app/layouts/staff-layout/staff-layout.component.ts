@@ -19,7 +19,7 @@ interface StaffNavItem {
 })
 export class StaffLayoutComponent {
   readonly user = this.authService.getCurrentUser();
-  readonly role: UserRole = this.user?.role ?? 'nurse';
+  readonly role: UserRole = this.user?.roles[0] ?? 'NURSE';
   readonly roleLabel = ROLE_LABELS[this.role];
   readonly menuItems: StaffNavItem[] = this.getMenuItems(this.role);
   mobileMenuOpen = false;
@@ -38,10 +38,10 @@ export class StaffLayoutComponent {
 
   private getMenuItems(role: UserRole): StaffNavItem[] {
     const menus: Partial<Record<UserRole, StaffNavItem[]>> = {
-      admin: [
+      ADMIN: [
         { label: 'Admin dashboard', icon: 'bi-grid-1x2', route: '/admin/dashboard' }
       ],
-      nurse: [
+      NURSE: [
         { label: 'Dashboard', icon: 'bi-grid-1x2', route: '/nurse/dashboard' },
         { label: 'Patients', icon: 'bi-people', route: '/nurse/patients' },
         { label: 'Nursing care', icon: 'bi-heart-pulse', route: '/nurse/nursing' },
@@ -49,17 +49,17 @@ export class StaffLayoutComponent {
         { label: 'Consultations', icon: 'bi-clipboard2-pulse', route: '/nurse/consultations' },
         { label: 'Laboratory tests', icon: 'bi-eyedropper', route: '/nurse/laboratory' }
       ],
-      laboratory_staff: [
+      LABORATORY_STAFF: [
         { label: 'Dashboard', icon: 'bi-grid-1x2', route: '/laboratory/dashboard' },
         { label: 'Test requests', icon: 'bi-eyedropper', route: '/laboratory/tests' },
         { label: 'Patients', icon: 'bi-people', route: '/laboratory/patients' }
       ],
-      pharmacy_staff: [
+      PHARMACY_STAFF: [
         { label: 'Dashboard', icon: 'bi-grid-1x2', route: '/pharmacy/dashboard' },
         { label: 'Prescriptions & stock', icon: 'bi-capsule', route: '/pharmacy/stock' },
         { label: 'Patients', icon: 'bi-people', route: '/pharmacy/patients' }
       ],
-      accounts_staff: [
+      ACCOUNTS_STAFF: [
         { label: 'Dashboard', icon: 'bi-grid-1x2', route: '/accounts/dashboard' },
         { label: 'Billing', icon: 'bi-receipt', route: '/accounts/billing' },
         { label: 'Reports', icon: 'bi-bar-chart', route: '/accounts/reports' }

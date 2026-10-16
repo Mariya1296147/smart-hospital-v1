@@ -1,0 +1,342 @@
+
+<div class="patient-page">
+  <div class="page-overlay"></div>
+
+  <div class="patient-container">
+    <!-- Page Header -->
+    <header class="page-header">
+      <div class="brand-icon">
+        <i class="bi bi-heart-pulse-fill"></i>
+      </div>
+
+      <div>
+        <h1>Smart Hospital</h1>
+        <p>Patient Registration & My Profile</p>
+      </div>
+    </header>
+
+    @if (!registeredPatient) {
+      <div class="welcome-section">
+        <span class="section-label">PATIENT PORTAL</span>
+        <h2>Your Health, <span>Our Priority.</span></h2>
+        <p>
+          Register to access your personal information,
+          appointments, medical reports and treatment history.
+        </p>
+      </div>
+
+      <div class="content-grid">
+        <!-- Registration Form -->
+        <section class="panel registration-panel">
+          <div class="panel-heading">
+            <div class="heading-icon">
+              <i class="bi bi-person-vcard"></i>
+            </div>
+
+            <div>
+              <h3>Patient Registration</h3>
+              <p>Enter your personal information</p>
+            </div>
+          </div>
+
+          <form
+            #patientForm="ngForm"
+            (ngSubmit)="registerPatient(patientForm)"
+          >
+            <div class="form-group">
+              <label for="patientName">Full Name *</label>
+              <input
+                id="patientName"
+                type="text"
+                name="patientName"
+                [(ngModel)]="formData.name"
+                placeholder="Enter your full name"
+                required
+                minlength="2"
+                autocomplete="name"
+              />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input
+                  id="phone"
+                  type="tel"
+                  name="phone"
+                  [(ngModel)]="formData.phone"
+                  placeholder="01XXXXXXXXX"
+                  required
+                  autocomplete="tel"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  [(ngModel)]="formData.email"
+                  placeholder="you@example.com"
+                  email
+                  autocomplete="email"
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="dob">Date of Birth *</label>
+                <input
+                  id="dob"
+                  type="date"
+                  name="dob"
+                  [(ngModel)]="formData.dateOfBirth"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="gender">Gender *</label>
+                <select
+                  id="gender"
+                  name="gender"
+                  [(ngModel)]="formData.gender"
+                  required
+                >
+                  <option value="" disabled>Select gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address">Address *</label>
+              <textarea
+                id="address"
+                name="address"
+                [(ngModel)]="formData.address"
+                placeholder="Enter your present address"
+                rows="2"
+                required
+              ></textarea>
+            </div>
+
+            @if (errorMessage) {
+              <div class="message error-message">
+                <i class="bi bi-exclamation-circle"></i>
+                {{ errorMessage }}
+              </div>
+            }
+
+            <button
+              type="submit"
+              class="primary-button"
+              [disabled]="isLoading"
+            >
+              <i class="bi bi-person-plus"></i>
+              {{ isLoading ? 'Please wait...' : 'Register Patient' }}
+            </button>
+
+            <p class="form-note">
+              <i class="bi bi-shield-lock"></i>
+              Your information should be protected and accessible
+              only to authorized users.
+            </p>
+          </form>
+        </section>
+
+        <!-- Patient Scanner -->
+        <section class="panel scanner-panel">
+          <div class="panel-heading">
+            <div class="heading-icon">
+              <i class="bi bi-qr-code-scan"></i>
+            </div>
+
+            <div>
+              <h3>Patient Scanner</h3>
+              <p>Find your patient record</p>
+            </div>
+          </div>
+
+          <div class="scanner-illustration">
+            <div class="scanner-frame">
+              <span class="corner top-left"></span>
+              <span class="corner top-right"></span>
+              <span class="corner bottom-left"></span>
+              <span class="corner bottom-right"></span>
+
+              <i class="bi bi-qr-code"></i>
+              <div class="scan-line"></div>
+            </div>
+
+            <h4>Scan Patient QR Code</h4>
+            <p>
+              Use your registered Patient QR Code
+              to find your hospital record.
+            </p>
+          </div>
+
+          <div class="scanner-divider">
+            <span>OR SEARCH WITH PATIENT ID</span>
+          </div>
+
+          <form (ngSubmit)="findPatient()">
+            <div class="form-group">
+              <label for="searchPatientId">Patient ID</label>
+              <div class="search-input">
+                <i class="bi bi-person-badge"></i>
+                <input
+                  id="searchPatientId"
+                  type="text"
+                  name="searchPatientId"
+                  [(ngModel)]="searchPatientId"
+                  placeholder="Enter your Patient ID"
+                  required
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="secondary-button"
+              [disabled]="isLoading"
+            >
+              <i class="bi bi-search"></i>
+              Find My Profile
+            </button>
+          </form>
+
+          @if (scannerMessage) {
+            <p class="scanner-message">{{ scannerMessage }}</p>
+          }
+
+          <div class="privacy-note">
+            <i class="bi bi-shield-check"></i>
+            <span>
+              Patient records must be verified securely
+              before personal information is displayed.
+            </span>
+          </div>
+        </section>
+      </div>
+    } @else {
+      <!-- Read-only Patient Profile -->
+      <section class="profile-panel">
+        <div class="profile-banner">
+          <div class="profile-avatar">
+            <i class="bi bi-person-fill"></i>
+          </div>
+
+          <div class="profile-heading">
+            <span class="section-label">PATIENT ACCOUNT</span>
+            <h2>{{ registeredPatient.name }}</h2>
+            <p>Patient ID: {{ registeredPatient.patientId }}</p>
+          </div>
+
+          <span class="readonly-badge">
+            <i class="bi bi-eye"></i> View Only
+          </span>
+        </div>
+
+        <div class="profile-content">
+          <div class="profile-section">
+            <h3><i class="bi bi-person-lines-fill"></i> Personal Information</h3>
+
+            <div class="details-grid">
+              <div class="detail-item">
+                <span>Full Name</span>
+                <strong>{{ registeredPatient.name }}</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Patient ID</span>
+                <strong>{{ registeredPatient.patientId }}</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Phone</span>
+                <strong>{{ registeredPatient.phone }}</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Email</span>
+                <strong>{{ registeredPatient.email || 'Not provided' }}</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Date of Birth</span>
+                <strong>{{ registeredPatient.dateOfBirth }}</strong>
+              </div>
+
+              <div class="detail-item">
+                <span>Gender</span>
+                <strong>{{ registeredPatient.gender }}</strong>
+              </div>
+
+              <div class="detail-item full-width">
+                <span>Address</span>
+                <strong>{{ registeredPatient.address }}</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-section">
+            <h3><i class="bi bi-calendar2-check"></i> Appointment History</h3>
+            <p class="empty-state">
+              Appointment information will appear here when
+              connected to the hospital records.
+            </p>
+          </div>
+
+          <div class="profile-section">
+            <h3><i class="bi bi-capsule"></i> Medicine History</h3>
+            <p class="empty-state">
+              Prescribed medicines will appear here when available.
+            </p>
+          </div>
+
+          <div class="profile-section">
+            <h3><i class="bi bi-file-earmark-medical"></i> Medical Reports</h3>
+            <p class="empty-state">
+              Your available medical reports will appear here.
+            </p>
+          </div>
+
+          <div class="profile-section">
+            <h3><i class="bi bi-hospital"></i> Admission & Discharge</h3>
+            <p class="empty-state">
+              Admission date, discharge date and discharge summary
+              will appear here when connected to the backend.
+            </p>
+          </div>
+
+          <div class="profile-section">
+            <h3><i class="bi bi-person-heart"></i> Treating Doctor</h3>
+            <p class="empty-state">
+              Your treating doctor's information will appear here
+              when available in the hospital records.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            class="secondary-button back-button"
+            (click)="backToRegistration()"
+          >
+            <i class="bi bi-arrow-left"></i>
+            Back to Patient Portal
+          </button>
+        </div>
+      </section>
+    }
+
+    <footer class="page-footer">
+      <i class="bi bi-heart-pulse-fill"></i>
+      Smart Hospital · Patient Care Portal
+    </footer>
+  </div>
+</div>

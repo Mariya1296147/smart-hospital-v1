@@ -58,7 +58,7 @@
                             type="text"
                             class="form-control"
                             name="name"
-                            [(ngModel)]="newUser.name"
+                            [(ngModel)]="newUser.userName"
                             placeholder="Enter full name"
                             required>
 
@@ -84,7 +84,7 @@
 
 
                     <!-- PHONE -->
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
 
                         <label class="form-label fw-semibold">
                             Phone Number
@@ -98,7 +98,7 @@
                             placeholder="017XXXXXXXX"
                             required>
 
-                    </div>
+                    </div> -->
 
 
                     <!-- ROLE -->
@@ -111,7 +111,7 @@
                         <select
                             class="form-select"
                             name="role"
-                            [(ngModel)]="newUser.role"
+                            [(ngModel)]="newUser.roles"
                             required>
 
                             <option value="" disabled>
@@ -132,7 +132,7 @@
 
 
                     <!-- DEPARTMENT -->
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
 
                         <label class="form-label fw-semibold">
                             Department
@@ -165,11 +165,11 @@
 
                         </select>
 
-                    </div>
+                    </div> -->
 
 
                     <!-- EDUCATION -->
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
 
                         <label class="form-label fw-semibold">
                             Educational Qualification
@@ -183,11 +183,11 @@
                             placeholder="e.g. MBBS, BSc in Nursing, B.Pharm"
                             required>
 
-                    </div>
+                    </div> -->
 
 
                     <!-- EXPERIENCE -->
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
 
                         <label class="form-label fw-semibold">
                             Work Experience
@@ -202,10 +202,10 @@
                             required>
 
                     </div>
-
+ -->
 
                     <!-- NID -->
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
 
                         <label class="form-label fw-semibold">
                             NID Number
@@ -219,7 +219,7 @@
                             placeholder="Enter NID number"
                             required>
 
-                    </div>
+                    </div> -->
 
 
                     <!-- PASSWORD -->
@@ -360,7 +360,7 @@
                                 <div>
 
                                     <div class="fw-semibold text-dark">
-                                        {{ user.name }}
+                                        {{ user.userName }}
                                     </div>
 
                                     <small class="text-muted">
@@ -379,9 +379,9 @@
 
                             <select
                                 class="form-select form-select-sm"
-                                [ngModel]="user.role"
-                                (ngModelChange)="update(user.id, { role: $event })"
-                                [disabled]="user.role === 'admin'"
+                                [ngModel]="user.roles[0]"
+                                (ngModelChange)="update(user.userName, { roles: [$event] })"
+                                [disabled]="user.roles[0] === 'ADMIN'"
                                 style="width: 150px;">
 
                                 <option
@@ -400,13 +400,13 @@
                         <!-- STATUS -->
                         <td class="py-3">
 
-                            <span
+                            <!-- <span
                                 class="badge rounded-pill px-3 py-2"
                                 [class]="statusClass(user.status)">
 
                                 {{ user.status | titlecase }}
 
-                            </span>
+                            </span> -->
 
                         </td>
 
@@ -414,7 +414,7 @@
                         <!-- CREATED -->
                         <td class="py-3 text-muted text-nowrap">
 
-                            {{ user.createdAt | date:'mediumDate' }}
+                            {{ user.dateCreated| date:'mediumDate' }}
 
                         </td>
 
@@ -422,43 +422,43 @@
                         <!-- ACTIONS -->
                         <td class="py-3 text-center text-nowrap">
 
-                            <!-- APPROVE -->
-                            <button
+                            APPROVE
+                            <!-- <button
                                 *ngIf="user.status === 'pending'"
                                 type="button"
                                 class="btn btn-sm btn-success me-1"
-                                (click)="update(user.id, { status: 'approved' })">
+                                (click)="update(user.userName, { status: 'approved' })">
 
                                 <i class="bi bi-check-circle me-1"></i>
                                 Approve
 
-                            </button>
+                            </button> -->
 
 
                             <!-- ACTIVATE -->
-                            <button
-                                *ngIf="user.role !== 'admin' && user.status === 'inactive'"
+                            <!-- <button
+                                *ngIf="user.roles[0] !== 'ADMIN' && user.status === 'inactive'"
                                 type="button"
                                 class="btn btn-sm btn-outline-success me-1"
-                                (click)="update(user.id, { status: 'approved' })">
+                                (click)="update(user.userName, { status: 'approved' })">
 
                                 <i class="bi bi-person-check me-1"></i>
                                 Activate
 
-                            </button>
+                            </button> -->
 
 
                             <!-- DEACTIVATE -->
-                            <button
-                                *ngIf="user.role !== 'admin' && user.status !== 'inactive'"
+                            <!-- <button
+                                *ngIf="user.roles[0] !== 'ADMIN' && user.status !== 'inactive'"
                                 type="button"
                                 class="btn btn-sm btn-outline-danger"
-                                (click)="update(user.id, { status: 'inactive' })">
+                                (click)="update(user.userName, { status: 'inactive' })">
 
                                 <i class="bi bi-person-x me-1"></i>
                                 Deactivate
 
-                            </button>
+                            </button> -->
 
                         </td>
 

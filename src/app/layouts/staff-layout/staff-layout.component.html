@@ -32,7 +32,7 @@
     <div class="staff-account">
       <div class="account-avatar"><i class="bi bi-person"></i></div>
       <div class="account-name">
-        <strong>{{ user?.name || roleLabel }}</strong>
+        <strong>{{ user?.userFirstName || roleLabel }}</strong>
         <small>{{ roleLabel }}</small>
       </div>
       <button type="button" (click)="logout()" aria-label="Log out">

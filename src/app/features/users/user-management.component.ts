@@ -1,13 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AuthService, RegistrationInput } from '../../core/services/auth.service';
 import {
   HospitalUser,
+  RegisterRequest,
   ROLE_LABELS,
+  UserDTO,
   UserRole,
   UserStatus
 } from '../../models/user';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-user-management',
@@ -20,20 +22,18 @@ export class UserManagementComponent {
   readonly roles = Object.keys(ROLE_LABELS) as UserRole[];
   readonly labels = ROLE_LABELS;
 
-  users: HospitalUser[] = [];
+  users: UserDTO[] = [];
 
   showAddForm = false;
 
-  newUser: RegistrationInput = {
-    name: '',
+  newUser: UserDTO = {
+    userName: '',
     email: '',
-    phone: '',
-    password: '',
-    role: 'doctor',
-    department: '',
-    education: '',
-    experience: '',
-    nid: ''
+    userFirstName: '',
+    userLastName: '',
+    enabled: false,
+    roles: [],
+    dateCreated: ''
   };
 
   constructor(private authService: AuthService) {
@@ -41,7 +41,9 @@ export class UserManagementComponent {
   }
 
   refresh(): void {
-    this.users = this.authService.getUsers();
+    this.authService.getAllUsers().subscribe((users) => {
+      this.users = users;
+    });
   }
 
   openAddForm(): void {
@@ -54,12 +56,15 @@ export class UserManagementComponent {
   }
 
   createUser(): void {
-    const result = this.authService.register(this.newUser);
-
-    if (!result.success) {
-      alert(result.message);
-      return;
-    }
+    const regesterUser: RegisterRequest = {
+      username: this.newUser.userName,
+      email: this.newUser.email,
+      firstName: this.newUser.userFirstName,
+      lastName: this.newUser.userLastName,
+      password: this.newUser.password || 'defaultPassword123' // You might want to generate a random password or have a better default
+    };
+    this.authService.register(regesterUser);
+ 
 
     alert('New user added successfully. The account is waiting for Admin approval.');
 
@@ -69,21 +74,19 @@ export class UserManagementComponent {
 
   resetForm(): void {
     this.newUser = {
-      name: '',
+      userName: '',
       email: '',
-      phone: '',
-      password: '',
-      role: 'doctor',
-      department: '',
-      education: '',
-      experience: '',
-      nid: ''
+      userFirstName: '',
+      userLastName: '',
+      enabled: false,
+      roles: [],
+      dateCreated: ''
     };
   }
 
   update(
     id: string,
-    changes: Partial<Pick<HospitalUser, 'role' | 'status'>>
+    changes: Partial<UserDTO>
   ): void {
     this.authService.updateUser(id, changes);
     this.refresh();

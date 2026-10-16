@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-import { HospitalUser } from '../../../models/user';
+import { HospitalUser, UserDTO } from '../../../models/user';
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -12,7 +12,7 @@ import { HospitalUser } from '../../../models/user';
 })
 export class DoctorDashboardComponent {
 
-  currentUser: HospitalUser | null = null;
+  currentUser: UserDTO | null = null;
 
   constructor(private authService: AuthService) {
     this.currentUser = this.authService.getCurrentUser();
