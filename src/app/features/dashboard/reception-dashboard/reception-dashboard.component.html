@@ -10,12 +10,13 @@
     </div>
   </div>
 
+  <!-- Dashboard Cards -->
   <div class="dashboard-cards">
 
     <div class="dashboard-card">
       <i class="bi bi-people"></i>
       <div>
-        <h3>1,248</h3>
+        <h3>{{ metric('totalPatients') }}</h3>
         <p>Total Patients</p>
       </div>
     </div>
@@ -23,15 +24,15 @@
     <div class="dashboard-card">
       <i class="bi bi-calendar-check"></i>
       <div>
-        <h3>36</h3>
-        <p>Today's Appointments</p>
+        <h3>{{ appointments.length }}</h3>
+        <p>Pending Appointments</p>
       </div>
     </div>
 
     <div class="dashboard-card">
       <i class="bi bi-hospital"></i>
       <div>
-        <h3>18</h3>
+        <h3>{{ metric('activeAdmissions') }}</h3>
         <p>Admissions</p>
       </div>
     </div>
@@ -39,19 +40,18 @@
     <div class="dashboard-card">
       <i class="bi bi-receipt"></i>
       <div>
-        <h3>24</h3>
-        <p>Pending Bills</p>
+        <h3>{{ metric('pendingAppointments') }}</h3>
+        <p>Appointments to confirm</p>
       </div>
     </div>
 
   </div>
 
+  <!-- Quick Actions -->
   <div class="quick-actions">
-
     <h4>Quick Actions</h4>
 
     <div class="action-grid">
-
       <a routerLink="/reception/patients">
         <i class="bi bi-person-plus"></i>
         <span>Patients</span>
@@ -71,9 +71,220 @@
         <i class="bi bi-receipt"></i>
         <span>Billing</span>
       </a>
+    </div>
+  </div>
 
+  <!-- Pending Appointments -->
+  <div class="pending-appointments">
+
+    <div class="section-header">
+      <div>
+        <h4>
+          <i class="bi bi-calendar2-check"></i>
+          Pending Appointments
+        </h4>
+        <p>Review, confirm or reject appointment requests.</p>
+      </div>
+
+      <button type="button" class="refresh-btn" (click)="loadAppointments()" [disabled]="loading">
+
+        <i class="bi bi-arrow-clockwise"></i>
+        {{ loading ? 'Loading...' : 'Refresh' }}
+      </button>
     </div>
 
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="success-message">
+      <i class="bi bi-check-circle"></i>
+      {{ successMessage }}
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="message">
+      Loading appointments...
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="!loading && errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && !errorMessage && appointments.length === 0" class="message">
+
+      <i class="bi bi-calendar-x"></i>
+      No pending appointments found.
+    </div>
+
+    <!-- Appointment Table -->
+    <div class="table-responsive" *ngIf="!loading && !errorMessage && appointments.length > 0">
+
+      <table class="appointment-table">
+
+        <thead>
+          <tr>
+            <th>Appointment ID</th>
+            <th>Patient</th>
+            <th>Phone</th>
+            <th>Doctor</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let appointment of appointments">
+
+            <td>
+              {{ appointment.appointmentId || appointment.id || '-' }}
+            </td>
+
+            <td>
+              {{ appointment.patientName || appointment.patient?.name || '-' }}
+            </td>
+
+            <td>
+              {{ appointment.patientPhone || appointment.patient?.phone || '-' }}
+            </td>
+
+            <td>
+              {{ appointment.doctorName || appointment.doctor?.name || '-' }}
+            </td>
+
+            <td>
+              {{ appointment.department || appointment.doctor?.department || '-' }}
+            </td>
+
+            <td>
+              {{ appointment.appointmentDate || '-' }}
+            </td>
+
+            <td>
+              {{ appointment.appointmentTime || '-' }}
+            </td>
+
+            <td>
+              <span class="status-pending" [class.status-other]="appointment.status !== 'PENDING'">
+
+                {{ appointment.status || 'UNKNOWN' }}
+              </span>
+            </td>
+
+            <!-- Action Buttons -->
+            <td class="action-buttons">
+
+              <!-- Confirm Button -->
+              <button type="button" class="btn-confirm" style="
+      background-color: #e8f7ee !important;
+      color: #198754 !important;
+      border: 1px solid #a8dfbd !important;
+      padding: 8px 14px;
+      border-radius: 7px;
+      font-weight: 600;
+      cursor: pointer;
+    " [disabled]="
+      loading ||
+      actionLoadingId === appointment.id ||
+      appointment.id == null
+    " (click)="appointment.id != null && updateAppointmentStatus(appointment.id, 'SCHEDULED')">
+
+                <i class="bi bi-check-circle"></i>
+                {{
+                actionLoadingId === appointment.id
+                ? 'Processing...'
+                : 'Confirm'
+                }}
+              </button>
+
+              <!-- Reject Button -->
+              <button type="button" class="btn-reject" style="
+      background-color: #fff0f0 !important;
+      color: #dc3545 !important;
+      border: 1px solid #f2b8bd !important;
+      padding: 8px 14px;
+      border-radius: 7px;
+      font-weight: 600;
+      cursor: pointer;
+    " [disabled]="
+      loading ||
+      actionLoadingId === appointment.id ||
+      appointment.id == null
+    " (click)="appointment.id != null && updateAppointmentStatus(appointment.id, 'REJECTED')">
+
+                <i class="bi bi-x-circle"></i>
+                Reject
+              </button>
+
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+
+  <div class="pending-appointments doctor-visits mt-4">
+    <div class="section-header">
+      <div>
+        <h4><i class="bi bi-clipboard2-pulse"></i> Doctor Visits</h4>
+        <p>Completed visits with their existing prescriptions.</p>
+      </div>
+      <button type="button" class="refresh-btn" (click)="loadDoctorVisits()" [disabled]="doctorVisitsLoading">
+        <i class="bi bi-arrow-clockwise"></i>
+        {{ doctorVisitsLoading ? 'Loading...' : 'Refresh' }}
+      </button>
+    </div>
+
+    <div *ngIf="doctorVisitsError" class="error-message">{{ doctorVisitsError }}</div>
+    <div *ngIf="doctorVisitsLoading" class="message">Loading completed doctor visits...</div>
+    <div *ngIf="!doctorVisitsLoading && !doctorVisitsError && doctorVisits.length === 0" class="message">
+      No completed doctor visits are waiting for reception.
+    </div>
+
+    <div class="table-responsive" *ngIf="!doctorVisitsLoading && !doctorVisitsError && doctorVisits.length > 0">
+      <table class="appointment-table">
+        <thead>
+          <tr><th>Visit</th><th>Patient</th><th>Doctor</th><th>Visit Details</th><th>Prescription</th><th>Receipt</th></tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let visit of doctorVisits">
+            <td>
+              <strong>{{ visit.appointmentCode }}</strong>
+              <small class="d-block">{{ visit.appointmentDate }} · {{ visit.appointmentTime }}</small>
+              <small class="d-block">{{ visit.status }}</small>
+            </td>
+            <td>
+              <strong>{{ visit.patientName }}</strong>
+              <small class="d-block">{{ visit.patientCode }} · {{ visit.patientPhone || 'No phone' }}</small>
+              <small class="d-block">{{ visit.gender || 'Gender not recorded' }}<ng-container *ngIf="visit.age != null"> · Age {{ visit.age }}</ng-container></small>
+            </td>
+            <td>
+              <strong>{{ visit.doctorName }}</strong>
+              <small class="d-block">{{ visit.departmentName || 'Department not specified' }}</small>
+            </td>
+            <td>
+              <span>{{ visit.reason || 'Doctor visit' }}</span>
+              <small class="d-block">{{ visit.notes || 'No visit notes' }}</small>
+            </td>
+            <td>
+              <strong>Prescription #{{ visit.prescription.id }}</strong>
+              <small class="d-block">{{ prescriptionSummary(visit) }}</small>
+            </td>
+            <td>
+              <a *ngIf="!visit.receiptExists" class="btn btn-sm btn-primary"
+                 routerLink="/reception/billing/add" [queryParams]="billingParams(visit)">
+                <i class="bi bi-receipt"></i> Collect Fee / Create Receipt
+              </a>
+              <span *ngIf="visit.receiptExists" class="badge bg-success">Receipt already created</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </div>

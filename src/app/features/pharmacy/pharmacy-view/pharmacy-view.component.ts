@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, ActivatedRoute } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 
 import { PharmacyService } from '../../../core/services/pharmacy.service';
 import { Pharmacy } from '../../../models/Pharmacy';
@@ -19,11 +19,13 @@ import { Pharmacy } from '../../../models/Pharmacy';
 export class PharmacyViewComponent implements OnInit {
 
   medicine!: Pharmacy;
+  readonly stockPath: string;
 
   constructor(
     private pharmacyService: PharmacyService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private router: Router
+  ) { this.stockPath = this.router.url.startsWith('/pharmacy/') ? '/pharmacy/stock' : '/admin/pharmacy'; }
 
   ngOnInit(): void {
 
@@ -32,12 +34,10 @@ export class PharmacyViewComponent implements OnInit {
         this.route.snapshot.paramMap.get('id')
       );
 
-    const data =
-      this.pharmacyService.getMedicineById(id);
-
-    if (data) {
-      this.medicine = data;
-    }
+    this.pharmacyService.getMedicineById(id).subscribe({
+      next: data => this.medicine = data,
+      error: error => console.error('ওষুধের তথ্য পাওয়া যায়নি', error)
+    });
   }
 
 }

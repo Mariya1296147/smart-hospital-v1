@@ -334,5 +334,15 @@
   .table-header {
     gap: 10px;
   }
+  .action-btn.prescription {
+  background: #e8f1ff;
+  color: #2563eb;
+  border: 1px solid #c7dcff;
+}
+
+.action-btn.prescription:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
 
 }

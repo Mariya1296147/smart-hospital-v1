@@ -26,6 +26,8 @@
         #medicineForm="ngForm"
         (ngSubmit)="saveMedicine()">
 
+        <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
         <div class="row g-3">
 
           <!-- Medicine ID -->
@@ -40,9 +42,13 @@
               class="form-control"
               name="medicineId"
               [(ngModel)]="medicine.medicineId"
-              placeholder="Example: MED-1011"
-              required>
+              placeholder="Auto-generated if left blank">
 
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Batch Number</label>
+            <input class="form-control" name="batchNumber" [(ngModel)]="medicine.batchNumber" placeholder="Batch / lot number">
           </div>
 
 
@@ -63,6 +69,16 @@
 
           </div>
 
+          <div class="col-md-6">
+            <label class="form-label">Purchase Price (৳)</label>
+            <input type="number" class="form-control" name="purchasePrice" [(ngModel)]="medicine.purchasePrice" min="0" step="0.01">
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Low Stock Alert At</label>
+            <input type="number" class="form-control" name="lowStockThreshold" [(ngModel)]="medicine.lowStockThreshold" min="0">
+          </div>
+
 
           <!-- Category -->
           <div class="col-md-6">
@@ -79,6 +95,9 @@
 
               <option value="">
                 Select Category
+              </option>
+                <option value="Gastric">
+                Paracitamol
               </option>
 
               <option value="Pain Relief">
@@ -159,15 +178,15 @@
           <div class="col-md-6">
 
             <label class="form-label">
-              Unit Price (৳)
+              Selling Price (৳)
             </label>
 
             <input
               type="number"
               class="form-control"
-              name="unitPrice"
-              [(ngModel)]="medicine.unitPrice"
-              min="0"
+              name="sellingPrice"
+              [(ngModel)]="medicine.sellingPrice"
+              min="0.01"
               step="0.01"
               placeholder="Enter unit price"
               required>
@@ -217,28 +236,7 @@
               Status
             </label>
 
-            <select
-              class="form-select"
-              name="status"
-              [(ngModel)]="medicine.status">
-
-              <option value="Available">
-                Available
-              </option>
-
-              <option value="Low Stock">
-                Low Stock
-              </option>
-
-              <option value="Out of Stock">
-                Out of Stock
-              </option>
-
-              <option value="Expired">
-                Expired
-              </option>
-
-            </select>
+            <div class="form-control bg-light">Calculated automatically from stock and expiry date</div>
 
           </div>
 
@@ -261,7 +259,7 @@
 
 
             <a
-              routerLink="/admin/pharmacy"
+              [routerLink]="stockPath"
               class="btn btn-secondary">
 
               <i class="bi bi-x-lg me-2"></i>

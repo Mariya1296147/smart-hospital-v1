@@ -34,11 +34,9 @@ export class NurseViewComponent implements OnInit {
       this.route.snapshot.paramMap.get('id')
     );
 
-    const data =
-      this.nurseService.getNurseById(id);
-
-    if (data) {
-      this.nurse = data;
-    }
+    this.nurseService.getNurseById(id).subscribe({
+      next: data => this.nurse = data,
+      error: error => console.error('নার্সের তথ্য পাওয়া যায়নি', error)
+    });
   }
 }

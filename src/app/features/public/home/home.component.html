@@ -21,9 +21,12 @@
           Trusted Healthcare Partner
         </span>
 
-        <h1>
-          Advanced Healthcare
-          <span>For Your Better Life</span>
+        <h1 class="hero-title">
+          Smart Healthcare<br />
+
+          <span class="gradient-text">
+            {{ typingText }}
+          </span><span class="typing-cursor"></span>
         </h1>
 
         <p class="hero-text">
@@ -93,8 +96,8 @@
             </div>
 
             <div>
-              <small>Emergency Hotline</small>
-              <strong>+880 1712-345678</strong>
+              <small>Bangladesh National Emergency Service</small>
+              <strong>999</strong>
             </div>
 
           </div>
@@ -395,87 +398,84 @@
   <div class="container-fluid page-container">
 
 
-    
-<!-- DOCTORS SECTION -->
-<section id="doctors" class="section doctors-section">
 
-  <div class="container-fluid page-container">
+    <!-- DOCTORS AUTO CAROUSEL -->
+    <section id="doctors" class="section doctors-section">
 
-    <div class="section-heading text-center">
-      <span>OUR SPECIALISTS</span>
-      <h2>Meet Our Doctors</h2>
-      <p>Experienced and dedicated doctors for your better health.</p>
-    </div>
+      <div class="container-fluid page-container">
 
-    <!-- সব Doctor Card -->
-    <div class="doctors-grid">
-
-      <div class="doctor-card" *ngFor="let doctor of visibleDoctors">
-
-        <div class="doctor-image">
-          <img
-            [src]="doctor.image || 'assets/sh.jpg'"
-            [alt]="doctor.name">
-
-          <span class="available-badge">
-            <i class="bi bi-check-circle-fill"></i>
-            {{ doctor.status }}
-          </span>
+        <div class="section-heading text-center">
+          <span>OUR SPECIALISTS</span>
+          <h2>Meet Our Doctors</h2>
+          <p>Experienced and dedicated doctors for your better health.</p>
         </div>
 
-        <div class="doctor-info">
+        <div class="doctor-carousel-wrapper">
 
-          <h3>{{ doctor.name }}</h3>
+          <div class="doctors-grid">
 
-          <span class="specialty">
-            {{ doctor.specialization }}
-          </span>
+            <div class="doctor-card" *ngFor="let doctor of visibleDoctors">
 
-          <div class="doctor-details">
+              <div class="doctor-image">
+                <img [src]="doctor.image || 'assets/sh.jpg'" [alt]="doctor.name">
 
-            <p>
-              <i class="bi bi-hospital"></i>
-              {{ doctor.department }}
-            </p>
+                <span class="available-badge">
+                  <i class="bi bi-check-circle-fill"></i>
+                  {{ doctor.status }}
+                </span>
+              </div>
 
-            <p>
-              <i class="bi bi-mortarboard-fill"></i>
-              {{ doctor.qualification || 'MBBS' }}
-            </p>
+              <div class="doctor-info">
 
-            <p>
-              <i class="bi bi-clock-history"></i>
-              {{ doctor.experience || 'Experienced Doctor' }}
-            </p>
+                <h3>{{ doctor.name }}</h3>
+
+                <span class="specialty">
+                  {{ doctor.specialization }}
+                </span>
+
+                <div class="doctor-details">
+
+                  <p>
+                    <i class="bi bi-hospital"></i>
+                    {{ doctor.department }}
+                  </p>
+
+                  <p>
+                    <i class="bi bi-mortarboard-fill"></i>
+                    {{ doctor.qualification || 'MBBS' }}
+                  </p>
+
+                  <p>
+                    <i class="bi bi-clock-history"></i>
+                    {{ doctor.experience || 'Experienced Doctor' }}
+                  </p>
+
+                </div>
+
+                <a routerLink="/appointment" class="appointment-btn">
+                  <i class="bi bi-calendar-check"></i>
+                  Book Appointment
+                </a>
+
+              </div>
+
+            </div>
 
           </div>
 
-          <a routerLink="/appointment" class="appointment-btn">
-            <i class="bi bi-calendar-check"></i>
-            Book Appointment
-          </a>
+        </div>
+
+        <div class="doctor-indicators" *ngIf="doctors.length > 4">
+
+          <button *ngFor="let doctor of doctors; let i = index" type="button" [class.active]="i === currentDoctor"
+            [attr.aria-label]="'Show ' + doctor.name" (click)="goToDoctor(i)">
+          </button>
 
         </div>
+
       </div>
 
-    </div>
-
-    <!-- Slider Indicators -->
-    <div class="doctor-indicators" *ngIf="doctors.length > 4">
-
-      <button
-        *ngFor="let doctor of doctors; let i = index"
-        type="button"
-        [class.active]="i === currentDoctor"
-        [attr.aria-label]="'Show ' + doctor.name"
-        (click)="goToDoctor(i)">
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
+    </section>
 
     <!-- =========================================================
      DEPARTMENTS
@@ -621,7 +621,7 @@
 
             </div>
 
-            <a href="tel:+8801712345678" class="emergency-call">
+            <a href="tel:999" class="emergency-call">
 
               <div class="emergency-call-icon">
                 <i class="bi bi-telephone-fill"></i>
@@ -630,11 +630,11 @@
               <div>
 
                 <small>
-                  Emergency Hotline
+                  Bangladesh National Emergency Service
                 </small>
 
                 <strong>
-                  +880 1712-345678
+                  999
                 </strong>
 
               </div>
@@ -719,7 +719,50 @@
                   </div>
 
 
+                  <!-- AGE -->
+
+                  <div class="col-md-6">
+                    <label>Age</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-calendar2-week"></i></span>
+                      <input type="number" class="form-control" name="age" [(ngModel)]="appointment.age"
+                        min="0" step="1" placeholder="Enter age" required>
+                    </div>
+                  </div>
+
+
+                  <!-- GENDER -->
+
+                  <div class="col-md-6">
+                    <label>Gender</label>
+                    <div class="input-group">
+                      <span class="input-group-text"><i class="bi bi-person"></i></span>
+                      <select class="form-select" name="gender" [(ngModel)]="appointment.gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+
+
                   <!-- DEPARTMENT -->
+
+                  <div class="col-md-6">
+
+                    <label>Email Address</label>
+
+                    <div class="input-group">
+
+                      <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+
+                      <input type="email" class="form-control" name="email" [(ngModel)]="appointment.email"
+                        placeholder="you@example.com" required>
+
+                    </div>
+
+                  </div>
 
                   <div class="col-md-6">
 
@@ -733,21 +776,51 @@
                         <i class="bi bi-hospital"></i>
                       </span>
 
-                      <select class="form-select" name="department" [(ngModel)]="appointment.department" required>
+                      <select class="form-select" name="departmentId" [(ngModel)]="appointment.departmentId"
+                        (ngModelChange)="onBookingDepartmentChange()"
+                        [disabled]="bookingDataLoading || bookingDepartments.length === 0" required>
 
                         <option value="">
                           Select Department
                         </option>
 
-                        <option *ngFor="let department of departments" [value]="department.name">
+                        <option *ngFor="let department of bookingDepartments" [value]="department.id">
 
-                          {{ department.name }}
+                          {{ department.departmentName }}
 
                         </option>
 
                       </select>
 
                     </div>
+
+                  </div>
+
+
+                  <!-- DOCTOR -->
+
+                  <div class="col-md-6">
+
+                    <label>Doctor</label>
+
+                    <div class="input-group">
+
+                      <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+
+                      <select class="form-select" name="doctorId" [(ngModel)]="appointment.doctorId"
+                        [disabled]="!appointment.departmentId || doctorsForBookingDepartment.length === 0" required>
+                        <option value="">Select Doctor</option>
+                        <option *ngFor="let doctor of doctorsForBookingDepartment" [value]="doctor.id">
+                          {{ doctor.name }}{{ doctor.specialization ? ' — ' + doctor.specialization : '' }}
+                        </option>
+                      </select>
+
+                    </div>
+
+                    <small class="text-muted"
+                      *ngIf="appointment.departmentId && doctorsForBookingDepartment.length === 0">
+                      No active doctors are listed for this department.
+                    </small>
 
                   </div>
 
@@ -772,16 +845,33 @@
 
                   </div>
 
+                  <!-- TIME -->
+
+                  <div class="col-md-6">
+
+                    <label>Appointment Time</label>
+
+                    <div class="input-group">
+
+                      <span class="input-group-text"><i class="bi bi-clock"></i></span>
+
+                      <input type="time" class="form-control" name="time" [(ngModel)]="appointment.time" required>
+
+                    </div>
+
+                  </div>
+
 
                   <!-- BUTTON -->
 
                   <div class="col-12">
 
-                    <button type="submit" class="btn btn-primary w-100 appointment-submit">
+                    <button type="submit" class="btn btn-primary w-100 appointment-submit"
+                      [disabled]="bookingSubmitting || bookingDataLoading">
 
                       <i class="bi bi-calendar-check me-2"></i>
 
-                      Request Appointment
+                      {{ bookingSubmitting ? 'Submitting…' : 'Request Appointment' }}
 
                     </button>
 
@@ -850,8 +940,8 @@
 
             <div class="map-card">
 
-              <iframe src="https://www.google.com/maps?q=Bonosree,Dhaka,Bangladesh&output=embed" width="100%"
-                height="450" style="border:0;" allowfullscreen="" loading="lazy">
+              <iframe *ngIf="mapEmbedUrl" [src]="mapEmbedUrl" width="100%" height="450" style="border:0;"
+                allowfullscreen="" loading="lazy">
               </iframe>
 
             </div>
@@ -894,7 +984,7 @@
                   </strong>
 
                   <span>
-                    Dhaka, Bangladesh
+                    {{ hospitalSettings.address || 'Address not configured' }}
                   </span>
 
                 </div>
@@ -913,11 +1003,11 @@
                 <div>
 
                   <strong>
-                    Emergency
+                    Hospital phone
                   </strong>
 
                   <span>
-                    +880 1712-345678
+                    {{ hospitalSettings.phone || 'Not configured' }}
                   </span>
 
                 </div>
@@ -940,7 +1030,7 @@
                   </strong>
 
                   <span>
-                    info&#64;smarthospital.com
+                    {{ hospitalSettings.email || 'Not configured' }}
                   </span>
 
                 </div>
@@ -948,13 +1038,21 @@
               </div>
 
 
-              <a href="tel:+8801712345678" class="btn btn-primary w-100 mt-3">
+              <a routerLink="/contact" class="btn btn-primary w-100 mt-3">
 
                 <i class="bi bi-telephone-fill me-2"></i>
 
                 Contact Hospital
 
               </a>
+
+              <div class="location-item mt-3">
+                <div class="location-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+                <div>
+                  <strong>Hospital emergency number</strong>
+                  <span>{{ hospitalSettings.emergencyPhone || 'Not configured' }}</span>
+                </div>
+              </div>
 
             </div>
 

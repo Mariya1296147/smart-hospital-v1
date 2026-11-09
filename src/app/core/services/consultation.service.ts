@@ -1,126 +1,70 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ApiService } from './api.service';
 import { Consultation } from '../../models/consultation';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ConsultationService {
+  private readonly resource = 'consultations';
+  constructor(private readonly api: ApiService) { }
+  getConsultations(): Observable<Consultation[]> {
+    return this.api.getAll<any>(this.resource).pipe(map(items => (items ?? []).map(item => this.toForm(item))));
+  }
+  getConsultationById(id: number): Observable<Consultation> {
+    return this.api.getById<any>(this.resource, id).pipe(map(item => this.toForm(item)));
+  }
+  addConsultation(value: Partial<Consultation>): Observable<Consultation> {
+    return this.api.create<any>(this.resource, this.toPayload(value)).pipe(map(item => this.toForm(item)));
+  }
+  updateConsultation(id: number, value: Partial<Consultation>): Observable<Consultation> {
+    return this.api.update<any>(this.resource, id, this.toPayload(value)).pipe(map(item => this.toForm(item)));
+  }
+  deleteConsultation(id: number): Observable<void> { return this.api.remove(this.resource, id); }
 
-  private consultations: Consultation[] = [
-    {
-      id: 1,
-      consultationId: 'CON-1001',
-      patientName: 'Mariya Rahman',
-      patientId: 'P-1001',
-      doctorName: 'Dr. Ahmed Rahman',
-      department: 'Cardiology',
-      date: '2026-09-15',
-      time: '10:30 AM',
-      type: 'Follow-up',
-      symptoms: 'Chest pain and shortness of breath',
-      diagnosis: 'Mild cardiac condition',
-      notes: 'Patient advised to take proper rest.',
-      prescription: 'Aspirin 75mg, Atorvastatin 20mg',
-      status: 'Completed'
-    },
-    {
-      id: 2,
-      consultationId: 'CON-1002',
-      patientName: 'Sarah Ahmed',
-      patientId: 'P-1002',
-      doctorName: 'Dr. Rahim Khan',
-      department: 'Neurology',
-      date: '2026-09-15',
-      time: '11:00 AM',
-      type: 'New Consultation',
-      symptoms: 'Headache and dizziness',
-      diagnosis: 'Migraine',
-      notes: 'Patient advised to avoid stress.',
-      prescription: 'Paracetamol 500mg',
-      status: 'Completed'
-    },
-    {
-      id: 3,
-      consultationId: 'CON-1003',
-      patientName: 'Karim Hasan',
-      patientId: 'P-1003',
-      doctorName: 'Dr. Nusrat Jahan',
-      department: 'Pediatrics',
-      date: '2026-09-16',
-      time: '09:30 AM',
-      type: 'New Consultation',
-      symptoms: 'Fever and cough',
-      diagnosis: 'Viral infection',
-      notes: 'Keep the patient hydrated.',
-      prescription: 'Paracetamol Syrup',
-      status: 'Pending'
-    },
-    {
-      id: 4,
-      consultationId: 'CON-1004',
-      patientName: 'Nusrat Akter',
-      patientId: 'P-1004',
-      doctorName: 'Dr. Tanvir Hasan',
-      department: 'Orthopedics',
-      date: '2026-09-16',
-      time: '02:00 PM',
-      type: 'Follow-up',
-      symptoms: 'Knee pain',
-      diagnosis: 'Joint inflammation',
-      notes: 'Continue physiotherapy.',
-      prescription: 'Pain relief medication',
-      status: 'Pending'
-    },
-    {
-      id: 5,
-      consultationId: 'CON-1005',
-      patientName: 'Imran Hossain',
-      patientId: 'P-1005',
-      doctorName: 'Dr. Maria Akter',
-      department: 'Dermatology',
-      date: '2026-09-17',
-      time: '04:00 PM',
-      type: 'New Consultation',
-      symptoms: 'Skin irritation and itching',
-      diagnosis: 'Skin allergy',
-      notes: 'Avoid suspected allergens.',
-      prescription: 'Antihistamine and topical cream',
-      status: 'Completed'
-    }
-  ];
-
-  getConsultations(): Consultation[] {
-    return this.consultations;
+  private toPayload(value: Partial<Consultation>): Record<string, unknown> {
+    return {
+      consultationId: value.consultationId,
+      patient: value.patientRecordId ? { id: value.patientRecordId } : null,
+      appointment: value.appointmentRecordId ? { id: value.appointmentRecordId } : null,
+      doctor: value.doctorId ? { id: value.doctorId } : null,
+      department: value.departmentId ? { id: value.departmentId } : null,
+      date: value.date,
+      time: value.time,
+      type: value.type,
+      symptoms: value.symptoms,
+      diagnosis: value.diagnosis,
+      notes: value.notes,
+      status: value.status?.toUpperCase()
+    };
   }
 
-  getConsultationById(id: number): Consultation | undefined {
-    return this.consultations.find(
-      consultation => consultation.id === id
-    );
-  }
+  private toForm(item: any): Consultation {
+    const patient = item.patient ?? {};
+    const doctor = item.doctor ?? {};
+    const department = item.department ?? {};
+    const status = String(item.status ?? 'PENDING').toLowerCase();
 
-  addConsultation(consultation: Consultation): void {
-    const newId = this.consultations.length > 0
-      ? Math.max(...this.consultations.map(c => c.id)) + 1
-      : 1;
-
-    consultation.id = newId;
-    this.consultations.push(consultation);
-  }
-
-  updateConsultation(updatedConsultation: Consultation): void {
-    const index = this.consultations.findIndex(
-      consultation => consultation.id === updatedConsultation.id
-    );
-
-    if (index !== -1) {
-      this.consultations[index] = updatedConsultation;
-    }
-  }
-
-  deleteConsultation(id: number): void {
-    this.consultations = this.consultations.filter(
-      consultation => consultation.id !== id
-    );
+    return {
+      id: item.id,
+      consultationId: item.consultationId ?? '',
+      patientName: patient.name ?? item.patientName ?? '',
+      patientId: patient.patientId ?? (typeof item.patientId === 'string' ? item.patientId : ''),
+      patientRecordId: patient.id ?? (typeof item.patientId === 'number' ? item.patientId : null),
+      appointmentRecordId: item.appointment?.id ?? item.appointmentId ?? null,
+      age: patient.age ?? item.age ?? 0,
+      gender: patient.gender ?? item.gender ?? 'Other',
+      doctorName: doctor.name ?? item.doctorName ?? '',
+      doctorId: doctor.id ?? item.doctorId ?? null,
+      department: department.departmentName ?? item.departmentName ?? (typeof item.department === 'string' ? item.department : ''),
+      departmentId: department.id ?? item.departmentId ?? null,
+      date: item.date ?? '',
+      time: item.time?.slice?.(0, 5) ?? item.time ?? '',
+      type: item.type ?? '',
+      symptoms: item.symptoms ?? '',
+      diagnosis: item.diagnosis ?? '',
+      notes: item.notes ?? '',
+      status: status === 'completed' ? 'Completed' : status === 'cancelled' ? 'Cancelled' : 'Pending'
+    };
   }
 }

@@ -7,9 +7,7 @@
 
       <div class="form-title-icon">
 
-        <i
-          class="bi"
-          [ngClass]="
+        <i class="bi" [ngClass]="
             isEditMode
               ? 'bi-pencil-square'
               : 'bi-calendar-plus'
@@ -22,17 +20,17 @@
 
         <h2>
           {{
-            isEditMode
-              ? 'Edit Appointment'
-              : 'Add Appointment'
+          isEditMode
+          ? 'Edit Appointment'
+          : 'Add Appointment'
           }}
         </h2>
 
         <p>
           {{
-            isEditMode
-              ? 'Update appointment information'
-              : 'Create a new hospital appointment'
+          isEditMode
+          ? 'Update appointment information'
+          : 'Create a new hospital appointment'
           }}
         </p>
 
@@ -41,9 +39,7 @@
     </div>
 
 
-    <a
-      routerLink="/admin/appointments"
-      class="back-btn">
+    <a routerLink="/admin/appointments" class="back-btn">
 
       <i class="bi bi-arrow-left"></i>
 
@@ -57,9 +53,7 @@
   <!-- Form -->
   <div class="form-card">
 
-    <form
-      [formGroup]="appointmentForm"
-      (ngSubmit)="saveAppointment()">
+    <form [formGroup]="appointmentForm" (ngSubmit)="saveAppointment()">
 
 
       <!-- Section -->
@@ -93,11 +87,7 @@
               <span>*</span>
             </label>
 
-            <input
-              type="text"
-              formControlName="appointmentId"
-              class="form-control"
-              placeholder="APT-1007"
+            <input type="text" formControlName="appointmentId" class="form-control" placeholder="APT-1007"
               [class.is-invalid]="
                 isInvalid('appointmentId')
               ">
@@ -109,27 +99,31 @@
           </div>
 
 
-          <!-- Patient -->
           <div class="col-md-4">
+            <label>Patient Name <span>*</span></label>
 
-            <label>
-              Patient Name
-              <span>*</span>
-            </label>
+            <select formControlName="patientId" class="form-select" [class.is-invalid]="isInvalid('patientId')" (change)="onPatientChange()">
 
-            <input
-              type="text"
-              formControlName="patientName"
-              class="form-control"
-              placeholder="Enter patient name"
-              [class.is-invalid]="
-                isInvalid('patientName')
-              ">
+              <option value="">Select Patient</option>
 
-            <div class="invalid-feedback">
-              Patient name is required.
-            </div>
+              <option *ngFor="let patient of patients" [value]="patient.id">
+                {{ patient.name || ((patient.firstName || '') + ' ' + (patient.lastName || '')) }}
+              </option>
+            </select>
 
+            <div class="invalid-feedback">Patient is required.</div>
+          </div>
+
+          <div class="col-md-3">
+            <label>Age</label>
+            <input type="number" min="0" formControlName="age" class="form-control"
+              [class.is-invalid]="isInvalid('age')" placeholder="Patient age">
+            <div class="invalid-feedback">Age cannot be negative.</div>
+          </div>
+
+          <div class="col-md-3">
+            <label>Gender</label>
+            <input type="text" formControlName="gender" class="form-control" placeholder="Patient gender">
           </div>
 
 
@@ -141,11 +135,7 @@
               <span>*</span>
             </label>
 
-            <input
-              type="text"
-              formControlName="patientPhone"
-              class="form-control"
-              placeholder="017XXXXXXXX"
+            <input type="text" formControlName="patientPhone" class="form-control" placeholder="017XXXXXXXX"
               [class.is-invalid]="
                 isInvalid('patientPhone')
               ">
@@ -159,127 +149,37 @@
 
           <!-- Doctor -->
           <div class="col-md-6">
+            <label>Doctor <span>*</span></label>
 
-            <label>
-              Doctor
-              <span>*</span>
-            </label>
+            <select formControlName="doctorId" class="form-select" [class.is-invalid]="isInvalid('doctorId')" [disabled]="!appointmentForm.get('departmentId')?.value">
 
-            <select
-              formControlName="doctorName"
-              class="form-select"
-              [class.is-invalid]="
-                isInvalid('doctorName')
-              ">
+              <option value="">Select Doctor</option>
 
-              <option value="">
-                Select Doctor
+              <option *ngFor="let doctor of departmentDoctors" [value]="doctor.id">
+                {{ doctor.name }}
               </option>
-
-              <option value="Dr. Sarah Ahmed">
-                Dr. Sarah Ahmed
-              </option>
-
-              <option value="Dr. Mahmud Hasan">
-                Dr. Mahmud Hasan
-              </option>
-
-              <option value="Dr. Tanvir Rahman">
-                Dr. Tanvir Rahman
-              </option>
-
-              <option value="Dr. Farzana Islam">
-                Dr. Farzana Islam
-              </option>
-
             </select>
 
-            <div class="invalid-feedback">
-              Doctor is required.
-            </div>
-
+            <div class="invalid-feedback">Doctor is required.</div>
           </div>
 
 
-          <!-- Department -->
           <div class="col-md-6">
+            <label>Department <span>*</span></label>
 
-            <label>
-              Department
-              <span>*</span>
-            </label>
+            <select formControlName="departmentId" class="form-select" [class.is-invalid]="isInvalid('departmentId')" (change)="onDepartmentChange()">
 
-            <select
-              formControlName="department"
-              class="form-select"
-              [class.is-invalid]="
-                isInvalid('department')
-              ">
+              <option value="">Select Department</option>
 
-              <option value="">
-                Select Department
+              <option *ngFor="let department of departments" [value]="department.id">
+                {{ department.name }}
               </option>
-
-              <option value="Cardiology">
-                Cardiology
-              </option>
-
-              <option value="Neurology">
-                Neurology
-              </option>
-
-              <option value="Orthopedics">
-                Orthopedics
-              </option>
-
-              <option value="Pediatrics">
-                Pediatrics
-              </option>
-
-              <option value="Dermatology">
-                Dermatology
-              </option>
-
-              <option value="Gynecology">
-                Gynecology
-              </option>
-
-              <option value="General Medicine">
-                General Medicine
-              </option>
-
             </select>
 
             <div class="invalid-feedback">
               Department is required.
             </div>
-
           </div>
-
-
-          <!-- Date -->
-          <div class="col-md-4">
-
-            <label>
-              Appointment Date
-              <span>*</span>
-            </label>
-
-            <input
-              type="date"
-              formControlName="appointmentDate"
-              class="form-control"
-              [class.is-invalid]="
-                isInvalid('appointmentDate')
-              ">
-
-            <div class="invalid-feedback">
-              Date is required.
-            </div>
-
-          </div>
-
-
           <!-- Time -->
           <div class="col-md-4">
 
@@ -288,11 +188,7 @@
               <span>*</span>
             </label>
 
-            <input
-              type="time"
-              formControlName="appointmentTime"
-              class="form-control"
-              [class.is-invalid]="
+            <input type="time" formControlName="appointmentTime" class="form-control" [class.is-invalid]="
                 isInvalid('appointmentTime')
               ">
 
@@ -303,6 +199,7 @@
           </div>
 
 
+
           <!-- Status -->
           <div class="col-md-4">
 
@@ -311,29 +208,28 @@
               <span>*</span>
             </label>
 
-            <select
-              formControlName="status"
-              class="form-select">
+            <select formControlName="status" class="form-select">
 
-              <option value="Scheduled">
-                Scheduled
-              </option>
-
-              <option value="Pending">
+              <option value="PENDING">
                 Pending
               </option>
 
-              <option value="Completed">
+              <option value="SCHEDULED">
+                Scheduled
+              </option>
+
+              <option value="COMPLETED">
                 Completed
               </option>
 
-              <option value="Cancelled">
+              <option value="CANCELLED">
                 Cancelled
               </option>
 
             </select>
 
           </div>
+
 
 
           <!-- Reason -->
@@ -344,12 +240,8 @@
               <span>*</span>
             </label>
 
-            <input
-              type="text"
-              formControlName="reason"
-              class="form-control"
-              placeholder="e.g. Chest Pain, Fever, General Checkup"
-              [class.is-invalid]="
+            <input type="text" formControlName="reason" class="form-control"
+              placeholder="e.g. Chest Pain, Fever, General Checkup" [class.is-invalid]="
                 isInvalid('reason')
               ">
 
@@ -367,10 +259,7 @@
               Additional Notes
             </label>
 
-            <textarea
-              formControlName="notes"
-              class="form-control"
-              rows="4"
+            <textarea formControlName="notes" class="form-control" rows="4"
               placeholder="Write additional notes here...">
             </textarea>
 
@@ -385,22 +274,16 @@
       <!-- Footer -->
       <div class="form-footer">
 
-        <a
-          routerLink="/admin/appointments"
-          class="cancel-btn">
+        <a routerLink="/admin/appointments" class="cancel-btn">
 
           Cancel
 
         </a>
 
 
-        <button
-          type="submit"
-          class="save-btn">
+        <button type="submit" class="save-btn">
 
-          <i
-            class="bi"
-            [ngClass]="
+          <i class="bi" [ngClass]="
               isEditMode
                 ? 'bi-check-lg'
                 : 'bi-plus-lg'
@@ -408,9 +291,9 @@
           </i>
 
           {{
-            isEditMode
-              ? 'Update Appointment'
-              : 'Save Appointment'
+          isEditMode
+          ? 'Update Appointment'
+          : 'Save Appointment'
           }}
 
         </button>

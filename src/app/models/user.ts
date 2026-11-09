@@ -1,11 +1,10 @@
-// export type UserRole =
-//   | 'admin'
-//   | 'doctor'
-//   | 'receptionist'
-//   | 'nurse'
-//   | 'laboratory_staff'
-//   | 'pharmacy_staff'
-//   | 'accounts_staff';
+export type UserStatus =
+  | 'ACTIVE'
+  | 'INACTIVE'
+  | 'PENDING'
+  | 'APPROVED'
+  | 'REJECTED';
+
 export type UserRole =
   | 'ADMIN'
   | 'DOCTOR'
@@ -13,10 +12,18 @@ export type UserRole =
   | 'NURSE'
   | 'LABORATORY_STAFF'
   | 'PHARMACY_STAFF'
-  | 'ACCOUNTS_STAFF';
+  | 'ACCOUNTS_STAFF'
+  | 'PATIENT';
   
-export type UserStatus = 'approved' | 'pending' | 'inactive';
-
+// export type UserStatus = 'approved' | 'pending' | 'inactive';
+export interface AdminRegisterRequest {
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  roles: UserRole[];
+}
 export interface HospitalUser {
   id: string;
   name: string;
@@ -43,7 +50,8 @@ export const ROLE_LABELS: Record<UserRole, string> = {
   NURSE: 'Nurse',
   LABORATORY_STAFF: 'Laboratory Staff',
   PHARMACY_STAFF: 'Pharmacy Staff',
-  ACCOUNTS_STAFF: 'Accounts Staff'
+  ACCOUNTS_STAFF: 'Accounts Staff',
+  PATIENT: 'Patient'
 };
 
 export const PUBLIC_REGISTRATION_ROLES: UserRole[] = [

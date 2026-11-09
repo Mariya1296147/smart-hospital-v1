@@ -24,7 +24,10 @@ export class DischargeListComponent implements OnInit {
   }
 
   loadDischarges(): void {
-    this.discharges = this.dischargeService.getDischarges();
+    this.dischargeService.getDischarges().subscribe({
+      next: discharges => this.discharges = discharges,
+      error: error => console.error('ছাড়পত্রের তালিকা লোড করা যায়নি', error)
+    });
   }
 
   get totalDischarges(): number {
@@ -50,8 +53,10 @@ export class DischargeListComponent implements OnInit {
     );
 
     if (confirmed) {
-      this.dischargeService.deleteDischarge(id);
-      this.loadDischarges();
+      this.dischargeService.deleteDischarge(id).subscribe({
+        next: () => this.loadDischarges(),
+        error: error => console.error('ছাড়পত্র মুছতে ব্যর্থ', error)
+      });
     }
   }
 }

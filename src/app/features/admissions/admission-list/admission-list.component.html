@@ -6,16 +6,14 @@
     <div>
       <h3 class="fw-bold mb-1">Admissions</h3>
       <p class="text-muted mb-0">
-        Manage admitted patients
+        Review admission requests and admitted patients
       </p>
     </div>
 
-    <a
-      routerLink="/admin/admissions/add"
-      class="btn btn-primary">
+    <a *ngIf="isAdmin || isAccountsStaff" [routerLink]="[basePath, 'add']" class="btn btn-primary">
 
       <i class="bi bi-plus-lg me-2"></i>
-      Add Admission
+      Create Admission
 
     </a>
 
@@ -35,12 +33,13 @@
 
             <tr>
               <th>Admission ID</th>
-              <th>Patient</th>
+              <th>Patient details</th>
               <th>Department</th>
               <th>Doctor</th>
               <th>Admission Date</th>
               <th>Ward</th>
               <th>Bed</th>
+              <th>Assigned Nurse</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -62,7 +61,9 @@
 
               <!-- Patient -->
               <td>
-                {{ admission.patientName }}
+                <strong>{{ admission.patientName }}</strong>
+                <small class="d-block text-muted" *ngIf="admission.patientCode">{{ admission.patientCode }}</small>
+                <small class="d-block text-muted" *ngIf="admission.patientPhone">{{ admission.patientPhone }}</small>
               </td>
 
 
@@ -92,8 +93,10 @@
 
               <!-- Bed -->
               <td>
-                {{ admission.bed }}
+                {{ admission.bed }}<small class="d-block text-muted" *ngIf="admission.bedType">{{ admission.bedType }}</small>
               </td>
+
+              <td>{{ admission.assignedNurseName || 'Unassigned' }}</td>
 
 
               <!-- Status -->
@@ -102,9 +105,10 @@
                 <span
                   class="badge"
                   [ngClass]="{
-                    'bg-success': admission.status === 'Admitted',
-                    'bg-secondary': admission.status === 'Discharged',
-                    'bg-warning text-dark': admission.status === 'Transferred'
+                    'bg-success': ['ADMITTED','ACTIVE','IN_PROGRESS'].includes(admission.status.toUpperCase()),
+                    'bg-secondary': admission.status.toUpperCase() === 'DISCHARGED',
+                    'bg-warning text-dark': admission.status.toUpperCase() === 'PENDING',
+                    'bg-info text-dark': admission.status.toUpperCase() === 'TRANSFERRED'
                   }">
 
                   {{ admission.status }}
@@ -120,11 +124,7 @@
                 <div class="d-flex gap-2">
 
                   <!-- View -->
-                  <a
-                    [routerLink]="[
-                      '/admin/admissions/view',
-                      admission.id
-                    ]"
+                  <a [routerLink]="[basePath, 'view', admission.id]"
                     class="btn btn-sm btn-outline-info"
                     title="View">
 
@@ -134,13 +134,8 @@
 
 
                   <!-- Edit -->
-                  <a
-                    [routerLink]="[
-                      '/admin/admissions/edit',
-                      admission.id
-                    ]"
-                    class="btn btn-sm btn-outline-primary"
-                    title="Edit">
+                  <a *ngIf="isAdmin" [routerLink]="[basePath, 'edit', admission.id]"
+                    class="btn btn-sm btn-outline-primary" title="Edit">
 
                     <i class="bi bi-pencil"></i>
 
@@ -148,7 +143,13 @@
 
 
                   <!-- Delete -->
-                  <button
+                  <a *ngIf="isAccountsStaff && admission.status?.toUpperCase() === 'PENDING'"
+                    [routerLink]="[basePath, 'edit', admission.id]"
+                    class="btn btn-sm btn-primary" title="Assign a bed and confirm">
+                    <i class="bi bi-check2-circle me-1"></i>Confirm
+                  </a>
+
+                  <button *ngIf="isAdmin"
                     type="button"
                     class="btn btn-sm btn-outline-danger"
                     title="Delete"
@@ -169,7 +170,7 @@
             <tr *ngIf="admissions.length === 0">
 
               <td
-                colspan="9"
+                colspan="10"
                 class="text-center text-muted py-4">
 
                 No admissions found.

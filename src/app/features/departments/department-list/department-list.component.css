@@ -1,0 +1,210 @@
+
+.department-page {
+  padding: 24px;
+  min-height: 100%;
+  background: #f4f7fc;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.page-header h2 {
+  color: #183153;
+  font-size: 25px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.page-header p {
+  color: #718096;
+  margin: 0;
+  font-size: 14px;
+}
+
+/* White Add Department button */
+.add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 16px;
+  color: #183b68;
+  background: #ffffff;
+  border: 1px solid #183b68;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  color: #ffffff;
+  background: #183b68;
+}
+
+.add-btn:focus-visible {
+  outline: 2px solid #5b9bd5;
+  outline-offset: 3px;
+}
+
+.department-card {
+  background: #ffffff;
+  border: 1px solid #e4eaf2;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(25, 50, 85, 0.04);
+}
+
+.card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  border-bottom: 1px solid #e8edf4;
+}
+
+.card-heading h5 {
+  color: #183153;
+  margin: 0;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.total-count {
+  color: #315b8b;
+  background: #eaf2ff;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+thead {
+  background: #f7f9fc;
+}
+
+th,
+td {
+  padding: 15px 18px;
+  text-align: left;
+  border-bottom: 1px solid #edf0f5;
+  font-size: 13px;
+}
+
+th {
+  color: #52647b;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+td {
+  color: #536277;
+}
+
+.department-name {
+  color: #183153;
+  font-weight: 600;
+}
+
+tbody tr:hover {
+  background: #f9fbff;
+}
+
+.actions {
+  white-space: nowrap;
+}
+
+.edit-btn,
+.delete-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 7px;
+  margin-right: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.edit-btn {
+  color: #245b9c;
+  background: #eaf2ff;
+  border: none;
+}
+
+.delete-btn {
+  color: #c03939;
+  background: #fff0f0;
+  border: none;
+}
+
+.edit-btn:hover {
+  background: #d7e7ff;
+}
+
+.delete-btn:hover {
+  background: #ffdddd;
+}
+
+.message,
+.empty-message {
+  text-align: center;
+  padding: 30px;
+  color: #7b8798;
+}
+
+.error-message {
+  padding: 16px;
+  color: #b42318;
+  background: #fff1f0;
+}
+
+.error-message button {
+  margin-left: 10px;
+  border: none;
+  background: #183b68;
+  color: #ffffff;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .department-page {
+    padding: 14px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .card-heading {
+    padding: 15px;
+  }
+
+  .add-btn {
+    width: fit-content;
+  }
+}

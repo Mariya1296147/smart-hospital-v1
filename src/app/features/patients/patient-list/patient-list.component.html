@@ -1,23 +1,21 @@
+
 <div class="patient-page">
 
-  <!-- ================= PAGE HEADER ================= -->
+  <!-- PAGE HEADER -->
 
   <div class="page-header">
 
     <div>
       <h2>Patients</h2>
-
-      <p>
-        Manage hospital patients and their information.
-      </p>
+      <p>Manage hospital patients and their information.</p>
     </div>
 
     <a
-      routerLink="/admin/patients/add"
+      *ngIf="canAddPatient"
+      [routerLink]="isAdmin ? '/admin/patients/add' : '/reception/patients/add'"
       class="btn btn-primary">
 
       <i class="bi bi-plus-lg"></i>
-
       Add Patient
 
     </a>
@@ -25,124 +23,80 @@
   </div>
 
 
-  <!-- ================= SUMMARY CARDS ================= -->
+  <!-- SUMMARY CARDS -->
 
   <div class="row g-4 mb-4">
 
-    <!-- Total -->
-
     <div class="col-xl-3 col-md-6">
-
       <div class="summary-card">
-
         <div class="summary-icon">
           <i class="bi bi-people-fill"></i>
         </div>
-
         <div>
           <span>Total Patients</span>
-          <h3>1,248</h3>
+          <h3>{{ patients.length }}</h3>
         </div>
-
       </div>
-
     </div>
 
-
-    <!-- Active -->
-
     <div class="col-xl-3 col-md-6">
-
       <div class="summary-card">
-
         <div class="summary-icon active-icon">
           <i class="bi bi-person-check-fill"></i>
         </div>
-
         <div>
           <span>Active Patients</span>
-          <h3>984</h3>
+          <h3>{{ activePatients }}</h3>
         </div>
-
       </div>
-
     </div>
 
-
-    <!-- Pending -->
-
     <div class="col-xl-3 col-md-6">
-
       <div class="summary-card">
-
         <div class="summary-icon pending-icon">
           <i class="bi bi-clock-fill"></i>
         </div>
-
         <div>
           <span>Pending</span>
-          <h3>142</h3>
+          <h3>{{ pendingPatients }}</h3>
         </div>
-
       </div>
-
     </div>
 
-
-    <!-- New -->
-
     <div class="col-xl-3 col-md-6">
-
       <div class="summary-card">
-
         <div class="summary-icon male-icon">
           <i class="bi bi-person-fill"></i>
         </div>
-
         <div>
           <span>New This Month</span>
-          <h3>122</h3>
+          <h3>{{ newPatientsThisMonth }}</h3>
         </div>
-
       </div>
-
     </div>
 
   </div>
 
 
-  <!-- ================= PATIENT CARD ================= -->
+  <!-- PATIENT CARD -->
 
   <div class="patient-card">
 
-
-    <!-- ================= CARD HEADER ================= -->
-
     <div class="card-top">
-
       <div>
-
         <h5>Patient List</h5>
-
-        <p>
-          All registered patients
-        </p>
-
+        <p>All registered patients</p>
       </div>
-
     </div>
 
 
-    <!-- ================= SEARCH & FILTER ================= -->
+    <!-- SEARCH & FILTER -->
 
     <div class="card border-0 shadow-sm mb-4">
 
       <div class="card-body">
 
         <div class="row g-3">
-
-
-          <!-- SEARCH -->
 
           <div class="col-md-7">
 
@@ -168,8 +122,6 @@
           </div>
 
 
-          <!-- DEPARTMENT -->
-
           <div class="col-md-5">
 
             <label class="form-label fw-semibold">
@@ -181,28 +133,14 @@
               [(ngModel)]="selectedDepartment"
               (change)="filterPatients()">
 
-              <option value="">
-                All Departments
-              </option>
+              <option value="">All Departments</option>
 
-              <option value="Cardiology">
-                Cardiology
-              </option>
+              <option
+                *ngFor="let department of departments"
+                [value]="department.departmentName">
 
-              <option value="Neurology">
-                Neurology
-              </option>
+                {{ department.departmentName }}
 
-              <option value="Orthopedics">
-                Orthopedics
-              </option>
-
-              <option value="Pediatrics">
-                Pediatrics
-              </option>
-
-              <option value="Medicine">
-                Medicine
               </option>
 
             </select>
@@ -216,126 +154,70 @@
     </div>
 
 
-    <!-- ================= TABLE ================= -->
+    <!-- PATIENT TABLE -->
 
     <div class="table-responsive">
 
       <table class="table align-middle">
 
         <thead>
-
           <tr>
-
             <th>Patient</th>
-
             <th>Patient ID</th>
-
             <th>Age</th>
-
             <th>Gender</th>
-
             <th>Phone</th>
-
             <th>Department</th>
-
             <th>Status</th>
-
             <th>Action</th>
-
           </tr>
-
         </thead>
 
 
         <tbody>
 
-          <!-- IMPORTANT:
-               paginatedPatients ব্যবহার করা হয়েছে -->
-
-          @for (
-            patient of paginatedPatients;
-            track patient.id
-          ) {
+          @for (patient of paginatedPatients; track patient.id) {
 
             <tr>
 
-
-              <!-- PATIENT -->
-
               <td>
-
                 <div class="patient-info">
 
                   <div class="patient-avatar">
-
                     {{ patient.name.charAt(0) }}
-
                   </div>
 
                   <div>
-
-                    <strong>
-                      {{ patient.name }}
-                    </strong>
-
-                    <small>
-                      Patient
-                    </small>
-
+                    <strong>{{ patient.name }}</strong>
+                    <small>Patient</small>
                   </div>
 
                 </div>
-
               </td>
 
 
-              <!-- PATIENT ID -->
-
               <td>
-
                 <span class="patient-id">
                   {{ patient.patientId }}
                 </span>
-
               </td>
 
 
-              <!-- AGE -->
+              <td>{{ patient.age }}</td>
+
+              <td>{{ patient.gender }}</td>
+
+              <td>{{ patient.phone }}</td>
+
 
               <td>
-                {{ patient.age }}
-              </td>
-
-
-              <!-- GENDER -->
-
-              <td>
-                {{ patient.gender }}
-              </td>
-
-
-              <!-- PHONE -->
-
-              <td>
-                {{ patient.phone }}
-              </td>
-
-
-              <!-- DEPARTMENT -->
-
-              <td>
-
                 <span class="department">
                   {{ patient.department }}
                 </span>
-
               </td>
 
 
-              <!-- STATUS -->
-
               <td>
-
                 <span
                   class="status"
                   [class.active]="patient.status === 'Active'"
@@ -345,53 +227,57 @@
                   {{ patient.status }}
 
                 </span>
-
               </td>
 
 
-              <!-- ACTION -->
+              <!-- ACTION BUTTONS -->
 
               <td>
 
-                <!-- VIEW -->
+                <!-- VIEW: ALL ROLES -->
 
                 <a
                   [routerLink]="[
-                    '/admin/patients/view',
+                    isAdmin ? '/admin/patients/view' :
+                    isReceptionist ? '/reception/patients/view' :
+                    '/doctor/patients/view',
                     patient.id
                   ]"
                   class="btn btn-sm btn-outline-primary me-1">
 
                   <i class="bi bi-eye"></i>
-                  view
+                  View
 
                 </a>
 
 
-                <!-- EDIT -->
+                <!-- EDIT: ADMIN + RECEPTIONIST -->
 
                 <a
+                  *ngIf="canEditPatient"
                   [routerLink]="[
-                    '/admin/patients/edit',
+                    isAdmin ? '/admin/patients/edit' :
+                    '/reception/patients/edit',
                     patient.id
                   ]"
                   class="btn btn-sm btn-outline-warning me-1">
 
                   <i class="bi bi-pencil"></i>
-                  edit
+                  Edit
 
                 </a>
 
 
-                <!-- DELETE -->
+                <!-- DELETE: ADMIN ONLY -->
 
                 <button
+                  *ngIf="canDeletePatient"
                   type="button"
                   (click)="deletePatient(patient.id)"
                   class="btn btn-sm btn-outline-danger">
 
                   <i class="bi bi-trash"></i>
-                  delete
+                  Delete
 
                 </button>
 
@@ -402,24 +288,19 @@
           }
 
 
-          <!-- ================= NO RESULT ================= -->
-
           @if (paginatedPatients.length === 0) {
 
             <tr>
-
-              <td
-                colspan="8"
-                class="text-center py-4">
+              <td colspan="8" class="text-center py-4">
 
                 <i class="bi bi-search fs-3 text-muted"></i>
 
                 <p class="mb-0 mt-2 text-muted">
-                  No patients found.
+                  <ng-container *ngIf="isNurse && !searchText && !selectedDepartment; else noPatientMatch">No admitted patients are assigned to your ward yet. Ask an administrator to link your Nurse profile and ward.</ng-container>
+                  <ng-template #noPatientMatch>No matching patients found.</ng-template>
                 </p>
 
               </td>
-
             </tr>
 
           }
@@ -431,43 +312,22 @@
     </div>
 
 
-    <!-- ================= PAGINATION ================= -->
+    <!-- PAGINATION -->
 
     <div class="table-footer">
 
-
-      <!-- SHOWING -->
-
       <span>
-
         Showing
-        <strong>
-          {{ startItem }}
-        </strong>
-
+        <strong>{{ startItem }}</strong>
         to
-
-        <strong>
-          {{ endItem }}
-        </strong>
-
+        <strong>{{ endItem }}</strong>
         of
-
-        <strong>
-          {{ patients.length }}
-        </strong>
-
+        <strong>{{ getFilteredPatients().length }}</strong>
         patients
-
       </span>
 
 
-      <!-- PAGINATION BUTTONS -->
-
       <div class="pagination-buttons">
-
-
-        <!-- PREVIOUS -->
 
         <button
           type="button"
@@ -480,12 +340,7 @@
         </button>
 
 
-        <!-- PAGE NUMBERS -->
-
-        @for (
-          page of pages;
-          track page
-        ) {
+        @for (page of pages; track page) {
 
           <button
             type="button"
@@ -499,8 +354,6 @@
 
         }
 
-
-        <!-- NEXT -->
 
         <button
           type="button"

@@ -26,18 +26,20 @@ export class NurseListComponent implements OnInit {
   }
 
   loadNurses(): void {
-    this.nurses = this.nurseService.getNurses();
+    this.nurseService.getNurses().subscribe({
+      next: nurses => this.nurses = nurses,
+      error: error => console.error('নার্সের তালিকা লোড করা যায়নি', error)
+    });
   }
 
   deleteNurse(id: number): void {
 
     if (confirm('Are you sure you want to delete this nurse?')) {
 
-      this.nurseService.deleteNurse(id);
-
-      this.loadNurses();
-
-      alert('Nurse deleted successfully!');
+      this.nurseService.deleteNurse(id).subscribe({
+        next: () => { this.loadNurses(); alert('নার্সের রেকর্ড মুছে ফেলা হয়েছে।'); },
+        error: error => console.error('নার্সের রেকর্ড মুছতে ব্যর্থ', error)
+      });
     }
   }
 }

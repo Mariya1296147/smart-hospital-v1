@@ -120,8 +120,17 @@
               type="email"
               class="form-control"
               name="email"
-              [(ngModel)]="nurse.email">
+              [(ngModel)]="nurse.email"
+              required>
 
+          </div>
+
+          <div class="col-md-6" *ngIf="!isEdit">
+            <label class="form-label">Initial login password</label>
+            <input type="password" class="form-control" name="accountPassword"
+              [(ngModel)]="accountPassword" minlength="8" autocomplete="new-password"
+              placeholder="At least 8 characters" required>
+            <small class="text-muted">The nurse signs in with the email above and this password.</small>
           </div>
 
 
@@ -134,32 +143,14 @@
 
             <select
               class="form-select"
-              name="department"
-              [(ngModel)]="nurse.department">
+              name="departmentId"
+              [(ngModel)]="nurse.departmentId">
 
-              <option value="">
+              <option [ngValue]="null">
                 Select Department
               </option>
 
-              <option value="Cardiology">
-                Cardiology
-              </option>
-
-              <option value="Neurology">
-                Neurology
-              </option>
-
-              <option value="Emergency">
-                Emergency
-              </option>
-
-              <option value="General Medicine">
-                General Medicine
-              </option>
-
-              <option value="ICU">
-                ICU
-              </option>
+              <option *ngFor="let department of departments" [ngValue]="department.id">{{ department.departmentName }}</option>
 
             </select>
 
@@ -182,21 +173,7 @@
                 Select Ward
               </option>
 
-              <option value="General Ward">
-                General Ward
-              </option>
-
-              <option value="Private Ward">
-                Private Ward
-              </option>
-
-              <option value="ICU">
-                ICU
-              </option>
-
-              <option value="Emergency Ward">
-                Emergency Ward
-              </option>
+              <option *ngFor="let ward of wards" [value]="ward.wardName">{{ ward.wardName }}</option>
 
             </select>
 

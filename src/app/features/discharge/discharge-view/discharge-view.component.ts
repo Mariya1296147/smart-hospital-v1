@@ -27,7 +27,9 @@ export class DischargeViewComponent implements OnInit {
       this.route.snapshot.paramMap.get('id')
     );
 
-    this.discharge =
-      this.dischargeService.getDischargeById(id);
+    this.dischargeService.getDischargeById(id).subscribe({
+      next: discharge => this.discharge = discharge,
+      error: error => console.error('ছাড়পত্রের তথ্য পাওয়া যায়নি', error)
+    });
   }
 }

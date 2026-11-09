@@ -1,16 +1,19 @@
+
 import { HttpInterceptorFn } from '@angular/common/http';
 
-
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+
   const token = localStorage.getItem('hospital-jwt-token');
 
-  if (token) {
-    req = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+  if (!token) {
+    return next(req);
   }
 
-  return next(req);
+  const authReq = req.clone({
+    setHeaders: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return next(authReq);
 };

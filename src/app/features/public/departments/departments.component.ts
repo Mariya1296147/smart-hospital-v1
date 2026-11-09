@@ -1,6 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { PublicBookingService, PublicDepartmentOption } from '../../../core/services/public-booking.service';
+
+interface DepartmentCard extends PublicDepartmentOption {
+  name: string;
+  icon: string;
+  doctors: number;
+}
 
 @Component({
   selector: 'app-departments',
@@ -9,81 +17,38 @@ import { RouterLink } from '@angular/router';
   templateUrl: './departments.component.html',
   styleUrl: './departments.component.css'
 })
-export class DepartmentsComponent {
+export class DepartmentsComponent implements OnInit {
+  departments: DepartmentCard[] = [];
+  loading = true;
+  error = '';
 
-  departments = [
-    {
-      icon: 'bi bi-heart-pulse-fill',
-      name: 'Cardiology',
-      doctors: 8,
-      description: 'Specialized care for heart and cardiovascular conditions.'
-    },
-    {
-      icon: 'bi bi-activity',
-      name: 'Neurology',
-      doctors: 6,
-      description: 'Diagnosis and treatment of brain and nervous system disorders.'
-    },
-    {
-      icon: 'bi bi-person-hearts',
-      name: 'Pediatrics',
-      doctors: 7,
-      description: 'Complete healthcare services for infants, children and teenagers.'
-    },
-    {
-      icon: 'bi bi-bandaid-fill',
-      name: 'Orthopedics',
-      doctors: 5,
-      description: 'Treatment for bones, joints, muscles and movement conditions.'
-    },
-    {
-      icon: 'bi bi-person-fill',
-      name: 'Dermatology',
-      doctors: 4,
-      description: 'Professional diagnosis and treatment for skin conditions.'
-    },
-    {
-      icon: 'bi bi-gender-female',
-      name: 'Gynecology',
-      doctors: 6,
-      description: 'Specialized healthcare for women at every stage of life.'
-    },
-    {
-      icon: 'bi bi-ear-fill',
-      name: 'ENT',
-      doctors: 4,
-      description: 'Medical care for ear, nose and throat conditions.'
-    },
-    {
-      icon: 'bi bi-eye-fill',
-      name: 'Ophthalmology',
-      doctors: 5,
-      description: 'Comprehensive diagnosis and treatment for eye conditions.'
-    },
-    {
-      icon: 'bi bi-lungs-fill',
-      name: 'Pulmonology',
-      doctors: 4,
-      description: 'Specialized treatment for respiratory and lung diseases.'
-    },
-    {
-      icon: 'bi bi-capsule-pill',
-      name: 'General Medicine',
-      doctors: 10,
-      description: 'Primary medical care for common and complex health conditions.'
-    },
-    {
-      icon: 'bi bi-person-check-fill',
-      name: 'Urology',
-      doctors: 4,
-      description: 'Diagnosis and treatment of urinary and reproductive conditions.'
-    },
-    {
-      icon: 'bi bi-scissors',
-      name: 'General Surgery',
-      doctors: 6,
-      description: 'Professional surgical care supported by experienced specialists.'
-    }
-  ];
+  private readonly icons: Record<string, string> = {
+    cardiology: 'bi bi-heart-pulse-fill', neurology: 'bi bi-activity',
+    pediatrics: 'bi bi-person-hearts', orthopedics: 'bi bi-bandaid-fill',
+    dermatology: 'bi bi-person-fill', gynecology: 'bi bi-gender-female',
+    ent: 'bi bi-ear-fill', ophthalmology: 'bi bi-eye-fill',
+    pulmonology: 'bi bi-lungs-fill', urology: 'bi bi-person-check-fill',
+    'general medicine': 'bi bi-capsule-pill', 'general surgery': 'bi bi-scissors'
+  };
 
+  constructor(private readonly booking: PublicBookingService) {}
+
+  ngOnInit(): void {
+    forkJoin({ departments: this.booking.getDepartments(), doctors: this.booking.getDoctors() }).subscribe({
+      next: ({ departments, doctors }) => {
+        this.departments = (departments ?? []).map(department => ({
+          ...department,
+          name: department.departmentName,
+          icon: this.icons[department.departmentName.toLowerCase()] || 'bi bi-hospital-fill',
+          doctors: (doctors ?? []).filter(doctor => doctor.departmentId === department.id).length
+        }));
+        this.loading = false;
+      },
+      error: error => {
+        console.error('Public department list failed to load:', error);
+        this.error = 'Department information is temporarily unavailable.';
+        this.loading = false;
+      }
+    });
+  }
 }

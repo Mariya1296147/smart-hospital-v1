@@ -1,0 +1,81 @@
+
+<div class="view-page">
+
+  <div class="view-header">
+    <div>
+      <span class="page-label">ADMIN PORTAL</span>
+      <h2>Medicine Details</h2>
+      <p>View complete medicine information.</p>
+    </div>
+
+    <a routerLink="/admin/medicines" class="btn-back">
+      <i class="bi bi-arrow-left"></i> Back
+    </a>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    Loading medicine details...
+  </div>
+
+  <div class="details-card" *ngIf="medicine">
+
+    <div class="medicine-heading">
+      <div class="medicine-icon">
+        <i class="bi bi-capsule"></i>
+      </div>
+
+      <div>
+        <h3>{{ medicine.medicineName }}</h3>
+        <p>{{ medicine.genericName }}</p>
+      </div>
+
+      <span class="status"
+            [class.active]="medicine.active"
+            [class.inactive]="!medicine.active">
+        {{ medicine.active ? 'Active' : 'Inactive' }}
+      </span>
+    </div>
+
+    <hr>
+
+    <div class="details-grid">
+
+      <div class="detail-item">
+        <small>Medicine ID</small>
+        <h6>{{ medicine.id }}</h6>
+      </div>
+
+      <div class="detail-item">
+        <small>Medicine Name</small>
+        <h6>{{ medicine.medicineName }}</h6>
+      </div>
+
+      <div class="detail-item">
+        <small>Generic Name</small>
+        <h6>{{ medicine.genericName }}</h6>
+      </div>
+
+      <div class="detail-item">
+        <small>Category</small>
+        <h6>{{ medicine.category }}</h6>
+      </div>
+
+      <div class="detail-item">
+        <small>Strength</small>
+        <h6>{{ medicine.strength }}</h6>
+      </div>
+
+      <div class="detail-item">
+        <small>Manufacturer</small>
+        <h6>{{ medicine.manufacturer || 'Not provided' }}</h6>
+      </div>
+
+      <div class="detail-item">
+        <small>Status</small>
+        <h6>{{ medicine.active ? 'Active' : 'Inactive' }}</h6>
+      </div>
+
+    </div>
+
+  </div>
+</div>

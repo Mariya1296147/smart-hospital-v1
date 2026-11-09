@@ -1,0 +1,172 @@
+<div class="container py-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2>Prescription Details</h2>
+      <p class="text-muted mb-0">View complete prescription information</p>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button class="btn btn-primary" [disabled]="printing || !prescription" (click)="printPrescription()">
+        <i class="bi bi-printer"></i> {{ printing ? 'Preparing PDF…' : 'Print Prescription' }}
+      </button>
+      <button class="btn btn-outline-secondary" (click)="goBack()">
+        <i class="bi bi-arrow-left"></i> Back to List
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary"></div>
+    <p>Loading prescription...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="prescription && !isLoading">
+
+    <!-- Basic Information -->
+    <div class="card shadow-sm mb-4">
+
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Prescription Information</h5>
+      </div>
+
+      <div class="card-body">
+        <div class="row g-3">
+
+          <div class="col-md-6">
+            <strong>Prescription ID:</strong>
+            <p>{{ prescription.id }}</p>
+          </div>
+
+          <div class="col-md-6">
+            <strong>Date:</strong>
+            <p>{{ prescription.date | date:'mediumDate' }}</p>
+          </div>
+
+          <div class="col-md-6">
+            <strong>Patient Name:</strong>
+            <p>{{ prescription.patientName }}</p>
+          </div>
+
+          <div class="col-md-6">
+            <strong>Doctor Name:</strong>
+            <p>{{ prescription.doctorName }}</p>
+          </div>
+
+          <div class="col-md-6">
+            <strong>Department:</strong>
+            <p>{{ prescription.departmentName || 'N/A' }}</p>
+          </div>
+
+          <div class="col-12">
+            <strong>Diagnosis:</strong>
+            <p>{{ prescription.diagnosis }}</p>
+          </div>
+
+          <div class="col-12">
+            <strong>Admission Required:</strong>
+            <p>{{ prescription.admissionRequired ? 'Yes' : 'No' }}</p>
+          </div>
+          <div class="col-12" *ngIf="prescription.admissionRequired && prescription.admissionReason">
+            <strong>Admission Reason:</strong>
+            <p>{{ prescription.admissionReason }}</p>
+          </div>
+
+          <div class="col-12">
+            <strong>Prescribed Tests:</strong>
+            <ng-container *ngIf="prescription.tests?.length; else noTests">
+              <ul class="mb-0 mt-2"><li *ngFor="let test of prescription.tests">{{ test.testName }} ({{ test.testCode }})</li></ul>
+            </ng-container>
+            <ng-template #noTests><p class="text-muted mb-0">No tests prescribed.</p></ng-template>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Medicine Details -->
+    <div class="card shadow-sm mb-4">
+
+      <div class="card-header">
+        <h5 class="mb-0">
+     Medicines ({{ prescription.medicines.length }})
+        </h5>
+      </div>
+
+      <div class="card-body">
+
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle">
+
+            <thead class="table-light">
+              <tr>
+                <th>#</th>
+                <th>Medicine Name</th>
+                <th>Dosage</th>
+                <th>Frequency</th>
+                <th>Duration</th>
+                <th>Instruction</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let medicine of prescription.medicines; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ medicine.medicineName }}</td>
+                <td>{{ medicine.dosage }}</td>
+                <td>{{ medicine.frequency }}</td>
+                <td>{{ medicine.duration }}</td>
+                <td>{{ medicine.instruction || 'N/A' }}</td>
+              </tr>
+
+              <tr *ngIf="!prescription.medicines?.length">
+                <td colspan="6" class="text-center text-muted">
+                  No medicines found.
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Advice -->
+    <div class="card shadow-sm mb-4">
+
+      <div class="card-header">
+        <h5 class="mb-0">Doctor's Advice</h5>
+      </div>
+
+      <div class="card-body">
+        <p class="mb-0">
+          {{ prescription.advice || 'No advice provided.' }}
+        </p>
+      </div>
+
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+
+      <button class="btn btn-secondary" (click)="goBack()">
+        Back
+      </button>
+
+      <button class="btn btn-outline-primary" [disabled]="printing" (click)="printPrescription()">
+        <i class="bi bi-printer"></i> {{ printing ? 'Preparing PDF…' : 'Print Prescription' }}
+      </button>
+
+      <button *ngIf="isAdmin" class="btn btn-primary" (click)="editPrescription()">
+        <i class="bi bi-pencil"></i> Edit Prescription
+      </button>
+
+    </div>
+
+  </div>
+</div>

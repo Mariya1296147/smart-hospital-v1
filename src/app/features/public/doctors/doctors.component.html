@@ -59,6 +59,10 @@
 
   <div class="container">
 
+    <p class="text-center" *ngIf="loading">Loading doctors…</p>
+    <p class="text-center text-danger" *ngIf="!loading && error">{{ error }}</p>
+    <p class="text-center" *ngIf="!loading && !error && doctors.length === 0">No active doctors are currently listed.</p>
+
     <div class="doctors-grid">
 
       <div
@@ -102,12 +106,12 @@
 
             <div>
               <i class="bi bi-mortarboard-fill"></i>
-              {{ doctor.qualification }}
+              {{ doctor.qualification || '—' }}
             </div>
 
             <div>
               <i class="bi bi-clock-history"></i>
-              {{ doctor.experience }}
+              {{ doctor.experienceLabel }}
             </div>
 
           </div>

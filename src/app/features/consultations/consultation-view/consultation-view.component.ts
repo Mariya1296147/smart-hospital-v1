@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { Consultation } from '../../../models/consultation';
 import { ConsultationService } from '../../../core/services/consultation.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-consultation-view',
@@ -18,7 +19,8 @@ export class ConsultationViewComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private consultationService: ConsultationService
+    private consultationService: ConsultationService,
+    public authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -27,7 +29,9 @@ export class ConsultationViewComponent implements OnInit {
       this.route.snapshot.paramMap.get('id')
     );
 
-    this.consultation =
-      this.consultationService.getConsultationById(id);
+    this.consultationService.getConsultationById(id).subscribe({
+      next: consultation => this.consultation = consultation,
+      error: error => console.error('পরামর্শের তথ্য পাওয়া যায়নি', error)
+    });
   }
 }

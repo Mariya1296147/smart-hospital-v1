@@ -1,0 +1,44 @@
+<div class="container-fluid py-4">
+  <header class="mb-4">
+    <h3 class="fw-bold mb-1">Ward &amp; Bed Management</h3>
+    <p class="text-muted mb-0">Manage database wards and their beds or cabins used for admissions.</p>
+  </header>
+  <div class="alert alert-danger" *ngIf="error">{{ error }}</div>
+  <div class="row g-4">
+    <div class="col-xl-5">
+      <section class="card border-0 shadow-sm">
+        <div class="card-header bg-white fw-semibold">{{ wardForm.id ? 'Edit Ward' : 'Create Ward' }}</div>
+        <div class="card-body">
+          <form #wardFormRef="ngForm" (ngSubmit)="saveWard()" class="row g-3">
+            <div class="col-md-6"><label class="form-label">Ward Name</label><input class="form-control" name="wardName" [(ngModel)]="wardForm.wardName" required></div>
+            <div class="col-md-6"><label class="form-label">Ward Number</label><input class="form-control" name="wardNumber" [(ngModel)]="wardForm.wardNumber"></div>
+            <div class="col-md-6"><label class="form-label">Ward Type</label><input class="form-control" name="wardType" [(ngModel)]="wardForm.wardType"></div>
+            <div class="col-md-6"><label class="form-label">Capacity</label><input type="number" min="0" class="form-control" name="capacity" [(ngModel)]="wardForm.capacity"></div>
+            <div class="col-12 d-flex gap-2"><button class="btn btn-primary" [disabled]="loading || wardFormRef.invalid">{{ wardForm.id ? 'Update Ward' : 'Save Ward' }}</button><button type="button" class="btn btn-outline-secondary" *ngIf="wardForm.id" (click)="wardForm = { wardName: '', wardNumber: '', wardType: '', capacity: undefined }">Cancel</button></div>
+          </form>
+        </div>
+        <div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>Ward</th><th>Capacity</th><th></th></tr></thead><tbody>
+          <tr *ngFor="let ward of wards"><td>{{ ward.wardName }}<small class="d-block text-muted">{{ ward.wardNumber || ward.wardType || '' }}</small></td><td>{{ ward.capacity ?? '—' }}</td><td class="text-end text-nowrap"><button class="btn btn-sm btn-outline-primary me-1" (click)="editWard(ward)">Edit</button><button class="btn btn-sm btn-outline-danger" (click)="deleteWard(ward)">Delete</button></td></tr>
+          <tr *ngIf="!loading && wards.length === 0"><td colspan="3" class="text-center text-muted py-3">No wards in the database yet.</td></tr>
+        </tbody></table></div>
+      </section>
+    </div>
+    <div class="col-xl-7">
+      <section class="card border-0 shadow-sm">
+        <div class="card-header bg-white fw-semibold">{{ bedForm.id ? 'Edit Bed / Cabin' : 'Create Bed / Cabin' }}</div>
+        <div class="card-body">
+          <form #bedFormRef="ngForm" (ngSubmit)="saveBed()" class="row g-3">
+            <div class="col-md-4"><label class="form-label">Bed / Cabin Number</label><input class="form-control" name="bedNumber" [(ngModel)]="bedForm.bedNumber" required></div>
+            <div class="col-md-4"><label class="form-label">Type</label><select class="form-select" name="bedType" [(ngModel)]="bedForm.bedType" required><option value="BED">Bed</option><option value="CABIN">Cabin</option></select></div>
+            <div class="col-md-4"><label class="form-label">Ward</label><select class="form-select" name="wardId" [(ngModel)]="bedForm.wardId" required><option [ngValue]="undefined">Select Ward</option><option *ngFor="let ward of wards" [ngValue]="ward.id">{{ ward.wardName }}</option></select></div>
+            <div class="col-12 d-flex gap-2"><button class="btn btn-primary" [disabled]="loading || bedFormRef.invalid">{{ bedForm.id ? 'Update Bed / Cabin' : 'Save Bed / Cabin' }}</button><button type="button" class="btn btn-outline-secondary" *ngIf="bedForm.id" (click)="bedForm = { bedNumber: '', bedType: 'BED', wardId: undefined, status: 'AVAILABLE' }">Cancel</button></div>
+          </form>
+        </div>
+        <div class="table-responsive"><table class="table table-hover mb-0"><thead><tr><th>Number</th><th>Type</th><th>Ward</th><th>Status</th><th></th></tr></thead><tbody>
+          <tr *ngFor="let bed of beds"><td>{{ bed.bedNumber }}</td><td>{{ bed.bedType || 'BED' }}</td><td>{{ wardNameForBed(bed) }}</td><td>{{ bed.status }}</td><td class="text-end text-nowrap"><button class="btn btn-sm btn-outline-primary me-1" (click)="editBed(bed)">Edit</button><button class="btn btn-sm btn-outline-danger" [disabled]="bed.status.toUpperCase() === 'OCCUPIED'" (click)="deleteBed(bed)">Delete</button></td></tr>
+          <tr *ngIf="!loading && beds.length === 0"><td colspan="5" class="text-center text-muted py-3">No beds or cabins in the database yet.</td></tr>
+        </tbody></table></div>
+      </section>
+    </div>
+  </div>
+</div>

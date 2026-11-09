@@ -273,17 +273,11 @@
             class="form-select"
             name="department"
             [(ngModel)]="patient.department"
+            (ngModelChange)="onDepartmentChange()"
             required>
 
             <option value="">Select Department</option>
-            <option value="Cardiology">Cardiology</option>
-            <option value="Neurology">Neurology</option>
-            <option value="Orthopedics">Orthopedics</option>
-            <option value="Pediatrics">Pediatrics</option>
-            <option value="Gynecology">Gynecology</option>
-            <option value="Medicine">Medicine</option>
-            <option value="Surgery">Surgery</option>
-            <option value="Dermatology">Dermatology</option>
+            <option *ngFor="let department of departments" [value]="department.departmentName">{{ department.departmentName }}</option>
 
           </select>
 
@@ -298,11 +292,11 @@
           <select
             class="form-select"
             name="doctor"
-            [(ngModel)]="patient.doctor">
+            [(ngModel)]="patient.doctor"
+            [disabled]="!patient.department">
 
             <option value="">Select Doctor</option>
-            <option value="Dr. Ahmed">Dr. Ahmed</option>
-            <option value="Dr. Rahman">Dr. Rahman</option>
+            <option *ngFor="let doctor of departmentDoctors" [value]="doctor.name">{{ doctor.name }}</option>
             <option value="Dr. Karim">Dr. Karim</option>
             <option value="Dr. Fatima">Dr. Fatima</option>
 

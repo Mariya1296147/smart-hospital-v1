@@ -1,19 +1,19 @@
 <div class="admin-sidebar" [class.open]="isOpen">
 
-  <!-- SIDEBAR TOGGLE BUTTON -->
-  <button
-    type="button"
-    class="sidebar-toggle"
-    (click)="toggleSidebar()"
-    title="Toggle Sidebar">
 
-    <i
-      class="bi"
-      [class.bi-chevron-left]="isOpen"
-      [class.bi-chevron-right]="!isOpen">
-    </i>
 
-  </button>
+
+<button
+  type="button"
+  class="sidebar-toggle"
+  (click)="toggleSidebar()"
+  title="Toggle Sidebar"
+  aria-label="Toggle Sidebar">
+  <i class="bi"
+     [class.bi-chevron-left]="isOpen"
+     [class.bi-chevron-right]="!isOpen">
+  </i>
+</button>
 
 
   <!-- WELCOME USER -->
@@ -40,10 +40,7 @@
       MAIN
     </div>
 
-    <a
-      routerLink="/admin/dashboard"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
+    <a routerLink="/admin/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
       class="menu-item">
 
       <i class="bi bi-grid-1x2-fill"></i>
@@ -57,54 +54,59 @@
       MANAGEMENT
     </div>
 
-    <a
-      routerLink="/admin/users"
-      routerLinkActive="active"
-      class="menu-item">
+    <a routerLink="/admin/users" routerLinkActive="active" class="menu-item">
 
       <i class="bi bi-people-fill"></i>
       <span>User Management</span>
 
     </a>
 
-    <a
-      routerLink="/admin/patients"
-      routerLinkActive="active"
-      class="menu-item">
+    <a routerLink="/admin/contact-messages" routerLinkActive="active" class="menu-item">
+      <i class="bi bi-inbox-fill"></i>
+      <span>Contact Inbox</span>
+    </a>
+
+    <a routerLink="/admin/patients" routerLinkActive="active" class="menu-item">
 
       <i class="bi bi-person-heart"></i>
       <span>Patients</span>
 
     </a>
 
-    <a
-      routerLink="/admin/doctors"
-      routerLinkActive="active"
-      class="menu-item">
+    <a routerLink="/admin/doctors" routerLinkActive="active" class="menu-item">
 
       <i class="bi bi-person-badge-fill"></i>
       <span>Doctors</span>
 
     </a>
+    <a routerLink="/admin/departments" routerLinkActive="active" class="menu-item">
 
-    <a
-      routerLink="/admin/appointments"
-      routerLinkActive="active"
-      class="menu-item">
+      <i class="bi bi-building"></i>
+      <span>Departments</span>
+
+    </a>
+    <a routerLink="/admin/appointments" routerLinkActive="active" class="menu-item">
 
       <i class="bi bi-calendar-check-fill"></i>
       <span>Appointments</span>
 
     </a>
 
-    <a
-      routerLink="/admin/consultations"
-      routerLinkActive="active"
-      class="menu-item">
+    <a routerLink="/admin/consultations" routerLinkActive="active" class="menu-item">
 
       <i class="bi bi-chat-left-text-fill"></i>
       <span>Consultations</span>
 
+    </a>
+
+    <a routerLink="/admin/prescriptions" routerLinkActive="active" class="menu-item">
+      <i class="bi bi-prescription2"></i>
+      <span>Prescriptions</span>
+    </a>
+
+    <a routerLink="/admin/test-catalog" routerLinkActive="active" class="menu-item">
+      <i class="bi bi-eyedropper"></i>
+      <span>Test Catalog</span>
     </a>
 
 
@@ -113,60 +115,48 @@
       HOSPITAL SERVICES
     </div>
 
-    <a
-      routerLink="/admin/admissions"
-      routerLinkActive="active"
-      class="menu-item">
+    <a routerLink="/admin/admissions" routerLinkActive="active" class="menu-item">
 
       <i class="bi bi-hospital-fill"></i>
       <span>Admissions</span>
 
     </a>
 
-    <a
-      routerLink="/admin/nursing"
-      routerLinkActive="active"
-      class="menu-item">
+    <a routerLink="/admin/facilities" routerLinkActive="active" class="menu-item">
+      <i class="bi bi-grid-3x3-gap-fill"></i>
+      <span>Ward &amp; Bed Management</span>
+    </a>
+
+    <a routerLink="/admin/nursing" routerLinkActive="active" class="menu-item">
 
       <i class="bi bi-heart-pulse-fill"></i>
       <span>Nursing</span>
 
     </a>
 
-    <a
-      routerLink="/admin/laboratory"
-      routerLinkActive="active"
-      class="menu-item">
+    <a routerLink="/admin/laboratory" routerLinkActive="active" class="menu-item">
 
       <i class="bi bi-eyedropper"></i>
       <span>Laboratory</span>
 
     </a>
 
-    <a
-      routerLink="/admin/pharmacy"
-      routerLinkActive="active"
-      class="menu-item">
+    <a routerLink="/admin/pharmacy" routerLinkActive="active" class="menu-item">
 
       <i class="bi bi-capsule"></i>
       <span>Pharmacy</span>
 
     </a>
+    
 
-    <a
-      routerLink="/admin/billing"
-      routerLinkActive="active"
-      class="menu-item">
+    <a routerLink="/admin/billing" routerLinkActive="active" class="menu-item">
 
       <i class="bi bi-receipt"></i>
       <span>Billing</span>
 
     </a>
 
-    <a
-      routerLink="/admin/discharge"
-      routerLinkActive="active"
-      class="menu-item">
+    <a routerLink="/admin/discharge" routerLinkActive="active" class="menu-item">
 
       <i class="bi bi-box-arrow-right"></i>
       <span>Discharge</span>
@@ -179,20 +169,14 @@
       REPORTS & SETTINGS
     </div>
 
-    <a
-      routerLink="/admin/reports"
-      routerLinkActive="active"
-      class="menu-item">
+    <a routerLink="/admin/reports" routerLinkActive="active" class="menu-item">
 
       <i class="bi bi-bar-chart-fill"></i>
       <span>Reports</span>
 
     </a>
 
-    <a
-      routerLink="/admin/settings"
-      routerLinkActive="active"
-      class="menu-item">
+    <a routerLink="/admin/settings" routerLinkActive="active" class="menu-item">
 
       <i class="bi bi-gear-fill"></i>
       <span>Settings</span>
@@ -220,10 +204,7 @@
   <!-- LOGOUT - ALWAYS AT BOTTOM -->
   <div class="sidebar-logout">
 
-    <button
-      type="button"
-      class="logout-button"
-      (click)="logout()">
+    <button type="button" class="logout-button" (click)="logout()">
 
       <i class="bi bi-box-arrow-left"></i>
       <span>Logout</span>

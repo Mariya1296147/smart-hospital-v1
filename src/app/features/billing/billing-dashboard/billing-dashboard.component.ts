@@ -1,6 +1,9 @@
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BillingService } from '../../../core/services/billing.service';
+import { DashboardService } from '../../../core/services/dashboard.service';
+import { Billing } from '../../../models/billing';
 
 @Component({
   selector: 'app-billing-dashboard',
@@ -15,115 +18,67 @@ export class BillingDashboardComponent {
   // SUMMARY
   // ==============================
 
-  totalRevenue = 1250000;
-  totalBilling = 1485000;
-  totalPayments = 1125000;
-  pendingAmount = 360000;
+  totalRevenue = 0;
+  totalBilling = 0;
+  totalPayments = 0;
+  pendingAmount = 0;
 
-  totalRefunds = 45000;
-  totalPatients = 1248;
-  todayRevenue = 68500;
-  monthlyRevenue = 425000;
+  totalRefunds = 0;
+  totalPatients = 0;
+  todayRevenue = 0;
+  monthlyRevenue = 0;
 
 
   // ==============================
   // BILLING BREAKDOWN
   // ==============================
 
-  billingBreakdown = [
-    {
-      title: 'Consultation Fees',
-      amount: 185000,
-      icon: 'bi-person-badge'
-    },
-    {
-      title: 'Laboratory Charges',
-      amount: 275000,
-      icon: 'bi-eyedropper'
-    },
-    {
-      title: 'Pharmacy Sales',
-      amount: 325000,
-      icon: 'bi-capsule'
-    },
-    {
-      title: 'Admission & Bed',
-      amount: 295000,
-      icon: 'bi-hospital'
-    },
-    {
-      title: 'Emergency Services',
-      amount: 165000,
-      icon: 'bi-heart-pulse'
-    },
-    {
-      title: 'Other Services',
-      amount: 240000,
-      icon: 'bi-receipt'
-    }
-  ];
+  billingBreakdown: Array<{ title: string; amount: number; icon: string }> = [];
 
 
   // ==============================
   // RECENT TRANSACTIONS
   // ==============================
 
-  recentTransactions = [
-    {
-      invoice: 'INV-1001',
-      patient: 'Mariya Rahman',
-      service: 'Consultation',
-      amount: 2500,
-      payment: 'Paid',
-      date: '24 Sep 2026'
-    },
-    {
-      invoice: 'INV-1002',
-      patient: 'Sarah Ahmed',
-      service: 'Laboratory',
-      amount: 5800,
-      payment: 'Paid',
-      date: '24 Sep 2026'
-    },
-    {
-      invoice: 'INV-1003',
-      patient: 'Rahim Khan',
-      service: 'Pharmacy',
-      amount: 3250,
-      payment: 'Pending',
-      date: '23 Sep 2026'
-    },
-    {
-      invoice: 'INV-1004',
-      patient: 'Nusrat Jahan',
-      service: 'Admission',
-      amount: 18500,
-      payment: 'Paid',
-      date: '23 Sep 2026'
-    },
-    {
-      invoice: 'INV-1005',
-      patient: 'Tanvir Hasan',
-      service: 'Emergency',
-      amount: 7200,
-      payment: 'Pending',
-      date: '22 Sep 2026'
-    }
-  ];
+  recentTransactions: Array<{ invoice: string; patient: string; service: string; amount: number; payment: string; date: string }> = [];
 
 
   // ==============================
   // MONTHLY REVENUE
   // ==============================
 
-  monthlyData = [
-    { month: 'Apr', amount: 285000 },
-    { month: 'May', amount: 325000 },
-    { month: 'Jun', amount: 365000 },
-    { month: 'Jul', amount: 390000 },
-    { month: 'Aug', amount: 410000 },
-    { month: 'Sep', amount: 425000 }
-  ];
+  monthlyData: Array<{ month: string; amount: number }> = [];
+  today = new Date();
+  get maxMonthlyAmount(): number { return Math.max(...this.monthlyData.map(item => item.amount), 1); }
+
+  constructor(billing: BillingService, dashboard: DashboardService) {
+    dashboard.getSummary().subscribe({ next: summary => this.totalPatients = summary.metrics?.totalPatients ?? 0, error: error => console.error('Dashboard summary failed to load', error) });
+    billing.getBills().subscribe({ next: bills => this.applyBills(bills ?? []), error: error => console.error('Bills failed to load', error) });
+  }
+
+  private applyBills(bills: Billing[]): void {
+    const paid = (bill: Billing) => String(bill.paymentStatus).toUpperCase() === 'PAID';
+    this.totalBilling = bills.reduce((sum, bill) => sum + Number(bill.totalAmount ?? bill.amount ?? 0), 0);
+    this.totalPayments = bills.filter(paid).reduce((sum, bill) => sum + Number(bill.totalAmount ?? bill.amount ?? 0), 0);
+    this.totalRevenue = this.totalPayments;
+    this.pendingAmount = bills.filter(bill => !paid(bill)).reduce((sum, bill) => sum + Number(bill.totalAmount ?? bill.amount ?? 0), 0);
+    const today = new Date().toISOString().slice(0, 10);
+    const month = today.slice(0, 7);
+    this.todayRevenue = bills.filter(bill => paid(bill) && bill.invoiceDate === today).reduce((sum, bill) => sum + Number(bill.totalAmount ?? bill.amount ?? 0), 0);
+    this.monthlyRevenue = bills.filter(bill => paid(bill) && bill.invoiceDate?.startsWith(month)).reduce((sum, bill) => sum + Number(bill.totalAmount ?? bill.amount ?? 0), 0);
+    this.recentTransactions = bills.slice().sort((a, b) => (b.invoiceDate || '').localeCompare(a.invoiceDate || '')).slice(0, 5).map(bill => ({
+      invoice: bill.invoiceId, patient: bill.patientName || 'Unknown patient', service: bill.serviceName || 'Service',
+      amount: Number(bill.totalAmount ?? bill.amount ?? 0), payment: bill.paymentStatus, date: bill.invoiceDate
+    }));
+    const grouped = new Map<string, number>();
+    bills.forEach(bill => grouped.set(bill.serviceName || 'Other services', (grouped.get(bill.serviceName || 'Other services') ?? 0) + Number(bill.totalAmount ?? bill.amount ?? 0)));
+    this.billingBreakdown = [...grouped.entries()].map(([title, amount]) => ({ title, amount, icon: 'bi-receipt' }));
+    this.monthlyData = Array.from({ length: 6 }, (_, offset) => {
+      const date = new Date(); date.setDate(1); date.setMonth(date.getMonth() - (5 - offset));
+      const key = date.toISOString().slice(0, 7);
+      return { month: date.toLocaleString('en', { month: 'short' }), amount: bills.filter(bill => paid(bill) && bill.invoiceDate?.startsWith(key)).reduce((sum, bill) => sum + Number(bill.totalAmount ?? bill.amount ?? 0), 0) };
+    });
+  }
 
 
   // ==============================
@@ -141,11 +96,11 @@ export class BillingDashboardComponent {
 
   getStatusClass(status: string): string {
 
-    if (status === 'Paid') {
+    if (String(status).toUpperCase() === 'PAID') {
       return 'status-paid';
     }
 
-    if (status === 'Pending') {
+    if (String(status).toUpperCase() === 'PENDING') {
       return 'status-pending';
     }
 

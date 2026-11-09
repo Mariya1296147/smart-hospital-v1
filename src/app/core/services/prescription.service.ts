@@ -1,28 +1,49 @@
+
 import { Injectable } from '@angular/core';
-import { Prescription } from '../../models/prescription';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { ApiService } from './api.service';
+import { CompletedDoctorVisit, Prescription, PrescriptionWriteRequest } from '../../models/prescription';
+import { environment } from '../../../environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrescriptionService {
 
-  private prescriptions: Prescription[] = [];
+  private readonly resource = 'prescriptions';
 
-  constructor() {}
+  constructor(private readonly api: ApiService, private readonly http: HttpClient) {}
 
-  getPrescriptions(): Prescription[] {
-    return this.prescriptions;
+  getPrescriptions(): Observable<Prescription[]> {
+    return this.api.getAll<Prescription>(this.resource);
   }
 
-  addPrescription(prescription: Prescription): void {
-    this.prescriptions.push(prescription);
+  getPrescriptionById(id: number): Observable<Prescription> {
+    return this.api.getById<Prescription>(this.resource, id);
   }
 
-  getPrescriptionById(id: number): Prescription | undefined {
-    return this.prescriptions.find(p => p.id === id);
+  getPrescriptionPdf(id: number): Observable<Blob> {
+    return this.http.get(`${environment.apiBaseUrl}/${this.resource}/${id}/pdf`, { responseType: 'blob' });
   }
 
-  deletePrescription(id: number): void {
-    this.prescriptions = this.prescriptions.filter(p => p.id !== id);
+  getCompletedDoctorVisits(): Observable<CompletedDoctorVisit[]> {
+    return this.api.getResource<CompletedDoctorVisit[]>(`${this.resource}/doctor-visits`);
+  }
+
+  addPrescription(value: PrescriptionWriteRequest): Observable<Prescription> {
+    return this.api.create<Prescription, PrescriptionWriteRequest>(this.resource, value);
+  }
+
+  updatePrescription(
+    id: number,
+    value: PrescriptionWriteRequest
+  ): Observable<Prescription> {
+    return this.api.update<Prescription, PrescriptionWriteRequest>(this.resource, id, value);
+  }
+
+  deletePrescription(id: number): Observable<void> {
+    return this.api.remove(this.resource, id);
   }
 }

@@ -26,11 +26,8 @@
 
         <div class="stat-content">
           <span>Total Patients</span>
-          <h3>1,248</h3>
-          <small>
-            <i class="bi bi-arrow-up"></i>
-            12% from last month
-          </small>
+          <h3>{{ metric('totalPatients') }}</h3>
+          <small>Live patient records</small>
         </div>
 
       </div>
@@ -49,11 +46,8 @@
 
         <div class="stat-content">
           <span>Total Doctors</span>
-          <h3>86</h3>
-          <small>
-            <i class="bi bi-arrow-up"></i>
-            5% from last month
-          </small>
+          <h3>{{ metric('totalDoctors') }}</h3>
+          <small>Registered doctors</small>
         </div>
 
       </div>
@@ -72,11 +66,8 @@
 
         <div class="stat-content">
           <span>Appointments</span>
-          <h3>324</h3>
-          <small>
-            <i class="bi bi-arrow-up"></i>
-            8% from last week
-          </small>
+          <h3>{{ metric('appointmentsToday') }}</h3>
+          <small>Scheduled for today</small>
         </div>
 
       </div>
@@ -95,11 +86,8 @@
 
         <div class="stat-content">
           <span>Admissions</span>
-          <h3>142</h3>
-          <small>
-            <i class="bi bi-arrow-up"></i>
-            6% from last week
-          </small>
+          <h3>{{ metric('activeAdmissions') }}</h3>
+          <small>Currently admitted</small>
         </div>
 
       </div>
@@ -124,9 +112,9 @@
             <span>Today's appointment schedule</span>
           </div>
 
-          <button class="btn btn-sm btn-outline-primary">
+          <a routerLink="/admin/appointments" class="btn btn-sm btn-outline-primary">
             View All
-          </button>
+          </a>
 
         </div>
 
@@ -146,118 +134,14 @@
             </thead>
 
             <tbody>
-
-              <tr>
-
-                <td>
-                  <div class="patient-info">
-                    <div class="patient-avatar">MR</div>
-
-                    <div>
-                      <strong>Mariya Rahman</strong>
-                      <small>P-1001</small>
-                    </div>
-                  </div>
-                </td>
-
-                <td>Dr. Ahmed Khan</td>
-
-                <td>Cardiology</td>
-
-                <td>09:30 AM</td>
-
-                <td>
-                  <span class="status confirmed">
-                    Confirmed
-                  </span>
-                </td>
-
+              <tr *ngIf="appointments.length === 0"><td colspan="5" class="text-muted text-center">No appointments found.</td></tr>
+              <tr *ngFor="let appointment of appointments">
+                <td><div class="patient-info"><div class="patient-avatar">{{ patientName(appointment).slice(0, 2).toUpperCase() }}</div><div><strong>{{ patientName(appointment) }}</strong><small>{{ patientId(appointment) }}</small></div></div></td>
+                <td>{{ doctorName(appointment) }}</td>
+                <td>{{ appointment.department || '—' }}</td>
+                <td>{{ formatTime(appointment.appointmentTime) }}</td>
+                <td><span class="status">{{ appointment.status }}</span></td>
               </tr>
-
-
-              <tr>
-
-                <td>
-                  <div class="patient-info">
-                    <div class="patient-avatar">SA</div>
-
-                    <div>
-                      <strong>Sarah Ahmed</strong>
-                      <small>P-1002</small>
-                    </div>
-                  </div>
-                </td>
-
-                <td>Dr. Rahman</td>
-
-                <td>Neurology</td>
-
-                <td>10:30 AM</td>
-
-                <td>
-                  <span class="status pending">
-                    Pending
-                  </span>
-                </td>
-
-              </tr>
-
-
-              <tr>
-
-                <td>
-                  <div class="patient-info">
-                    <div class="patient-avatar">MK</div>
-
-                    <div>
-                      <strong>Mohammad Karim</strong>
-                      <small>P-1003</small>
-                    </div>
-                  </div>
-                </td>
-
-                <td>Dr. Fatima</td>
-
-                <td>Orthopedics</td>
-
-                <td>11:30 AM</td>
-
-                <td>
-                  <span class="status confirmed">
-                    Confirmed
-                  </span>
-                </td>
-
-              </tr>
-
-
-              <tr>
-
-                <td>
-                  <div class="patient-info">
-                    <div class="patient-avatar">NS</div>
-
-                    <div>
-                      <strong>Nusrat Sultana</strong>
-                      <small>P-1004</small>
-                    </div>
-                  </div>
-                </td>
-
-                <td>Dr. Hasan</td>
-
-                <td>Pediatrics</td>
-
-                <td>01:00 PM</td>
-
-                <td>
-                  <span class="status completed">
-                    Completed
-                  </span>
-                </td>
-
-              </tr>
-
             </tbody>
 
           </table>
@@ -292,7 +176,7 @@
 
           <div class="overview-text">
             <span>Active Patients</span>
-            <strong>984</strong>
+            <strong>{{ metric('activePatients') }}</strong>
           </div>
 
         </div>
@@ -306,7 +190,7 @@
 
           <div class="overview-text">
             <span>Available Doctors</span>
-            <strong>64</strong>
+            <strong>{{ metric('availableDoctors') }}</strong>
           </div>
 
         </div>
@@ -320,7 +204,7 @@
 
           <div class="overview-text">
             <span>Available Beds</span>
-            <strong>128</strong>
+            <strong>{{ metric('availableBeds') }}</strong>
           </div>
 
         </div>
@@ -334,7 +218,7 @@
 
           <div class="overview-text">
             <span>Today's Revenue</span>
-            <strong>৳ 85,400</strong>
+            <strong>৳ {{ metric('todayRevenue') | number:'1.0-0' }}</strong>
           </div>
 
         </div>

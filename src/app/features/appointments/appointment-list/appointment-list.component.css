@@ -16,7 +16,7 @@
   margin-bottom: 25px;
 }
 
-.page-header > div:first-child {
+.page-header>div:first-child {
   display: flex;
   align-items: center;
   gap: 14px;
@@ -334,34 +334,72 @@ tbody tr:hover {
 
 
 /* =========================
-   ACTIONS
+   ACTION BUTTONS
 ========================= */
 
 .action-buttons {
   display: flex;
-  gap: 6px;
+  align-items: center;
+  gap: 7px;
 }
 
 .action-buttons button {
-  width: 31px;
-  height: 31px;
-  border-radius: 6px;
-  background: white;
-  display: flex;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: #fff;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
+
+/* Confirm - Green */
+
+.action-confirm {
+  color: #16834b;
+  background: #e8f7ee !important;
+  border: 1px solid #a8dfbd;
+}
+
+.action-confirm:hover {
+  color: #fff;
+  background: #198754 !important;
+  border-color: #198754;
+  box-shadow: 0 4px 10px rgba(25, 135, 84, 0.2);
+}
+
+/* Reject - Red */
+
+.action-reject {
+  color: #dc3545;
+  background: #fff0f0 !important;
+  border: 1px solid #f2b8bd;
+}
+
+.action-reject:hover {
+  color: #fff;
+  background: #dc3545 !important;
+  border-color: #dc3545;
+  box-shadow: 0 4px 10px rgba(220, 53, 69, 0.2);
+}
+
+/* View */
 
 .action-view {
   border: 1px solid #cfe0ff;
-  color: #020509;
+  color: #315f9d;
 }
+
+/* Edit */
 
 .action-edit {
   border: 1px solid #ffe0a3;
-  color: #1733e8;
+  color: #d18a15;
 }
+
+/* Delete */
 
 .action-delete {
   border: 1px solid #f5c5c5;
@@ -369,9 +407,8 @@ tbody tr:hover {
 }
 
 .action-buttons button:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
-
 
 /* =========================
    FOOTER
@@ -505,6 +542,30 @@ tbody tr:hover {
     gap: 15px;
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  /* Confirm Button - Green */
+  .action-confirm {
+    color: #16834b !important;
+    background: #e8f7ee !important;
+    border: 1px solid #a8dfbd !important;
+  }
+
+  .action-confirm:hover {
+    color: #fff !important;
+    background: #198754 !important;
+  }
+
+  /* Reject Button - Red */
+  .action-reject {
+    color: #dc3545 !important;
+    background: #fff0f0 !important;
+    border: 1px solid #f2b8bd !important;
+  }
+
+  .action-reject:hover {
+    color: #fff !important;
+    background: #dc3545 !important;
   }
 
 }

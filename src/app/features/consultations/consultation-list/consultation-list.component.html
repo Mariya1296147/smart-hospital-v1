@@ -1,3 +1,4 @@
+
 <div class="consultation-page">
 
   <!-- HEADER -->
@@ -16,13 +17,12 @@
     </div>
 
     <a
-      routerLink="/admin/consultations/add"
+      [routerLink]="consultationsRoute + '/add'"
       class="btn btn-primary add-btn">
       <i class="bi bi-plus-lg"></i>
       Add Consultation
     </a>
   </div>
-
 
   <!-- SUMMARY CARDS -->
   <div class="row g-4 mb-4">
@@ -40,7 +40,6 @@
       </div>
     </div>
 
-
     <div class="col-md-4">
       <div class="summary-card">
         <div class="summary-icon green">
@@ -53,7 +52,6 @@
         </div>
       </div>
     </div>
-
 
     <div class="col-md-4">
       <div class="summary-card">
@@ -70,7 +68,6 @@
 
   </div>
 
-
   <!-- TABLE -->
   <div class="table-card">
 
@@ -84,7 +81,6 @@
         {{ consultations.length }} Records
       </span>
     </div>
-
 
     <div class="table-responsive">
 
@@ -103,7 +99,6 @@
           </tr>
         </thead>
 
-
         <tbody>
 
           <tr *ngFor="let consultation of consultations">
@@ -113,7 +108,6 @@
                 {{ consultation.consultationId }}
               </strong>
             </td>
-
 
             <td>
               <div class="patient-info">
@@ -128,18 +122,15 @@
               </div>
             </td>
 
-
             <td>
               <strong>{{ consultation.doctorName }}</strong>
             </td>
-
 
             <td>
               <span class="department">
                 {{ consultation.department }}
               </span>
             </td>
-
 
             <td>
               <div class="date-info">
@@ -148,14 +139,11 @@
               </div>
             </td>
 
-
             <td>
               {{ consultation.type }}
             </td>
 
-
             <td>
-
               <span
                 class="status-badge"
                 [class.completed]="consultation.status === 'Completed'"
@@ -172,59 +160,54 @@
                 {{ consultation.status }}
 
               </span>
-
             </td>
 
-
+            <!-- ACTIONS -->
             <td>
-
               <div class="action-buttons">
 
+                <!-- VIEW -->
                 <a
-                  [routerLink]="[
-                    '/admin/consultations/view',
-                    consultation.id
-                  ]"
+                  [routerLink]="[consultationsRoute + '/view', consultation.id]"
                   class="action-btn view"
                   title="View">
-
                   <i class="bi bi-eye"></i>
-
                 </a>
 
-
+                <!-- EDIT -->
                 <a
-                  [routerLink]="[
-                    '/admin/consultations/edit',
-                    consultation.id
-                  ]"
+                  [routerLink]="[consultationsRoute + '/edit', consultation.id]"
                   class="action-btn edit"
                   title="Edit">
-
                   <i class="bi bi-pencil-square"></i>
-
                 </a>
 
+                <!-- CREATE PRESCRIPTION -->
+                <a
+                  *ngIf="authService.hasRole('DOCTOR')"
+                  [routerLink]="['/doctor/prescriptions/add', consultation.patientId]"
+                  [queryParams]="{ consultationId: consultation.id }"
+                  class="action-btn prescription"
+                  title="Create Prescription">
+                  <i class="bi bi-prescription2"></i>
+                </a>
 
+                <!-- DELETE -->
                 <button
                   type="button"
                   class="action-btn delete"
                   title="Delete"
                   (click)="deleteConsultation(consultation.id)">
-
                   <i class="bi bi-trash"></i>
-
                 </button>
 
               </div>
-
             </td>
 
           </tr>
 
-
+          <!-- EMPTY STATE -->
           <tr *ngIf="consultations.length === 0">
-
             <td colspan="8" class="empty-state">
 
               <i class="bi bi-clipboard-x"></i>
@@ -234,7 +217,6 @@
               <p>Add a consultation to see it here.</p>
 
             </td>
-
           </tr>
 
         </tbody>

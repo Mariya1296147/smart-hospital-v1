@@ -26,7 +26,7 @@
 
         <a
           [routerLink]="[
-            '/admin/consultations/edit',
+            (authService.hasRole('DOCTOR') ? '/doctor/consultations/edit' : '/admin/consultations/edit'),
             consultation.id
           ]"
           class="btn btn-primary">
@@ -38,7 +38,7 @@
 
 
         <a
-          routerLink="/admin/consultations"
+          [routerLink]="authService.hasRole('DOCTOR') ? '/doctor/consultations' : '/admin/consultations'"
           class="back-btn">
 
           <i class="bi bi-arrow-left"></i>
@@ -223,11 +223,11 @@
 
           <label>
             <i class="bi bi-capsule"></i>
-            Prescription
+            Medication Plan
           </label>
 
           <p>
-            {{ consultation.prescription || 'No prescription recorded.' }}
+            Medicines and instructions are saved in the patient's prescription record.
           </p>
 
         </div>

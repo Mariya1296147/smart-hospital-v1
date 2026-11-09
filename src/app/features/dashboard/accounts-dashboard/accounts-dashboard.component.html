@@ -11,7 +11,7 @@
 
       <h2>Accounts Dashboard</h2>
 
-      <p>Manage billing, payments, invoices and hospital finances.</p>
+      <p>Review admission requests and manage billing, payments and invoices.</p>
     </div>
 
     <div class="header-date">
@@ -29,8 +29,8 @@
       </div>
       <div>
         <span>Total Bills</span>
-        <h3>128</h3>
-        <small>This month</small>
+        <h3>{{ metric('totalBills') }}</h3>
+        <small>All records</small>
       </div>
     </div>
 
@@ -40,8 +40,8 @@
       </div>
       <div>
         <span>Total Revenue</span>
-        <h3>৳2.45M</h3>
-        <small>This month</small>
+        <h3>৳{{ metric('totalRevenue') | number:'1.0-0' }}</h3>
+        <small>All-time paid invoices</small>
       </div>
     </div>
 
@@ -51,7 +51,7 @@
       </div>
       <div>
         <span>Pending Payments</span>
-        <h3>24</h3>
+        <h3>{{ metric('unpaidInvoices') }}</h3>
         <small>Need attention</small>
       </div>
     </div>
@@ -62,7 +62,7 @@
       </div>
       <div>
         <span>Today's Payments</span>
-        <h3>৳86K</h3>
+        <h3>৳{{ metric('todayRevenue') | number:'1.0-0' }}</h3>
         <small>Collected today</small>
       </div>
     </div>
@@ -85,52 +85,12 @@
       </div>
 
       <div class="transaction-list">
-
-        <div class="transaction-row">
-          <div class="transaction-icon">
-            <i class="bi bi-arrow-down-circle"></i>
-          </div>
-
-          <div class="transaction-info">
-            <strong>Sarah Ahmed</strong>
-            <span>Consultation · INV-10245</span>
-          </div>
-
-          <div class="amount">
-            +৳2,500
-          </div>
+        <div class="transaction-row" *ngFor="let bill of bills">
+          <div class="transaction-icon"><i class="bi bi-arrow-down-circle"></i></div>
+          <div class="transaction-info"><strong>{{ bill.patientName || 'Unknown patient' }}</strong><span>{{ bill.serviceName }} · {{ bill.invoiceId }}</span></div>
+          <div class="amount">৳{{ bill.totalAmount | number:'1.0-2' }}</div>
         </div>
-
-        <div class="transaction-row">
-          <div class="transaction-icon">
-            <i class="bi bi-arrow-down-circle"></i>
-          </div>
-
-          <div class="transaction-info">
-            <strong>Mariya Rahman</strong>
-            <span>Admission · INV-10246</span>
-          </div>
-
-          <div class="amount">
-            +৳12,000
-          </div>
-        </div>
-
-        <div class="transaction-row">
-          <div class="transaction-icon">
-            <i class="bi bi-arrow-down-circle"></i>
-          </div>
-
-          <div class="transaction-info">
-            <strong>Ahmed Hasan</strong>
-            <span>Laboratory · INV-10247</span>
-          </div>
-
-          <div class="amount">
-            +৳3,200
-          </div>
-        </div>
-
+        <div class="transaction-row text-muted" *ngIf="bills.length === 0">No billing records found.</div>
       </div>
 
     </div>
@@ -146,6 +106,11 @@
       </div>
 
       <div class="quick-actions">
+
+        <a routerLink="/accounts/admissions">
+          <i class="bi bi-hospital"></i>
+          <span>Admission Management</span>
+        </a>
 
         <a routerLink="/accounts/billing">
           <i class="bi bi-receipt"></i>
@@ -190,7 +155,7 @@
 
         <div>
           <strong>Paid Invoices</strong>
-          <span>104 invoices completed</span>
+          <span>{{ metric('totalBills') - metric('unpaidInvoices') }} invoices completed</span>
         </div>
 
         <span class="paid">Paid</span>
@@ -201,7 +166,7 @@
 
         <div>
           <strong>Pending Invoices</strong>
-          <span>24 invoices awaiting payment</span>
+          <span>{{ metric('unpaidInvoices') }} invoices awaiting payment</span>
         </div>
 
         <span class="pending">Pending</span>
@@ -211,11 +176,11 @@
         <i class="bi bi-exclamation-circle"></i>
 
         <div>
-          <strong>Overdue Payments</strong>
-          <span>7 payments are overdue</span>
+          <strong>Revenue Collected Today</strong>
+          <span>৳{{ metric('todayRevenue') | number:'1.0-0' }} collected today</span>
         </div>
 
-        <span class="overdue">Overdue</span>
+        <span class="paid">Today</span>
       </div>
 
     </div>

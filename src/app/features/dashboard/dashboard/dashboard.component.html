@@ -47,22 +47,22 @@
 
         <div class="overview-item">
           <span>Appointments</span>
-          <strong>86</strong>
+          <strong>{{ metric('appointmentsToday') }}</strong>
         </div>
 
         <div class="overview-item">
-          <span>New Patients</span>
-          <strong>24</strong>
+          <span>Active Patients</span>
+          <strong>{{ metric('activePatients') }}</strong>
         </div>
 
         <div class="overview-item">
           <span>Laboratory Tests</span>
-          <strong>42</strong>
+          <strong>{{ metric('labTestsToday') }}</strong>
         </div>
 
         <div class="overview-item">
           <span>Discharges</span>
-          <strong>12</strong>
+          <strong>{{ metric('dischargesToday') }}</strong>
         </div>
 
       </div>

@@ -53,12 +53,10 @@
               Patient Name
             </label>
 
-            <input
-              type="text"
-              class="form-control"
-              name="patientName"
-              [(ngModel)]="laboratory.patientName"
-              required>
+            <select class="form-select" name="patientId" [(ngModel)]="laboratory.patientId" (ngModelChange)="onPatientChange()" required>
+              <option value="">Select Patient</option>
+              <option *ngFor="let patient of patients" [value]="patient.patientId">{{ patient.name }} · {{ patient.patientId }}</option>
+            </select>
 
           </div>
 
@@ -130,25 +128,7 @@
                 Select Department
               </option>
 
-              <option value="Hematology">
-                Hematology
-              </option>
-
-              <option value="Biochemistry">
-                Biochemistry
-              </option>
-
-              <option value="Radiology">
-                Radiology
-              </option>
-
-              <option value="Cardiology">
-                Cardiology
-              </option>
-
-              <option value="Neurology">
-                Neurology
-              </option>
+              <option *ngFor="let department of departments" [value]="department">{{ department }}</option>
 
             </select>
 
@@ -162,12 +142,10 @@
               Doctor
             </label>
 
-            <input
-              type="text"
-              class="form-control"
-              name="doctor"
-              [(ngModel)]="laboratory.doctor"
-              placeholder="Enter doctor name">
+            <select class="form-select" name="doctor" [(ngModel)]="laboratory.doctor">
+              <option value="">No doctor selected</option>
+              <option *ngFor="let doctor of doctors" [value]="doctor">{{ doctor }}</option>
+            </select>
 
           </div>
 

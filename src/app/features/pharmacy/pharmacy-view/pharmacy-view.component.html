@@ -18,7 +18,7 @@
 
       <a
         [routerLink]="[
-          '/admin/pharmacy/edit',
+          stockPath, 'edit',
           medicine.id
         ]"
         class="btn btn-primary">
@@ -30,7 +30,7 @@
 
 
       <a
-        routerLink="/admin/pharmacy"
+        [routerLink]="stockPath"
         class="btn btn-secondary">
 
         <i class="bi bi-arrow-left me-2"></i>
@@ -139,7 +139,7 @@
           <h6
             [ngClass]="{
               'text-success': medicine.quantity > 75,
-              'text-warning': medicine.quantity > 0 && medicine.quantity <= 75,
+              'text-warning': medicine.quantity > 0 && medicine.quantity <= (medicine.lowStockThreshold ?? 10),
               'text-danger': medicine.quantity === 0
             }">
 
@@ -153,13 +153,23 @@
         <div class="col-md-6">
 
           <label>
-            Unit Price
+            Selling Price
           </label>
 
           <h6>
-            ৳{{ medicine.unitPrice | number:'1.2-2' }}
+            ৳{{ (medicine.sellingPrice ?? medicine.unitPrice) | number:'1.2-2' }}
           </h6>
 
+        </div>
+
+        <div class="col-md-6">
+          <label>Batch Number</label>
+          <h6>{{ medicine.batchNumber || '—' }}</h6>
+        </div>
+
+        <div class="col-md-6">
+          <label>Purchase Price</label>
+          <h6>৳{{ (medicine.purchasePrice ?? medicine.unitPrice) | number:'1.2-2' }}</h6>
         </div>
 
 
@@ -202,16 +212,16 @@
               [ngClass]="{
 
                 'bg-success':
-                  medicine.status === 'Available',
+                  medicine.status === 'AVAILABLE' || medicine.status === 'Available',
 
                 'bg-warning text-dark':
-                  medicine.status === 'Low Stock',
+                  medicine.status === 'LOW STOCK' || medicine.status === 'Low Stock',
 
                 'bg-danger':
-                  medicine.status === 'Out of Stock',
+                  medicine.status === 'OUT OF STOCK' || medicine.status === 'Out of Stock',
 
                 'bg-secondary':
-                  medicine.status === 'Expired'
+                  medicine.status === 'EXPIRED' || medicine.status === 'Expired'
 
               }">
 

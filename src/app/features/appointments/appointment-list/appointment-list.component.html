@@ -171,6 +171,9 @@
                   <small>
                     {{ appointment.patientPhone }}
                   </small>
+                  <small *ngIf="appointment.age != null || appointment.gender">
+                    {{ appointment.gender || 'Gender not provided' }}<ng-container *ngIf="appointment.age != null"> · Age {{ appointment.age }}</ng-container>
+                  </small>
 
                 </div>
 
@@ -235,35 +238,50 @@
 
             </td>
 
-       
+
             <!-- Actions -->
             <td>
               <div class="action-buttons">
+
+                <!-- Confirm: Receptionist -->
+                <button *ngIf="isReceptionist && appointment.status?.toUpperCase() === 'PENDING'" class="action-confirm"
+                  title="Confirm Appointment" (click)="confirmAppointment(appointment.id)">
+                  <i class="bi bi-check-lg"></i>
+                </button>
+
+                <!-- Reject: Receptionist -->
+                <button *ngIf="isReceptionist && appointment.status?.toUpperCase() === 'PENDING'" class="action-reject"
+                  title="Reject Appointment" (click)="rejectAppointment(appointment.id)">
+                  <i class="bi bi-x-lg"></i>
+                </button>
+
+                <!-- Start Consultation: Doctor -->
+                <button *ngIf="isDoctor && appointment.status?.toUpperCase() === 'SCHEDULED'" class="action-view"
+                  title="Start consultation" (click)="startConsultation(appointment.id)">
+                  <i class="bi bi-clipboard2-pulse"></i>
+                </button>
 
                 <!-- View -->
                 <button class="action-view" title="View" (click)="viewAppointment(appointment.id)">
                   <i class="bi bi-eye"></i>
                 </button>
 
-                <!-- Edit -->
-                <button class="action-edit" title="Edit" (click)="editAppointment(appointment.id)">
+                <!-- Edit: Admin + Receptionist -->
+                <button *ngIf="canEditAppointment" class="action-edit" title="Edit"
+                  (click)="editAppointment(appointment.id)">
                   <i class="bi bi-pencil"></i>
                 </button>
 
-               
-
-                <!-- Delete -->
-                <button class="action-delete" title="Delete" (click)="deleteAppointment(appointment.id)">
+                <!-- Delete: Admin only -->
+                <button *ngIf="canDeleteAppointment" class="action-delete" title="Delete"
+                  (click)="deleteAppointment(appointment.id)">
                   <i class="bi bi-trash"></i>
                 </button>
 
               </div>
             </td>
-           
-          </tr>
 
-
-          <!-- Empty -->
+            <!-- Empty -->
           <tr *ngIf="paginatedAppointments.length === 0">
 
             <td colspan="7" class="empty-state">

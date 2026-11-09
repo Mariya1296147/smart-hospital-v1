@@ -26,19 +26,20 @@ export class LaboratoryListComponent implements OnInit {
   }
 
   loadLaboratoryTests(): void {
-    this.laboratoryTests =
-      this.laboratoryService.getLaboratoryTests();
+    this.laboratoryService.getLaboratoryTests().subscribe({
+      next: tests => this.laboratoryTests = tests,
+      error: error => console.error('ল্যাব পরীক্ষার তালিকা লোড করা যায়নি', error)
+    });
   }
 
   deleteLaboratory(id: number): void {
 
     if (confirm('Are you sure you want to delete this laboratory test?')) {
 
-      this.laboratoryService.deleteLaboratory(id);
-
-      this.loadLaboratoryTests();
-
-      alert('Laboratory test deleted successfully!');
+      this.laboratoryService.deleteLaboratory(id).subscribe({
+        next: () => { this.loadLaboratoryTests(); alert('ল্যাব পরীক্ষাটি মুছে ফেলা হয়েছে।'); },
+        error: error => console.error('ল্যাব পরীক্ষা মুছতে ব্যর্থ', error)
+      });
     }
   }
 }

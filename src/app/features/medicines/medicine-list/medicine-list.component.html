@@ -1,0 +1,107 @@
+
+<div class="medicine-page">
+
+  <div class="page-header">
+    <div>
+      <span class="page-label">ADMIN PORTAL</span>
+      <h2>Medicine Management</h2>
+      <p>Manage your hospital medicine inventory.</p>
+    </div>
+
+    <a routerLink="/admin/medicines/add" class="btn-add">
+      <i class="bi bi-plus-circle"></i> Add Medicine
+    </a>
+  </div>
+
+  <div class="stats-card">
+    <div class="stat-icon"><i class="bi bi-capsule"></i></div>
+    <div>
+      <h3>{{ medicines.length }}</h3>
+      <p>Total Medicines</p>
+    </div>
+  </div>
+
+  <div class="content-card">
+
+    <div class="toolbar">
+      <h5>Medicine List</h5>
+
+      <input
+        type="text"
+        class="search-box"
+        placeholder="Search medicine..."
+        [(ngModel)]="searchText">
+    </div>
+
+    <div *ngIf="isLoading" class="message">
+      Loading medicines...
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <div class="table-responsive" *ngIf="!isLoading">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Medicine Name</th>
+            <th>Generic Name</th>
+            <th>Category</th>
+            <th>Strength</th>
+            <th>Manufacturer</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let medicine of filteredMedicines; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td class="medicine-name">{{ medicine.medicineName }}</td>
+            <td>{{ medicine.genericName }}</td>
+            <td>{{ medicine.category }}</td>
+            <td>{{ medicine.strength }}</td>
+            <td>{{ medicine.manufacturer }}</td>
+
+            <td>
+              <span [class.active]="medicine.active"
+                    [class.inactive]="!medicine.active"
+                    class="status">
+                {{ medicine.active ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+
+            <td>
+              <div class="actions">
+                <a [routerLink]="['/admin/medicines/view', medicine.id]"
+                   class="action-btn view" title="View">
+                  <i class="bi bi-eye"></i>
+                </a>
+
+                <a [routerLink]="['/admin/medicines/edit', medicine.id]"
+                   class="action-btn edit" title="Edit">
+                  <i class="bi bi-pencil"></i>
+                </a>
+
+                <button class="action-btn delete"
+                        (click)="deleteMedicine(medicine.id)"
+                        title="Delete">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <tr *ngIf="filteredMedicines.length === 0">
+            <td colspan="8" class="empty">
+              No medicines found.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

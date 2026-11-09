@@ -122,7 +122,8 @@
               <div class="doctor-info">
 
                 <div class="doctor-avatar">
-                  <i class="bi bi-person-fill"></i>
+                  <img *ngIf="doctor.imageUrl; else defaultDoctorAvatar" [src]="imageSource(doctor.imageUrl)" [alt]="doctor.name">
+                  <ng-template #defaultDoctorAvatar><i class="bi bi-person-fill"></i></ng-template>
                 </div>
 
                 <div>

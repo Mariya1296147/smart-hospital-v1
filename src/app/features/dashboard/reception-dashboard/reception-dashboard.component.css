@@ -1,4 +1,3 @@
-
 .dashboard-page {
   padding: 10px;
 }
@@ -44,7 +43,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
-.dashboard-card > i {
+.dashboard-card>i {
   width: 50px;
   height: 50px;
   border-radius: 12px;
@@ -114,6 +113,7 @@
 
 /* RESPONSIVE */
 @media (max-width: 1000px) {
+
   .dashboard-cards,
   .action-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -121,8 +121,212 @@
 }
 
 @media (max-width: 600px) {
+
   .dashboard-cards,
   .action-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.pending-appointments {
+  margin-top: 28px;
+  padding: 22px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(20, 45, 82, 0.08);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.section-header h4 {
+  margin: 0 0 6px;
+  color: #142d52;
+}
+
+.section-header p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.refresh-btn {
+  padding: 9px 14px;
+  border: 0;
+  border-radius: 7px;
+  background: #142d52;
+  color: #fff;
+  cursor: pointer;
+}
+
+.refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.appointment-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+.appointment-table th,
+.appointment-table td {
+  padding: 13px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e5eaf1;
+}
+
+.appointment-table th {
+  background: #f0f5fc;
+  color: #142d52;
+  font-size: 13px;
+}
+
+.appointment-table td {
+  font-size: 14px;
+}
+
+.status-pending {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: #fff0d5;
+  color: #8a5700;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.message,
+.error-message {
+  padding: 16px 0;
+  color: #64748b;
+}
+
+.error-message {
+  color: #b42318;
+}
+
+@media (max-width: 600px) {
+  .pending-appointments {
+    padding: 14px;
+  }
+
+  .section-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .btn-confirm,
+  .btn-reject {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 8px 11px;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .btn-confirm {
+    background-color: #198754;
+  }
+
+  .btn-reject {
+    background-color: #dc3545;
+  }
+
+  .btn-confirm:hover:not(:disabled),
+  .btn-reject:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  .btn-confirm:disabled,
+  .btn-reject:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .success-message {
+    margin-bottom: 12px;
+    padding: 12px 15px;
+    color: #146c43;
+    background-color: #d1e7dd;
+    border: 1px solid #badbcc;
+    border-radius: 6px;
+  }
+
+  .action-buttons button i {
+    font-size: 14px;
+  }
+  /* Action Buttons */
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+/* Confirm Button - Green */
+.btn-confirm {
+  background: #e8f7ee !important;
+  color: #198754 !important;
+  border: 1px solid #a8dfbd !important;
+  padding: 8px 15px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-confirm:hover:not(:disabled) {
+  background: #198754 !important;
+  color: #ffffff !important;
+  border-color: #198754 !important;
+}
+
+/* Reject Button - Red */
+.btn-reject {
+  background: #fff0f0 !important;
+  color: #dc3545 !important;
+  border: 1px solid #f2b8bd !important;
+  padding: 8px 15px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-reject:hover:not(:disabled) {
+  background: #dc3545 !important;
+  color: #ffffff !important;
+  border-color: #dc3545 !important;
+}
+
+/* Disabled */
+.btn-confirm:disabled,
+.btn-reject:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 }

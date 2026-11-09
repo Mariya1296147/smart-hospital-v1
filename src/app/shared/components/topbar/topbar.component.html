@@ -1,24 +1,18 @@
 <header class="topbar">
 
-  <!-- LEFT -->
+  <!-- LEFT: Hospital Logo + Title -->
   <div class="topbar-left">
 
-   <button
-  class="menu-button"
-  type="button"
-  (click)="toggleMenu()">
+    <div class="hospital-brand">
+      <i class="bi bi-hospital"></i>
+    </div>
 
-  <i class="bi bi-list"></i>
-
-</button>
-    <!-- Hospital Title -->
     <div class="hospital-title">
       <h2>Smart Hospital</h2>
       <span>Hospital Management System</span>
     </div>
 
   </div>
-
 
   <!-- RIGHT -->
   <div class="topbar-right">
@@ -29,10 +23,8 @@
       <span class="notification-count">3</span>
     </button>
 
-
     <!-- Admin Profile -->
     <div class="profile">
-
       <div class="profile-avatar">
         <i class="bi bi-person-fill"></i>
       </div>
@@ -43,28 +35,21 @@
       </div>
 
       <i class="bi bi-chevron-down profile-arrow"></i>
-
     </div>
 
-
     <!-- View Website -->
-    <a
-      routerLink="/"
-      class="view-website">
+    <a routerLink="/" class="view-website">
       <i class="bi bi-globe2"></i>
       <span>View Website</span>
     </a>
-
 
     <!-- Logout -->
     <button
       type="button"
       class="logout-button"
       (click)="logout()">
-
       <i class="bi bi-box-arrow-right"></i>
       <span>Logout</span>
-
     </button>
 
   </div>

@@ -1,75 +1,20 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ApiService } from './api.service';
 import { Nurse } from '../../models/nursing';
 
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class NurseService {
-
-  private nurses: Nurse[] = [
-    {
-      id: 1,
-      nurseId: 'N-1001',
-      name: 'Nusrat Jahan',
-      gender: 'Female',
-      phone: '01711111111',
-      email: 'nusrat@hospital.com',
-      department: 'Cardiology',
-      ward: 'General Ward',
-      shift: 'Morning',
-      qualification: 'BSc in Nursing',
-      joiningDate: '2024-01-15',
-      status: 'Active'
-    },
-    {
-      id: 2,
-      nurseId: 'N-1002',
-      name: 'Sadia Ahmed',
-      gender: 'Female',
-      phone: '01822222222',
-      email: 'sadia@hospital.com',
-      department: 'Neurology',
-      ward: 'Private Ward',
-      shift: 'Night',
-      qualification: 'Diploma in Nursing',
-      joiningDate: '2023-08-20',
-      status: 'Active'
-    }
-  ];
-
-  getNurses(): Nurse[] {
-    return this.nurses;
-  }
-
-  getNurseById(id: number): Nurse | undefined {
-    return this.nurses.find(n => n.id === id);
-  }
-
-  addNurse(nurse: Nurse): void {
-    const newId =
-      this.nurses.length > 0
-        ? Math.max(...this.nurses.map(n => n.id)) + 1
-        : 1;
-
-    nurse.id = newId;
-
-    this.nurses.push(nurse);
-  }
-
-  updateNurse(nurse: Nurse): void {
-    const index = this.nurses.findIndex(
-      n => n.id === nurse.id
-    );
-
-    if (index !== -1) {
-      this.nurses[index] = nurse;
-    }
-  }
-
-  deleteNurse(id: number): void {
-    this.nurses = this.nurses.filter(
-      n => n.id !== id
+  private readonly resource = 'nurses';
+  constructor(private readonly api: ApiService) {}
+  getNurses(): Observable<Nurse[]> { return this.api.getAll<Nurse>(this.resource); }
+  getMyProfile(): Observable<Nurse> { return this.api.getResource<Nurse>(`${this.resource}/me`); }
+  getNurseById(id: number): Observable<Nurse> { return this.api.getById<Nurse>(this.resource, id); }
+  addNurse(value: Partial<Nurse>, password: string): Observable<Nurse> {
+    return this.api.create<Nurse, { profile: Partial<Nurse>; password: string }>(
+      this.resource, { profile: value, password }
     );
   }
+  updateNurse(id: number, value: Partial<Nurse>): Observable<Nurse> { return this.api.update<Nurse>(this.resource, id, value); }
+  deleteNurse(id: number): Observable<void> { return this.api.remove(this.resource, id); }
 }

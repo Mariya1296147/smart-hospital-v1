@@ -123,7 +123,7 @@
 
           <div>
             <strong>Address</strong>
-            <span>Dhaka, Bangladesh</span>
+            <span>{{ hospitalSettings.address || 'Address not configured' }}</span>
           </div>
 
         </div>
@@ -138,8 +138,24 @@
           </div>
 
           <div>
-            <strong>Emergency</strong>
-            <span>+880 1712-345678</span>
+            <strong>Hospital emergency number</strong>
+            <span>{{ hospitalSettings.emergencyPhone || 'Not configured' }}</span>
+          </div>
+
+        </div>
+
+
+        <!-- HOSPITAL PHONE -->
+
+        <div class="footer-contact">
+
+          <div class="contact-icon">
+            <i class="bi bi-telephone-fill"></i>
+          </div>
+
+          <div>
+            <strong>Hospital phone</strong>
+            <span>{{ hospitalSettings.phone || 'Not configured' }}</span>
           </div>
 
         </div>
@@ -155,7 +171,7 @@
 
           <div>
             <strong>Email</strong>
-            <span>info&#64;smarthospital.com</span>
+            <span>{{ hospitalSettings.email || 'Not configured' }}</span>
           </div>
 
         </div>

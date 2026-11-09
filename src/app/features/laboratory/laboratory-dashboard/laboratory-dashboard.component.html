@@ -22,6 +22,15 @@
     </div>
   </div>
 
+  <div class="alert alert-info d-flex align-items-center gap-2" role="status" *ngIf="loading">
+    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+    Loading laboratory worklist…
+  </div>
+  <div class="alert alert-danger d-flex align-items-center justify-content-between gap-3" role="alert" *ngIf="errorMessage">
+    <span>{{ errorMessage }}</span>
+    <button type="button" class="btn btn-outline-danger btn-sm flex-shrink-0" (click)="load()" [disabled]="loading">Try again</button>
+  </div>
+
   <!-- Statistics -->
   <div class="stats-grid">
 
@@ -31,8 +40,8 @@
       </div>
       <div>
         <span>Test Requests</span>
-        <h3>42</h3>
-        <small>Today's requests</small>
+        <h3>{{ metric('labTestsToday') }}</h3>
+        <small>From doctor prescriptions</small>
       </div>
     </div>
 
@@ -42,8 +51,8 @@
       </div>
       <div>
         <span>Pending Tests</span>
-        <h3>12</h3>
-        <small>Awaiting processing</small>
+        <h3>{{ metric('pendingLabTests') }}</h3>
+        <small>Awaiting sample collection</small>
       </div>
     </div>
 
@@ -53,8 +62,8 @@
       </div>
       <div>
         <span>Completed Tests</span>
-        <h3>28</h3>
-        <small>Completed today</small>
+        <h3>{{ metric('completedLabTests') }}</h3>
+        <small>Results entered</small>
       </div>
     </div>
 
@@ -64,11 +73,35 @@
       </div>
       <div>
         <span>Reports Ready</span>
-        <h3>18</h3>
-        <small>Ready for review</small>
+        <h3>{{ metric('completedLabTests') }}</h3>
+        <small>Completed test reports</small>
       </div>
     </div>
 
+  </div>
+
+  <div class="status-sections">
+    <section class="dashboard-panel">
+      <div class="panel-header"><div><h4>Pending Tests</h4><p>{{ pendingTests.length }} shown · {{ metric('pendingLabTests') }} total</p></div><a routerLink="/laboratory/pending">Open queue</a></div>
+      <div class="test-list">
+        <div class="test-row" *ngFor="let test of pendingTests"><div class="test-info"><strong>{{ test.patientName }}</strong><span>{{ test.patientCode }} · {{ test.testName }} · {{ test.doctorName }} · {{ test.testDate | date:'mediumDate' }}</span></div><span [class]="statusClass(test.status)">Pending</span></div>
+        <div class="text-muted py-3" *ngIf="pendingTests.length === 0">No pending tests.</div>
+      </div>
+    </section>
+    <section class="dashboard-panel">
+      <div class="panel-header"><div><h4>In Progress</h4><p>{{ inProgressTests.length }} shown · {{ metric('inProgressLabTests') }} total</p></div><a routerLink="/laboratory/in-progress">Open queue</a></div>
+      <div class="test-list">
+        <div class="test-row" *ngFor="let test of inProgressTests"><div class="test-info"><strong>{{ test.patientName }}</strong><span>{{ test.patientCode }} · {{ test.testName }} · {{ test.doctorName }} · {{ test.testDate | date:'mediumDate' }}</span></div><span [class]="statusClass(test.status)">{{ test.status | titlecase }}</span></div>
+        <div class="text-muted py-3" *ngIf="inProgressTests.length === 0">No tests in progress.</div>
+      </div>
+    </section>
+    <section class="dashboard-panel">
+      <div class="panel-header"><div><h4>Completed</h4><p>{{ completedTests.length }} shown · {{ metric('completedLabTests') }} total</p></div><a routerLink="/laboratory/reports">View reports</a></div>
+      <div class="test-list">
+        <div class="test-row" *ngFor="let test of completedTests"><div class="test-info"><strong>{{ test.patientName }}</strong><span>{{ test.patientCode }} · {{ test.testName }} · {{ test.doctorName }} · {{ test.testDate | date:'mediumDate' }}</span></div><span [class]="statusClass(test.status)">Completed</span></div>
+        <div class="text-muted py-3" *ngIf="completedTests.length === 0">No completed tests yet.</div>
+      </div>
+    </section>
   </div>
 
   <!-- Main Content -->
@@ -83,49 +116,25 @@
           <p>Latest laboratory requests</p>
         </div>
 
-        <a routerLink="/laboratory/tests">View All</a>
+        <a routerLink="/laboratory/pending">View All</a>
       </div>
 
       <div class="test-list">
 
-        <div class="test-row">
+        <div class="test-row" *ngFor="let test of tests">
           <div class="test-icon">
             <i class="bi bi-droplet"></i>
           </div>
 
           <div class="test-info">
-            <strong>Sarah Ahmed</strong>
-            <span>CBC · Blood Test</span>
+            <strong>{{ test.patientName || 'Patient' }}</strong>
+            <span>{{ test.testName }} · Rx #{{ test.prescriptionId }}</span>
           </div>
 
-          <span class="status pending">Pending</span>
+          <span [class]="statusClass(test.status)">{{ test.status | titlecase }}</span>
         </div>
 
-        <div class="test-row">
-          <div class="test-icon">
-            <i class="bi bi-heart-pulse"></i>
-          </div>
-
-          <div class="test-info">
-            <strong>Mariya Rahman</strong>
-            <span>Cardiac Enzyme Test</span>
-          </div>
-
-          <span class="status processing">Processing</span>
-        </div>
-
-        <div class="test-row">
-          <div class="test-icon">
-            <i class="bi bi-eyedropper"></i>
-          </div>
-
-          <div class="test-info">
-            <strong>Ahmed Hasan</strong>
-            <span>Blood Glucose Test</span>
-          </div>
-
-          <span class="status completed">Completed</span>
-        </div>
+        <div class="test-row text-muted" *ngIf="tests.length === 0">No laboratory requests found.</div>
 
       </div>
 
@@ -143,24 +152,24 @@
 
       <div class="quick-actions">
 
-        <a routerLink="/laboratory/tests">
+        <a routerLink="/laboratory/pending">
           <i class="bi bi-clipboard2-pulse"></i>
-          <span>Test Requests</span>
+          <span>Pending Tests</span>
         </a>
 
-        <a routerLink="/laboratory/tests">
+        <a routerLink="/laboratory/result-entry">
           <i class="bi bi-file-earmark-medical"></i>
-          <span>Test Results</span>
+          <span>Result Entry</span>
         </a>
 
-        <a routerLink="/laboratory/patients">
-          <i class="bi bi-people"></i>
-          <span>Patients</span>
+        <a routerLink="/laboratory/sample-collection">
+          <i class="bi bi-droplet"></i>
+          <span>Sample Collection</span>
         </a>
 
-        <a routerLink="/laboratory/tests">
-          <i class="bi bi-search"></i>
-          <span>View Tests</span>
+        <a routerLink="/laboratory/reports">
+          <i class="bi bi-file-earmark-medical"></i>
+          <span>Test Reports</span>
         </a>
 
       </div>
@@ -185,33 +194,33 @@
         <i class="bi bi-check-circle"></i>
 
         <div>
-          <strong>Blood Collection</strong>
-          <span>18 samples collected</span>
+          <strong>Pending tests</strong>
+          <span>{{ metric('pendingLabTests') }} tests need sample collection</span>
         </div>
 
-        <span class="work-complete">Completed</span>
+        <a class="work-pending" routerLink="/laboratory/sample-collection">Collect</a>
       </div>
 
       <div class="work-item">
         <i class="bi bi-hourglass-split"></i>
 
         <div>
-          <strong>Sample Processing</strong>
-          <span>12 samples waiting</span>
+          <strong>Test processing</strong>
+          <span>Move collected samples through processing</span>
         </div>
 
-        <span class="work-pending">In Progress</span>
+        <a class="work-pending" routerLink="/laboratory/processing">Open queue</a>
       </div>
 
       <div class="work-item">
         <i class="bi bi-file-earmark-check"></i>
 
         <div>
-          <strong>Report Verification</strong>
-          <span>8 reports awaiting verification</span>
+          <strong>Completed test reports</strong>
+          <span>{{ metric('completedLabTests') }} results ready</span>
         </div>
 
-        <span class="work-pending">Pending</span>
+        <a class="work-complete" routerLink="/laboratory/reports">View reports</a>
       </div>
 
     </div>

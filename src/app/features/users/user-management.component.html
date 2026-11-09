@@ -1,475 +1,305 @@
-<div class="container-fluid py-2">
+<div class="container-fluid py-4">
 
-    <!-- ================= HEADER ================= -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-
+    <!-- PAGE HEADER -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <div>
-            <h2 class="h3 mb-1 fw-bold">User Management</h2>
+            <h3 class="fw-bold mb-1">User Management</h3>
             <p class="text-muted mb-0">
                 Approve staff accounts and manage access roles.
             </p>
         </div>
 
-        <div class="d-flex align-items-center gap-2">
-
-            <span class="badge bg-primary px-3 py-2">
-                {{ users.length }} accounts
-            </span>
-
-            <button
-                *ngIf="!showAddForm"
-                type="button"
-                class="btn btn-primary px-3"
-                (click)="openAddForm()">
-
-                <i class="bi bi-person-plus me-1"></i>
-                Add New User
-
-            </button>
-
-        </div>
+        <button type="button" class="btn btn-primary px-4" (click)="openAddForm()" *ngIf="!showAddForm">
+            <i class="bi bi-person-plus me-2"></i>
+            Add New User
+        </button>
     </div>
 
+    <!-- SUCCESS MESSAGE -->
+    <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-2"></i>
+        {{ successMessage }}
 
-    <!-- ================= ADD NEW USER FORM ================= -->
-    <div *ngIf="showAddForm" class="card border-0 shadow-sm mb-4">
+        <button type="button" class="btn-close" aria-label="Close" (click)="successMessage = ''">
+        </button>
+    </div>
 
-        <div class="card-header bg-primary text-white py-3">
-            <h5 class="mb-0 fw-semibold">
-                <i class="bi bi-person-plus me-2"></i>
-                Add New User
-            </h5>
+    <!-- ERROR MESSAGE -->
+    <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle me-2"></i>
+        {{ errorMessage }}
+
+        <button type="button" class="btn-close" aria-label="Close" (click)="errorMessage = ''">
+        </button>
+    </div>
+
+    <!-- ADD USER FORM -->
+    <div class="card border-0 shadow-sm mb-4" *ngIf="showAddForm">
+
+        <div class="card-header bg-white py-3">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-person-plus fs-4 text-primary"></i>
+                <div>
+                    <h5 class="fw-bold mb-0">Create New User</h5>
+                    <small class="text-muted">
+                        Enter staff information and assign a role.
+                    </small>
+                </div>
+            </div>
         </div>
 
         <div class="card-body p-4">
 
-            <form #userForm="ngForm" (ngSubmit)="createUser()">
+            <form #userForm="ngForm" (ngSubmit)="createUser()" novalidate>
 
                 <div class="row g-3">
 
-                    <!-- NAME -->
+                    <!-- USERNAME -->
                     <div class="col-md-6">
-
-                        <label class="form-label fw-semibold">
-                            Full Name
+                        <label for="username" class="form-label fw-semibold">
+                            Username <span class="text-danger">*</span>
                         </label>
 
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="name"
-                            [(ngModel)]="newUser.userName"
-                            placeholder="Enter full name"
-                            required>
+                        <input id="username" type="text" class="form-control" name="username"
+                            [(ngModel)]="newUser.userName" #usernameModel="ngModel" placeholder="Enter username"
+                            autocomplete="username" required
+                            [class.is-invalid]="usernameModel.invalid && usernameModel.touched">
 
+                        <div class="invalid-feedback" *ngIf="usernameModel.invalid && usernameModel.touched">
+                            Username is required.
+                        </div>
                     </div>
-
 
                     <!-- EMAIL -->
                     <div class="col-md-6">
-
-                        <label class="form-label fw-semibold">
-                            Email Address
+                        <label for="email" class="form-label fw-semibold">
+                            Email Address <span class="text-danger">*</span>
                         </label>
 
-                        <input
-                            type="email"
-                            class="form-control"
-                            name="email"
-                            [(ngModel)]="newUser.email"
-                            placeholder="Enter email address"
-                            required>
+                        <input id="email" type="email" class="form-control" name="email" [(ngModel)]="newUser.email"
+                            #emailModel="ngModel" placeholder="Enter email address" autocomplete="email" required email
+                            [class.is-invalid]="emailModel.invalid && emailModel.touched">
 
+                        <div class="invalid-feedback" *ngIf="emailModel.invalid && emailModel.touched">
+                            Enter a valid email address.
+                        </div>
                     </div>
 
-
-                    <!-- PHONE -->
-                    <!-- <div class="col-md-6">
-
-                        <label class="form-label fw-semibold">
-                            Phone Number
+                    <!-- FIRST NAME -->
+                    <div class="col-md-6">
+                        <label for="firstName" class="form-label fw-semibold">
+                            First Name <span class="text-danger">*</span>
                         </label>
 
-                        <input
-                            type="tel"
-                            class="form-control"
-                            name="phone"
-                            [(ngModel)]="newUser.phone"
-                            placeholder="017XXXXXXXX"
-                            required>
+                        <input id="firstName" type="text" class="form-control" name="firstName"
+                            [(ngModel)]="newUser.userFirstName" #firstNameModel="ngModel" placeholder="Enter first name"
+                            autocomplete="given-name" required
+                            [class.is-invalid]="firstNameModel.invalid && firstNameModel.touched">
 
-                    </div> -->
+                        <div class="invalid-feedback" *ngIf="firstNameModel.invalid && firstNameModel.touched">
+                            First name is required.
+                        </div>
+                    </div>
 
+                    <!-- LAST NAME -->
+                    <div class="col-md-6">
+                        <label for="lastName" class="form-label fw-semibold">
+                            Last Name <span class="text-danger">*</span>
+                        </label>
+
+                        <input id="lastName" type="text" class="form-control" name="lastName"
+                            [(ngModel)]="newUser.userLastName" #lastNameModel="ngModel" placeholder="Enter last name"
+                            autocomplete="family-name" required
+                            [class.is-invalid]="lastNameModel.invalid && lastNameModel.touched">
+
+                        <div class="invalid-feedback" *ngIf="lastNameModel.invalid && lastNameModel.touched">
+                            Last name is required.
+                        </div>
+                    </div>
 
                     <!-- ROLE -->
                     <div class="col-md-6">
-
-                        <label class="form-label fw-semibold">
-                            Position / Role
+                        <label for="role" class="form-label fw-semibold">
+                            Position / Role <span class="text-danger">*</span>
                         </label>
 
-                        <select
-                            class="form-select"
-                            name="role"
-                            [(ngModel)]="newUser.roles"
-                            required>
+                        <select id="role" class="form-select" name="role" [(ngModel)]="selectedRole"
+                            #roleModel="ngModel" required [class.is-invalid]="roleModel.invalid && roleModel.touched">
 
-                            <option value="" disabled>
-                                Select Role
-                            </option>
+                            <option value="" disabled>Select Role</option>
 
-                            <option
-                                *ngFor="let role of roles"
-                                [value]="role">
-
+                            <option *ngFor="let role of roles" [ngValue]="role">
                                 {{ labels[role] }}
-
                             </option>
 
                         </select>
 
+                        <div class="invalid-feedback" *ngIf="roleModel.invalid && roleModel.touched">
+                            Please select a role.
+                        </div>
                     </div>
-
-
-                    <!-- DEPARTMENT -->
-                    <!-- <div class="col-md-6">
-
-                        <label class="form-label fw-semibold">
-                            Department
-                        </label>
-
-                        <select
-                            class="form-select"
-                            name="department"
-                            [(ngModel)]="newUser.department"
-                            required>
-
-                            <option value="" disabled>
-                                Select Department
-                            </option>
-
-                            <option value="Cardiology">Cardiology</option>
-                            <option value="Neurology">Neurology</option>
-                            <option value="General Medicine">General Medicine</option>
-                            <option value="Surgery">Surgery</option>
-                            <option value="Pediatrics">Pediatrics</option>
-                            <option value="Gynecology">Gynecology</option>
-                            <option value="Orthopedics">Orthopedics</option>
-                            <option value="Emergency">Emergency</option>
-                            <option value="Nursing">Nursing</option>
-                            <option value="Laboratory">Laboratory</option>
-                            <option value="Pharmacy">Pharmacy</option>
-                            <option value="Accounts">Accounts</option>
-                            <option value="Reception">Reception</option>
-                            <option value="Administration">Administration</option>
-
-                        </select>
-
-                    </div> -->
-
-
-                    <!-- EDUCATION -->
-                    <!-- <div class="col-md-6">
-
-                        <label class="form-label fw-semibold">
-                            Educational Qualification
-                        </label>
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="education"
-                            [(ngModel)]="newUser.education"
-                            placeholder="e.g. MBBS, BSc in Nursing, B.Pharm"
-                            required>
-
-                    </div> -->
-
-
-                    <!-- EXPERIENCE -->
-                    <!-- <div class="col-md-6">
-
-                        <label class="form-label fw-semibold">
-                            Work Experience
-                        </label>
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="experience"
-                            [(ngModel)]="newUser.experience"
-                            placeholder="e.g. 5 Years"
-                            required>
-
-                    </div>
- -->
-
-                    <!-- NID -->
-                    <!-- <div class="col-md-6">
-
-                        <label class="form-label fw-semibold">
-                            NID Number
-                        </label>
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            name="nid"
-                            [(ngModel)]="newUser.nid"
-                            placeholder="Enter NID number"
-                            required>
-
-                    </div> -->
-
 
                     <!-- PASSWORD -->
                     <div class="col-md-6">
-
-                        <label class="form-label fw-semibold">
-                            Password
+                        <label for="password" class="form-label fw-semibold">
+                            Password <span class="text-danger">*</span>
                         </label>
 
-                        <input
-                            type="password"
-                            class="form-control"
-                            name="password"
-                            [(ngModel)]="newUser.password"
-                            placeholder="Create password"
-                            required>
+                        <input id="password" type="password" class="form-control" name="password"
+                            [(ngModel)]="newUser.password" #passwordModel="ngModel" placeholder="Minimum 8 characters"
+                            autocomplete="new-password" minlength="8" required
+                            [class.is-invalid]="passwordModel.invalid && passwordModel.touched">
 
+                        <div class="invalid-feedback" *ngIf="passwordModel.invalid && passwordModel.touched">
+                            Password is required and must contain at least 8 characters.
+                        </div>
                     </div>
 
                 </div>
 
+                <!-- FORM VALIDATION SUMMARY -->
+                <div *ngIf="userForm.invalid && userForm.submitted" class="alert alert-warning mt-4 mb-0">
+                    Please complete all required fields correctly.
+                </div>
 
                 <!-- FORM BUTTONS -->
-                <div class="d-flex justify-content-end gap-2 mt-4">
+                <div class="d-flex flex-wrap justify-content-end gap-2 mt-4">
 
-                    <button
-                        type="button"
-                        class="btn btn-outline-secondary px-4"
+                    <button type="button" class="btn btn-outline-secondary px-4" [disabled]="isSaving"
                         (click)="closeAddForm()">
-
                         Cancel
-
                     </button>
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary px-4"
-                        [disabled]="userForm.invalid">
+                    <button type="submit" class="btn btn-primary px-4" [disabled]="isSaving">
 
-                        <i class="bi bi-person-check me-1"></i>
-                        Create User
+                        <span *ngIf="isSaving" class="spinner-border spinner-border-sm me-2" aria-hidden="true">
+                        </span>
 
+                        <i *ngIf="!isSaving" class="bi bi-person-check me-1">
+                        </i>
+
+                        {{ isSaving ? 'Creating...' : 'Create User' }}
                     </button>
+
+
 
                 </div>
 
             </form>
 
         </div>
-
     </div>
 
-
-    <!-- ================= STAFF ACCOUNTS ================= -->
+    <!-- USER LIST -->
     <div class="card border-0 shadow-sm">
 
-        <!-- CARD HEADER -->
-        <div class="card-header bg-white border-bottom py-3 px-4">
+        <div class="card-header bg-white py-3">
+            <div class="d-flex justify-content-between align-items-center gap-2">
+                <h5 class="fw-bold mb-0">Staff Accounts</h5>
 
-            <div class="d-flex align-items-center">
-
-                <div
-                    class="rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center me-3"
-                    style="width: 40px; height: 40px;">
-
-                    <i class="bi bi-people fs-5"></i>
-
-                </div>
-
-                <div>
-
-                    <h5 class="mb-0 fw-semibold">
-                        Staff Accounts
-                    </h5>
-
-                    <small class="text-muted">
-                        Manage hospital staff access
-                    </small>
-
-                </div>
-
+                <button type="button" class="btn btn-outline-primary btn-sm" [disabled]="isLoading" (click)="refresh()">
+                    <i class="bi bi-arrow-clockwise me-1"></i>
+                    {{ isLoading ? 'Loading...' : 'Refresh' }}
+                </button>
             </div>
-
         </div>
 
-
-        <!-- TABLE -->
         <div class="table-responsive">
 
             <table class="table table-hover align-middle mb-0">
 
                 <thead class="table-light">
-
                     <tr>
-
-                        <th class="ps-4 py-3 text-nowrap">
-                            Staff Member
-                        </th>
-
-                        <th class="py-3 text-nowrap">
-                            Role
-                        </th>
-
-                        <th class="py-3 text-nowrap">
-                            Status
-                        </th>
-
-                        <th class="py-3 text-nowrap">
-                            Created
-                        </th>
-
-                        <th class="py-3 text-center text-nowrap">
-                            Actions
-                        </th>
-
+                        <th>Staff Member</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Created Date</th>
+                        <th class="text-end">Actions</th>
                     </tr>
-
                 </thead>
-
 
                 <tbody>
 
+                    <tr *ngIf="isLoading">
+                        <td colspan="5" class="text-center py-5">
+                            <span class="spinner-border spinner-border-sm me-2"></span>
+                            Loading staff accounts...
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="!isLoading && users.length === 0">
+                        <td colspan="5" class="text-center text-muted py-5">
+                            <i class="bi bi-people fs-2 d-block mb-2"></i>
+                            No staff accounts found.
+                        </td>
+                    </tr>
+
                     <tr *ngFor="let user of users">
 
-                        <!-- STAFF MEMBER -->
-                        <td class="ps-4 py-3">
-
-                            <div class="d-flex align-items-center">
-
-                                <div
-                                    class="rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center me-3 flex-shrink-0"
-                                    style="width: 42px; height: 42px;">
-
-                                    <i class="bi bi-person-fill fs-5"></i>
-
-                                </div>
-
-                                <div>
-
-                                    <div class="fw-semibold text-dark">
-                                        {{ user.userName }}
-                                    </div>
-
-                                    <small class="text-muted">
-                                        {{ user.email }}
-                                    </small>
-
-                                </div>
-
+                        <td>
+                            <div class="fw-semibold">
+                                {{ user.userFirstName }} {{ user.userLastName }}
                             </div>
 
+                            <small class="text-muted">
+                                &#64;{{ user.userName }}
+                            </small>
+
+                            <div class="small text-muted">
+                                {{ user.email }}
+                            </div>
                         </td>
 
+                        <td>
+                            <ng-container *ngFor="let role of user.roles; let last = last">
+                                <span class="badge bg-light text-dark border me-1 mb-1">
+                                    {{ labels[role] || role }}
+                                </span>
+                            </ng-container>
 
-                        <!-- ROLE -->
-                        <td class="py-3">
-
-                            <select
-                                class="form-select form-select-sm"
-                                [ngModel]="user.roles[0]"
-                                (ngModelChange)="update(user.userName, { roles: [$event] })"
-                                [disabled]="user.roles[0] === 'ADMIN'"
-                                style="width: 150px;">
-
-                                <option
-                                    *ngFor="let role of roles"
-                                    [value]="role">
-
-                                    {{ labels[role] }}
-
-                                </option>
-
-                            </select>
-
+                            <span *ngIf="!user.roles || user.roles.length === 0" class="text-muted">
+                                No role assigned
+                            </span>
                         </td>
 
-
-                        <!-- STATUS -->
-                        <td class="py-3">
-
-                            <!-- <span
-                                class="badge rounded-pill px-3 py-2"
-                                [class]="statusClass(user.status)">
-
-                                {{ user.status | titlecase }}
-
-                            </span> -->
-
+                        <td>
+                            <span class="badge" [ngClass]="user.enabled ? 'bg-success' : 'bg-secondary'">
+                                {{ user.enabled ? 'Enabled' : 'Disabled' }}
+                            </span>
                         </td>
 
-
-                        <!-- CREATED -->
-                        <td class="py-3 text-muted text-nowrap">
-
-                            {{ user.dateCreated| date:'mediumDate' }}
-
+                        <td>
+                            {{ user.dateCreated ? (user.dateCreated | date:'mediumDate') : '—' }}
                         </td>
 
+                        <td class="text-end text-nowrap">
 
-                        <!-- ACTIONS -->
-                        <td class="py-3 text-center text-nowrap">
+                            <button type="button" class="btn btn-sm me-1"
+                                [ngClass]="user.enabled ? 'btn-outline-warning' : 'btn-outline-success'"
+                                [disabled]="user.roles.includes('ADMIN')" (click)="toggleUserStatus(user)"
+                                [title]="user.enabled ? 'Disable user' : 'Enable user'">
 
-                            APPROVE
-                            <!-- <button
-                                *ngIf="user.status === 'pending'"
-                                type="button"
-                                class="btn btn-sm btn-success me-1"
-                                (click)="update(user.userName, { status: 'approved' })">
+                                <i [class]="user.enabled ? 'bi bi-person-dash' : 'bi bi-person-check'">
+                                </i>
 
-                                <i class="bi bi-check-circle me-1"></i>
-                                Approve
+                                {{ user.enabled ? 'Disable' : 'Enable' }}
+                            </button>
 
-                            </button> -->
+                            <button type="button" class="btn btn-outline-danger btn-sm"
+                                [disabled]="user.roles.includes('ADMIN')" (click)="deleteUser(user.userName)"
+                                title="Delete user">
 
-
-                            <!-- ACTIVATE -->
-                            <!-- <button
-                                *ngIf="user.roles[0] !== 'ADMIN' && user.status === 'inactive'"
-                                type="button"
-                                class="btn btn-sm btn-outline-success me-1"
-                                (click)="update(user.userName, { status: 'approved' })">
-
-                                <i class="bi bi-person-check me-1"></i>
-                                Activate
-
-                            </button> -->
-
-
-                            <!-- DEACTIVATE -->
-                            <!-- <button
-                                *ngIf="user.roles[0] !== 'ADMIN' && user.status !== 'inactive'"
-                                type="button"
-                                class="btn btn-sm btn-outline-danger"
-                                (click)="update(user.userName, { status: 'inactive' })">
-
-                                <i class="bi bi-person-x me-1"></i>
-                                Deactivate
-
-                            </button> -->
+                                <i class="bi bi-trash"></i>
+                            </button>
 
                         </td>
 
                     </tr>
 
                 </tbody>
-
             </table>
 
         </div>
-
     </div>
 
 </div>

@@ -5,6 +5,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { DischargeService } from '../../../core/services/discharge.service';
 import { Discharge } from '../../../models/discharge';
+import { PatientService } from '../../../core/services/patient.service';
+import { DoctorService } from '../../../core/services/doctor.service';
+import { DepartmentService } from '../../../core/services/department.service';
+import { AdmissionService } from '../../../core/services/admission.service';
+import { Patient } from '../../../models/patient';
+import { Admission } from '../../../models/admission';
 
 @Component({
   selector: 'app-discharge-form',
@@ -37,31 +43,10 @@ export class DischargeFormComponent implements OnInit {
     status: 'Discharged'
   };
 
-  patients = [
-    { id: 'P-1001', name: 'Mariya Rahman' },
-    { id: 'P-1002', name: 'Sarah Ahmed' },
-    { id: 'P-1003', name: 'Karim Hasan' },
-    { id: 'P-1004', name: 'Nusrat Akter' },
-    { id: 'P-1005', name: 'Imran Hossain' }
-  ];
-
-  doctors = [
-    'Dr. Ahmed Rahman',
-    'Dr. Rahim Khan',
-    'Dr. Nusrat Jahan',
-    'Dr. Tanvir Hasan',
-    'Dr. Maria Akter'
-  ];
-
-  departments = [
-    'Cardiology',
-    'Neurology',
-    'Pediatrics',
-    'Orthopedics',
-    'Dermatology',
-    'Medicine',
-    'Surgery'
-  ];
+  patients: Patient[] = [];
+  doctors: string[] = [];
+  departments: string[] = [];
+  activeAdmissions: Admission[] = [];
 
   dischargeTypes = [
     'Normal',
@@ -72,11 +57,22 @@ export class DischargeFormComponent implements OnInit {
 
   constructor(
     private dischargeService: DischargeService,
+    private patientService: PatientService,
+    private doctorService: DoctorService,
+    private departmentService: DepartmentService,
+    private admissionService: AdmissionService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.patientService.getPatients().subscribe({ next: items => this.patients = items ?? [], error: error => console.error('Patients failed to load', error) });
+    this.doctorService.getDoctors().subscribe({ next: items => this.doctors = (items ?? []).map(item => item.name), error: error => console.error('Doctors failed to load', error) });
+    this.departmentService.getAll().subscribe({ next: items => this.departments = (items ?? []).map(item => item.departmentName), error: error => console.error('Departments failed to load', error) });
+    this.admissionService.getAdmissions().subscribe({
+      next: items => this.activeAdmissions = (items ?? []).filter(item => ['ADMITTED', 'ACTIVE', 'IN_PROGRESS'].includes(String(item.status).toUpperCase())),
+      error: error => console.error('Admissions failed to load', error)
+    });
 
     const id = this.route.snapshot.paramMap.get('id');
 
@@ -84,35 +80,35 @@ export class DischargeFormComponent implements OnInit {
       this.isEditMode = true;
       this.dischargeId = Number(id);
 
-      const existingDischarge =
-        this.dischargeService.getDischargeById(this.dischargeId);
-
-      if (existingDischarge) {
-        this.discharge = { ...existingDischarge };
-      }
+      this.dischargeService.getDischargeById(this.dischargeId).subscribe({
+        next: existing => this.discharge = { ...existing },
+        error: error => console.error('ছাড়পত্রের তথ্য লোড করা যায়নি', error)
+      });
     } else {
       this.generateDischargeId();
     }
   }
 
   generateDischargeId(): void {
-    const discharges = this.dischargeService.getDischarges();
-
-    const nextNumber = discharges.length > 0
-      ? Math.max(...discharges.map(d => d.id)) + 1000
-      : 1001;
-
-    this.discharge.dischargeId = `DIS-${nextNumber}`;
+    this.discharge.dischargeId = `DIS-${Date.now()}`;
   }
 
   onPatientChange(): void {
 
     const patient = this.patients.find(
-      p => p.id === this.discharge.patientId
+      p => String(p.id) === this.discharge.patientId
     );
 
     if (patient) {
       this.discharge.patientName = patient.name;
+      const admission = this.activeAdmissions.find(item => item.patientId === patient.id);
+      if (admission) {
+        this.discharge.admissionDate = admission.admissionDate;
+        this.discharge.room = admission.ward;
+        this.discharge.bed = admission.bed;
+        this.discharge.doctorName = admission.doctor;
+        this.discharge.department = admission.department;
+      }
     }
   }
 
@@ -121,32 +117,32 @@ export class DischargeFormComponent implements OnInit {
     if (
       !this.discharge.patientName ||
       !this.discharge.patientId ||
-      !this.discharge.doctorName ||
-      !this.discharge.department ||
-      !this.discharge.admissionDate ||
       !this.discharge.dischargeDate ||
-      !this.discharge.room ||
-      !this.discharge.bed ||
       !this.discharge.diagnosis
     ) {
       alert('Please fill in all required fields.');
       return;
     }
+    if (!this.activeAdmissions.some(item => item.patientId === Number(this.discharge.patientId))) {
+      alert('Choose a patient with an active admission before discharging.');
+      return;
+    }
 
     if (this.isEditMode) {
 
-      this.dischargeService.updateDischarge(this.discharge);
-
-      alert('Discharge record updated successfully!');
+      this.dischargeService.updateDischarge(this.dischargeId!, this.discharge).subscribe({
+        next: () => { alert('ছাড়পত্র হালনাগাদ হয়েছে।'); this.router.navigate(['/admin/discharge']); },
+        error: error => console.error('ছাড়পত্র হালনাগাদ ব্যর্থ', error)
+      });
 
     } else {
 
-      this.dischargeService.addDischarge(this.discharge);
-
-      alert('Discharge record added successfully!');
+      this.dischargeService.addDischarge(this.discharge).subscribe({
+        next: () => { alert('ছাড়পত্র সংরক্ষিত হয়েছে।'); this.router.navigate(['/admin/discharge']); },
+        error: error => console.error('ছাড়পত্র সংরক্ষণ ব্যর্থ', error)
+      });
     }
 
-    this.router.navigate(['/admin/discharge']);
   }
 
   cancel(): void {

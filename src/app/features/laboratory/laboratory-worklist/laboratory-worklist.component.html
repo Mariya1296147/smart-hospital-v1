@@ -1,0 +1,92 @@
+<div class="lab-workspace">
+  <header class="worklist-header">
+    <div>
+      <span class="eyebrow"><i class="bi bi-eyedropper me-2"></i>LABORATORY WORKSPACE</span>
+      <h1>{{ title }}</h1>
+      <p>{{ subtitle }}</p>
+    </div>
+    <div class="paid-only" *ngIf="!isDoctor"><i class="bi bi-link-45deg"></i><span>Prescription-linked tests</span></div>
+  </header>
+
+  <nav class="workflow-nav" aria-label="Laboratory workflow" *ngIf="!isDoctor">
+    <a routerLink="/laboratory/pending" routerLinkActive="active"><span>1</span>Pending Tests</a>
+    <a routerLink="/laboratory/in-progress" routerLinkActive="active"><span>2</span>In Progress</a>
+    <a routerLink="/laboratory/reports" routerLinkActive="active"><span>3</span>Completed Reports</a>
+    <a routerLink="/laboratory/sample-collection" routerLinkActive="active"><span><i class="bi bi-droplet"></i></span>Sample Collection</a>
+    <a routerLink="/laboratory/processing" routerLinkActive="active"><span><i class="bi bi-gear"></i></span>Processing</a>
+    <a routerLink="/laboratory/result-entry" routerLinkActive="active"><span><i class="bi bi-pencil"></i></span>Result Entry</a>
+  </nav>
+
+  <div class="alert alert-danger d-flex align-items-center justify-content-between gap-3" role="alert" *ngIf="errorMessage">
+    <span>{{ errorMessage }}</span>
+    <button type="button" class="btn btn-outline-danger btn-sm flex-shrink-0" (click)="load()" [disabled]="loading">Retry</button>
+  </div>
+  <div class="alert alert-success" *ngIf="successMessage">{{ successMessage }}</div>
+
+  <div class="loading-state" *ngIf="loading"><span class="spinner-border spinner-border-sm me-2"></span>Loading prescribed tests…</div>
+
+  <ng-container *ngIf="!loading">
+    <section class="empty-state" *ngIf="!errorMessage && groups.length === 0">
+      <span class="empty-icon"><i class="bi bi-clipboard2-pulse"></i></span>
+      <h2>{{ view === 'REPORTS' ? 'No completed reports yet' : 'No tests in this step' }}</h2>
+      <p>Prescribed tests appear here as they move through the laboratory workflow. Billing status is shown from Accounts when available.</p>
+    </section>
+
+    <section class="prescription-card" *ngFor="let group of groups">
+      <header class="prescription-header">
+        <div class="patient-block">
+          <span class="patient-avatar"><i class="bi bi-person"></i></span>
+          <div><small>PATIENT</small><h2>{{ group.patientName }}</h2><span>{{ group.patientCode }}<ng-container *ngIf="group.patientPhone"> · {{ group.patientPhone }}</ng-container></span></div>
+        </div>
+        <div class="rx-meta">
+          <div><small>PRESCRIPTION</small><strong>#{{ group.prescriptionId }}</strong></div>
+          <div><small>ORDER DATE</small><strong>{{ group.tests[0].testDate | date:'mediumDate' }}</strong></div>
+          <div *ngIf="group.doctorName"><small>ORDERED BY</small><strong>{{ group.doctorName }}</strong></div>
+        </div>
+      </header>
+      <div class="context-row" *ngIf="group.departmentName || group.diagnosis">
+        <span *ngIf="group.departmentName"><i class="bi bi-hospital me-1"></i>{{ group.departmentName }}</span>
+        <span *ngIf="group.diagnosis"><i class="bi bi-clipboard2-pulse me-1"></i>{{ group.diagnosis }}</span>
+      </div>
+
+      <div class="test-list">
+        <article class="test-item" *ngFor="let test of group.tests">
+          <div class="test-main">
+            <span class="test-mark"><i class="bi bi-eyedropper"></i></span>
+            <div class="test-name"><small>{{ test.testCode }}</small><strong>{{ test.testName }}</strong><span>Test date {{ test.testDate | date:'mediumDate' }}</span><span *ngIf="test.sampleDate"><i class="bi bi-calendar-check me-1"></i>Sample collected {{ test.sampleDate | date:'mediumDate' }}</span><span class="billing-state">{{ test.invoiceId ? 'Invoice ' + test.invoiceId + ' · ' + (test.billingStatus || 'Billing linked') : 'Billing pending in Accounts' }}</span></div>
+            <span class="status-pill" [ngClass]="'status-' + test.status.toLowerCase()">{{ statusLabel(test.status) }}</span>
+          </div>
+
+          <div class="result-entry" *ngIf="showResultAction && test.status === 'PROCESSING'">
+            <label [for]="'result-' + test.id">Individual test result</label>
+            <textarea class="form-control" rows="3" [id]="'result-' + test.id" [name]="'result-' + test.id" [(ngModel)]="resultDrafts[test.id]" placeholder="Enter findings, measurements and units for this test"></textarea>
+            <label class="mt-2" [for]="'remarks-' + test.id">Remarks</label>
+            <textarea class="form-control" rows="2" [id]="'remarks-' + test.id" [name]="'remarks-' + test.id" [(ngModel)]="remarksDrafts[test.id]" placeholder="Interpretation, limitations, or follow-up notes (optional)"></textarea>
+            <small>Results and remarks are saved to this prescribed test. Other tests under the same prescription remain separate.</small>
+          </div>
+
+          <div class="completed-result" *ngIf="view === 'REPORTS'">
+            <small>RESULT <span *ngIf="test.resultEnteredAt">· {{ test.resultEnteredAt | date:'medium' }}</span></small>
+            <p>{{ test.result || 'No result recorded' }}</p>
+            <small *ngIf="test.remarks">REMARKS</small><p *ngIf="test.remarks">{{ test.remarks }}</p>
+          </div>
+
+          <footer class="test-actions" *ngIf="view !== 'REPORTS'">
+            <span class="workflow-hint" *ngIf="showSampleCollectionAction && test.status === 'PENDING'">Confirm that the patient's sample has been collected.</span>
+            <span class="workflow-hint" *ngIf="showProcessingAction && test.status === 'SAMPLE_COLLECTED'">Sample recorded {{ test.sampleDate | date:'mediumDate' }}. Begin laboratory processing.</span>
+            <span class="workflow-hint" *ngIf="showResultAction && test.status === 'PROCESSING'">Enter and verify the result before completing this test.</span>
+            <button type="button" class="btn btn-primary" *ngIf="canManageTests && showSampleCollectionAction && test.status === 'PENDING'" [disabled]="busyId === test.id" (click)="collectSample(test)">
+              <span *ngIf="busyId === test.id" class="spinner-border spinner-border-sm me-2"></span><i class="bi bi-droplet me-2" *ngIf="busyId !== test.id"></i>Mark sample collected
+            </button>
+            <button type="button" class="btn btn-primary" *ngIf="canManageTests && showProcessingAction && test.status === 'SAMPLE_COLLECTED'" [disabled]="busyId === test.id" (click)="startProcessing(test)">
+              <span *ngIf="busyId === test.id" class="spinner-border spinner-border-sm me-2"></span><i class="bi bi-gear me-2" *ngIf="busyId !== test.id"></i>Start processing
+            </button>
+            <button type="button" class="btn btn-primary" *ngIf="canManageTests && showResultAction && test.status === 'PROCESSING'" [disabled]="busyId === test.id" (click)="saveResult(test)">
+              <span *ngIf="busyId === test.id" class="spinner-border spinner-border-sm me-2"></span><i class="bi bi-check2-circle me-2" *ngIf="busyId !== test.id"></i>Save result &amp; complete
+            </button>
+          </footer>
+        </article>
+      </div>
+    </section>
+  </ng-container>
+</div>

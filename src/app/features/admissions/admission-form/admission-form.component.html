@@ -2,12 +2,13 @@
 
   <div class="mb-4">
     <h3 class="fw-bold">
-      {{ isEdit ? 'Edit Admission' : 'Add Admission' }}
+      {{ isAccountsStaff && admission.status.toUpperCase() === 'PENDING' ? 'Confirm Admission Request' : isEdit ? 'Edit Admission' : 'Add Admission' }}
     </h3>
 
     <p class="text-muted">
-      {{ isEdit
-        ? 'Update admission information'
+      {{ isAccountsStaff && admission.status.toUpperCase() === 'PENDING'
+        ? 'Review the patient details, assign an available ward and bed or cabin, then confirm.'
+        : isEdit ? 'Update admission information'
         : 'Create a new patient admission'
       }}
     </p>
@@ -28,17 +29,15 @@
               class="form-control"
               name="admissionId"
               [(ngModel)]="admission.admissionId"
-              required>
+              readonly>
           </div>
 
           <div class="col-md-6">
             <label class="form-label">Patient Name</label>
-            <input
-              type="text"
-              class="form-control"
-              name="patientName"
-              [(ngModel)]="admission.patientName"
-              required>
+            <select class="form-select" name="patientId" [(ngModel)]="admission.patientId" (ngModelChange)="onPatientChange()" required [disabled]="isAccountsStaff">
+              <option [ngValue]="undefined">Select Patient</option>
+              <option *ngFor="let patient of patients" [ngValue]="patient.id">{{ patient.name }} · {{ patient.patientId }}</option>
+            </select>
           </div>
 
           <div class="col-md-6">
@@ -46,27 +45,22 @@
             <select
               class="form-select"
               name="department"
-              [(ngModel)]="admission.department"
+              [(ngModel)]="admission.departmentId"
+              [disabled]="isAccountsStaff"
               required>
 
-              <option value="">Select Department</option>
-              <option>Cardiology</option>
-              <option>Neurology</option>
-              <option>Orthopedics</option>
-              <option>Medicine</option>
-              <option>Surgery</option>
+              <option [ngValue]="undefined">Select Department</option>
+              <option *ngFor="let department of departments" [ngValue]="department.id">{{ department.departmentName }}</option>
 
             </select>
           </div>
 
           <div class="col-md-6">
             <label class="form-label">Doctor</label>
-            <input
-              type="text"
-              class="form-control"
-              name="doctor"
-              [(ngModel)]="admission.doctor"
-              required>
+            <select class="form-select" name="doctorId" [(ngModel)]="admission.doctorId" (ngModelChange)="onDoctorChange()" required [disabled]="isAccountsStaff">
+              <option [ngValue]="undefined">Select Doctor</option>
+              <option *ngFor="let doctor of doctors" [ngValue]="doctor.id">{{ doctor.name }}</option>
+            </select>
           </div>
 
           <div class="col-md-6">
@@ -76,7 +70,7 @@
               class="form-control"
               name="admissionDate"
               [(ngModel)]="admission.admissionDate"
-              required>
+              [required]="admission.status.toUpperCase() === 'ADMITTED'">
           </div>
 
           <div class="col-md-6">
@@ -84,38 +78,47 @@
             <select
               class="form-select"
               name="ward"
-              [(ngModel)]="admission.ward">
+              [(ngModel)]="admission.wardId"
+              [required]="admission.status.toUpperCase() === 'ADMITTED'"
+              [disabled]="loadingWards"
+              (ngModelChange)="onWardChange($event)">
 
-              <option value="">Select Ward</option>
-              <option>General Ward</option>
-              <option>Private Ward</option>
-              <option>ICU</option>
-              <option>CCU</option>
+              <option [ngValue]="undefined">{{ loadingWards ? 'Loading wards…' : 'Select Ward' }}</option>
+              <option *ngFor="let ward of wards" [ngValue]="ward.id">{{ ward.wardName }}</option>
 
             </select>
+            <small class="text-muted" *ngIf="!loadingWards && wards.length === 0">No wards currently have an available bed or cabin.</small>
           </div>
 
           <div class="col-md-6">
-            <label class="form-label">Bed Number</label>
-            <input
-              type="text"
-              class="form-control"
-              name="bed"
-              [(ngModel)]="admission.bed">
+            <label class="form-label">Bed / Cabin</label>
+            <select class="form-select" name="bedId" [(ngModel)]="admission.bedId"
+              [required]="admission.status.toUpperCase() === 'ADMITTED'" [disabled]="!admission.wardId || loadingBeds">
+              <option [ngValue]="undefined">{{ loadingBeds ? 'Loading beds and cabins…' : 'Select an available bed or cabin' }}</option>
+              <option *ngFor="let bed of availableBeds" [ngValue]="bed.id">{{ bed.bedNumber }}{{ bed.bedType ? ' · ' + bed.bedType : '' }}</option>
+            </select>
+            <small class="text-muted" *ngIf="admission.wardId && !loadingBeds && availableBeds.length === 0">No available beds or cabins in this ward.</small>
           </div>
 
           <div class="col-md-6">
             <label class="form-label">Status</label>
+            <select *ngIf="isAccountsStaff; else standardStatus"
+              class="form-select" name="status" [(ngModel)]="admission.status">
+              <option value="PENDING">Pending</option>
+              <option value="ADMITTED">Admitted</option>
+            </select>
+            <ng-template #standardStatus>
             <select
               class="form-select"
               name="status"
               [(ngModel)]="admission.status">
 
-              <option>Admitted</option>
-              <option>Discharged</option>
-              <option>Transferred</option>
+              <option value="ADMITTED">Admitted</option>
+              <option value="DISCHARGED">Discharged</option>
+              <option value="TRANSFERRED">Transferred</option>
 
             </select>
+            </ng-template>
           </div>
 
           <div class="col-12">
@@ -124,23 +127,25 @@
               class="form-control"
               rows="4"
               name="reason"
-              [(ngModel)]="admission.reason">
+              [(ngModel)]="admission.reason" [readonly]="isAccountsStaff">
             </textarea>
           </div>
 
         </div>
 
+        <div class="alert alert-danger mt-3 mb-0" *ngIf="facilityError">{{ facilityError }}</div>
+
         <div class="mt-4 d-flex gap-2">
 
           <button
             type="submit"
-            class="btn btn-primary">
+            class="btn btn-primary" [disabled]="loading">
             <i class="bi bi-check-lg me-2"></i>
-            {{ isEdit ? 'Update Admission' : 'Save Admission' }}
+            {{ isAccountsStaff && admission.status.toUpperCase() === 'PENDING' ? 'Confirm Admission' : isEdit ? 'Update Admission' : 'Save Admission' }}
           </button>
 
           <a
-            routerLink="/admin/admissions"
+              [routerLink]="basePath"
             class="btn btn-secondary">
             Cancel
           </a>

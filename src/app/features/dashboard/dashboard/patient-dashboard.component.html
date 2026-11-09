@@ -1,0 +1,262 @@
+<main class="patient-dashboard container py-4">
+  <header class="mb-4">
+    <p class="text-primary mb-1">Patient portal</p>
+    <h1 class="h3">Welcome{{ patient?.firstName ? ', ' + patient?.firstName : '' }}</h1>
+    <p class="text-muted mb-0">Your appointments, care records, test results, and bills.</p>
+  </header>
+
+  <div class="alert alert-info" *ngIf="!loading && !patient">
+    No patient profile is linked to this login. Please contact the hospital reception desk.
+  </div>
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-lg-3">
+      <div class="metric"><span>Appointments</span><strong>{{ metric('totalAppointments') }}</strong></div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="metric"><span>Prescriptions</span><strong>{{ metric('totalPrescriptions') }}</strong></div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="metric"><span>Test results</span><strong>{{ metric('totalLabTests') }}</strong></div>
+    </div>
+    <div class="col-6 col-lg-3">
+      <div class="metric"><span>Unpaid bills</span><strong>{{ metric('unpaidInvoices') }}</strong></div>
+    </div>
+  </div>
+
+  <section class="card mb-4" *ngIf="patient">
+    <div class="card-body">
+      <h2 class="h5">My profile</h2>
+      <div class="row g-2">
+        <div class="col-md-4"><span class="text-muted">Patient ID</span>
+          <div>{{ patient.patientId }}</div>
+        </div>
+        <div class="col-md-4"><span class="text-muted">Email</span>
+          <div>{{ patient.email }}</div>
+        </div>
+        <div class="col-md-4"><span class="text-muted">Phone</span>
+          <div>{{ patient.phone || '—' }}</div>
+        </div>
+        <div class="col-md-4"><span class="text-muted">Blood group</span>
+          <div>{{ patient.bloodGroup || '—' }}</div>
+        </div>
+        <div class="col-md-8"><span class="text-muted">Allergies</span>
+          <div>{{ patient.allergies || 'None recorded' }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card mb-4">
+    <div class="card-body">
+      <h2 class="h5">My appointments</h2>
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th> Time</th>
+              <th>Doctor</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of appointments">
+              <td>{{ item.appointmentDate | date:'mediumDate' }}</td>
+              <td>{{ item.appointmentTime || '—' }}</td>
+              <td>{{ item.doctorName || '—' }}</td>
+              <td>{{ item.status }}</td>
+            </tr>
+            <tr *ngIf="!appointments.length">
+              <td colspan="4" class="text-muted">No appointments found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="col-lg-6">
+    <div class="card h-100">
+      <div class="card-body">
+
+        <h2 class="h5">Prescriptions</h2>
+
+        <div *ngFor="let item of prescriptions" class="mb-3">
+
+          <div class="border rounded p-3">
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <strong>Prescription #{{ item.id }}</strong>
+              <span class="small text-muted">
+                {{ item.date | date:'mediumDate' }}
+              </span>
+            </div>
+
+            <div class="small text-muted mb-2">
+              Doctor: {{ item.doctorName || '—' }}
+            </div>
+
+            <div class="mb-2" *ngIf="item.diagnosis">
+              <strong>Diagnosis:</strong>
+              {{ item.diagnosis }}
+            </div>
+
+            <div class="mt-2">
+              <strong>Medicines:</strong>
+
+              <div class="ps-3 mt-2" *ngFor="let medicine of item.medicines">
+                <div>
+                  <strong>{{ medicine.medicineName }}</strong>
+                </div>
+
+                <div class="small text-muted">
+                  Dosage: {{ medicine.dosage || '—' }}
+                  · Frequency: {{ medicine.frequency || '—' }}
+                </div>
+
+                <div class="small text-muted">
+                  Duration: {{ medicine.duration || '—' }}
+                </div>
+
+                <div class="small text-muted" *ngIf="medicine.instruction">
+                  Instruction: {{ medicine.instruction }}
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-2" *ngIf="item.advice">
+              <strong>Advice:</strong>
+              {{ item.advice }}
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="text-muted" *ngIf="!prescriptions.length">
+          No prescriptions found.
+        </div>
+
+      </div>
+    </div>
+  </section>up list-group-flush"><li class="list-group-item px-0" *ngFor="let item of tests"><strong>{{ item.testName
+      }}</strong><span class="badge text-bg-light ms-2">{{ item.status }}</span>
+    <div class="small text-muted">{{ item.sampleDate | date:'mediumDate' }}</div>
+    <div>{{ item.result || 'Result not available yet' }}</div>
+  </li>
+  <li class="list-group-item px-0 text-muted" *ngIf="!tests.length">No lab tests found.</li>
+
+
+
+  <section class="card mt-4">
+    <div class="card-body">
+      <h2 class="h5">Billing</h2>
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th>Invoice</th>
+              <th>Date</th>
+              <th>Service</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of bills">
+              <td>{{ item.invoiceId }}</td>
+              <td>{{ item.invoiceDate | date:'mediumDate' }}</td>
+              <td>{{ item.serviceName }}</td>
+              <td>{{ item.totalAmount | currency:'BDT':'symbol-narrow' }}</td>
+              <td>{{ item.paymentStatus }}</td>
+            </tr>
+            <tr *ngIf="!bills.length">
+              <td colspan="5" class="text-muted">No bills found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <div class="row g-4 mt-1">
+    <section class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <h2 class="h5">Admissions</h2>
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Ward / bed</th>
+                  <th>Doctor</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of admissions">
+                  <td>{{ item.admissionDate | date:'mediumDate' }}</td>
+                  <td>{{ item.ward }} / {{ item.bed }}</td>
+                  <td>{{ item.doctor }}</td>
+                  <td>{{ item.status }}</td>
+                </tr>
+                <tr *ngIf="!admissions.length">
+                  <td colspan="4" class="text-muted">No admissions found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="col-lg-6">
+      <div class="card h-100">
+        <div class="card-body">
+          <h2 class="h5">Consultations</h2>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item px-0" *ngFor="let item of consultations"><strong>{{ item.diagnosis || item.type
+                }}</strong>
+              <div>{{ item.doctorName }} · {{ item.department }}</div>
+              <div class="small text-muted">{{ item.date | date:'mediumDate' }} · {{ item.status }}</div>
+              <div>{{ item.notes }}</div>
+            </li>
+            <li class="list-group-item px-0 text-muted" *ngIf="!consultations.length">No consultations found.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="h5">Discharge records</h2>
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th>Admission</th>
+                  <th>Discharged</th>
+                  <th>Doctor</th>
+                  <th>Diagnosis</th>
+                  <th>Instructions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of discharges">
+                  <td>{{ item.admissionDate | date:'mediumDate' }}</td>
+                  <td>{{ item.dischargeDate | date:'mediumDate' }}</td>
+                  <td>{{ item.doctorName }}</td>
+                  <td>{{ item.diagnosis }}</td>
+                  <td>{{ item.instructions }}</td>
+                </tr>
+                <tr *ngIf="!discharges.length">
+                  <td colspan="5" class="text-muted">No discharge records found.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>

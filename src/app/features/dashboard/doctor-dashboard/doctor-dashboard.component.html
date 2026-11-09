@@ -1,513 +1,296 @@
 <div class="doctor-dashboard">
 
-  <!-- ================= HEADER ================= -->
-  <div class="dashboard-header">
+  <!-- PROFESSIONAL HEADER -->
+  <header class="professional-header">
+    <div class="header-main">
+      <div class="breadcrumb">
+        <i class="bi bi-grid-1x2-fill"></i>
+        <span>Workspace</span>
+        <i class="bi bi-chevron-right"></i>
+        <strong>Doctor Dashboard</strong>
+      </div>
 
-    <div>
-      <span class="welcome-label">
-        <i class="bi bi-heart-pulse-fill"></i>
-        DOCTOR PORTAL
-      </span>
+      <div class="welcome-content">
+        <div class="welcome-icon">
+          <i class="bi bi-heart-pulse-fill"></i>
+        </div>
 
-      <h2>Doctor Dashboard</h2>
-
-      <p>
-        Welcome back,
-        <strong>{{ currentUser?.userName }}</strong>.
-        Here's your medical overview.
-      </p>
+        <div class="welcome-text">
+          <span class="eyebrow">SMART HOSPITAL · DOCTOR PORTAL</span>
+          <h1>Welcome back, {{ currentUser?.userName || 'Doctor' }}!</h1>
+          <p>Manage your appointments and provide better patient care.</p>
+        </div>
+      </div>
     </div>
 
-    <a
-      routerLink="/doctor/consultations/add"
-      class="new-consultation-btn"
-    >
-      <i class="bi bi-plus-lg"></i>
-      New Consultation
-    </a>
+    <div class="header-tools">
+      <div class="today-card">
+        <div class="today-icon">
+          <i class="bi bi-calendar3"></i>
+        </div>
+        <div>
+          <span>Today</span>
+          <strong>{{ today | date:'EEE, dd MMM yyyy' }}</strong>
+        </div>
+      </div>
 
-  </div>
+      <div class="header-separator"></div>
 
+      <div class="profile-card">
+        <div class="profile-avatar">
+          <i class="bi bi-person-fill"></i>
+        </div>
+        <div class="profile-info">
+          <strong>{{ currentUser?.userName || 'Doctor' }}</strong>
+          <span>Medical Professional</span>
+        </div>
+        <i class="bi bi-chevron-down profile-chevron"></i>
+      </div>
+    </div>
+  </header>
 
-  <!-- ================= STATISTICS ================= -->
-  <div class="row g-4 stats-row">
+  <!-- STATISTICS -->
+  <section class="stats-grid">
 
-    <!-- Total Patients -->
-    <div class="col-md-6 col-xl-3">
-      <div class="stat-card">
-
+    <article class="stat-card">
+      <div class="stat-top">
         <div class="stat-icon patients-icon">
           <i class="bi bi-people-fill"></i>
         </div>
-
-        <div class="stat-content">
-          <span>Total Patients</span>
-          <h3>248</h3>
-
-          <small>
-            <i class="bi bi-arrow-up"></i>
-            Active patients
-          </small>
-        </div>
-
+        <span class="stat-tag">Patients</span>
       </div>
-    </div>
+      <div class="stat-content">
+        <span>Total Patients</span>
+        <h2>{{ metric('totalPatients') }}</h2>
+        <small><i class="bi bi-activity"></i> Patient records</small>
+      </div>
+    </article>
 
-
-    <!-- Today's Appointments -->
-    <div class="col-md-6 col-xl-3">
-      <div class="stat-card">
-
-        <div class="stat-icon appointment-icon">
+    <article class="stat-card">
+      <div class="stat-top">
+        <div class="stat-icon appointments-icon">
           <i class="bi bi-calendar2-check-fill"></i>
         </div>
-
-        <div class="stat-content">
-          <span>Today's Appointments</span>
-          <h3>18</h3>
-
-          <small>
-            <i class="bi bi-clock"></i>
-            Scheduled today
-          </small>
-        </div>
-
+        <span class="stat-tag">Schedule</span>
       </div>
-    </div>
+      <div class="stat-content">
+        <span>Today's Appointments</span>
+        <h2>{{ appointments.length }}</h2>
+        <small><i class="bi bi-clock"></i> Daily schedule</small>
+      </div>
+    </article>
 
-
-    <!-- Consultations -->
-    <div class="col-md-6 col-xl-3">
-      <div class="stat-card">
-
-        <div class="stat-icon consultation-icon">
+    <article class="stat-card">
+      <div class="stat-top">
+        <div class="stat-icon consultations-icon">
           <i class="bi bi-clipboard2-pulse-fill"></i>
         </div>
-
-        <div class="stat-content">
-          <span>Consultations</span>
-          <h3>12</h3>
-
-          <small>
-            <i class="bi bi-check-circle"></i>
-            Today's consultations
-          </small>
-        </div>
-
+        <span class="stat-tag">Medical</span>
       </div>
-    </div>
+      <div class="stat-content">
+        <span>Consultations</span>
+        <h2>{{ metric('totalConsultations') }}</h2>
+        <small><i class="bi bi-check-circle"></i> Consultation records</small>
+      </div>
+    </article>
 
-
-    <!-- New Patients -->
-    <div class="col-md-6 col-xl-3">
-      <div class="stat-card">
-
-        <div class="stat-icon new-patient-icon">
+    <article class="stat-card">
+      <div class="stat-top">
+        <div class="stat-icon new-patients-icon">
           <i class="bi bi-person-plus-fill"></i>
         </div>
+        <span class="stat-tag">New</span>
+      </div>
+      <div class="stat-content">
+        <span>New Patients</span>
+        <h2>{{ metric('newPatientsToday') }}</h2>
+        <small><i class="bi bi-person-plus"></i> Registered today</small>
+      </div>
+    </article>
 
-        <div class="stat-content">
-          <span>New Patients</span>
-          <h3>06</h3>
+  </section>
 
-          <small>
-            <i class="bi bi-graph-up-arrow"></i>
-            This week
-          </small>
+  <!-- MAIN CONTENT -->
+  <section class="dashboard-grid">
+
+    <!-- APPOINTMENTS -->
+    <article class="dashboard-card appointments-card">
+      <div class="section-header">
+        <div class="section-heading">
+          <div class="section-icon">
+            <i class="bi bi-calendar3"></i>
+          </div>
+          <div>
+            <h2>My Appointments</h2>
+            <p>Your confirmed appointment schedule</p>
+          </div>
         </div>
 
+        <a routerLink="/doctor/appointments" class="view-all">
+          View all <i class="bi bi-arrow-up-right"></i>
+        </a>
       </div>
-    </div>
 
-  </div>
+      <div class="table-responsive">
+        <table class="appointment-table">
+          <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Time</th>
+              <th>Department</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
 
+          <tbody>
+            <tr *ngIf="loading">
+              <td colspan="5" class="table-message">
+                <i class="bi bi-arrow-repeat"></i>
+                Loading appointments...
+              </td>
+            </tr>
 
-  <!-- ================= MAIN CONTENT ================= -->
-  <div class="row g-4 main-row">
+            <tr *ngIf="!loading && errorMessage">
+              <td colspan="5" class="table-message error-message">
+                <i class="bi bi-exclamation-circle"></i>
+                {{ errorMessage }}
+              </td>
+            </tr>
 
-    <!-- ================= APPOINTMENTS ================= -->
-    <div class="col-lg-8">
+            <tr *ngIf="!loading && !errorMessage && appointments.length === 0">
+              <td colspan="5" class="table-message">
+                <div class="empty-state">
+                  <i class="bi bi-calendar2-x"></i>
+                  <strong>No scheduled appointments</strong>
+                  <span>Confirmed appointments will appear here.</span>
+                </div>
+              </td>
+            </tr>
 
-      <div class="dashboard-card">
+            <tr *ngFor="let appointment of appointments">
+              <td>
+                <div class="patient-info">
+                  <div class="patient-avatar">
+                    {{ getPatientInitials(appointment) }}
+                  </div>
+                  <div class="patient-details">
+                    <strong>{{ getPatientName(appointment) }}</strong>
+                    <small>{{ appointment.appointmentId }}</small>
+                  </div>
+                </div>
+              </td>
 
-        <div class="card-header-custom">
+              <td>
+                <span class="appointment-time">
+                  <i class="bi bi-clock"></i>
+                  {{ formatAppointmentTime(appointment.appointmentTime) }}
+                </span>
+              </td>
 
-          <div class="header-title">
+              <td>
+                <span class="department-name">
+                  {{ getDepartment(appointment) }}
+                </span>
+              </td>
 
-            <div class="header-icon">
-              <i class="bi bi-calendar3"></i>
-            </div>
+              <td>
+                <span class="status-badge">
+                  <span class="status-dot"></span>
+                  {{ appointment.status }}
+                </span>
+              </td>
 
-            <div>
-              <h5>Today's Appointments</h5>
-              <span>Patients scheduled for today</span>
-            </div>
+              <td>
+                <a [routerLink]="['/doctor/prescriptions/add', appointment.patientRecordId]"
+                  [queryParams]="{ appointmentId: appointment.id }"
+                  class="btn-create-prescription">
+                  <i class="bi bi-prescription2"></i>
+                  <span>Create Prescription</span>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
+      <div class="appointment-footer">
+        <span>
+          <i class="bi bi-shield-check"></i>
+          Showing confirmed appointments only
+        </span>
+        <button type="button" class="refresh-button" (click)="loadAppointments()" [disabled]="loading">
+          <i class="bi bi-arrow-clockwise"></i>
+          Refresh
+        </button>
+      </div>
+    </article>
+
+    <!-- QUICK ACTIONS -->
+    <aside class="dashboard-card quick-card">
+
+      <div class="section-header">
+        <div class="section-heading">
+          <div class="section-icon quick-section-icon">
+            <i class="bi bi-lightning-charge-fill"></i>
           </div>
 
-          <a routerLink="/doctor/appointments">
-            View All
-            <i class="bi bi-arrow-right"></i>
-          </a>
-
+          <div>
+            <h2>Quick Actions</h2>
+            <p>Access your daily tasks</p>
+          </div>
         </div>
-
-
-        <!-- ================= APPOINTMENT TABLE ================= -->
-        <div class="table-responsive">
-
-          <table class="table appointment-table align-middle">
-
-            <thead>
-              <tr>
-                <th>Patient</th>
-                <th>Time</th>
-                <th>Department</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-
-
-            <tbody>
-
-              <!-- SARAH -->
-              <tr>
-
-                <td>
-                  <div class="patient-info">
-
-                    <div class="patient-avatar">
-                      SA
-                    </div>
-
-                    <div>
-                      <strong>Sarah Ahmed</strong>
-                      <small>Patient ID: P-1002</small>
-                    </div>
-
-                  </div>
-                </td>
-
-
-                <td>
-                  <span class="appointment-time">
-                    09:30 AM
-                  </span>
-                </td>
-
-
-                <td>
-                  <span class="department-name">
-                    Cardiology
-                  </span>
-                </td>
-
-
-                <td>
-                  <span class="status confirmed">
-                    <i class="bi bi-check-circle-fill"></i>
-                    Confirmed
-                  </span>
-                </td>
-
-
-                <td>
-                  <a
-                    routerLink="/doctor/prescriptions/add/P-1002"
-                    class="prescription-btn"
-                  >
-                    <i class="bi bi-prescription2"></i>
-                    Prescription
-                  </a>
-                </td>
-
-              </tr>
-
-
-              <!-- MARIYA -->
-              <tr>
-
-                <td>
-                  <div class="patient-info">
-
-                    <div class="patient-avatar">
-                      MR
-                    </div>
-
-                    <div>
-                      <strong>Mariya Rahman</strong>
-                      <small>Patient ID: P-1001</small>
-                    </div>
-
-                  </div>
-                </td>
-
-
-                <td>
-                  <span class="appointment-time">
-                    11:00 AM
-                  </span>
-                </td>
-
-
-                <td>
-                  <span class="department-name">
-                    Cardiology
-                  </span>
-                </td>
-
-
-                <td>
-                  <span class="status pending">
-                    <i class="bi bi-clock-fill"></i>
-                    Pending
-                  </span>
-                </td>
-
-
-                <td>
-                  <a
-                    routerLink="/doctor/prescriptions/add/P-1001"
-                    class="prescription-btn"
-                  >
-                    <i class="bi bi-prescription2"></i>
-                    Prescription
-                  </a>
-                </td>
-
-              </tr>
-
-
-              <!-- JOHN -->
-              <tr>
-
-                <td>
-                  <div class="patient-info">
-
-                    <div class="patient-avatar">
-                      JS
-                    </div>
-
-                    <div>
-                      <strong>John Smith</strong>
-                      <small>Patient ID: P-1003</small>
-                    </div>
-
-                  </div>
-                </td>
-
-
-                <td>
-                  <span class="appointment-time">
-                    02:30 PM
-                  </span>
-                </td>
-
-
-                <td>
-                  <span class="department-name">
-                    Medicine
-                  </span>
-                </td>
-
-
-                <td>
-                  <span class="status confirmed">
-                    <i class="bi bi-check-circle-fill"></i>
-                    Confirmed
-                  </span>
-                </td>
-
-
-                <td>
-                  <a
-                    routerLink="/doctor/prescriptions/add/P-1003"
-                    class="prescription-btn"
-                  >
-                    <i class="bi bi-prescription2"></i>
-                    Prescription
-                  </a>
-                </td>
-
-              </tr>
-
-            </tbody>
-
-          </table>
-
-        </div>
-
       </div>
 
-    </div>
+      <div class="quick-actions">
 
-
-    <!-- ================= QUICK ACTIONS ================= -->
-    <div class="col-lg-4">
-
-      <div class="dashboard-card quick-card">
-
-        <div class="card-header-custom">
-
-          <div class="header-title">
-
-            <div class="header-icon quick-header-icon">
-              <i class="bi bi-lightning-charge-fill"></i>
-            </div>
-
-            <div>
-              <h5>Quick Actions</h5>
-              <span>Common doctor tasks</span>
-            </div>
-
+        <!-- Patient Records -->
+        <a routerLink="/doctor/patients" class="quick-action">
+          <div class="quick-icon patients-action">
+            <i class="bi bi-people-fill"></i>
           </div>
 
-        </div>
+          <div class="quick-action-text">
+            <strong>Patient Records</strong>
+            <span>View assigned patient information</span>
+          </div>
 
+          <i class="bi bi-chevron-right quick-arrow"></i>
+        </a>
 
-        <div class="quick-actions">
+        <!-- Laboratory Reports -->
+        <a routerLink="/doctor/laboratory" class="quick-action">
+          <div class="quick-icon laboratory-action">
+            <i class="bi bi-eyedropper"></i>
+          </div>
 
-          <!-- PRESCRIPTIONS -->
-          <a
-            routerLink="/doctor/patients"
-            class="quick-action"
-          >
+          <div class="quick-action-text">
+            <strong>Laboratory Reports</strong>
+            <span>Review diagnostic reports</span>
+          </div>
 
-            <div class="quick-action-icon prescription">
-              <i class="bi bi-prescription2"></i>
-            </div>
+          <i class="bi bi-chevron-right quick-arrow"></i>
+        </a>
 
-            <div class="quick-action-text">
+        <!-- Prescriptions -->
+        <a routerLink="/doctor/prescriptions" class="quick-action">
+          <div class="quick-icon prescriptions-action">
+            <i class="bi bi-prescription2"></i>
+          </div>
 
-              <strong>Prescriptions</strong>
+          <div class="quick-action-text">
+            <strong>Prescriptions</strong>
+            <span>View and manage your prescriptions</span>
+          </div>
 
-              <span>
-                Create and manage prescriptions
-              </span>
-
-            </div>
-
-            <div class="quick-arrow">
-              <i class="bi bi-arrow-up-right"></i>
-            </div>
-
-          </a>
-
-
-          <!-- CONSULTATION -->
-          <a
-            routerLink="/doctor/consultations/add"
-            class="quick-action"
-          >
-
-            <div class="quick-action-icon consultation">
-              <i class="bi bi-clipboard2-plus-fill"></i>
-            </div>
-
-            <div class="quick-action-text">
-
-              <strong>New Consultation</strong>
-
-              <span>
-                Start a patient consultation
-              </span>
-
-            </div>
-
-            <div class="quick-arrow">
-              <i class="bi bi-arrow-up-right"></i>
-            </div>
-
-          </a>
-
-
-          <!-- PATIENTS -->
-          <a
-            routerLink="/doctor/patients"
-            class="quick-action"
-          >
-
-            <div class="quick-action-icon patient">
-              <i class="bi bi-people-fill"></i>
-            </div>
-
-            <div class="quick-action-text">
-
-              <strong>Patient Records</strong>
-
-              <span>
-                View patient information
-              </span>
-
-            </div>
-
-            <div class="quick-arrow">
-              <i class="bi bi-arrow-up-right"></i>
-            </div>
-
-          </a>
-
-
-          <!-- APPOINTMENTS -->
-          <a
-            routerLink="/doctor/appointments"
-            class="quick-action"
-          >
-
-            <div class="quick-action-icon appointment">
-              <i class="bi bi-calendar2-event-fill"></i>
-            </div>
-
-            <div class="quick-action-text">
-
-              <strong>Appointments</strong>
-
-              <span>
-                Manage today's schedule
-              </span>
-
-            </div>
-
-            <div class="quick-arrow">
-              <i class="bi bi-arrow-up-right"></i>
-            </div>
-
-          </a>
-
-
-          <!-- LABORATORY -->
-          <a
-            routerLink="/doctor/laboratory"
-            class="quick-action"
-          >
-
-            <div class="quick-action-icon laboratory">
-              <i class="bi bi-eyedropper"></i>
-            </div>
-
-            <div class="quick-action-text">
-
-              <strong>Laboratory</strong>
-
-              <span>
-                Check diagnostic reports
-              </span>
-
-            </div>
-
-            <div class="quick-arrow">
-              <i class="bi bi-arrow-up-right"></i>
-            </div>
-
-          </a>
-
-        </div>
+          <i class="bi bi-chevron-right quick-arrow"></i>
+        </a>
 
       </div>
 
-    </div>
+      <div class="quick-card-footer">
+        <i class="bi bi-info-circle"></i>
+        Keep patient records accurate and up to date.
+      </div>
 
-  </div>
-
-</div>
+    </aside>

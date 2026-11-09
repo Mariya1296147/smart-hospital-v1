@@ -1,44 +1,60 @@
-<div class="login-page">
 
+<div class="login-page">
   <div class="login-wrapper">
 
-    <!-- LEFT SIDE: HOSPITAL LOGO -->
-    <div class="brand-panel">
+    <!-- LEFT SIDE: BRANDING -->
+    <section class="brand-panel">
 
       <div class="brand-content">
 
-        <div class="hospital-logo">
-          <i class="bi bi-hospital"></i>
-          <span class="logo-cross">+</span>
+        <!-- Hospital Logo and Name -->
+        <div class="hospital-brand">
+
+          <div class="hospital-logo">
+            <i class="bi bi-hospital"></i>
+            <span>+</span>
+          </div>
+
+          <div class="brand-title">
+            <h2 class="hospital-name">Smart Hospital</h2>
+            <p class="hospital-tagline">
+              Healthcare Made Smarter.
+            </p>
+          </div>
+
         </div>
 
-        <h1>Smart <span>Hospital</span></h1>
+        <!-- Welcome Content -->
+        <div class="welcome-content">
 
-        <div class="brand-line"></div>
+          <h1>Welcome Back!</h1>
 
-        <h2>Healthcare Made Smarter.</h2>
+          <h2>Your Health, Our Priority</h2>
 
-        <p>
-          Compassionate care, modern technology,
-          and trusted healthcare services —
-          all in one place.
-        </p>
+          <p class="brand-description">
+            Login to access your dashboard
+            <br>
+            and manage your healthcare services.
+          </p>
 
-        <div class="brand-features">
+        </div>
 
-          <div class="brand-feature">
+        <!-- Features -->
+        <div class="feature-list">
+
+          <div class="feature-item">
             <i class="bi bi-shield-check"></i>
-            <span>Secure Healthcare System</span>
+            <span>Secure &amp; Trusted</span>
           </div>
 
-          <div class="brand-feature">
-            <i class="bi bi-heart-pulse"></i>
-            <span>Patient-Centered Care</span>
+          <div class="feature-item">
+            <i class="bi bi-clock-history"></i>
+            <span>24/7 Support</span>
           </div>
 
-          <div class="brand-feature">
-            <i class="bi bi-clock"></i>
-            <span>Healthcare Support 24/7</span>
+          <div class="feature-item">
+            <i class="bi bi-heart-pulse-fill"></i>
+            <span>Better Care, Healthier You</span>
           </div>
 
         </div>
@@ -50,106 +66,118 @@
         Smart Hospital Management System
       </div>
 
-      <div class="decoration decoration-one"></div>
-      <div class="decoration decoration-two"></div>
-
-    </div>
+    </section>
 
 
-    <!-- RIGHT SIDE: LOGIN FORM -->
-    <div class="form-panel">
+    <!-- RIGHT SIDE: LOGIN CARD -->
+    <section class="login-panel">
 
       <div class="login-card">
 
-        <div class="form-top-icon">
-          <i class="bi bi-person-lock"></i>
+        <!-- Hospital Icon -->
+        <div class="login-avatar">
+          <i class="bi bi-hospital"></i>
         </div>
 
-        <div class="form-heading">
-          <span class="eyebrow">WELCOME BACK</span>
-          <h2>Sign In</h2>
-          <p>Please enter your details to access your account.</p>
+        <h2 class="login-heading">Smart Hospital</h2>
+
+        <p class="login-subtitle">
+          Login to Your Account
+        </p>
+
+        <div class="login-divider"></div>
+
+        <!-- Error Message -->
+        <div class="error-message" *ngIf="message">
+          <i class="bi bi-exclamation-circle-fill"></i>
+          <span>{{ message }}</span>
         </div>
 
-
-        <!-- ERROR MESSAGE -->
-        <div *ngIf="message" class="alert alert-danger" role="alert">
-          <i class="bi bi-exclamation-circle me-2"></i>
-          {{ message }}
-        </div>
-
-
+        <!-- Login Form -->
         <form #loginForm="ngForm" (ngSubmit)="login()">
 
-          <!-- EMAIL -->
-          <div class="form-field">
-            <label for="email">Email Address</label>
+          <!-- Email -->
+          <div class="form-group">
 
             <div class="input-box">
-              <input id="email" type="email" name="email" [(ngModel)]="email" #emailInput="ngModel"
-                placeholder="Enter your email" required email autocomplete="email"
-                [class.is-invalid]="emailInput.invalid && emailInput.touched">
+              <i class="bi bi-person"></i>
+
+              <input
+                type="email"
+                id="email"
+                name="email"
+                [(ngModel)]="email"
+                placeholder="Username or Email"
+                autocomplete="username"
+                required
+              />
             </div>
 
-            <div class="error-text" *ngIf="emailInput.invalid && emailInput.touched">
-              Please enter a valid email address.
-            </div>
           </div>
 
-          <!-- PASSWORD -->
-          <div class="form-field">
-            <label for="password">Password</label>
+          <!-- Password -->
+          <div class="form-group">
 
             <div class="input-box">
-              <input id="password" [type]="showPassword ? 'text' : 'password'" name="password" [(ngModel)]="password"
-                #passwordInput="ngModel" placeholder="Enter your password" required autocomplete="current-password"
-                [class.is-invalid]="passwordInput.invalid && passwordInput.touched">
+              <i class="bi bi-lock-fill"></i>
 
-              <button type="button" class="password-toggle" (click)="showPassword = !showPassword">
-                <i [class]="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+              <input
+                [type]="showPassword ? 'text' : 'password'"
+                id="password"
+                name="password"
+                [(ngModel)]="password"
+                placeholder="Password"
+                autocomplete="current-password"
+                required
+              />
+
+              <button
+                type="button"
+                class="password-toggle"
+                (click)="showPassword = !showPassword"
+                [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+              >
+                <i [class]="showPassword ? 'bi bi-eye-slash-fill' : 'bi bi-eye-fill'"></i>
               </button>
+
             </div>
 
-            <div class="error-text" *ngIf="passwordInput.invalid && passwordInput.touched">
-              Password is required.
-            </div>
           </div>
 
+          <!-- Login Button -->
+          <button
+            type="submit"
+            class="login-button"
+            [disabled]="loginForm.invalid || loading"
+          >
+            <i class="bi bi-box-arrow-in-right"></i>
 
-          <!-- LOGIN BUTTON -->
-          <button type="submit" class="login-button" [disabled]="loginForm.invalid || loading">
-
-            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2">
-            </span>
-
-            <i *ngIf="!loading" class="bi bi-box-arrow-in-right me-2">
-            </i>
-
-            {{ loading ? 'Signing in...' : 'Sign In' }}
-
-            <i *ngIf="!loading" class="bi bi-arrow-right ms-2">
-            </i>
-
+            <span>{{ loading ? 'Signing In...' : 'Login' }}</span>
           </button>
 
         </form>
 
-
-        <!-- REGISTER -->
-        <div class="register-area">
-          <span>Don't have an account?</span>
-          <a routerLink="/register">Create Account</a>
+        <!-- Back to Home -->
+        <div class="account-divider">
+          <span></span>
+          <p>Smart Healthcare System</p>
+          <span></span>
         </div>
 
-        <div class="secure-message">
+        <a routerLink="/" class="home-link">
+          <i class="bi bi-house-fill"></i>
+          Back to Home
+        </a>
+
+        <!-- Footer -->
+        <div class="secure-footer">
           <i class="bi bi-shield-lock-fill"></i>
-          <span>Secure access to your healthcare system</span>
+          Secure access to your healthcare system
         </div>
 
       </div>
 
-    </div>
+    </section>
 
   </div>
-
 </div>

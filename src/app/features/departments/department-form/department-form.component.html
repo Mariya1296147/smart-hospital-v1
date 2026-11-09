@@ -1,0 +1,182 @@
+
+<div class="form-page">
+  <div class="page-header">
+    <div class="page-title">
+      <span class="eyebrow">HOSPITAL MANAGEMENT / DEPARTMENTS</span>
+      <h2>{{ isEditMode ? 'Edit Department' : 'Create Department' }}</h2>
+      <p>Manage department information and operational status.</p>
+    </div>
+
+    <a routerLink="/admin/departments" class="back-btn">
+      <i class="bi bi-arrow-left"></i>
+      <span>Back to Departments</span>
+    </a>
+  </div>
+
+  <div class="form-layout">
+    <div class="form-card">
+      <div class="form-heading">
+        <div class="heading-icon">
+          <i class="bi bi-hospital"></i>
+        </div>
+        <div>
+          <h5>Department Information</h5>
+          <p>Enter the details of this hospital department.</p>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span>{{ errorMessage }}</span>
+      </div>
+
+      <form #departmentForm="ngForm" (ngSubmit)="saveDepartment()">
+        <div class="section-label">
+          <span>GENERAL INFORMATION</span>
+          <span class="required-note"><b>*</b> Required fields</span>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="departmentName">Department Name <span>*</span></label>
+            <div class="input-wrap">
+              <i class="bi bi-building"></i>
+              <input
+                type="text"
+                id="departmentName"
+                name="departmentName"
+                [(ngModel)]="department.departmentName"
+                placeholder="e.g. Cardiology"
+                required
+                maxlength="100"
+                #nameInput="ngModel"
+              />
+            </div>
+            <small class="validation"
+              *ngIf="nameInput.invalid && nameInput.touched">
+              Please enter a department name.
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="departmentCode">Department Code</label>
+            <div class="input-wrap">
+              <i class="bi bi-upc-scan"></i>
+              <input
+                type="text"
+                id="departmentCode"
+                name="departmentCode"
+                [(ngModel)]="department.departmentCode"
+                placeholder="e.g. CARD-001"
+                maxlength="30"
+              />
+            </div>
+            <small class="field-hint">Use a unique code if your hospital requires one.</small>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="description">Department Description</label>
+            <div class="input-wrap textarea-wrap">
+              <i class="bi bi-card-text"></i>
+              <textarea
+                id="description"
+                name="description"
+                [(ngModel)]="department.description"
+                placeholder="Describe the department's services..."
+                rows="4"
+                maxlength="500"
+              ></textarea>
+            </div>
+            <small class="field-hint">Briefly describe the services provided by this department.</small>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="status">Department Status <span>*</span></label>
+            <div class="input-wrap">
+              <i class="bi bi-toggle-on"></i>
+              <select
+                id="status"
+                name="status"
+                [(ngModel)]="departmentStatus"
+                required
+              >
+                <option value="ACTIVE">Active</option>
+                <option value="INACTIVE">Inactive</option>
+              </select>
+              <i class="bi bi-chevron-down select-arrow"></i>
+            </div>
+
+            <div class="status-help">
+              <span
+                class="status-dot"
+                [class.inactive-dot]="departmentStatus === 'INACTIVE'">
+              </span>
+              <span *ngIf="departmentStatus === 'ACTIVE'">
+                This department is marked as active.
+              </span>
+              <span *ngIf="departmentStatus === 'INACTIVE'">
+                This department is marked as inactive.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <a routerLink="/admin/departments" class="cancel-btn">
+            Cancel
+          </a>
+
+          <button
+            type="submit"
+            class="save-btn"
+            [disabled]="departmentForm.invalid || loading"
+          >
+            <i
+              class="bi"
+              [ngClass]="loading ? 'bi-arrow-repeat spinning' : 'bi-check2-circle'">
+            </i>
+            {{
+              loading
+                ? 'Saving...'
+                : isEditMode
+                  ? 'Update Department'
+                  : 'Save Department'
+            }}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <aside class="info-card">
+      <div class="info-icon">
+        <i class="bi bi-shield-check"></i>
+      </div>
+      <h5>Department Setup</h5>
+      <p>
+        Keep department information accurate so hospital staff can identify
+        and manage departments easily.
+      </p>
+
+      <div class="info-divider"></div>
+
+      <div class="status-example">
+        <span class="status-badge active-badge">
+          <span></span> Active
+        </span>
+        <p>Use when the department is operating normally.</p>
+      </div>
+
+      <div class="status-example">
+        <span class="status-badge inactive-badge">
+          <span></span> Inactive
+        </span>
+        <p>Use when the department is not currently operating.</p>
+      </div>
+
+      <div class="info-footer">
+        <i class="bi bi-info-circle"></i>
+        <span>Fields marked with * are required.</span>
+      </div>
+    </aside>
+  </div>
+</div>

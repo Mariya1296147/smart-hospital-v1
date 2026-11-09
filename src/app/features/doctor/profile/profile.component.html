@@ -1,4 +1,3 @@
-
 <div class="doctor-profile">
 
   <!-- Page Header -->
@@ -10,62 +9,90 @@
   </div>
 
   <!-- Profile Card -->
-  <div class="profile-card">
+<!-- Profile Card -->
+<div class="profile-card">
 
-    <!-- Profile Top -->
-    <div class="profile-top">
+  <!-- Profile Top -->
+  <div class="profile-top">
 
-      <div class="profile-avatar">
-        <i class="bi bi-person-circle"></i>
-      </div>
+    <div class="profile-avatar"
+         style="width: 130px;
+                height: 130px;
+                border-radius: 50%;
+                overflow: hidden;
+                border: 4px solid #e2e8f0;
+                background: #f1f5f9;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;">
 
-      <div class="profile-info">
-        <h3>Dr. Amina Rahman</h3>
-        <p>Doctor • Cardiology</p>
-
-        <span class="status-badge">
-          <i class="bi bi-check-circle"></i>
-          Active
-        </span>
-      </div>
+      <img
+        *ngIf="doctor?.imageUrl; else defaultDoctor"
+        [src]="'http://localhost:9090/api' + doctor?.imageUrl"
+        alt="Doctor Profile"
+        style="width: 100%;
+               height: 100%;
+               object-fit: cover;
+               object-position: center;
+               display: block;">
 
     </div>
 
-    <!-- Information -->
-    <div class="profile-details">
+    <ng-template #defaultDoctor>
+      <i class="bi bi-person-fill"
+         style="font-size: 65px; color: #94a3b8;">
+      </i>
+    </ng-template>
 
-      <div class="detail-item">
-        <span class="detail-label">Full Name</span>
-        <strong>Dr. Amina Rahman</strong>
-      </div>
+  </div>
 
-      <div class="detail-item">
-        <span class="detail-label">Email</span>
-        <strong>doctor#45smarthospital.com</strong>
-      </div>
+  <div class="profile-info">
+    <h3>{{ displayName }}</h3>
+    <p>Doctor<span *ngIf="doctor?.department"> • {{ doctor?.department }}</span></p>
 
-      <div class="detail-item">
-        <span class="detail-label">Phone</span>
-        <strong>01700000001</strong>
-      </div>
+    <span class="status-badge">
+      <i class="bi bi-check-circle"></i>
+      {{ doctor?.status || (loading ? 'Loading profile…' : 'Account') }}
+    </span>
+  </div>
 
-      <div class="detail-item">
-        <span class="detail-label">Department</span>
-        <strong>Cardiology</strong>
-      </div>
+</div>
 
-      <div class="detail-item">
-        <span class="detail-label">Education</span>
-        <strong>MBBS, FCPS</strong>
-      </div>
+  <!-- Information -->
+  <div class="profile-details">
 
-      <div class="detail-item">
-        <span class="detail-label">Experience</span>
-        <strong>8 Years</strong>
-      </div>
+    <div class="detail-item">
+      <span class="detail-label">Full Name</span>
+      <strong>{{ displayName }}</strong>
+    </div>
 
+    <div class="detail-item">
+      <span class="detail-label">Email</span>
+      <strong>{{ doctor?.email || accountEmail || '—' }}</strong>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Phone</span>
+      <strong>{{ doctor?.phone || '—' }}</strong>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Department</span>
+      <strong>{{ doctor?.department || '—' }}</strong>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Education</span>
+      <strong>{{ doctor?.qualification || '—' }}</strong>
+    </div>
+
+    <div class="detail-item">
+      <span class="detail-label">Experience</span>
+      <strong>{{ doctor?.experience || '—' }}</strong>
     </div>
 
   </div>
 
 </div>
+

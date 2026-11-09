@@ -34,11 +34,9 @@ export class LaboratoryViewComponent implements OnInit {
       this.route.snapshot.paramMap.get('id')
     );
 
-    const data =
-      this.laboratoryService.getLaboratoryById(id);
-
-    if (data) {
-      this.laboratory = data;
-    }
+    this.laboratoryService.getLaboratoryById(id).subscribe({
+      next: data => this.laboratory = data,
+      error: error => console.error('ল্যাব পরীক্ষার তথ্য পাওয়া যায়নি', error)
+    });
   }
 }

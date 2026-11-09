@@ -22,7 +22,7 @@
 
     <div class="header-date">
       <i class="bi bi-calendar3"></i>
-      24 September 2026
+      {{ today | date:'dd MMMM yyyy' }}
     </div>
 
   </div>
@@ -200,7 +200,7 @@
 
           <div
             class="bar"
-            [style.height.%]="(item.amount / 450000) * 100"
+            [style.height.%]="(item.amount / maxMonthlyAmount) * 100"
           ></div>
 
           <span>{{ item.month }}</span>

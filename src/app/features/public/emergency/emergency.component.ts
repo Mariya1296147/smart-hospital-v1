@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { HospitalSettings, HospitalSettingsService } from '../../../core/services/hospital-settings.service';
 
 @Component({
   selector: 'app-emergency',
@@ -9,6 +10,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './emergency.component.css'
 })
 export class EmergencyComponent {
+  readonly hospitalSettings: HospitalSettings;
+
+  constructor(hospitalSettingsService: HospitalSettingsService) {
+    this.hospitalSettings = hospitalSettingsService.getSettings();
+  }
 
   emergencyServices = [
     {

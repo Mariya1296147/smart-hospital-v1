@@ -6,6 +6,8 @@ export interface Nurse {
   phone: string;
   email: string;
   department: string;
+  /** Database ID used when assigning a department to this nurse. */
+  departmentId?: number | null;
   ward: string;
   shift: string;
   qualification: string;

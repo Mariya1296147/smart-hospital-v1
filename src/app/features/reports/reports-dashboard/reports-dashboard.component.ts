@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { DashboardService } from '../../../core/services/dashboard.service';
+import { DashboardSummary } from '../../../models/dashboard';
 
-@Component({ selector: 'app-reports-dashboard', standalone: true, imports: [CommonModule, FormsModule], templateUrl: './reports-dashboard.component.html', styleUrl: './reports-dashboard.component.css' })
+@Component({ selector: 'app-reports-dashboard', standalone: true, imports: [CommonModule], templateUrl: './reports-dashboard.component.html', styleUrl: './reports-dashboard.component.css' })
 export class ReportsDashboardComponent {
-  range = 'This month';
+  summary: DashboardSummary | null = null;
   reports = [
     { title: 'Patient Report', description: 'Admissions, visits and discharge overview', icon: 'bi-people-fill', color: 'primary', updated: 'Updated today' },
     { title: 'Appointment Report', description: 'Appointments by doctor and status', icon: 'bi-calendar-check-fill', color: 'success', updated: 'Updated today' },
@@ -13,5 +14,21 @@ export class ReportsDashboardComponent {
     { title: 'Pharmacy Report', description: 'Medicine stock and dispensing summary', icon: 'bi-capsule', color: 'danger', updated: 'Updated today' },
     { title: 'Discharge Report', description: 'Patient discharge activity by department', icon: 'bi-box-arrow-right', color: 'secondary', updated: 'Updated today' }
   ];
-  exportReport(title: string): void { alert(`${title} is ready to export for ${this.range}.`); }
+
+  constructor(dashboard: DashboardService) {
+    dashboard.getSummary().subscribe({
+      next: summary => this.summary = summary,
+      error: error => console.error('Report metrics failed to load', error)
+    });
+  }
+
+  metric(name: string): number { return this.summary?.metrics?.[name] ?? 0; }
+  reportCount(title: string): number {
+    const counts: Record<string, string> = {
+      'Patient Report': 'totalPatients', 'Appointment Report': 'totalAppointments',
+      'Billing Report': 'totalInvoices', 'Laboratory Report': 'totalLabTests',
+      'Pharmacy Report': 'totalMedicines', 'Discharge Report': 'dischargesToday'
+    };
+    return this.metric(counts[title] ?? '');
+  }
 }

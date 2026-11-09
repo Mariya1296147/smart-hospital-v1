@@ -1,0 +1,96 @@
+
+<div class="form-page">
+
+  <div class="form-header">
+    <div>
+      <span class="page-label">ADMIN PORTAL</span>
+      <h2>{{ isEditMode ? 'Edit Medicine' : 'Add New Medicine' }}</h2>
+      <p>Enter medicine information below.</p>
+    </div>
+
+    <button class="btn-back" (click)="cancel()">
+      <i class="bi bi-arrow-left"></i> Back
+    </button>
+  </div>
+
+  <div class="form-card">
+
+    <div class="section-title">
+      <i class="bi bi-capsule"></i>
+      <div>
+        <h5>Medicine Information</h5>
+        <small>Basic medicine details</small>
+      </div>
+    </div>
+
+    <div class="row g-3">
+
+      <div class="col-md-6">
+        <label>Medicine Name *</label>
+        <input class="form-control"
+               [(ngModel)]="medicine.medicineName"
+               placeholder="e.g. Napa">
+      </div>
+
+      <div class="col-md-6">
+        <label>Generic Name *</label>
+        <input class="form-control"
+               [(ngModel)]="medicine.genericName"
+               placeholder="e.g. Paracetamol">
+      </div>
+
+      <div class="col-md-6">
+        <label>Category *</label>
+        <select class="form-select" [(ngModel)]="medicine.category">
+          <option value="">Select Category</option>
+          <option value="Tablet">Tablet</option>
+          <option value="Capsule">Capsule</option>
+          <option value="Syrup">Syrup</option>
+          <option value="Injection">Injection</option>
+          <option value="Drops">Drops</option>
+          <option value="Cream">Cream</option>
+          <option value="Ointment">Ointment</option>
+          <option value="Inhaler">Inhaler</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label>Strength *</label>
+        <input class="form-control"
+               [(ngModel)]="medicine.strength"
+               placeholder="e.g. 500 mg">
+      </div>
+
+      <div class="col-md-6">
+        <label>Manufacturer</label>
+        <input class="form-control"
+               [(ngModel)]="medicine.manufacturer"
+               placeholder="Manufacturer name">
+      </div>
+
+      <div class="col-md-6">
+        <label>Status</label>
+        <select class="form-select" [(ngModel)]="medicine.active">
+          <option [ngValue]="true">Active</option>
+          <option [ngValue]="false">Inactive</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-cancel" (click)="cancel()">
+        Cancel
+      </button>
+
+      <button class="btn-save"
+              (click)="saveMedicine()"
+              [disabled]="isSaving">
+        <i class="bi bi-check-circle"></i>
+        {{ isSaving ? 'Saving...' : (isEditMode ? 'Update Medicine' : 'Save Medicine') }}
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HospitalSettings, HospitalSettingsService } from '../../core/services/hospital-settings.service';
 
 
 @Component({
@@ -11,25 +12,18 @@ import { FormsModule } from '@angular/forms';
 })
 export class SettingsComponent implements OnInit {
   saved = false;
-  settings = {
-    hospitalName: 'Smart Hospital',
-    email: 'info@smarthospital.com',
-    phone: '+880 1700-000000',
-    address: 'Dhaka, Bangladesh',
-    timezone: 'Asia/Dhaka',
+  settings: HospitalSettings;
 
-    emailNotifications: true,
-    appointmentNotifications: true,
-    stockAlerts: true
-  };
+  constructor(private readonly hospitalSettings: HospitalSettingsService) {
+    this.settings = hospitalSettings.getSettings();
+  }
+
   ngOnInit(): void {
-    const data = localStorage.getItem('smart-hospital-settings');
-
-    if (data) this.settings = JSON.parse(data);
+    this.settings = this.hospitalSettings.getSettings();
   }
   save(): void {
-    localStorage.setItem('smart-hospital-settings',
-      JSON.stringify(this.settings)); this.saved = true;
+    this.hospitalSettings.saveSettings(this.settings);
+    this.saved = true;
     setTimeout(() => this.saved = false, 2500);
   }
 }

@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
-import { JwtResponse, LoginRequest, RegisterRequest, UserDTO, UserRole } from '../../models/user';
+import { AdminRegisterRequest, JwtResponse, LoginRequest, RegisterRequest, UserDTO, UserRole } from '../../models/user';
+import { environment } from '../../../environment/environment';
 
 
 
@@ -11,14 +12,14 @@ import { JwtResponse, LoginRequest, RegisterRequest, UserDTO, UserRole } from '.
 })
 export class AuthService {
 
-  private readonly apiUrl = 'http://localhost:9090/api';
+  private readonly apiUrl = environment.apiBaseUrl;
   private readonly tokenKey = 'hospital-jwt-token';
   private readonly userKey = 'hospital-current-user';
 
   constructor(
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) { }
 
   // =========================
   // LOGIN
@@ -30,8 +31,6 @@ export class AuthService {
       request
     ).pipe(
       tap(response => {
-        console.log("---------------------------------------");
-        
         localStorage.setItem(this.tokenKey, response.token);
         localStorage.setItem(
           this.userKey,
@@ -52,7 +51,15 @@ export class AuthService {
       { responseType: 'text' }
     );
   }
-
+  registerByAdmin(
+    request: AdminRegisterRequest
+  ): Observable<string> {
+    return this.http.post(
+      `${this.apiUrl}/users`,
+      request,
+      { responseType: 'text' }
+    );
+  }
   // =========================
   // LOGOUT
   // =========================
@@ -134,7 +141,8 @@ export class AuthService {
       NURSE: '/nurse/dashboard',
       LABORATORY_STAFF: '/laboratory/dashboard',
       PHARMACY_STAFF: '/pharmacy/dashboard',
-      ACCOUNTS_STAFF: '/accounts/dashboard'
+      ACCOUNTS_STAFF: '/accounts/dashboard',
+      PATIENT: '/patient/dashboard'
     };
 
     return routes[user.roles[0]] ?? '/login';
@@ -201,56 +209,57 @@ export class AuthService {
     });
   }
 
-  
-// isLoggedIn(): boolean {
-//   return !!this.getToken() && !!this.getCurrentUser();
-// }
 
-// dashboardRoute(): string {
-//   const user = this.getCurrentUser();
+  // isLoggedIn(): boolean {
+  //   return !!this.getToken() && !!this.getCurrentUser();
+  // }
 
-//   if (!user || !user.roles?.length) {
-//     return '/login';
-//   }
+  // dashboardRoute(): string {
+  //   const user = this.getCurrentUser();
 
-//   const role = user.roles[0];
+  //   if (!user || !user.roles?.length) {
+  //     return '/login';
+  //   }
 
-//   const routes: Record<string, string> = {
-//     ADMIN: '/admin/dashboard',
-//     DOCTOR: '/doctor/dashboard',
-//     RECEPTIONIST: '/reception/dashboard',
-//     NURSE: '/nurse/dashboard',
-//     LABORATORY_STAFF: '/laboratory/dashboard',
-//     PHARMACY_STAFF: '/pharmacy/dashboard',
-//     ACCOUNTS_STAFF: '/accounts/dashboard'
-//   };
+  //   const role = user.roles[0];
 
-//   return routes[role] ?? '/login';
-// }
+  //   const routes: Record<string, string> = {
+  //     ADMIN: '/admin/dashboard',
+  //     DOCTOR: '/doctor/dashboard',
+  //     RECEPTIONIST: '/reception/dashboard',
+  //     NURSE: '/nurse/dashboard',
+  //     LABORATORY_STAFF: '/laboratory/dashboard',
+  //     PHARMACY_STAFF: '/pharmacy/dashboard',
+  //     ACCOUNTS_STAFF: '/accounts/dashboard'
+  //   };
 
-canAccessUrl(url: string): boolean {
-  const user = this.getCurrentUser();
+  //   return routes[role] ?? '/login';
+  // }
 
-  if (!user || !user.roles?.length) {
-    return false;
+  canAccessUrl(url: string): boolean {
+    const user = this.getCurrentUser();
+
+    if (!user || !user.roles?.length) {
+      return false;
+    }
+
+    const dashboardRoutes: Record<string, string> = {
+      ADMIN: '/admin',
+      DOCTOR: '/doctor',
+      RECEPTIONIST: '/reception',
+      NURSE: '/nurse',
+      LABORATORY_STAFF: '/laboratory',
+      PHARMACY_STAFF: '/pharmacy',
+      ACCOUNTS_STAFF: '/accounts',
+      PATIENT: '/patient'
+    };
+
+    return user.roles.some(role => {
+      const baseRoute = dashboardRoutes[role];
+
+      return !!baseRoute &&
+        (url === baseRoute || url.startsWith(baseRoute + '/'));
+    });
   }
-
-  const dashboardRoutes: Record<string, string> = {
-    ADMIN: '/admin',
-    DOCTOR: '/doctor',
-    RECEPTIONIST: '/reception',
-    NURSE: '/nurse',
-    LABORATORY_STAFF: '/laboratory',
-    PHARMACY_STAFF: '/pharmacy',
-    ACCOUNTS_STAFF: '/accounts'
-  };
-
-  return user.roles.some(role => {
-    const baseRoute = dashboardRoutes[role];
-
-    return !!baseRoute &&
-      (url === baseRoute || url.startsWith(baseRoute + '/'));
-  });
-}
 
 }

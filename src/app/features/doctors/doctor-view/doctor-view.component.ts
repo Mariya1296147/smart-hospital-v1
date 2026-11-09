@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -15,16 +16,8 @@ import { Doctor, DoctorService } from '../../../core/services/doctor.service';
 })
 export class DoctorViewComponent implements OnInit {
 
-  // ================================
-  // DOCTOR DATA
-  // ================================
-
   doctor: Doctor | undefined;
-
-
-  // ================================
-  // CONSTRUCTOR
-  // ================================
+  isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,49 +25,35 @@ export class DoctorViewComponent implements OnInit {
     private doctorService: DoctorService
   ) {}
 
-
-  // ================================
-  // LOAD DOCTOR
-  // ================================
-
   ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
 
-    const id = Number(
-      this.route.snapshot.paramMap.get('id')
-    );
-
-    if (!id) {
-      this.router.navigate([
-        '/admin/doctors'
-      ]);
+    if (!Number.isFinite(id) || id <= 0) {
+      alert('Invalid doctor ID.');
+      this.router.navigate(['/admin/doctors']);
       return;
     }
 
-    this.doctor =
-      this.doctorService.getDoctorById(id);
+    this.isLoading = true;
 
+    this.doctorService.getDoctorById(id).subscribe({
+      next: (data) => {
+        this.doctor = data;
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Failed to load doctor:', error);
+        this.isLoading = false;
 
-    // Doctor না পাওয়া গেলে
-    if (!this.doctor) {
+        alert('Doctor not found or unable to load doctor details.');
 
-      alert('Doctor not found.');
-
-      this.router.navigate([
-        '/admin/doctors'
-      ]);
-
-    }
-
+        this.router.navigate(['/admin/doctors']);
+      }
+    });
   }
 
-
-  // ================================
-  // EDIT DOCTOR
-  // ================================
-
   editDoctor(): void {
-
-    if (!this.doctor) {
+    if (this.doctor?.id == null) {
       return;
     }
 
@@ -82,7 +61,5 @@ export class DoctorViewComponent implements OnInit {
       '/admin/doctors/edit',
       this.doctor.id
     ]);
-
   }
-
 }

@@ -14,7 +14,7 @@
     </div>
 
     <a
-      routerLink="/admin/pharmacy/add"
+      [routerLink]="[stockPath, 'add']"
       class="btn btn-primary">
 
       <i class="bi bi-plus-lg me-2"></i>
@@ -211,6 +211,8 @@
       </div>
 
 
+      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+      <div *ngIf="loading" class="text-center text-muted py-3">Loading medicine stock…</div>
       <div class="table-responsive">
 
         <table class="table table-hover align-middle">
@@ -228,6 +230,7 @@
               <th>Manufacturer</th>
 
               <th>Quantity</th>
+              <th>Batch</th>
 
               <th>Unit Price</th>
 
@@ -271,11 +274,11 @@
                   [class.text-danger]="medicine.quantity === 0"
                   [class.text-warning]="
                     medicine.quantity > 0 &&
-                    medicine.quantity <= 75
+                    medicine.quantity <= (medicine.lowStockThreshold ?? 10)
                   "
                   [class.fw-bold]="
                     medicine.quantity === 0 ||
-                    medicine.quantity <= 75
+                    medicine.quantity <= (medicine.lowStockThreshold ?? 10)
                   ">
 
                   {{ medicine.quantity }}
@@ -284,8 +287,10 @@
 
               </td>
 
+              <td>{{ medicine.batchNumber || '—' }}</td>
+
               <td>
-                ৳{{ medicine.unitPrice | number:'1.2-2' }}
+                ৳{{ (medicine.sellingPrice ?? medicine.unitPrice) | number:'1.2-2' }}
               </td>
 
               <td>
@@ -299,16 +304,16 @@
                   [ngClass]="{
 
                     'bg-success':
-                      medicine.status === 'Available',
+                      medicine.status === 'AVAILABLE' || medicine.status === 'Available',
 
                     'bg-warning text-dark':
-                      medicine.status === 'Low Stock',
+                      medicine.status === 'LOW STOCK' || medicine.status === 'Low Stock',
 
                     'bg-danger':
-                      medicine.status === 'Out of Stock',
+                      medicine.status === 'OUT OF STOCK' || medicine.status === 'Out of Stock',
 
                     'bg-secondary':
-                      medicine.status === 'Expired'
+                      medicine.status === 'EXPIRED' || medicine.status === 'Expired'
 
                   }">
 
@@ -326,7 +331,7 @@
                   <!-- View -->
                   <a
                     [routerLink]="[
-                      '/admin/pharmacy/view',
+                      stockPath, 'view',
                       medicine.id
                     ]"
                     class="btn btn-sm btn-outline-info"
@@ -340,7 +345,7 @@
                   <!-- Edit -->
                   <a
                     [routerLink]="[
-                      '/admin/pharmacy/edit',
+                      stockPath, 'edit',
                       medicine.id
                     ]"
                     class="btn btn-sm btn-outline-primary"
@@ -374,7 +379,7 @@
               *ngIf="medicines.length === 0">
 
               <td
-                colspan="9"
+                colspan="10"
                 class="text-center text-muted py-5">
 
                 <i class="bi bi-capsule fs-2 d-block mb-2"></i>

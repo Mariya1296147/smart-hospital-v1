@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 
 import { BillingService } from '../../../core/services/billing.service';
 import { Billing } from '../../../models/billing';
+import { AuthService } from '../../../core/services/auth.service';
 
 
 @Component({
@@ -19,21 +20,40 @@ import { Billing } from '../../../models/billing';
 export class BillingListComponent implements OnInit {
 
   bills: Billing[] = [];
+  readonly isAdmin: boolean;
+  readonly isReceptionist: boolean;
+  readonly basePath: string;
+  downloadingId: number | null = null;
 
   constructor(
-    private billingService: BillingService
-  ) {}
+    private billingService: BillingService,
+    authService: AuthService
+  ) {
+    this.isAdmin = authService.isAdmin();
+    this.isReceptionist = authService.hasRole('RECEPTIONIST');
+    this.basePath = this.isAdmin ? '/admin/billing'
+      : authService.hasRole('ACCOUNTS_STAFF') ? '/accounts/billing' : '/reception/billing';
+  }
 
   ngOnInit(): void {
     this.loadBills();
   }
 
   loadBills(): void {
-    this.bills =
-      this.billingService.getBills();
+    this.billingService.getBills().subscribe({
+      next: bills => this.bills = (bills ?? []).filter(bill => this.isDoctorVisit(bill) === this.isReceptionist),
+      error: error => console.error('Error loading bills:', error)
+    });
+  }
+
+  private isDoctorVisit(bill: Billing): boolean {
+    return !!bill.appointmentId || !!bill.appointment?.id
+      || !!bill.items?.some(item => item.serviceCategory?.toUpperCase() === 'DOCTOR_VISIT')
+      || /^doctor visits?\b/i.test(bill.serviceName ?? '');
   }
 
   deleteBill(id: number): void {
+    if (!this.isAdmin) return;
 
     if (
       confirm(
@@ -41,12 +61,28 @@ export class BillingListComponent implements OnInit {
       )
     ) {
 
-      this.billingService.deleteBill(id);
-
-      this.loadBills();
-
-      alert('Invoice deleted successfully!');
+      this.billingService.deleteBill(id).subscribe({
+        next: () => { this.loadBills(); alert('Invoice deleted successfully.'); },
+        error: error => console.error('Error deleting invoice:', error)
+      });
     }
+  }
+
+  downloadInvoice(bill: Billing): void {
+    if (!bill.id || this.downloadingId !== null) return;
+    this.downloadingId = bill.id;
+    this.billingService.getInvoicePdf(bill.id).subscribe({
+      next: pdf => {
+        const url = URL.createObjectURL(pdf);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `invoice-${bill.invoiceId || bill.id}.pdf`;
+        link.click();
+        URL.revokeObjectURL(url);
+        this.downloadingId = null;
+      },
+      error: () => { this.downloadingId = null; alert('Could not download the invoice PDF.'); }
+    });
   }
 
   get totalBills(): number {
@@ -77,6 +113,10 @@ export class BillingListComponent implements OnInit {
     return this.bills.filter(
       bill => bill.paymentStatus === 'Overdue'
     ).length;
+  }
+
+  get partiallyPaidBills(): number {
+    return this.bills.filter(bill => bill.paymentStatus === 'Partially Paid').length;
   }
 
 }

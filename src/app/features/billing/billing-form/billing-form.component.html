@@ -1,329 +1,173 @@
-<div class="container-fluid py-4">
-
-  <!-- Header -->
-  <div class="mb-4">
-
-    <h3 class="fw-bold mb-1">
-      {{ isEdit ? 'Edit Invoice' : 'Create Invoice' }}
-    </h3>
-
-    <p class="text-muted mb-0">
-      {{ isEdit
-        ? 'Update patient billing information'
-        : 'Create a new patient invoice'
-      }}
-    </p>
-
+<div class="container-fluid py-4 billing-form-page">
+  <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-4">
+    <div>
+      <span class="eyebrow">{{ isReceptionist ? 'RECEPTION BILLING' : 'PATIENT ACCOUNTS' }}</span>
+      <h2 class="fw-bold mb-1">{{ isEdit ? 'Edit Invoice' : 'Create Invoice' }}</h2>
+      <p class="text-muted mb-0">{{ isReceptionist ? 'Create and collect Doctor Visit fees.' : 'Manage tests, admission, pharmacy and other hospital charges.' }}</p>
+    </div>
+    <a [routerLink]="billingListPath" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-2"></i>Back to invoices</a>
   </div>
 
-
-  <div class="card shadow-sm border-0">
-
-    <div class="card-body p-4">
-
-      <form
-        #billingForm="ngForm"
-        (ngSubmit)="saveBill()">
-
-        <div class="row g-3">
-
-
-          <!-- Invoice ID -->
-          <div class="col-md-6">
-
-            <label class="form-label">
-              Invoice ID
-            </label>
-
-            <input
-              type="text"
-              class="form-control"
-              name="invoiceId"
-              [(ngModel)]="bill.invoiceId"
-              placeholder="Example: INV-1007"
-              required>
-
+  <div class="row g-4">
+    <div class="col-xl-8">
+      <form #billingForm="ngForm" (ngSubmit)="saveBill()" class="card border-0 shadow-sm">
+        <div class="card-header billing-card-header">
+          <div class="d-flex align-items-center gap-3">
+            <span class="section-icon"><i class="bi bi-receipt-cutoff"></i></span>
+            <div><h5 class="mb-1">Invoice details</h5><p class="mb-0">Patient information and service lines</p></div>
           </div>
-
-
-          <!-- Invoice Date -->
-          <div class="col-md-6">
-
-            <label class="form-label">
-              Invoice Date
-            </label>
-
-            <input
-              type="date"
-              class="form-control"
-              name="invoiceDate"
-              [(ngModel)]="bill.invoiceDate"
-              required>
-
-          </div>
-
-
-          <!-- Patient ID -->
-          <div class="col-md-6">
-
-            <label class="form-label">
-              Patient ID
-            </label>
-
-            <input
-              type="text"
-              class="form-control"
-              name="patientId"
-              [(ngModel)]="bill.patientId"
-              placeholder="Example: P-1001"
-              required>
-
-          </div>
-
-
-          <!-- Patient Name -->
-          <div class="col-md-6">
-
-            <label class="form-label">
-              Patient Name
-            </label>
-
-            <input
-              type="text"
-              class="form-control"
-              name="patientName"
-              [(ngModel)]="bill.patientName"
-              placeholder="Enter patient name"
-              required>
-
-          </div>
-
-
-          <!-- Doctor -->
-          <div class="col-md-6">
-
-            <label class="form-label">
-              Doctor
-            </label>
-
-            <input
-              type="text"
-              class="form-control"
-              name="doctor"
-              [(ngModel)]="bill.doctor"
-              placeholder="Enter doctor name"
-              required>
-
-          </div>
-
-
-          <!-- Department -->
-          <div class="col-md-6">
-
-            <label class="form-label">
-              Department
-            </label>
-
-            <select
-              class="form-select"
-              name="department"
-              [(ngModel)]="bill.department"
-              required>
-
-              <option value="">
-                Select Department
-              </option>
-
-              <option value="Cardiology">
-                Cardiology
-              </option>
-
-              <option value="Neurology">
-                Neurology
-              </option>
-
-              <option value="Medicine">
-                Medicine
-              </option>
-
-              <option value="Orthopedics">
-                Orthopedics
-              </option>
-
-              <option value="Laboratory">
-                Laboratory
-              </option>
-
-              <option value="Radiology">
-                Radiology
-              </option>
-
-              <option value="Emergency">
-                Emergency
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <!-- Service -->
-          <div class="col-md-12">
-
-            <label class="form-label">
-              Service / Charge
-            </label>
-
-            <input
-              type="text"
-              class="form-control"
-              name="serviceName"
-              [(ngModel)]="bill.serviceName"
-              placeholder="Example: Cardiology Consultation"
-              required>
-
-          </div>
-
-
-          <!-- Amount -->
-          <div class="col-md-4">
-
-            <label class="form-label">
-              Amount (৳)
-            </label>
-
-            <input
-              type="number"
-              class="form-control"
-              name="amount"
-              [(ngModel)]="bill.amount"
-              (ngModelChange)="calculateTotal()"
-              min="0"
-              step="0.01"
-              required>
-
-          </div>
-
-
-          <!-- Discount -->
-          <div class="col-md-4">
-
-            <label class="form-label">
-              Discount (৳)
-            </label>
-
-            <input
-              type="number"
-              class="form-control"
-              name="discount"
-              [(ngModel)]="bill.discount"
-              (ngModelChange)="calculateTotal()"
-              min="0"
-              step="0.01">
-
-          </div>
-
-
-          <!-- Tax -->
-          <div class="col-md-4">
-
-            <label class="form-label">
-              Tax (৳)
-            </label>
-
-            <input
-              type="number"
-              class="form-control"
-              name="tax"
-              [(ngModel)]="bill.tax"
-              (ngModelChange)="calculateTotal()"
-              min="0"
-              step="0.01">
-
-          </div>
-
-
-          <!-- Total -->
-          <div class="col-md-6">
-
-            <label class="form-label">
-              Total Amount (৳)
-            </label>
-
-            <input
-              type="number"
-              class="form-control total-input"
-              name="totalAmount"
-              [(ngModel)]="bill.totalAmount"
-              readonly>
-
-          </div>
-
-
-          <!-- Payment Status -->
-          <div class="col-md-6">
-
-            <label class="form-label">
-              Payment Status
-            </label>
-
-            <select
-              class="form-select"
-              name="paymentStatus"
-              [(ngModel)]="bill.paymentStatus">
-
-              <option value="Paid">
-                Paid
-              </option>
-
-              <option value="Pending">
-                Pending
-              </option>
-
-              <option value="Overdue">
-                Overdue
-              </option>
-
-            </select>
-
-          </div>
-
-
-          <!-- Buttons -->
-          <div class="col-12 mt-4">
-
-            <button
-              type="submit"
-              class="btn btn-primary me-2">
-
-              <i class="bi bi-check-lg me-2"></i>
-
-              {{ isEdit
-                ? 'Update Invoice'
-                : 'Create Invoice'
-              }}
-
-            </button>
-
-
-            <a
-              routerLink="/admin/billing"
-              class="btn btn-secondary">
-
-              <i class="bi bi-x-lg me-2"></i>
-
-              Cancel
-
-            </a>
-
-          </div>
-
         </div>
+        <div class="card-body p-4">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Invoice number</label>
+              <input class="form-control" name="invoiceId" [(ngModel)]="bill.invoiceId" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Invoice date</label>
+              <input type="date" class="form-control" name="invoiceDate" [(ngModel)]="bill.invoiceDate" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Patient ID</label>
+              <select class="form-select" name="patientId" [(ngModel)]="bill.patientId" (ngModelChange)="onPatientChange()" required>
+                <option value="">Select patient ID</option>
+                <option *ngFor="let patient of patients" [ngValue]="patient.patientId">{{ patient.patientId }} · {{ patient.name }}</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Patient name</label>
+              <input class="form-control" name="patientName" [(ngModel)]="bill.patientName" readonly required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Phone</label>
+              <input class="form-control" name="patientPhone" [ngModel]="patientPhone" readonly placeholder="Patient phone number">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Doctor <span class="optional">Optional</span></label>
+              <select class="form-select" name="doctor" [(ngModel)]="bill.doctor">
+                <option value="">Select doctor</option>
+                <option *ngFor="let doctor of doctors" [value]="doctor.name">{{ doctor.name }}</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Department <span class="optional">Optional</span></label>
+              <select class="form-select" name="department" [(ngModel)]="bill.department">
+                <option value="">Select department</option>
+                <option *ngFor="let department of departments" [value]="department.departmentName">{{ department.departmentName }}</option>
+              </select>
+            </div>
+          </div>
 
+          <div class="service-heading d-flex flex-wrap justify-content-between align-items-center gap-2 mt-4 mb-3">
+            <div><h5 class="mb-1">{{ isReceptionist ? 'Doctor Visit fee' : 'Services and charges' }}</h5><p class="text-muted small mb-0">{{ isReceptionist ? 'Reception Staff manages Doctor Visit fees and payments.' : 'Add test, admission, bed, pharmacy or other charges.' }}</p></div>
+            <button type="button" class="btn btn-sm btn-outline-primary" (click)="addLine()"><i class="bi bi-plus-lg me-1"></i>Add service line</button>
+          </div>
+
+          <div class="service-lines" *ngIf="bill.items?.length; else emptyLines">
+            <div class="service-line" *ngFor="let item of bill.items; let i = index">
+              <div class="row g-3 align-items-end">
+                <div class="col-lg-3 col-md-5">
+                  <label class="form-label">Service type</label>
+                  <select class="form-select" [name]="'category' + i" [(ngModel)]="item.serviceCategory" [disabled]="!!item.prescriptionTestId">
+                    <option *ngFor="let category of categories" [ngValue]="category.value">{{ category.label }}</option>
+                  </select>
+                </div>
+                <div class="col-lg-4 col-md-7">
+                  <label class="form-label">Description</label>
+                  <input class="form-control" [name]="'description' + i" [(ngModel)]="item.description" placeholder="Service or charge details" required>
+                </div>
+                <div class="col-4 col-lg-1 col-md-3">
+                  <label class="form-label">Qty</label>
+                  <input type="number" class="form-control" [name]="'quantity' + i" [(ngModel)]="item.quantity" (ngModelChange)="calculateTotal()" min="0.01" step="0.01" required>
+                </div>
+                <div class="col-6 col-lg-2 col-md-4">
+                  <label class="form-label">Unit price (৳)</label>
+                  <input type="number" class="form-control" [name]="'unitPrice' + i" [(ngModel)]="item.unitPrice" (ngModelChange)="calculateTotal()" min="0" step="0.01" required>
+                </div>
+                <div class="col-6 col-lg-2 col-md-5 d-flex align-items-end gap-2">
+                  <div class="line-total flex-grow-1"><small>Line total</small><strong>৳{{ (item.quantity * item.unitPrice) | number:'1.2-2' }}</strong></div>
+                  <button type="button" class="btn btn-outline-danger remove-line" title="Remove line" (click)="removeLine(i)"><i class="bi bi-trash"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-template #emptyLines>
+            <div class="empty-lines"><i class="bi bi-card-list"></i><span>No charges yet. Add a service line or select a prescribed test.</span></div>
+          </ng-template>
+
+          <div class="row g-3 mt-2 justify-content-end">
+            <div class="col-md-4 col-sm-6">
+              <label class="form-label">Discount (৳)</label>
+              <input type="number" class="form-control" name="discount" [(ngModel)]="bill.discount" (ngModelChange)="calculateTotal()" min="0" step="0.01">
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <label class="form-label">Tax (৳)</label>
+              <input type="number" class="form-control" name="tax" [(ngModel)]="bill.tax" (ngModelChange)="calculateTotal()" min="0" step="0.01">
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <label class="form-label">Paid amount (৳)</label>
+              <input type="number" class="form-control" name="paidAmount" [(ngModel)]="bill.paidAmount" (ngModelChange)="updatePaymentStatus()" min="0" [max]="bill.totalAmount" step="0.01" [readonly]="isEdit">
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <label class="form-label">Due amount (৳)</label>
+              <input type="number" class="form-control" name="dueAmount" [ngModel]="dueAmount" readonly>
+            </div>
+            <div class="col-md-4 col-sm-6">
+              <label class="form-label">Payment status</label>
+              <input class="form-control" name="paymentStatus" [ngModel]="bill.paymentStatus" readonly>
+            </div>
+          </div>
+
+          <div class="alert alert-danger mt-3 mb-0" *ngIf="errorMessage">{{ errorMessage }}</div>
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mt-4">
+            <span class="small text-muted"><i class="bi bi-info-circle me-1"></i>{{ isEdit ? 'Record additional payments from invoice details.' : 'Enter the opening paid amount; record later payments from invoice details.' }}</span>
+            <div class="d-flex gap-2">
+              <a [routerLink]="billingListPath" class="btn btn-light">Cancel</a>
+              <button type="submit" class="btn btn-primary px-4" [disabled]="isSaving || billingForm.invalid">
+                <span *ngIf="isSaving" class="spinner-border spinner-border-sm me-2"></span>
+                {{ isEdit ? 'Save changes' : 'Create invoice' }}
+              </button>
+            </div>
+          </div>
+        </div>
       </form>
-
     </div>
 
-  </div>
+    <aside class="col-xl-4">
+      <div class="card border-0 shadow-sm prescribed-card" *ngIf="!isEdit && !isReceptionist">
+        <div class="card-header billing-card-header">
+          <div class="d-flex align-items-center gap-3">
+            <span class="section-icon"><i class="bi bi-prescription2"></i></span>
+            <div><h5 class="mb-1">Prescribed tests</h5><p class="mb-0">Ready to add to an invoice</p></div>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="prescribed-empty" *ngIf="prescribedTests.length === 0">No unbilled prescribed tests are available.</div>
+          <div class="prescribed-test" *ngFor="let test of prescribedTests">
+            <div class="d-flex justify-content-between gap-2">
+              <div><strong>{{ test.testName }}</strong><small>{{ test.testCode }} · {{ test.patientName }}</small></div>
+              <strong class="test-price">৳{{ test.price | number:'1.2-2' }}</strong>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <small class="text-muted">{{ test.doctorName }}</small>
+              <button type="button" class="btn btn-sm" [class.btn-primary]="!hasTest(test.prescriptionTestId)" [class.btn-success]="hasTest(test.prescriptionTestId)" [disabled]="hasTest(test.prescriptionTestId)" (click)="addPrescribedTest(test)">
+                <i class="bi" [ngClass]="hasTest(test.prescriptionTestId) ? 'bi-check-lg' : 'bi-plus-lg'"></i>
+                {{ hasTest(test.prescriptionTestId) ? 'Added' : 'Add test' }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <div class="card border-0 shadow-sm total-card mt-4">
+        <div class="card-body p-4">
+          <h6 class="text-uppercase mb-3">Invoice summary</h6>
+          <div class="summary-row"><span>Subtotal</span><strong>৳{{ subtotal | number:'1.2-2' }}</strong></div>
+          <div class="summary-row" *ngIf="bill.discount > 0"><span>Discount</span><strong class="text-success">−৳{{ bill.discount | number:'1.2-2' }}</strong></div>
+          <div class="summary-row" *ngIf="bill.tax > 0"><span>Tax</span><strong>৳{{ bill.tax | number:'1.2-2' }}</strong></div>
+          <div class="summary-total"><span>Total</span><strong>৳{{ bill.totalAmount | number:'1.2-2' }}</strong></div>
+        </div>
+      </div>
+    </aside>
+  </div>
 </div>

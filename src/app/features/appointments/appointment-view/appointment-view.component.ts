@@ -42,18 +42,10 @@ export class AppointmentViewComponent
       );
 
 
-    this.appointment =
-      this.appointmentService
-        .getAppointmentById(id);
-
-
-    if (!this.appointment) {
-
-      this.router.navigate([
-        '/admin/appointments'
-      ]);
-
-    }
+    this.appointmentService.getAppointmentById(id).subscribe({
+      next: appointment => this.appointment = appointment,
+      error: () => this.router.navigate(['/admin/appointments'])
+    });
 
   }
 

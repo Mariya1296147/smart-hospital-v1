@@ -14,7 +14,7 @@
     </div>
 
     <a
-      routerLink="/admin/billing/add"
+      [routerLink]="basePath + '/add'"
       class="btn btn-primary">
 
       <i class="bi bi-plus-lg me-2"></i>
@@ -358,6 +358,9 @@
                     'bg-warning text-dark':
                       bill.paymentStatus === 'Pending',
 
+                    'bg-info text-dark':
+                      bill.paymentStatus === 'Partially Paid',
+
                     'bg-danger':
                       bill.paymentStatus === 'Overdue'
 
@@ -383,10 +386,7 @@
 
                   <!-- View -->
                   <a
-                    [routerLink]="[
-                      '/admin/billing/view',
-                      bill.id
-                    ]"
+                    [routerLink]="[basePath, 'view', bill.id]"
                     class="btn btn-sm btn-outline-info"
                     title="View">
 
@@ -394,9 +394,14 @@
 
                   </a>
 
+                  <button type="button" class="btn btn-sm btn-outline-primary" title="Download invoice PDF"
+                    [disabled]="downloadingId === bill.id" (click)="downloadInvoice(bill)">
+                    <i class="bi bi-file-earmark-pdf"></i>
+                  </button>
+
 
                   <!-- Edit -->
-                  <a
+                  <a *ngIf="isAdmin"
                     [routerLink]="[
                       '/admin/billing/edit',
                       bill.id
@@ -410,11 +415,11 @@
 
 
                   <!-- Delete -->
-                  <button
+                  <button *ngIf="isAdmin"
                     type="button"
                     class="btn btn-sm btn-outline-danger"
                     title="Delete"
-                    (click)="deleteBill(bill.id)">
+                    (click)="deleteBill(bill.id!)">
 
                     <i class="bi bi-trash"></i>
 

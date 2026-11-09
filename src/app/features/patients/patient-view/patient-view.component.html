@@ -1,186 +1,221 @@
+
 <div class="patient-view-page">
 
   <!-- HEADER -->
   <div class="page-header">
-
     <div>
       <h2>Patient Details</h2>
       <p>View complete patient information</p>
     </div>
 
-    <a
-      routerLink="/admin/patients"
-      class="btn btn-outline-secondary">
-
+    <a routerLink="../.." class="btn btn-outline-secondary">
       <i class="bi bi-arrow-left"></i>
       Back to Patients
-
     </a>
-
   </div>
 
+  <!-- LOADING -->
+  <div *ngIf="isLoading" class="profile-card text-center">
+    Loading patient information...
+  </div>
 
-  <!-- PATIENT PROFILE -->
-  <div class="profile-card">
+  <!-- ERROR -->
+  <div *ngIf="!isLoading && errorMessage" class="profile-card text-center">
+    <h4>{{ errorMessage }}</h4>
+    <a routerLink="../.." class="btn btn-secondary mt-3">
+      Back to Patients
+    </a>
+  </div>
 
-    <div class="profile-top">
+  <!-- PATIENT DETAILS -->
+  <ng-container *ngIf="!isLoading && patient">
 
-      <div class="patient-avatar">
-        <i class="bi bi-person-fill"></i>
-      </div>
+    <div class="profile-card">
 
-      <div class="patient-title">
+      <!-- PROFILE -->
+      <div class="profile-top">
 
-        <h3>
-          {{ patient.firstName }} {{ patient.lastName }}
-        </h3>
+        <div class="patient-avatar">
+          <i class="bi bi-person-fill"></i>
+        </div>
 
-        <span>
-          Patient ID: {{ patient.patientId }}
+        <div class="patient-title">
+          <h3>{{ patientName }}</h3>
+          <span *ngIf="patient.patientId">
+            Patient ID: {{ patient.patientId }}
+          </span>
+        </div>
+
+        <span class="status-badge" *ngIf="patient.status">
+          {{ patient.status }}
         </span>
 
       </div>
 
-      <span class="status-badge">
-        {{ patient.status }}
-      </span>
+      <!-- PERSONAL INFORMATION -->
+      <ng-container
+        *ngIf="patient.patientId || patient.firstName ||
+        patient.lastName || patient.name || patient.gender ||
+        patient.dateOfBirth || patient.age != null ||
+        patient.bloodGroup || patient.maritalStatus">
+
+        <div class="section-title">
+          <i class="bi bi-person"></i>
+          Personal Information
+        </div>
+
+        <div class="info-grid">
+
+          <div class="info-item" *ngIf="patient.patientId">
+            <span>Patient ID</span>
+            <strong>{{ patient.patientId }}</strong>
+          </div>
+
+          <div class="info-item" *ngIf="patient.name">
+            <span>Full Name</span>
+            <strong>{{ patient.name }}</strong>
+          </div>
+
+          <div class="info-item" *ngIf="patient.firstName">
+            <span>First Name</span>
+            <strong>{{ patient.firstName }}</strong>
+          </div>
+
+          <div class="info-item" *ngIf="patient.lastName">
+            <span>Last Name</span>
+            <strong>{{ patient.lastName }}</strong>
+          </div>
+
+          <div class="info-item" *ngIf="patient.gender">
+            <span>Gender</span>
+            <strong>{{ patient.gender }}</strong>
+          </div>
+
+          <div class="info-item" *ngIf="patient.dateOfBirth">
+            <span>Date of Birth</span>
+            <strong>{{ patient.dateOfBirth }}</strong>
+          </div>
+
+          <div class="info-item" *ngIf="patient.age != null">
+            <span>Age</span>
+            <strong>{{ patient.age }} Years</strong>
+          </div>
+
+          <div class="info-item" *ngIf="patient.bloodGroup">
+            <span>Blood Group</span>
+            <strong>{{ patient.bloodGroup }}</strong>
+          </div>
+
+          <div class="info-item" *ngIf="patient.maritalStatus">
+            <span>Marital Status</span>
+            <strong>{{ patient.maritalStatus }}</strong>
+          </div>
+
+        </div>
+      </ng-container>
+
+      <!-- CONTACT INFORMATION -->
+      <ng-container
+        *ngIf="patient.phone || patient.email ||
+        patient.emergencyContact || patient.address">
+
+        <div class="section-title">
+          <i class="bi bi-telephone"></i>
+          Contact Information
+        </div>
+
+        <div class="info-grid">
+
+          <div class="info-item" *ngIf="patient.phone">
+            <span>Phone</span>
+            <strong>{{ patient.phone }}</strong>
+          </div>
+
+          <div class="info-item" *ngIf="patient.email">
+            <span>Email</span>
+            <strong>{{ patient.email }}</strong>
+          </div>
+
+          <div class="info-item" *ngIf="patient.emergencyContact">
+            <span>Emergency Contact</span>
+            <strong>{{ patient.emergencyContact }}</strong>
+          </div>
+
+          <div class="info-item full-width" *ngIf="patient.address">
+            <span>Address</span>
+            <strong>{{ patient.address }}</strong>
+          </div>
+
+        </div>
+      </ng-container>
+
+      <!-- MEDICAL INFORMATION -->
+      <ng-container
+        *ngIf="patient.department || patient.doctor ||
+        patient.allergies || patient.medicalHistory">
+
+        <div class="section-title">
+          <i class="bi bi-heart-pulse"></i>
+          Medical Information
+        </div>
+
+        <div class="info-grid">
+
+          <div class="info-item" *ngIf="patient.department">
+            <span>Department</span>
+            <strong>{{ patient.department }}</strong>
+          </div>
+
+          <div class="info-item" *ngIf="patient.doctor">
+            <span>Assigned Doctor</span>
+            <strong>{{ patient.doctor }}</strong>
+          </div>
+
+          <div class="info-item full-width" *ngIf="patient.allergies">
+            <span>Allergies</span>
+            <strong>{{ patient.allergies }}</strong>
+          </div>
+
+          <div class="info-item full-width" *ngIf="patient.medicalHistory">
+            <span>Medical History</span>
+            <strong>{{ patient.medicalHistory }}</strong>
+          </div>
+
+        </div>
+      </ng-container>
+
+      <!-- RECORD INFORMATION -->
+      <ng-container *ngIf="patient.createdAt || patient.updatedAt">
+
+        <div class="section-title">
+          <i class="bi bi-clock-history"></i>
+          Record Information
+        </div>
+
+        <div class="info-grid">
+
+          <div class="info-item" *ngIf="patient.createdAt">
+            <span>Created At</span>
+            <strong>{{ patient.createdAt }}</strong>
+          </div>
+
+          <div class="info-item" *ngIf="patient.updatedAt">
+            <span>Last Updated</span>
+            <strong>{{ patient.updatedAt }}</strong>
+          </div>
+
+        </div>
+      </ng-container>
+
+      <!-- ACTION -->
+      <div class="action-buttons">
+        <a routerLink="../.." class="btn btn-secondary">
+          <i class="bi bi-arrow-left"></i>
+          Back to Patients
+        </a>
+      </div>
 
     </div>
-
-
-    <!-- PERSONAL INFORMATION -->
-
-    <div class="section-title">
-      <i class="bi bi-person"></i>
-      Personal Information
-    </div>
-
-    <div class="info-grid">
-
-      <div class="info-item">
-        <span>First Name</span>
-        <strong>{{ patient.firstName }}</strong>
-      </div>
-
-      <div class="info-item">
-        <span>Last Name</span>
-        <strong>{{ patient.lastName }}</strong>
-      </div>
-
-      <div class="info-item">
-        <span>Gender</span>
-        <strong>{{ patient.gender }}</strong>
-      </div>
-
-      <div class="info-item">
-        <span>Date of Birth</span>
-        <strong>{{ patient.dateOfBirth }}</strong>
-      </div>
-
-      <div class="info-item">
-        <span>Age</span>
-        <strong>{{ patient.age }} Years</strong>
-      </div>
-
-      <div class="info-item">
-        <span>Blood Group</span>
-        <strong>{{ patient.bloodGroup }}</strong>
-      </div>
-
-      <div class="info-item">
-        <span>Marital Status</span>
-        <strong>{{ patient.maritalStatus }}</strong>
-      </div>
-
-    </div>
-
-
-    <!-- CONTACT INFORMATION -->
-
-    <div class="section-title">
-      <i class="bi bi-telephone"></i>
-      Contact Information
-    </div>
-
-    <div class="info-grid">
-
-      <div class="info-item">
-        <span>Phone</span>
-        <strong>{{ patient.phone }}</strong>
-      </div>
-
-      <div class="info-item">
-        <span>Email</span>
-        <strong>{{ patient.email }}</strong>
-      </div>
-
-      <div class="info-item">
-        <span>Emergency Contact</span>
-        <strong>{{ patient.emergencyContact }}</strong>
-      </div>
-
-      <div class="info-item full-width">
-        <span>Address</span>
-        <strong>{{ patient.address }}</strong>
-      </div>
-
-    </div>
-
-
-    <!-- MEDICAL INFORMATION -->
-
-    <div class="section-title">
-      <i class="bi bi-heart-pulse"></i>
-      Medical Information
-    </div>
-
-    <div class="info-grid">
-
-      <div class="info-item">
-        <span>Department</span>
-        <strong>{{ patient.department }}</strong>
-      </div>
-
-      <div class="info-item">
-        <span>Assigned Doctor</span>
-        <strong>{{ patient.doctor }}</strong>
-      </div>
-
-      <div class="info-item full-width">
-        <span>Allergies</span>
-        <strong>{{ patient.allergies }}</strong>
-      </div>
-
-      <div class="info-item full-width">
-        <span>Medical History</span>
-        <strong>{{ patient.medicalHistory }}</strong>
-      </div>
-
-    </div>
-
-
-    <!-- ACTIONS -->
-
-    <div class="action-buttons">
-
-      <a
-        routerLink="/admin/patients"
-        class="btn btn-secondary">
-
-        <i class="bi bi-arrow-left"></i>
-        Back
-
-      </a>
-
-      <button class="btn btn-primary">
-
-        <i class="bi bi-pencil"></i>
-        Edit Patient
-
-      </button>
-
-    </div>
-
-  </div>
+  </ng-container>
 
 </div>

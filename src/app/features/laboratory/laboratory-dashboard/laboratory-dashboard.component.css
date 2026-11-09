@@ -94,6 +94,27 @@
   margin-bottom: 20px;
 }
 
+.status-sections {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.status-sections .dashboard-panel {
+  min-width: 0;
+  padding: 18px;
+}
+
+.status-sections .test-row {
+  align-items: flex-start;
+}
+
+.status-sections .test-info span {
+  display: block;
+  line-height: 1.45;
+}
+
 .dashboard-panel {
   background: #fff;
   border: 1px solid #e5e7eb;
@@ -280,6 +301,10 @@
   }
 
   .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .status-sections {
     grid-template-columns: 1fr;
   }
 }

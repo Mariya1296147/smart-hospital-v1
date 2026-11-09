@@ -1,0 +1,112 @@
+<div class="container py-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2>Prescription List</h2>
+      <p class="text-muted">{{ isAdmin ? 'Manage all prescriptions' : 'Your accessible prescriptions' }}</p>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button *ngIf="isAdmin" class="btn btn-primary" routerLink="/admin/prescriptions/add"><i class="bi bi-plus-lg"></i> New Prescription</button>
+      <button class="btn btn-outline-secondary" [routerLink]="isAdmin ? '/admin/dashboard' : '/doctor/dashboard'"><i class="bi bi-arrow-left"></i> Dashboard</button>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="isLoading" class="text-center py-4">
+    <div class="spinner-border text-primary"></div>
+    <p>Loading prescriptions...</p>
+  </div>
+
+  <div class="card shadow-sm" *ngIf="!isLoading">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Diagnosis</th>
+            <th>Medicines</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let prescription of prescriptions">
+
+            <td>{{ prescription.id }}</td>
+
+            <td>{{ prescription.patientName }}</td>
+
+            <td>{{ prescription.doctorName }}</td>
+
+            <td>{{ prescription.diagnosis }}</td>
+
+            <td>
+              <span class="badge bg-info text-dark">
+               {{ prescription.medicines.length }} Medicines
+              </span>
+            </td>
+
+            <td>{{ prescription.date | date:'mediumDate' }}</td>
+
+            <td>
+              <div class="d-flex gap-1">
+
+                <button class="btn btn-sm btn-outline-primary"
+                        title="View"
+                        (click)="viewPrescription(prescription.id)">
+                  <i class="bi bi-eye"></i>
+                </button>
+
+                <button class="btn btn-sm btn-outline-secondary"
+                        title="Print Prescription"
+                        [disabled]="printingPrescriptionId === prescription.id"
+                        (click)="printPrescription(prescription.id)">
+                  <i class="bi bi-printer"></i>
+                  {{ printingPrescriptionId === prescription.id ? 'Preparing…' : 'Print' }}
+                </button>
+
+                <button *ngIf="!isAdmin" class="btn btn-sm btn-outline-success"
+                        title="Complete Visit"
+                        [disabled]="!prescription.appointmentId || prescription.appointmentStatus !== 'SCHEDULED' || completingAppointmentId === prescription.appointmentId"
+                        (click)="completeVisit(prescription)">
+                  <i class="bi bi-check2-circle"></i>
+                  {{ completingAppointmentId === prescription.appointmentId ? 'Completing…' : prescription.appointmentStatus === 'COMPLETED' ? 'Visit Completed' : 'Complete Visit' }}
+                </button>
+
+                <button *ngIf="isAdmin" class="btn btn-sm btn-outline-success"
+                        title="Edit"
+                        (click)="editPrescription(prescription.id)">
+                  <i class="bi bi-pencil"></i>
+                </button>
+
+                <button *ngIf="isAdmin" class="btn btn-sm btn-outline-danger"
+                        title="Delete"
+                        (click)="deletePrescription(prescription.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+
+              </div>
+            </td>
+
+          </tr>
+
+          <tr *ngIf="prescriptions.length === 0">
+            <td colspan="7" class="text-center text-muted py-4">
+              No prescriptions found.
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

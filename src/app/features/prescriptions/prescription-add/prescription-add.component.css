@@ -1,3 +1,4 @@
+
 .prescription-page {
   padding: 30px;
   background: #f5f7fb;
@@ -5,7 +6,6 @@
 }
 
 /* Header */
-
 .page-header {
   display: flex;
   justify-content: space-between;
@@ -35,9 +35,7 @@
   color: #64748b;
 }
 
-
 /* Main Card */
-
 .prescription-card {
   max-width: 1100px;
   margin: auto;
@@ -47,9 +45,7 @@
   box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
 }
 
-
 /* Section */
-
 .section-title {
   display: flex;
   align-items: center;
@@ -79,9 +75,7 @@
   color: #94a3b8;
 }
 
-
 /* Form */
-
 .form-label {
   font-weight: 600;
   color: #334155;
@@ -105,9 +99,7 @@ textarea.form-control {
   box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
 }
 
-
 /* Medicine */
-
 .medicine-box {
   background: #f8fafc;
   border: 1px solid #e2e8f0;
@@ -115,17 +107,102 @@ textarea.form-control {
   padding: 20px;
 }
 
+/* Test Multi-select Dropdown */
+.test-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.test-dropdown summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 12px 15px;
+  user-select: none;
+}
+
+.test-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.test-dropdown summary::after {
+  content: "\25BC";
+  margin-left: auto;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.test-dropdown[open] summary {
+  border-color: #0d9488;
+}
+
+.test-dropdown[open] summary::after {
+  content: "\25B2";
+}
+
+.test-dropdown-options {
+  margin-top: 8px;
+  padding: 10px 15px;
+  max-height: 240px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #dbe3ee;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(15, 23, 42, 0.06);
+}
+
+.test-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 5px;
+  border-bottom: 1px solid #edf1f5;
+  cursor: pointer;
+  font-weight: 500;
+  color: #334155;
+}
+
+.test-option:last-child {
+  border-bottom: none;
+}
+
+.test-option:hover {
+  background: #f8fafc;
+}
+
+.test-option .form-check-input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  accent-color: #0d9488;
+}
+
+.test-option small {
+  color: #94a3b8;
+  margin-left: 5px;
+}
+
+.selected-tests .badge {
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 7px;
+}
+
+.selected-tests .btn-close {
+  font-size: 9px;
+}
 
 /* Divider */
-
 hr {
   margin: 30px 0;
   border-color: #e2e8f0;
 }
 
-
 /* Buttons */
-
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -151,11 +228,8 @@ hr {
   border-color: #0f766e;
 }
 
-
 /* Responsive */
-
 @media (max-width: 768px) {
-
   .prescription-page {
     padding: 15px;
   }
@@ -176,5 +250,4 @@ hr {
   .form-actions .btn {
     width: 100%;
   }
-
 }

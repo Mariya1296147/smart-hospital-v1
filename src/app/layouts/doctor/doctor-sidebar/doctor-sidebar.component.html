@@ -1,113 +1,81 @@
+
 <div class="doctor-sidebar" [class.open]="isOpen">
 
   <!-- TOGGLE BUTTON -->
   <button
-  type="button"
-  class="sidebar-toggle"
-  (click)="toggleSidebar()"
-  title="Toggle Sidebar">
-
-  <i class="bi bi-chevron-right"></i>
-
-</button>
+    type="button"
+    class="sidebar-toggle"
+    (click)="toggleSidebar()"
+    title="Toggle Sidebar">
+    <i class="bi bi-chevron-right"></i>
+  </button>
 
   <!-- WELCOME -->
   <div class="welcome-user">
-
     <div class="welcome-title">
-      Welcome,
-      {{ userName }}
+      Welcome, {{ userName }}
     </div>
 
     <div class="online-status">
       <span class="online-dot"></span>
       <span>{{ roleLabel }} · Online</span>
     </div>
-
   </div>
-
 
   <!-- MENU -->
   <nav class="sidebar-menu">
 
     <!-- MAIN -->
-    <div class="menu-section-title">
-      MAIN
-    </div>
+    <div class="menu-section-title">MAIN</div>
 
     <a
       routerLink="/doctor/dashboard"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
       class="menu-item">
-
       <i class="bi bi-grid-1x2-fill"></i>
       <span>Dashboard</span>
-
     </a>
 
-
     <!-- MY WORK -->
-    <div class="menu-section-title">
-      MY WORK
-    </div>
+    <div class="menu-section-title">MY WORK</div>
 
     <a
       routerLink="/doctor/profile"
       routerLinkActive="active"
       class="menu-item">
-
       <i class="bi bi-person-badge-fill"></i>
       <span>My Profile</span>
-
     </a>
 
     <a
       routerLink="/doctor/patients"
       routerLinkActive="active"
       class="menu-item">
-
       <i class="bi bi-people-fill"></i>
       <span>My Patients</span>
-
-    </a>
-
-    <a
-      routerLink="/doctor/appointments"
-      routerLinkActive="active"
-      class="menu-item">
-
-      <i class="bi bi-calendar-check-fill"></i>
-      <span>Appointments</span>
-
-    </a>
-
-    <a
-      routerLink="/doctor/consultations"
-      routerLinkActive="active"
-      class="menu-item">
-
-      <i class="bi bi-chat-left-text-fill"></i>
-      <span>Consultations</span>
-
     </a>
 
     <a
       routerLink="/doctor/prescriptions"
       routerLinkActive="active"
       class="menu-item">
-
       <i class="bi bi-file-medical-fill"></i>
       <span>Prescriptions</span>
+    </a>
 
+    <a
+      routerLink="/doctor/laboratory-reports"
+      routerLinkActive="active"
+      class="menu-item">
+      <i class="bi bi-file-earmark-medical-fill"></i>
+      <span>Laboratory Reports</span>
     </a>
 
   </nav>
 
-
   <!-- USER INFO -->
   <div class="sidebar-footer">
-
     <div class="user-icon">
       <i class="bi bi-person-circle"></i>
     </div>
@@ -116,23 +84,17 @@
       <strong>{{ userName }}</strong>
       <small>{{ roleLabel }}</small>
     </div>
-
   </div>
-
 
   <!-- LOGOUT -->
   <div class="sidebar-logout">
-
     <button
       type="button"
       class="logout-button"
       (click)="logout()">
-
       <i class="bi bi-box-arrow-left"></i>
       <span>Logout</span>
-
     </button>
-
   </div>
 
 </div>

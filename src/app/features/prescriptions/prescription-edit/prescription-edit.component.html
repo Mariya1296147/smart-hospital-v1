@@ -1,0 +1,223 @@
+
+<div class="container py-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="mb-1">Edit Prescription</h2>
+      <p class="text-muted mb-0">Update prescription and medicines</p>
+    </div>
+
+    <button class="btn btn-outline-secondary" (click)="cancel()">
+      <i class="bi bi-arrow-left"></i> Back
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary"></div>
+    <p class="mt-2">Loading prescription...</p>
+  </div>
+
+  <div *ngIf="!isLoading">
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+
+    <form [formGroup]="prescriptionForm"
+          (ngSubmit)="updatePrescription()">
+
+      <!-- Prescription Information -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Prescription Information</h5>
+        </div>
+
+        <div class="card-body">
+          <div class="row g-3">
+
+            <div class="col-md-6">
+              <label class="form-label">Patient ID</label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="patientId"
+                readonly>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Doctor ID</label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="doctorId"
+                readonly>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Department ID</label>
+              <input
+                type="number"
+                class="form-control"
+                formControlName="departmentId">
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Diagnosis</label>
+              <textarea
+                class="form-control"
+                rows="3"
+                formControlName="diagnosis"
+                placeholder="Enter diagnosis">
+              </textarea>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="card shadow-sm mb-4">
+        <div class="card-header"><h5 class="mb-0">Tests</h5></div>
+        <div class="card-body">
+          <label class="form-check d-flex justify-content-between align-items-center py-2 border-bottom" *ngFor="let test of availableTests">
+            <span><input class="form-check-input me-2" type="checkbox" [checked]="isTestSelected(test.id)" [disabled]="!test.active && !isTestSelected(test.id)" (change)="toggleTest(test, $any($event.target).checked)">
+              <strong>{{ test.name }}</strong> <span class="text-muted">({{ test.code }})</span> <span *ngIf="!test.active" class="badge bg-secondary ms-2">Inactive</span>
+            </span>
+          </label>
+          <p *ngIf="availableTests.length === 0" class="text-muted mb-0">No catalog tests found.</p>
+        </div>
+      </div>
+
+      <!-- Medicines -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Medicines</h5>
+
+          <button
+            type="button"
+            class="btn btn-sm btn-primary"
+            (click)="addMedicine()">
+            <i class="bi bi-plus-circle"></i> Add Medicine
+          </button>
+        </div>
+
+        <div class="card-body" formArrayName="medicines">
+
+          <div
+            class="border rounded p-3 mb-3"
+            *ngFor="let medicine of medicines.controls; let i = index"
+            [formGroupName]="i">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h6 class="mb-0">Medicine {{ i + 1 }}</h6>
+
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-danger"
+                (click)="removeMedicine(i)"
+                [disabled]="medicines.length === 1">
+                <i class="bi bi-trash"></i> Remove
+              </button>
+            </div>
+
+            <div class="row g-3">
+
+              <div class="col-md-6">
+                <label class="form-label">Medicine Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="medicineName"
+                  placeholder="Medicine name">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Dosage</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="dosage"
+                  placeholder="e.g. 500 mg">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Frequency</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="frequency"
+                  placeholder="e.g. Twice daily">
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label">Duration</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="duration"
+                  placeholder="e.g. 5 days">
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">Instruction</label>
+                <textarea
+                  class="form-control"
+                  rows="2"
+                  formControlName="instruction"
+                  placeholder="Medicine instructions">
+                </textarea>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Advice -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-header">
+          <h5 class="mb-0">Doctor's Advice</h5>
+        </div>
+
+        <div class="card-body">
+          <textarea
+            class="form-control"
+            rows="4"
+            formControlName="advice"
+            placeholder="Enter advice">
+          </textarea>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="d-flex justify-content-end gap-2 mb-4">
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancel()">
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="isSaving || prescriptionForm.invalid">
+
+          <span
+            *ngIf="isSaving"
+            class="spinner-border spinner-border-sm me-1">
+          </span>
+
+          {{ isSaving ? 'Updating...' : 'Update Prescription' }}
+        </button>
+
+      </div>
+
+    </form>
+  </div>
+</div>

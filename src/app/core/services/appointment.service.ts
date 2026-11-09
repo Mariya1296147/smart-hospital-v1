@@ -1,133 +1,116 @@
-import { Injectable } from '@angular/core';
-import { Appointment } from '../../models/appointment';
 
+import { Injectable } from '@angular/core';
+import { Observable, map } from 'rxjs';
+import { ApiService } from './api.service';
+import { Appointment } from '../../models/appointment';
+import { DoctorPatient } from '../../models/doctor-patient';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
+  private readonly resource = 'appointments';
 
-  private appointments: Appointment[] = [
-    {
-      id: 1,
-      appointmentId: 'APT-1001',
-      patientName: 'Rahim Ahmed',
-      patientPhone: '01711111111',
-      doctorName: 'Dr. Sarah Ahmed',
-      department: 'Cardiology',
-      appointmentDate: '2026-09-20',
-      appointmentTime: '10:00 AM',
-      reason: 'Chest Pain',
-      status: 'Scheduled',
-      notes: 'First consultation'
-    },
-    {
-      id: 2,
-      appointmentId: 'APT-1002',
-      patientName: 'Nusrat Jahan',
-      patientPhone: '01822222222',
-      doctorName: 'Dr. Mahmud Hasan',
-      department: 'Neurology',
-      appointmentDate: '2026-09-20',
-      appointmentTime: '11:30 AM',
-      reason: 'Headache',
-      status: 'Pending',
-      notes: 'Morning appointment'
-    },
-    {
-      id: 3,
-      appointmentId: 'APT-1003',
-      patientName: 'Karim Hossain',
-      patientPhone: '01933333333',
-      doctorName: 'Dr. Tanvir Rahman',
-      department: 'Orthopedics',
-      appointmentDate: '2026-09-21',
-      appointmentTime: '02:00 PM',
-      reason: 'Back Pain',
-      status: 'Completed',
-      notes: 'Follow-up visit'
-    },
-    {
-      id: 4,
-      appointmentId: 'APT-1004',
-      patientName: 'Mim Akter',
-      patientPhone: '01644444444',
-      doctorName: 'Dr. Farzana Islam',
-      department: 'Pediatrics',
-      appointmentDate: '2026-09-22',
-      appointmentTime: '09:30 AM',
-      reason: 'Fever',
-      status: 'Scheduled',
-      notes: 'Child patient'
-    },
-    {
-      id: 5,
-      appointmentId: 'APT-1005',
-      patientName: 'Sakib Khan',
-      patientPhone: '01555555555',
-      doctorName: 'Dr. Sarah Ahmed',
-      department: 'Cardiology',
-      appointmentDate: '2026-09-23',
-      appointmentTime: '04:00 PM',
-      reason: 'Heart Checkup',
-      status: 'Cancelled',
-      notes: 'Patient cancelled'
-    },
-    {
-      id: 6,
-      appointmentId: 'APT-1006',
-      patientName: 'Jannat Ara',
-      patientPhone: '01766666666',
-      doctorName: 'Dr. Mahmud Hasan',
-      department: 'Neurology',
-      appointmentDate: '2026-09-24',
-      appointmentTime: '12:00 PM',
-      reason: 'Migraine',
-      status: 'Pending',
-      notes: ''
-    }
-  ];
+  constructor(private readonly api: ApiService) {}
 
-  getAppointments(): Appointment[] {
-    return this.appointments;
+  getAppointments(): Observable<Appointment[]> {
+    return this.api.getAll<Appointment>(this.resource).pipe(map(items => items.map(item => this.normalize(item))));
   }
 
-  getAppointmentById(id: number): Appointment | undefined {
-    return this.appointments.find(
-      appointment => appointment.id === id
+  getAppointmentById(id: number): Observable<Appointment> {
+    return this.api.getById<Appointment>(this.resource, id).pipe(map(item => this.normalize(item)));
+  }
+
+  addAppointment(value: Partial<Appointment>): Observable<Appointment> {
+    return this.api.create<Appointment>(this.resource, value);
+  }
+
+  createPublicAppointment(request: {
+    patientName: string;
+    email: string;
+    phone: string;
+    age: number;
+    gender: string;
+    doctorId: number;
+    departmentId?: number;
+    appointmentDate: string;
+    appointmentTime: string;
+    message?: string;
+  }): Observable<Appointment> {
+    return this.api.create<Appointment>(
+      `${this.resource}/public`,
+      request
     );
   }
 
-  addAppointment(appointment: Appointment): void {
-
-    const newId =
-      this.appointments.length > 0
-        ? Math.max(...this.appointments.map(a => a.id)) + 1
-        : 1;
-
-    appointment.id = newId;
-
-    this.appointments.push(appointment);
+  getMyAppointments(): Observable<Appointment[]> {
+    return this.api.getAll<Appointment>(
+      `${this.resource}/doctor/my?status=SCHEDULED`
+    ).pipe(map(items => items.map(item => this.normalize(item))));
   }
 
-  updateAppointment(appointment: Appointment): void {
-
-    const index = this.appointments.findIndex(
-      a => a.id === appointment.id
+  getMyPatients(): Observable<DoctorPatient[]> {
+    return this.api.getResource<Array<{
+      patientId: string;
+      name: string;
+      age: number | null;
+      gender?: string;
+      bloodGroup?: string;
+      phone?: string;
+      department?: string;
+      appointmentStatus: string;
+      lastAppointmentDate?: string;
+    }>>(`${this.resource}/doctor/patients`).pipe(
+      map(items => (items ?? []).map(item => ({
+        id: item.patientId,
+        name: item.name,
+        age: item.age,
+        gender: item.gender,
+        bloodGroup: item.bloodGroup,
+        phone: item.phone,
+        department: item.department,
+        status: item.appointmentStatus,
+        lastAppointmentDate: item.lastAppointmentDate
+      })))
     );
-
-    if (index !== -1) {
-      this.appointments[index] = appointment;
-    }
   }
 
-  deleteAppointment(id: number): void {
+  updateAppointment(
+    id: number,
+    value: Partial<Appointment>
+  ): Observable<Appointment> {
+    return this.api.update<Appointment>(this.resource, id, value);
+  }
 
-    this.appointments =
-      this.appointments.filter(
-        appointment => appointment.id !== id
-      );
+ updateStatus(
+  id: number,
+  status: 'SCHEDULED' | 'REJECTED' | 'COMPLETED'
+): Observable<Appointment> {
+  return this.api.patch<Appointment>(
+    this.resource,
+    `${id}/status?status=${status}`
+  ).pipe(map(item => this.normalize(item)));
+}
+  
+
+  deleteAppointment(id: number): Observable<void> {
+    return this.api.remove(this.resource, id);
+  }
+
+  private normalize(item: any): Appointment {
+    return {
+      ...item,
+      patientRecordId: item.patientRecordId ?? item.patient?.id,
+      doctorId: item.doctorId ?? item.doctor?.id,
+      departmentId: item.departmentId ?? item.department?.id ?? item.doctor?.department?.id,
+      patientName: item.patientName ?? item.patient?.name ?? '',
+      patientPhone: item.patientPhone ?? item.patient?.phone ?? '',
+      doctorName: item.doctorName ?? item.doctor?.name ?? '',
+      department: typeof item.department === 'string'
+        ? item.department
+        : item.department?.departmentName ?? item.doctor?.department?.departmentName ?? ''
+    } as Appointment;
   }
 }
-
 export { Appointment };
+

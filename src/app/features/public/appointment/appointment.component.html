@@ -57,6 +57,8 @@
 
         </div>
 
+        <p class="text-danger" *ngIf="loadError">{{ loadError }}</p>
+
 
         <form (ngSubmit)="submitAppointment()">
 
@@ -113,6 +115,35 @@
           </div>
 
 
+          <!-- Age + Gender -->
+
+          <div class="form-row">
+
+            <div class="form-group">
+              <label>Age <span>*</span></label>
+              <div class="input-wrapper">
+                <i class="bi bi-calendar2-week-fill"></i>
+                <input type="number" name="age" [(ngModel)]="appointment.age"
+                  min="0" step="1" placeholder="Enter age" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Gender <span>*</span></label>
+              <div class="input-wrapper">
+                <i class="bi bi-person-fill"></i>
+                <select name="gender" [(ngModel)]="appointment.gender" required>
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+
           <!-- Phone + Department -->
 
           <div class="form-row">
@@ -152,8 +183,10 @@
 
                 <select
                   name="department"
-                  [(ngModel)]="appointment.department"
+                  [(ngModel)]="appointment.departmentId"
                   required
+                  [disabled]="loadingDepartments || departments.length === 0"
+                  (ngModelChange)="onDepartmentChange()"
                 >
 
                   <option value="">
@@ -162,9 +195,9 @@
 
                   <option
                     *ngFor="let department of departments"
-                    [value]="department"
+                    [value]="department.id"
                   >
-                    {{ department }}
+                    {{ department.departmentName }}
                   </option>
 
                 </select>
@@ -192,8 +225,9 @@
 
                 <select
                   name="doctor"
-                  [(ngModel)]="appointment.doctor"
+                  [(ngModel)]="appointment.doctorId"
                   required
+                  [disabled]="!appointment.departmentId || loadingDoctors || departmentDoctors.length === 0"
                 >
 
                   <option value="">
@@ -201,13 +235,17 @@
                   </option>
 
                   <option
-                    *ngFor="let doctor of doctors"
-                    [value]="doctor"
+                    *ngFor="let doctor of departmentDoctors"
+                    [value]="doctor.id"
                   >
-                    {{ doctor }}
+                    {{ doctor.name }}{{ doctor.specialization ? ' — ' + doctor.specialization : '' }}
                   </option>
 
                 </select>
+
+                <small class="text-muted" *ngIf="appointment.departmentId && !loadingDoctors && departmentDoctors.length === 0">
+                  No active doctors are listed for this department.
+                </small>
 
               </div>
 
@@ -339,11 +377,12 @@
           <button
             type="submit"
             class="submit-button"
+            [disabled]="submitting || loadingDepartments || loadingDoctors"
           >
 
             <i class="bi bi-calendar-check-fill"></i>
 
-            Book Appointment
+            {{ submitting ? 'Submitting…' : 'Book Appointment' }}
 
           </button>
 
@@ -374,15 +413,14 @@
             <h3>Need Immediate Help?</h3>
 
             <p>
-              For medical emergencies, contact our
-              emergency support immediately.
+              For national emergency assistance in Bangladesh, call the Bangladesh National Emergency Service.
             </p>
 
             <a href="tel:999">
 
               <i class="bi bi-telephone-fill"></i>
 
-              Call Emergency: 999
+              Bangladesh National Emergency Service: 999
 
             </a>
 
@@ -500,9 +538,8 @@
               with appointments.
             </p>
 
-            <a href="tel:+8801712345678">
-              +880 1712-345678
-            </a>
+            <span *ngIf="hospitalSettings.phone">{{ hospitalSettings.phone }}</span>
+            <span *ngIf="!hospitalSettings.phone">Hospital phone not configured</span>
 
           </div>
 

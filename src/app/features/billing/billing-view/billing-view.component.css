@@ -1,36 +1,34 @@
-.card {
-  border-radius: 12px;
-}
-
-.card-header {
-  border-bottom: 1px solid #eee;
-}
-
-label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: #6c757d;
-  margin-bottom: 6px;
-}
-
-.value {
-  background: #f8f9fa;
-  border-radius: 7px;
-  padding: 10px 12px;
-  font-weight: 500;
-}
-
-.total {
-  font-weight: 700;
-  font-size: 17px;
-}
-
-.badge {
-  padding: 8px 12px;
-  font-size: 13px;
-}
-
-.btn {
-  border-radius: 6px;
-}
+.billing-detail-page { color: #17364d; }
+.eyebrow { color: #4291bc; font-size: .72rem; font-weight: 800; letter-spacing: .14em; }
+.billing-detail-page h2 { color: #102d46; }
+.card { overflow: hidden; border-radius: 14px; }
+.invoice-banner { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1.4rem 1.6rem; color: #fff; background: #102d46; }
+.invoice-banner small { color: #a9c2d3; font-size: .67rem; font-weight: 800; letter-spacing: .13em; }
+.invoice-banner h3 { margin: .2rem 0 0; font-size: 1.3rem; font-weight: 750; }
+.invoice-banner .badge { padding: .55rem .8rem; font-size: .75rem; }
+.patient-meta small { display: block; margin-bottom: .25rem; color: #8194a2; font-size: .72rem; }
+.patient-meta strong { color: #264860; font-size: .9rem; }
+.section-title { color: #173d59; font-size: .98rem; font-weight: 750; }
+.charge-table thead th, .table thead th { padding: .75rem .8rem; color: #6e8596; background: #eef5fa; border: 0; font-size: .69rem; letter-spacing: .04em; text-transform: uppercase; }
+.charge-table tbody td { padding: .9rem .8rem; border-color: #eaf0f4; color: #435d70; font-size: .86rem; }
+.charge-table tbody strong { color: #23455f; font-size: .84rem; }
+.service-category { display: inline-block; margin-bottom: .25rem; color: #688da6; font-size: .62rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.invoice-totals { width: min(100%, 350px); }
+.invoice-totals > div { display: flex; justify-content: space-between; gap: 1rem; padding: .43rem .7rem; color: #6d8291; font-size: .84rem; }
+.invoice-totals strong { color: #24465f; }
+.invoice-totals .grand-total { margin-top: .25rem; padding-top: .75rem; border-top: 1px solid #dce7ef; color: #183d59; font-weight: 700; }
+.invoice-totals .grand-total strong { color: #133954; font-size: 1.04rem; }
+.invoice-totals .balance-due { margin-top: .25rem; padding: .75rem; color: #123d5d; background: #eaf4fb; border-radius: 8px; font-weight: 750; }
+.invoice-totals .balance-due strong { color: #123d5d; font-size: 1rem; }
+.section-header { padding: 1.1rem 1.3rem; background: #fff; border-bottom: 1px solid #e9eff4; }
+.section-header h5 { color: #173d59; font-size: .98rem; font-weight: 750; }
+.empty-history { padding: 1.5rem; color: #778b99; font-size: .87rem; }
+.payment-card { position: sticky; top: 1rem; }
+.due-highlight { padding: 1rem; background: #eaf4fb; border: 1px solid #d4e6f1; border-radius: 10px; }
+.due-highlight small { display: block; color: #678499; font-size: .65rem; font-weight: 800; letter-spacing: .12em; }
+.due-highlight strong { display: block; margin-top: .25rem; color: #103958; font-size: 1.5rem; }
+.form-label { color: #38556b; font-size: .8rem; font-weight: 700; }
+.form-control, .form-select { border-color: #dbe5ed; border-radius: 8px; }
+.form-control:focus, .form-select:focus { border-color: #6ab0d4; box-shadow: 0 0 0 .18rem #d8edf8; }
+.optional { color: #8799a7; font-size: .7rem; font-weight: 500; }
+.btn { border-radius: 8px; }

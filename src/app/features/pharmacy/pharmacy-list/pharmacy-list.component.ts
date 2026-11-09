@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { PharmacyService } from '../../../core/services/pharmacy.service';
 import { Pharmacy } from '../../../models/Pharmacy';
@@ -19,18 +19,28 @@ import { Pharmacy } from '../../../models/Pharmacy';
 export class PharmacyListComponent implements OnInit {
 
   medicines: Pharmacy[] = [];
+  readonly staffWorkspace: boolean;
+  loading = false;
+  error = '';
 
   ngOnInit(): void {
     this.loadMedicines();
   }
 
   constructor(
-    private pharmacyService: PharmacyService
-  ) {}
+    private pharmacyService: PharmacyService,
+    private router: Router
+  ) { this.staffWorkspace = this.router.url.startsWith('/pharmacy/'); }
+
+  get stockPath(): string { return this.staffWorkspace ? '/pharmacy/stock' : '/admin/pharmacy'; }
 
   loadMedicines(): void {
-    this.medicines =
-      this.pharmacyService.getMedicines();
+    this.loading = true;
+    this.error = '';
+    this.pharmacyService.getMedicines().subscribe({
+      next: medicines => { this.medicines = medicines; this.loading = false; },
+      error: error => { this.error = error?.error?.message || 'Medicine stock could not be loaded.'; this.loading = false; }
+    });
   }
 
   deleteMedicine(id: number): void {
@@ -41,11 +51,10 @@ export class PharmacyListComponent implements OnInit {
       )
     ) {
 
-      this.pharmacyService.deleteMedicine(id);
-
-      this.loadMedicines();
-
-      alert('Medicine deleted successfully!');
+      this.pharmacyService.deleteMedicine(id).subscribe({
+        next: () => this.loadMedicines(),
+        error: error => { this.error = error?.error?.message || 'Medicine could not be deleted.'; }
+      });
     }
   }
 
@@ -55,25 +64,25 @@ export class PharmacyListComponent implements OnInit {
 
   get availableMedicines(): number {
     return this.medicines.filter(
-      medicine => medicine.status === 'Available'
+      medicine => medicine.status === 'AVAILABLE' || medicine.status === 'Available'
     ).length;
   }
 
   get lowStockMedicines(): number {
     return this.medicines.filter(
-      medicine => medicine.status === 'Low Stock'
+      medicine => medicine.status === 'LOW STOCK' || medicine.status === 'Low Stock'
     ).length;
   }
 
   get outOfStockMedicines(): number {
     return this.medicines.filter(
-      medicine => medicine.status === 'Out of Stock'
+      medicine => medicine.status === 'OUT OF STOCK' || medicine.status === 'Out of Stock'
     ).length;
   }
 
   get expiredMedicines(): number {
     return this.medicines.filter(
-      medicine => medicine.status === 'Expired'
+      medicine => medicine.status === 'EXPIRED' || medicine.status === 'Expired'
     ).length;
   }
 }

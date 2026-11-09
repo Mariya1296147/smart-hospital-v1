@@ -22,6 +22,9 @@ export class PharmacyFormComponent implements OnInit {
 
   isEdit = false;
   medicineIdValue = 0;
+  readonly stockPath: string;
+  error = '';
+  saving = false;
 
   medicine: Pharmacy = {
     id: 0,
@@ -29,8 +32,12 @@ export class PharmacyFormComponent implements OnInit {
     medicineName: '',
     category: '',
     manufacturer: '',
+    batchNumber: '',
     quantity: 0,
     unitPrice: 0,
+    purchasePrice: 0,
+    sellingPrice: 0,
+    lowStockThreshold: 10,
     expiryDate: '',
     supplier: '',
     status: 'Available'
@@ -40,7 +47,7 @@ export class PharmacyFormComponent implements OnInit {
     private pharmacyService: PharmacyService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { this.stockPath = this.router.url.startsWith('/pharmacy/') ? '/pharmacy/stock' : '/admin/pharmacy'; }
 
   ngOnInit(): void {
 
@@ -53,41 +60,33 @@ export class PharmacyFormComponent implements OnInit {
 
       this.medicineIdValue = Number(id);
 
-      const existingMedicine =
-        this.pharmacyService.getMedicineById(
-          this.medicineIdValue
-        );
-
-      if (existingMedicine) {
-        this.medicine = {
-          ...existingMedicine
-        };
-      }
+      this.pharmacyService.getMedicineById(this.medicineIdValue).subscribe({
+        next: existing => this.medicine = { ...existing, purchasePrice: existing.purchasePrice ?? existing.unitPrice, sellingPrice: existing.sellingPrice ?? existing.unitPrice },
+        error: error => this.error = error?.error?.message || 'Medicine details could not be loaded.'
+      });
     }
   }
 
   saveMedicine(): void {
+    this.error = '';
+    this.medicine.unitPrice = Number(this.medicine.sellingPrice ?? this.medicine.unitPrice);
+    this.saving = true;
 
     if (this.isEdit) {
 
-      this.pharmacyService.updateMedicine(
-        this.medicine
-      );
-
-      alert('Medicine updated successfully!');
+      this.pharmacyService.updateMedicine(this.medicineIdValue, this.medicine).subscribe({
+        next: () => { this.saving = false; this.router.navigate([this.stockPath]); },
+        error: error => { this.saving = false; this.error = error?.error?.message || 'Medicine update failed.'; }
+      });
 
     } else {
 
-      this.pharmacyService.addMedicine(
-        this.medicine
-      );
-
-      alert('Medicine added successfully!');
+      this.pharmacyService.addMedicine(this.medicine).subscribe({
+        next: () => { this.saving = false; this.router.navigate([this.stockPath]); },
+        error: error => { this.saving = false; this.error = error?.error?.message || 'Medicine could not be saved.'; }
+      });
     }
 
-    this.router.navigate([
-      '/admin/pharmacy'
-    ]);
   }
 
 }

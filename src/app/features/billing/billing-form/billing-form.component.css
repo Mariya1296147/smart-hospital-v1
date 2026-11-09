@@ -1,28 +1,38 @@
-.card {
-  border-radius: 12px;
-}
-
-.form-label {
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.form-control,
-.form-select {
-  border-radius: 7px;
-  padding: 10px 12px;
-}
-
-.form-control:focus,
-.form-select:focus {
-  box-shadow: none;
-}
-
-.total-input {
-  font-weight: 700;
-  background-color: #f8f9fa;
-}
-
-.btn {
-  border-radius: 6px;
-}
+.billing-form-page { color: #16324a; }
+.eyebrow { color: #4291bc; font-size: .72rem; font-weight: 800; letter-spacing: .14em; }
+.billing-form-page h2 { color: #102d46; }
+.card { border-radius: 15px; overflow: hidden; }
+.billing-card-header { padding: 1.1rem 1.35rem; color: #fff; background: #102d46; border: 0; }
+.billing-card-header h5 { font-size: 1rem; font-weight: 700; }
+.billing-card-header p { color: #bdcfde; font-size: .8rem; }
+.section-icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: #d9edf9; color: #155c83; font-size: 1.15rem; }
+.form-label { margin-bottom: .4rem; color: #304d63; font-size: .83rem; font-weight: 700; }
+.optional { margin-left: .25rem; color: #8799a7; font-size: .7rem; font-weight: 500; }
+.form-control, .form-select { min-height: 42px; border-color: #dbe5ed; border-radius: 8px; }
+.form-control:focus, .form-select:focus { border-color: #6ab0d4; box-shadow: 0 0 0 .18rem #d8edf8; }
+.service-heading { border-top: 1px solid #e5edf3; padding-top: 1.25rem; }
+.service-heading h5 { color: #163a56; font-size: 1rem; font-weight: 750; }
+.service-line { padding: 1rem; border: 1px solid #e0eaf1; border-radius: 11px; background: #f8fbfd; }
+.service-line + .service-line { margin-top: .75rem; }
+.line-total { min-height: 42px; display: flex; flex-direction: column; justify-content: center; white-space: nowrap; }
+.line-total small { color: #7890a2; font-size: .67rem; }
+.line-total strong { color: #153d5b; font-size: .86rem; }
+.remove-line { width: 42px; height: 42px; flex: 0 0 42px; }
+.empty-lines { display: flex; align-items: center; gap: .8rem; padding: 1.3rem; color: #6b8292; background: #f4f8fb; border: 1px dashed #c7d8e5; border-radius: 10px; }
+.empty-lines i { color: #548bac; font-size: 1.25rem; }
+.prescribed-card .card-body { max-height: 450px; overflow: auto; }
+.prescribed-empty { padding: 1.5rem; color: #738897; font-size: .88rem; }
+.prescribed-test { padding: 1rem 1.15rem; border-bottom: 1px solid #e9eff4; }
+.prescribed-test:last-child { border-bottom: 0; }
+.prescribed-test strong { display: block; color: #173b55; font-size: .88rem; }
+.prescribed-test small { display: block; margin-top: .2rem; color: #7b8e9c; font-size: .74rem; }
+.prescribed-test .test-price { white-space: nowrap; color: #164d72; }
+.prescribed-test .btn { font-size: .75rem; }
+.total-card { background: #eaf4fb; }
+.total-card h6 { color: #668398; font-size: .7rem; font-weight: 800; letter-spacing: .1em; }
+.summary-row, .summary-total { display: flex; justify-content: space-between; gap: 1rem; padding: .5rem 0; color: #60798b; font-size: .88rem; }
+.summary-row strong { color: #193c55; }
+.summary-total { margin-top: .5rem; padding-top: 1rem; border-top: 1px solid #cbdde9; color: #153a55; font-size: 1rem; font-weight: 700; }
+.summary-total strong { color: #102d46; font-size: 1.3rem; }
+.btn { border-radius: 8px; }
+@media (max-width: 575.98px) { .service-line { padding: .8rem; } }

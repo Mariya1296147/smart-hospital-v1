@@ -1,87 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Laboratory } from '../../models/laboratory';
-@Injectable({
-  providedIn: 'root'
-})
+import { Observable } from 'rxjs';
+import { ApiService } from './api.service';
+import { Laboratory, LaboratoryWorkItem, LaboratoryWorkflowFilter, LaboratoryWorkflowUpdate } from '../../models/laboratory';
+
+@Injectable({ providedIn: 'root' })
 export class LaboratoryService {
+  private readonly resource = 'laboratories';
+  constructor(private readonly api: ApiService) {}
+  getLaboratoryTests(): Observable<Laboratory[]> { return this.api.getAll<Laboratory>(this.resource); }
+  getLaboratoryById(id: number): Observable<Laboratory> { return this.api.getById<Laboratory>(this.resource, id); }
+  addLaboratory(value: Partial<Laboratory>): Observable<Laboratory> { return this.api.create<Laboratory>(this.resource, value); }
+  updateLaboratory(id: number, value: Partial<Laboratory>): Observable<Laboratory> { return this.api.update<Laboratory>(this.resource, id, value); }
+  deleteLaboratory(id: number): Observable<void> { return this.api.remove(this.resource, id); }
 
-  private laboratoryTests: Laboratory[] = [
-    {
-      id: 1,
-      testId: 'LAB-1001',
-      patientName: 'Mariya Rahman',
-      testName: 'Complete Blood Count (CBC)',
-      department: 'Hematology',
-      doctor: 'Dr. Ahmed Khan',
-      sampleDate: '2026-09-18',
-      result: 'Normal',
-      status: 'Completed'
-    },
-    {
-      id: 2,
-      testId: 'LAB-1002',
-      patientName: 'Sarah Ahmed',
-      testName: 'Blood Glucose',
-      department: 'Biochemistry',
-      doctor: 'Dr. Nusrat Jahan',
-      sampleDate: '2026-09-19',
-      result: '5.8 mmol/L',
-      status: 'Completed'
-    },
-    {
-      id: 3,
-      testId: 'LAB-1003',
-      patientName: 'Rahim Uddin',
-      testName: 'Liver Function Test',
-      department: 'Biochemistry',
-      doctor: 'Dr. Ahmed Khan',
-      sampleDate: '2026-09-20',
-      result: 'Pending',
-      status: 'Pending'
-    }
-  ];
-
-  getLaboratoryTests(): Laboratory[] {
-    return this.laboratoryTests;
+  getWorklist(status?: LaboratoryWorkflowFilter): Observable<LaboratoryWorkItem[]> {
+    const query = status ? `?status=${encodeURIComponent(status)}` : '';
+    return this.api.getResource<LaboratoryWorkItem[]>(`${this.resource}/worklist${query}`);
   }
 
-  getLaboratoryById(id: number): Laboratory | undefined {
-    return this.laboratoryTests.find(
-      test => test.id === id
-    );
+  getCompletedReports(): Observable<LaboratoryWorkItem[]> {
+    return this.api.getResource<LaboratoryWorkItem[]>(`${this.resource}/reports`);
   }
 
-  addLaboratory(test: Laboratory): void {
-
-    const newId =
-      this.laboratoryTests.length > 0
-        ? Math.max(
-            ...this.laboratoryTests.map(test => test.id)
-          ) + 1
-        : 1;
-
-    test.id = newId;
-
-    this.laboratoryTests.push(test);
-  }
-
-  updateLaboratory(test: Laboratory): void {
-
-    const index =
-      this.laboratoryTests.findIndex(
-        item => item.id === test.id
-      );
-
-    if (index !== -1) {
-      this.laboratoryTests[index] = test;
-    }
-  }
-
-  deleteLaboratory(id: number): void {
-
-    this.laboratoryTests =
-      this.laboratoryTests.filter(
-        test => test.id !== id
-      );
+  updateTest(id: number, value: LaboratoryWorkflowUpdate): Observable<LaboratoryWorkItem> {
+    return this.api.patch<LaboratoryWorkItem>(this.resource, `worklist/${id}`, value);
   }
 }

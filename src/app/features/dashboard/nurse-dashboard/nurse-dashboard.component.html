@@ -22,6 +22,10 @@
     </div>
   </div>
 
+  <div class="alert alert-warning mb-4" *ngIf="profileUnavailable">
+    Your Nurse login is not linked to a Nurse profile and assigned ward yet. Ask an administrator to link your account and assign your ward; admitted patients and their records will then appear here.
+  </div>
+
   <!-- Statistics -->
   <div class="stats-grid">
 
@@ -30,9 +34,9 @@
         <i class="bi bi-people"></i>
       </div>
       <div>
-        <span>Assigned Patients</span>
-        <h3>32</h3>
-        <small>Currently under care</small>
+        <span>Active Admissions</span>
+        <h3>{{ metric('activeAdmissions') }}</h3>
+        <small>In your assigned ward</small>
       </div>
     </div>
 
@@ -42,8 +46,8 @@
       </div>
       <div>
         <span>Occupied Beds</span>
-        <h3>24</h3>
-        <small>Across active wards</small>
+        <h3>{{ metric('occupiedBeds') }}</h3>
+        <small>In your assigned ward</small>
       </div>
     </div>
 
@@ -52,9 +56,9 @@
         <i class="bi bi-clipboard2-pulse"></i>
       </div>
       <div>
-        <span>Pending Tasks</span>
-        <h3>08</h3>
-        <small>Need attention</small>
+        <span>Available Beds</span>
+        <h3>{{ metric('availableBeds') }}</h3>
+        <small>In your assigned ward</small>
       </div>
     </div>
 
@@ -63,9 +67,9 @@
         <i class="bi bi-capsule"></i>
       </div>
       <div>
-        <span>Medication</span>
-        <h3>15</h3>
-        <small>Due today</small>
+        <span>Assigned Patients</span>
+        <h3>{{ metric('totalPatients') }}</h3>
+        <small>In your assigned ward</small>
       </div>
     </div>
 
@@ -79,8 +83,8 @@
 
       <div class="panel-header">
         <div>
-          <h4>Patient Care</h4>
-          <p>Recently assigned patients</p>
+          <h4>My Patients</h4>
+      <p>Currently admitted patients in {{ nurse?.ward || 'your assigned ward' }}</p>
         </div>
 
         <a routerLink="/nurse/patients">View All</a>
@@ -88,38 +92,21 @@
 
       <div class="patient-list">
 
-        <div class="patient-row">
-          <div class="patient-avatar">SA</div>
-
+        <div class="patient-row" *ngFor="let admission of admissions">
+          <div class="patient-avatar">{{ (admission.patientName || 'PT').slice(0, 2).toUpperCase() }}</div>
           <div class="patient-info">
-            <strong>Sarah Ahmed</strong>
-            <span>Bed 204 · Neurology</span>
+            <strong>{{ admission.patientName }}</strong>
+            <span>{{ admission.patientCode || 'Patient' }} · {{ admission.bed || 'No bed' }} {{ admission.bedType || '' }} · {{ admission.ward || 'Ward unassigned' }} · Assigned to {{ admission.assignedNurseName || 'no nurse' }}</span>
           </div>
-
-          <span class="status stable">Stable</span>
-        </div>
-
-        <div class="patient-row">
-          <div class="patient-avatar">MR</div>
-
-          <div class="patient-info">
-            <strong>Mariya Rahman</strong>
-            <span>Bed 108 · Cardiology</span>
+          <div class="patient-actions">
+            <small class="d-block text-muted" *ngIf="admission.patientAge != null">{{ admission.patientAge }} years · {{ admission.patientGender || 'Gender not recorded' }}</small>
+            <span class="status stable">{{ admission.status }}</span>
+            <a class="btn btn-sm btn-outline-primary mt-2" [routerLink]="['/nurse/vital-signs']" [queryParams]="{ patientId: admission.patientId }" *ngIf="admission.patientId">
+              <i class="bi bi-heart-pulse me-1"></i>Update vitals
+            </a>
           </div>
-
-          <span class="status attention">Attention</span>
         </div>
-
-        <div class="patient-row">
-          <div class="patient-avatar">AH</div>
-
-          <div class="patient-info">
-            <strong>Ahmed Hasan</strong>
-            <span>Bed 305 · General Ward</span>
-          </div>
-
-          <span class="status stable">Stable</span>
-        </div>
+        <div class="patient-row text-muted" *ngIf="admissions.length === 0">No active admissions.</div>
 
       </div>
 
@@ -142,19 +129,24 @@
           <span>Patients</span>
         </a>
 
-        <a routerLink="/nurse/nursing">
+        <a routerLink="/nurse/vital-signs">
           <i class="bi bi-heart-pulse"></i>
-          <span>Nursing Care</span>
+          <span>Vital Signs</span>
         </a>
 
-        <a routerLink="/nurse/admissions">
-          <i class="bi bi-hospital"></i>
-          <span>Admissions</span>
+        <a routerLink="/nurse/medicine">
+          <i class="bi bi-capsule"></i>
+          <span>Medicine</span>
         </a>
 
         <a routerLink="/nurse/laboratory">
           <i class="bi bi-eyedropper"></i>
-          <span>Laboratory Tests</span>
+          <span>Lab Test Requests</span>
+        </a>
+
+        <a routerLink="/nurse/nursing-notes">
+          <i class="bi bi-journal-medical"></i>
+          <span>Nursing Notes</span>
         </a>
 
       </div>
@@ -163,44 +155,27 @@
 
   </div>
 
-  <!-- Nursing Tasks -->
+  <!-- Live nursing activity -->
   <div class="dashboard-panel tasks-panel">
 
     <div class="panel-header">
       <div>
-        <h4>Today's Nursing Tasks</h4>
-        <p>Activities requiring attention</p>
+        <h4>Recent Nursing Activity</h4>
+        <p>Medication orders, lab requests, vital-sign records and notes for your admitted patients</p>
       </div>
     </div>
 
     <div class="task-list">
 
-      <div class="task-item">
-        <i class="bi bi-check-circle"></i>
+      <div class="task-item" *ngFor="let activity of activityFeed">
+        <i class="bi bi-activity"></i>
         <div>
-          <strong>Morning Patient Check</strong>
-          <span>Ward A · 08:00 AM</span>
+          <strong>{{ activity.category }} · {{ activity.patientName }}</strong>
+          <span>{{ activity.description }}</span>
         </div>
-        <span class="task-done">Completed</span>
+        <time>{{ activity.recordedAt ? (activity.recordedAt | date:'short') : 'Date not recorded' }}</time>
       </div>
-
-      <div class="task-item">
-        <i class="bi bi-clock"></i>
-        <div>
-          <strong>Medication Round</strong>
-          <span>Ward B · 10:30 AM</span>
-        </div>
-        <span class="task-pending">Pending</span>
-      </div>
-
-      <div class="task-item">
-        <i class="bi bi-clipboard-check"></i>
-        <div>
-          <strong>Vital Signs Recording</strong>
-          <span>ICU · 12:00 PM</span>
-        </div>
-        <span class="task-pending">Pending</span>
-      </div>
+      <div class="text-muted py-3" *ngIf="!loading && activityFeed.length === 0">No recent nursing activity is recorded for your admitted patients.</div>
 
     </div>
 
