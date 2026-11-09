@@ -1,0 +1,178 @@
+<jasperReport name="prescription" language="java" pageWidth="595" pageHeight="842"
+              columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0"
+              whenNoDataType="AllSectionsNoDetail">
+    <parameter name="hospitalName" class="java.lang.String"/>
+    <parameter name="prescriptionId" class="java.lang.String"/>
+    <parameter name="prescriptionDate" class="java.lang.String"/>
+    <parameter name="patientName" class="java.lang.String"/>
+    <parameter name="patientCode" class="java.lang.String"/>
+    <parameter name="patientAge" class="java.lang.String"/>
+    <parameter name="patientGender" class="java.lang.String"/>
+    <parameter name="admissionSummary" class="java.lang.String"/>
+    <parameter name="admissionDetails" class="java.lang.String"/>
+    <parameter name="doctorName" class="java.lang.String"/>
+    <parameter name="departmentName" class="java.lang.String"/>
+    <parameter name="diagnosis" class="java.lang.String"/>
+    <parameter name="medicines" class="java.lang.String"/>
+    <parameter name="tests" class="java.lang.String"/>
+    <parameter name="advice" class="java.lang.String"/>
+
+    <background height="842">
+        <element kind="rectangle" x="0" y="0" width="595" height="842" mode="Opaque" backcolor="#EEF3F9">
+            <pen lineWidth="0.0" lineColor="#EEF3F9"/>
+        </element>
+    </background>
+
+    <title height="120">
+        <element kind="rectangle" x="40" y="24" width="515" height="91" mode="Opaque" backcolor="#102D46" radius="5">
+            <pen lineWidth="0.0" lineColor="#102D46"/>
+        </element>
+        <element kind="rectangle" x="40" y="111" width="515" height="4" mode="Opaque" backcolor="#22B4AE">
+            <pen lineWidth="0.0" lineColor="#22B4AE"/>
+        </element>
+        <element kind="textField" x="60" y="41" width="305" height="30" fontName="SansSerif" fontSize="20.0" bold="true" forecolor="#FFFFFF">
+            <expression><![CDATA[$P{hospitalName}]]></expression>
+        </element>
+        <element kind="staticText" x="60" y="75" width="300" height="16" fontName="SansSerif" fontSize="8.5" bold="true" forecolor="#C8D8E4">
+            <text><![CDATA[HOSPITAL  |  DIAGNOSTIC AND CLINICAL SERVICES]]></text>
+        </element>
+        <element kind="line" x="385" y="41" width="1" height="52" forecolor="#466176"/>
+        <element kind="staticText" x="405" y="40" width="130" height="17" fontName="SansSerif" fontSize="8.0" bold="true" forecolor="#8FAABD" hTextAlign="Right">
+            <text><![CDATA[OUTPATIENT CARE]]></text>
+        </element>
+        <element kind="staticText" x="380" y="59" width="155" height="22" fontName="SansSerif" fontSize="14.0" bold="true" forecolor="#FFFFFF" hTextAlign="Right">
+            <text><![CDATA[PRESCRIPTION]]></text>
+        </element>
+        <element kind="textField" x="380" y="84" width="155" height="14" fontName="SansSerif" fontSize="8.5" bold="true" forecolor="#BBD0DD" hTextAlign="Right">
+            <expression><![CDATA["RX-" + $P{prescriptionId} + "     |     " + $P{prescriptionDate}]]></expression>
+        </element>
+    </title>
+
+    <detail>
+        <band height="620" splitType="Stretch">
+            <!-- Patient identity card -->
+            <element kind="rectangle" x="40" y="0" width="515" height="115" mode="Opaque" backcolor="#FFFFFF" radius="5">
+                <pen lineWidth="0.8" lineColor="#D8E2EC"/>
+            </element>
+            <element kind="rectangle" x="40" y="0" width="5" height="115" mode="Opaque" backcolor="#22A7A2">
+                <pen lineWidth="0.0" lineColor="#22A7A2"/>
+            </element>
+            <element kind="staticText" x="59" y="11" width="265" height="12" fontName="SansSerif" fontSize="7.5" bold="true" forecolor="#6C8292">
+                <text><![CDATA[PATIENT NAME]]></text>
+            </element>
+            <element kind="textField" x="59" y="28" width="285" height="22" fontName="SansSerif" fontSize="13.0" bold="true" forecolor="#18364D">
+                <expression><![CDATA[$P{patientName}]]></expression>
+            </element>
+            <element kind="textField" x="59" y="56" width="285" height="14" fontName="SansSerif" fontSize="8.5" forecolor="#607787">
+                <expression><![CDATA["Patient ID   " + $P{patientCode}]]></expression>
+            </element>
+            <element kind="line" x="359" y="14" width="1" height="54" forecolor="#D8E2EC"/>
+            <element kind="staticText" x="377" y="13" width="71" height="12" fontName="SansSerif" fontSize="7.5" bold="true" forecolor="#6C8292">
+                <text><![CDATA[AGE]]></text>
+            </element>
+            <element kind="textField" x="377" y="33" width="72" height="20" fontName="SansSerif" fontSize="10.0" bold="true" forecolor="#18364D">
+                <expression><![CDATA[$P{patientAge}.isEmpty() ? "-" : $P{patientAge}]]></expression>
+            </element>
+            <element kind="staticText" x="462" y="13" width="78" height="12" fontName="SansSerif" fontSize="7.5" bold="true" forecolor="#6C8292">
+                <text><![CDATA[GENDER]]></text>
+            </element>
+            <element kind="textField" x="462" y="33" width="78" height="20" fontName="SansSerif" fontSize="10.0" bold="true" forecolor="#18364D">
+                <expression><![CDATA[$P{patientGender}.isEmpty() ? "-" : $P{patientGender}]]></expression>
+            </element>
+
+            <element kind="textField" x="59" y="75" width="480" height="14" fontName="SansSerif" fontSize="7.5" bold="true" forecolor="#18364D" textAdjust="ScaleFont">
+                <expression><![CDATA[$P{admissionSummary}]]></expression>
+            </element>
+            <element kind="textField" x="59" y="92" width="480" height="17" fontName="SansSerif" fontSize="7.5" forecolor="#506A7B" textAdjust="ScaleFont">
+                <expression><![CDATA[$P{admissionDetails}]]></expression>
+            </element>
+            <element kind="textField" x="40" y="123" width="515" height="17" fontName="SansSerif" fontSize="8.5" forecolor="#506A7B">
+                <expression><![CDATA["ATTENDING PHYSICIAN   " + $P{doctorName} + ($P{departmentName}.isEmpty() ? "" : "     |     SPECIALTY   " + $P{departmentName})]]></expression>
+            </element>
+
+            <!-- Clinical impression -->
+            <element kind="rectangle" x="40" y="151" width="515" height="77" mode="Opaque" backcolor="#FFFFFF" radius="5">
+                <pen lineWidth="0.8" lineColor="#D8E2EC"/>
+            </element>
+            <element kind="rectangle" x="40" y="151" width="5" height="77" mode="Opaque" backcolor="#497AA0">
+                <pen lineWidth="0.0" lineColor="#497AA0"/>
+            </element>
+            <element kind="staticText" x="58" y="162" width="475" height="14" fontName="SansSerif" fontSize="9.0" bold="true" forecolor="#18364D">
+                <text><![CDATA[CLINICAL IMPRESSION / DIAGNOSIS]]></text>
+            </element>
+            <element kind="textField" x="58" y="183" width="478" height="37" fontName="SansSerif" fontSize="9.0" forecolor="#314B5C" textAdjust="StretchHeight" positionType="Float">
+                <expression><![CDATA[$P{diagnosis}.isEmpty() ? "Not specified" : $P{diagnosis}]]></expression>
+            </element>
+
+            <!-- Two-column clinical plan -->
+            <element kind="rectangle" x="235" y="243" width="320" height="287" mode="Opaque" backcolor="#FFFFFF" radius="5" positionType="Float">
+                <pen lineWidth="0.8" lineColor="#D8E2EC"/>
+            </element>
+            <element kind="rectangle" x="235" y="243" width="320" height="38" mode="Opaque" backcolor="#E2EBF3" radius="5" positionType="Float">
+                <pen lineWidth="0.0" lineColor="#E2EBF3"/>
+            </element>
+            <element kind="rectangle" x="235" y="243" width="4" height="38" mode="Opaque" backcolor="#183F5C" positionType="Float">
+                <pen lineWidth="0.0" lineColor="#183F5C"/>
+            </element>
+            <element kind="staticText" x="251" y="253" width="290" height="17" fontName="SansSerif" fontSize="10.0" bold="true" forecolor="#18364D" positionType="Float">
+                <text><![CDATA[PRESCRIBED MEDICINES]]></text>
+            </element>
+            <element kind="textField" x="251" y="294" width="288" height="219" fontName="SansSerif" fontSize="8.7" forecolor="#263F50" textAdjust="StretchHeight" positionType="Float">
+                <expression><![CDATA[$P{medicines}.isEmpty() ? "No medicines prescribed" : $P{medicines}]]></expression>
+            </element>
+
+            <element kind="rectangle" x="40" y="243" width="184" height="145" mode="Opaque" backcolor="#FFFFFF" radius="5" positionType="Float">
+                <pen lineWidth="0.8" lineColor="#D8E2EC"/>
+            </element>
+            <element kind="rectangle" x="40" y="243" width="184" height="38" mode="Opaque" backcolor="#E2EBF3" radius="5" positionType="Float">
+                <pen lineWidth="0.0" lineColor="#E2EBF3"/>
+            </element>
+            <element kind="rectangle" x="40" y="243" width="4" height="38" mode="Opaque" backcolor="#148A87" positionType="Float">
+                <pen lineWidth="0.0" lineColor="#148A87"/>
+            </element>
+            <element kind="staticText" x="53" y="253" width="162" height="17" fontName="SansSerif" fontSize="9.0" bold="true" forecolor="#18364D" positionType="Float">
+                <text><![CDATA[TESTS / INVESTIGATIONS]]></text>
+            </element>
+            <element kind="textField" x="53" y="293" width="158" height="84" fontName="SansSerif" fontSize="8.5" forecolor="#263F50" textAdjust="StretchHeight" positionType="Float">
+                <expression><![CDATA[$P{tests}.isEmpty() ? "No tests ordered" : $P{tests}]]></expression>
+            </element>
+
+            <element kind="rectangle" x="40" y="402" width="184" height="128" mode="Opaque" backcolor="#FFFFFF" radius="5" positionType="Float">
+                <pen lineWidth="0.8" lineColor="#D8E2EC"/>
+            </element>
+            <element kind="rectangle" x="40" y="402" width="184" height="38" mode="Opaque" backcolor="#E2EBF3" radius="5" positionType="Float">
+                <pen lineWidth="0.0" lineColor="#E2EBF3"/>
+            </element>
+            <element kind="rectangle" x="40" y="402" width="4" height="38" mode="Opaque" backcolor="#497AA0" positionType="Float">
+                <pen lineWidth="0.0" lineColor="#497AA0"/>
+            </element>
+            <element kind="staticText" x="53" y="412" width="162" height="17" fontName="SansSerif" fontSize="9.0" bold="true" forecolor="#18364D" positionType="Float">
+                <text><![CDATA[CARE INSTRUCTIONS]]></text>
+            </element>
+            <element kind="textField" x="53" y="451" width="158" height="69" fontName="SansSerif" fontSize="8.5" forecolor="#263F50" textAdjust="StretchHeight" positionType="Float">
+                <expression><![CDATA[$P{advice}.isEmpty() ? "No additional advice" : $P{advice}]]></expression>
+            </element>
+
+            <element kind="line" x="385" y="573" width="170" height="1" forecolor="#7890A0" positionType="Float"/>
+            <element kind="textField" x="385" y="580" width="170" height="16" fontName="SansSerif" fontSize="8.5" bold="true" forecolor="#18364D" hTextAlign="Center" positionType="Float">
+                <expression><![CDATA[$P{doctorName}]]></expression>
+            </element>
+            <element kind="staticText" x="385" y="597" width="170" height="13" fontName="SansSerif" fontSize="7.5" forecolor="#607787" hTextAlign="Center" positionType="Float">
+                <text><![CDATA[PHYSICIAN SIGNATURE]]></text>
+            </element>
+        </band>
+    </detail>
+
+    <pageFooter height="29">
+        <element kind="line" x="40" y="0" width="515" height="1" forecolor="#C6D4E0"/>
+        <element kind="staticText" x="40" y="8" width="430" height="12" fontName="SansSerif" fontSize="7.0" forecolor="#5D7485">
+            <text><![CDATA[Confidential medical information. Please retain this report and follow your clinician's advice.]]></text>
+        </element>
+        <element kind="textField" x="495" y="8" width="60" height="12" fontName="SansSerif" fontSize="7.0" forecolor="#5D7485" hTextAlign="Right">
+            <expression><![CDATA["PAGE " + $V{PAGE_NUMBER}]]></expression>
+        </element>
+    </pageFooter>
+</jasperReport>
+
+
+

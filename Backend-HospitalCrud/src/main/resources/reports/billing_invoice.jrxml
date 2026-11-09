@@ -1,0 +1,319 @@
+<jasperReport name="billing_invoice" language="java" pageWidth="595" pageHeight="842"
+              columnWidth="515" leftMargin="40" rightMargin="40" topMargin="27" bottomMargin="28"
+              whenNoDataType="AllSectionsNoDetail">
+    <parameter name="hospitalName" class="java.lang.String"/>
+    <parameter name="invoiceId" class="java.lang.String"/>
+    <parameter name="invoiceDate" class="java.lang.String"/>
+    <parameter name="patientName" class="java.lang.String"/>
+    <parameter name="patientId" class="java.lang.String"/>
+    <parameter name="patientPhone" class="java.lang.String"/>
+    <parameter name="doctorName" class="java.lang.String"/>
+    <parameter name="departmentName" class="java.lang.String"/>
+    <parameter name="appointmentId" class="java.lang.String"/>
+    <parameter name="subtotal" class="java.math.BigDecimal"/>
+    <parameter name="discount" class="java.math.BigDecimal"/>
+    <parameter name="tax" class="java.math.BigDecimal"/>
+    <parameter name="total" class="java.math.BigDecimal"/>
+    <parameter name="paidAmount" class="java.math.BigDecimal"/>
+    <parameter name="balanceDue" class="java.math.BigDecimal"/>
+    <parameter name="paymentStatus" class="java.lang.String"/>
+    <field name="category" class="java.lang.String"/>
+    <field name="description" class="java.lang.String"/>
+    <field name="quantity" class="java.math.BigDecimal"/>
+    <field name="unitPrice" class="java.math.BigDecimal"/>
+    <field name="lineTotal" class="java.math.BigDecimal"/>
+
+    <background height="787">
+        <element kind="rectangle" x="0" y="0" width="515" height="787" mode="Opaque" backcolor="#EDF4FA">
+            <pen lineWidth="0.0" lineColor="#EDF4FA"/>
+        </element>
+    </background>
+
+    <title height="221">
+        <element kind="rectangle" x="0" y="0" width="515" height="105" mode="Opaque" backcolor="#102D46" radius="5">
+            <pen lineWidth="0.0" lineColor="#102D46"/>
+        </element>
+        <element kind="rectangle" x="0" y="101" width="515" height="4" mode="Opaque" backcolor="#28B7B0">
+            <pen lineWidth="0.0" lineColor="#28B7B0"/>
+        </element>
+        <element kind="textField" x="20" y="24" width="306" height="34" fontName="SansSerif" fontSize="23.0" bold="true" forecolor="#FFFFFF" textAdjust="ScaleFont">
+            <expression><![CDATA[$P{hospitalName}]]></expression>
+        </element>
+        <element kind="staticText" x="22" y="62" width="300" height="15" fontName="SansSerif" fontSize="8.0" bold="true" forecolor="#C4D7E5">
+            <text><![CDATA[HOSPITAL  |  PATIENT ACCOUNTS]]></text>
+        </element>
+        <element kind="staticText" x="22" y="79" width="290" height="12" fontName="SansSerif" fontSize="7.0" forecolor="#9FB9CB">
+            <text><![CDATA[PATIENT BILLING AND SERVICE INVOICE]]></text>
+        </element>
+        <element kind="rectangle" x="350" y="11" width="153" height="83" mode="Opaque" backcolor="#24465E" radius="4">
+            <pen lineWidth="0.8" lineColor="#6B879B"/>
+        </element>
+        <element kind="image" x="352" y="13" width="149" height="79" scaleImage="FillFrame" onErrorType="Blank">
+            <expression><![CDATA[javax.imageio.ImageIO.read(Thread.currentThread().getContextClassLoader().getResource("reports/hospital-building.jpg"))]]></expression>
+        </element>
+
+        <element kind="rectangle" x="0" y="120" width="301" height="94" mode="Opaque" backcolor="#FFFFFF" radius="5">
+            <pen lineWidth="0.8" lineColor="#D3E0E9"/>
+        </element>
+        <element kind="rectangle" x="0" y="120" width="4" height="94" mode="Opaque" backcolor="#2786B0">
+            <pen lineWidth="0.0" lineColor="#2786B0"/>
+        </element>
+        <element kind="rectangle" x="311" y="120" width="204" height="94" mode="Opaque" backcolor="#FFFFFF" radius="5">
+            <pen lineWidth="0.8" lineColor="#D3E0E9"/>
+        </element>
+        <element kind="rectangle" x="311" y="120" width="4" height="94" mode="Opaque" backcolor="#28A8A9">
+            <pen lineWidth="0.0" lineColor="#28A8A9"/>
+        </element>
+
+        <!-- Patient icon: simple head-and-shoulders mark -->
+        <element kind="ellipse" x="15" y="130" width="8" height="8" mode="Opaque" backcolor="#2786B0">
+            <pen lineWidth="0.0" lineColor="#2786B0"/>
+        </element>
+        <element kind="rectangle" x="12" y="140" width="14" height="5" mode="Opaque" backcolor="#2786B0" radius="2">
+            <pen lineWidth="0.0" lineColor="#2786B0"/>
+        </element>
+        <element kind="staticText" x="33" y="131" width="240" height="13" fontName="SansSerif" fontSize="7.5" bold="true" forecolor="#557488">
+            <text><![CDATA[PATIENT INFORMATION]]></text>
+        </element>
+        <element kind="textField" x="15" y="151" width="272" height="16" fontName="SansSerif" fontSize="10.5" bold="true" forecolor="#173B55" textAdjust="ScaleFont">
+            <expression><![CDATA[$P{patientName}]]></expression>
+        </element>
+        <element kind="textField" x="15" y="171" width="138" height="13" fontName="SansSerif" fontSize="8.0" forecolor="#476478">
+            <expression><![CDATA["Patient ID   " + $P{patientId}]]></expression>
+        </element>
+        <element kind="textField" x="155" y="171" width="133" height="13" fontName="SansSerif" fontSize="8.0" forecolor="#476478" textAdjust="ScaleFont">
+            <printWhenExpression><![CDATA[$P{patientPhone} != null && !$P{patientPhone}.isEmpty()]]></printWhenExpression>
+            <expression><![CDATA["Phone   " + $P{patientPhone}]]></expression>
+        </element>
+        <element kind="textField" x="15" y="191" width="137" height="12" fontName="SansSerif" fontSize="7.5" forecolor="#60798A" textAdjust="ScaleFont">
+            <printWhenExpression><![CDATA[$P{doctorName} != null && !$P{doctorName}.isEmpty()]]></printWhenExpression>
+            <expression><![CDATA["Doctor  " + $P{doctorName}]]></expression>
+        </element>
+        <element kind="textField" x="155" y="191" width="133" height="12" fontName="SansSerif" fontSize="7.5" forecolor="#60798A" textAdjust="ScaleFont">
+            <printWhenExpression><![CDATA[$P{departmentName} != null && !$P{departmentName}.isEmpty()]]></printWhenExpression>
+            <expression><![CDATA["Dept.  " + $P{departmentName}]]></expression>
+        </element>
+
+        <!-- Invoice icon: outlined sheet with detail lines -->
+        <element kind="rectangle" x="326" y="129" width="11" height="15" mode="Transparent">
+            <pen lineWidth="0.8" lineColor="#258A9A"/>
+        </element>
+        <element kind="line" x="329" y="133" width="5" height="0" forecolor="#258A9A"/>
+        <element kind="line" x="329" y="137" width="5" height="0" forecolor="#258A9A"/>
+        <element kind="line" x="329" y="141" width="4" height="0" forecolor="#258A9A"/>
+        <element kind="staticText" x="344" y="131" width="158" height="13" fontName="SansSerif" fontSize="7.5" bold="true" forecolor="#557488">
+            <text><![CDATA[INVOICE INFORMATION]]></text>
+        </element>
+        <element kind="textField" x="326" y="151" width="176" height="14" fontName="SansSerif" fontSize="9.0" bold="true" forecolor="#173B55" textAdjust="ScaleFont">
+            <expression><![CDATA[$P{invoiceId}]]></expression>
+        </element>
+        <element kind="textField" x="326" y="171" width="176" height="12" fontName="SansSerif" fontSize="8.0" forecolor="#476478">
+            <printWhenExpression><![CDATA[$P{invoiceDate} != null && !$P{invoiceDate}.isEmpty()]]></printWhenExpression>
+            <expression><![CDATA["Issued  " + $P{invoiceDate}]]></expression>
+        </element>
+        <element kind="textField" x="326" y="190" width="176" height="12" fontName="SansSerif" fontSize="7.5" forecolor="#60798A" textAdjust="ScaleFont">
+            <printWhenExpression><![CDATA[$P{appointmentId} != null && !$P{appointmentId}.isEmpty()]]></printWhenExpression>
+            <expression><![CDATA["Visit reference  " + $P{appointmentId}]]></expression>
+        </element>
+    </title>
+
+    <pageHeader height="45">
+        <element kind="ellipse" x="0" y="12" width="21" height="21" mode="Opaque" backcolor="#D9EDF5">
+            <pen lineWidth="0.0" lineColor="#D9EDF5"/>
+        </element>
+        <element kind="rectangle" x="9" y="16" width="3" height="13" mode="Opaque" backcolor="#247EA5">
+            <pen lineWidth="0.0" lineColor="#247EA5"/>
+        </element>
+        <element kind="rectangle" x="4" y="21" width="13" height="3" mode="Opaque" backcolor="#247EA5">
+            <pen lineWidth="0.0" lineColor="#247EA5"/>
+        </element>
+        <element kind="staticText" x="30" y="13" width="250" height="15" fontName="SansSerif" fontSize="10.0" bold="true" forecolor="#173B55">
+            <text><![CDATA[ITEMIZED SERVICES]]></text>
+        </element>
+        <element kind="staticText" x="30" y="29" width="330" height="11" fontName="SansSerif" fontSize="7.0" forecolor="#708898">
+            <text><![CDATA[HOSPITAL SERVICES AND CHARGES]]></text>
+        </element>
+        <element kind="line" x="405" y="22" width="110" height="0" forecolor="#C5D6E1"/>
+    </pageHeader>
+
+    <columnHeader height="30">
+        <element kind="rectangle" x="0" y="0" width="515" height="30" mode="Opaque" backcolor="#D7E8F3" radius="3">
+            <pen lineWidth="0.7" lineColor="#B6CCDA"/>
+        </element>
+        <element kind="staticText" x="13" y="9" width="238" height="13" fontName="SansSerif" fontSize="7.2" bold="true" forecolor="#21445E">
+            <text><![CDATA[SERVICE DETAILS]]></text>
+        </element>
+        <element kind="staticText" x="263" y="9" width="49" height="13" fontName="SansSerif" fontSize="7.2" bold="true" forecolor="#21445E" hTextAlign="Center">
+            <text><![CDATA[QTY]]></text>
+        </element>
+        <element kind="staticText" x="328" y="9" width="83" height="13" fontName="SansSerif" fontSize="7.2" bold="true" forecolor="#21445E" hTextAlign="Right">
+            <text><![CDATA[UNIT PRICE]]></text>
+        </element>
+        <element kind="staticText" x="423" y="9" width="78" height="13" fontName="SansSerif" fontSize="7.2" bold="true" forecolor="#21445E" hTextAlign="Right">
+            <text><![CDATA[AMOUNT]]></text>
+        </element>
+        <element kind="line" x="258" y="0" width="0" height="30" forecolor="#B6CCDA"/>
+        <element kind="line" x="320" y="0" width="0" height="30" forecolor="#B6CCDA"/>
+        <element kind="line" x="417" y="0" width="0" height="30" forecolor="#B6CCDA"/>
+    </columnHeader>
+
+    <detail>
+        <band height="34" splitType="Stretch">
+            <element kind="rectangle" x="0" y="0" width="515" height="34" mode="Opaque" backcolor="#F8FBFD">
+                <printWhenExpression><![CDATA[$V{REPORT_COUNT} % 2 == 0]]></printWhenExpression>
+                <pen lineWidth="0.0" lineColor="#F8FBFD"/>
+            </element>
+            <element kind="textField" x="13" y="9" width="238" height="17" fontName="SansSerif" fontSize="8.1" forecolor="#263F50" textAdjust="ScaleFont">
+                <expression><![CDATA[($F{category} == null || $F{category}.isEmpty() ? "" : $F{category} + "  /  ") + $F{description}]]></expression>
+            </element>
+            <element kind="textField" x="263" y="9" width="49" height="17" fontName="SansSerif" fontSize="8.1" forecolor="#263F50" hTextAlign="Center">
+                <expression><![CDATA[$F{quantity}]]></expression>
+            </element>
+            <element kind="textField" x="328" y="9" width="83" height="17" fontName="SansSerif" fontSize="8.1" forecolor="#263F50" pattern="#,##0.00" hTextAlign="Right">
+                <expression><![CDATA[$F{unitPrice}]]></expression>
+            </element>
+            <element kind="textField" x="423" y="9" width="78" height="17" fontName="SansSerif" fontSize="8.1" bold="true" forecolor="#1D4059" pattern="#,##0.00" hTextAlign="Right">
+                <expression><![CDATA[$F{lineTotal}]]></expression>
+            </element>
+            <element kind="line" x="0" y="33" width="515" height="1" forecolor="#D6E2EA"/>
+            <element kind="line" x="258" y="0" width="0" height="34" forecolor="#E0E9EF"/>
+            <element kind="line" x="320" y="0" width="0" height="34" forecolor="#E0E9EF"/>
+            <element kind="line" x="417" y="0" width="0" height="34" forecolor="#E0E9EF"/>
+        </band>
+    </detail>
+
+    <summary height="191">
+        <element kind="rectangle" x="0" y="8" width="226" height="123" mode="Opaque" backcolor="#FFFFFF" radius="5">
+            <pen lineWidth="0.8" lineColor="#D3E0E9"/>
+        </element>
+        <element kind="rectangle" x="0" y="8" width="4" height="123" mode="Opaque" backcolor="#28A8A9">
+            <pen lineWidth="0.0" lineColor="#28A8A9"/>
+        </element>
+        <!-- Medical cross icon -->
+        <element kind="ellipse" x="15" y="20" width="20" height="20" mode="Opaque" backcolor="#D9EDF5">
+            <pen lineWidth="0.0" lineColor="#D9EDF5"/>
+        </element>
+        <element kind="rectangle" x="24" y="24" width="3" height="12" mode="Opaque" backcolor="#247EA5">
+            <pen lineWidth="0.0" lineColor="#247EA5"/>
+        </element>
+        <element kind="rectangle" x="19" y="29" width="13" height="3" mode="Opaque" backcolor="#247EA5">
+            <pen lineWidth="0.0" lineColor="#247EA5"/>
+        </element>
+        <element kind="staticText" x="43" y="24" width="169" height="13" fontName="SansSerif" fontSize="7.4" bold="true" forecolor="#557488">
+            <text><![CDATA[PAYMENT INFORMATION]]></text>
+        </element>
+        <element kind="staticText" x="17" y="53" width="112" height="13" fontName="SansSerif" fontSize="7.5" forecolor="#708696">
+            <text><![CDATA[Payment status]]></text>
+        </element>
+        <element kind="textField" x="132" y="53" width="80" height="13" fontName="SansSerif" fontSize="8.0" bold="true" forecolor="#1C5E7B" hTextAlign="Right" textAdjust="ScaleFont">
+            <expression><![CDATA[$P{paymentStatus}]]></expression>
+        </element>
+        <element kind="line" x="17" y="72" width="193" height="0" forecolor="#DFE8EE"/>
+        <element kind="staticText" x="17" y="82" width="112" height="13" fontName="SansSerif" fontSize="7.5" forecolor="#708696">
+            <text><![CDATA[Paid to date]]></text>
+        </element>
+        <element kind="textField" x="132" y="82" width="80" height="13" fontName="SansSerif" fontSize="8.1" forecolor="#284C64" pattern="#,##0.00" hTextAlign="Right">
+            <expression><![CDATA[$P{paidAmount}]]></expression>
+        </element>
+        <element kind="staticText" x="17" y="104" width="112" height="13" fontName="SansSerif" fontSize="7.5" bold="true" forecolor="#31536A">
+            <text><![CDATA[Balance remaining]]></text>
+        </element>
+        <element kind="textField" x="132" y="103" width="80" height="15" fontName="SansSerif" fontSize="8.5" bold="true" forecolor="#173B55" pattern="#,##0.00" hTextAlign="Right">
+            <expression><![CDATA[$P{balanceDue}]]></expression>
+        </element>
+
+        <element kind="rectangle" x="239" y="8" width="276" height="123" mode="Opaque" backcolor="#FFFFFF" radius="5">
+            <pen lineWidth="0.8" lineColor="#D3E0E9"/>
+        </element>
+        <element kind="rectangle" x="239" y="8" width="276" height="31" mode="Opaque" backcolor="#E0EDF5" radius="5">
+            <pen lineWidth="0.0" lineColor="#E0EDF5"/>
+        </element>
+        <element kind="staticText" x="254" y="18" width="145" height="13" fontName="SansSerif" fontSize="7.4" bold="true" forecolor="#31536A">
+            <text><![CDATA[INVOICE TOTALS]]></text>
+        </element>
+        <element kind="staticText" x="254" y="47" width="132" height="12" fontName="SansSerif" fontSize="7.5" forecolor="#708696">
+            <text><![CDATA[Subtotal]]></text>
+        </element>
+        <element kind="textField" x="398" y="47" width="100" height="12" fontName="SansSerif" fontSize="7.8" forecolor="#284C64" pattern="#,##0.00" hTextAlign="Right">
+            <expression><![CDATA[$P{subtotal}]]></expression>
+        </element>
+        <element kind="staticText" x="254" y="64" width="132" height="12" fontName="SansSerif" fontSize="7.5" forecolor="#708696">
+            <printWhenExpression><![CDATA[$P{discount}.compareTo(java.math.BigDecimal.ZERO) > 0]]></printWhenExpression>
+            <text><![CDATA[Discount]]></text>
+        </element>
+        <element kind="textField" x="398" y="64" width="100" height="12" fontName="SansSerif" fontSize="7.8" forecolor="#27835F" pattern="-#,##0.00" hTextAlign="Right">
+            <printWhenExpression><![CDATA[$P{discount}.compareTo(java.math.BigDecimal.ZERO) > 0]]></printWhenExpression>
+            <expression><![CDATA[$P{discount}.negate()]]></expression>
+        </element>
+        <element kind="staticText" x="254" y="81" width="132" height="12" fontName="SansSerif" fontSize="7.5" forecolor="#708696">
+            <printWhenExpression><![CDATA[$P{tax}.compareTo(java.math.BigDecimal.ZERO) > 0]]></printWhenExpression>
+            <text><![CDATA[Tax]]></text>
+        </element>
+        <element kind="textField" x="398" y="81" width="100" height="12" fontName="SansSerif" fontSize="7.8" forecolor="#284C64" pattern="#,##0.00" hTextAlign="Right">
+            <printWhenExpression><![CDATA[$P{tax}.compareTo(java.math.BigDecimal.ZERO) > 0]]></printWhenExpression>
+            <expression><![CDATA[$P{tax}]]></expression>
+        </element>
+        <element kind="line" x="254" y="64" width="244" height="0" forecolor="#C8D9E4">
+            <printWhenExpression><![CDATA[$P{discount}.compareTo(java.math.BigDecimal.ZERO) <= 0 && $P{tax}.compareTo(java.math.BigDecimal.ZERO) <= 0]]></printWhenExpression>
+        </element>
+        <element kind="line" x="254" y="81" width="244" height="0" forecolor="#C8D9E4">
+            <printWhenExpression><![CDATA[($P{discount}.compareTo(java.math.BigDecimal.ZERO) > 0 && $P{tax}.compareTo(java.math.BigDecimal.ZERO) <= 0) || ($P{discount}.compareTo(java.math.BigDecimal.ZERO) <= 0 && $P{tax}.compareTo(java.math.BigDecimal.ZERO) > 0)]]></printWhenExpression>
+        </element>
+        <element kind="line" x="254" y="98" width="244" height="0" forecolor="#C8D9E4">
+            <printWhenExpression><![CDATA[$P{discount}.compareTo(java.math.BigDecimal.ZERO) > 0 && $P{tax}.compareTo(java.math.BigDecimal.ZERO) > 0]]></printWhenExpression>
+        </element>
+        <element kind="staticText" x="254" y="70" width="132" height="15" fontName="SansSerif" fontSize="8.2" bold="true" forecolor="#173B55">
+            <printWhenExpression><![CDATA[$P{discount}.compareTo(java.math.BigDecimal.ZERO) <= 0 && $P{tax}.compareTo(java.math.BigDecimal.ZERO) <= 0]]></printWhenExpression>
+            <text><![CDATA[INVOICE TOTAL]]></text>
+        </element>
+        <element kind="textField" x="398" y="68" width="100" height="17" fontName="SansSerif" fontSize="10.0" bold="true" forecolor="#123C5B" pattern="#,##0.00" hTextAlign="Right">
+            <printWhenExpression><![CDATA[$P{discount}.compareTo(java.math.BigDecimal.ZERO) <= 0 && $P{tax}.compareTo(java.math.BigDecimal.ZERO) <= 0]]></printWhenExpression>
+            <expression><![CDATA[$P{total}]]></expression>
+        </element>
+        <element kind="staticText" x="254" y="87" width="132" height="15" fontName="SansSerif" fontSize="8.2" bold="true" forecolor="#173B55">
+            <printWhenExpression><![CDATA[($P{discount}.compareTo(java.math.BigDecimal.ZERO) > 0 && $P{tax}.compareTo(java.math.BigDecimal.ZERO) <= 0) || ($P{discount}.compareTo(java.math.BigDecimal.ZERO) <= 0 && $P{tax}.compareTo(java.math.BigDecimal.ZERO) > 0)]]></printWhenExpression>
+            <text><![CDATA[INVOICE TOTAL]]></text>
+        </element>
+        <element kind="textField" x="398" y="85" width="100" height="17" fontName="SansSerif" fontSize="10.0" bold="true" forecolor="#123C5B" pattern="#,##0.00" hTextAlign="Right">
+            <printWhenExpression><![CDATA[($P{discount}.compareTo(java.math.BigDecimal.ZERO) > 0 && $P{tax}.compareTo(java.math.BigDecimal.ZERO) <= 0) || ($P{discount}.compareTo(java.math.BigDecimal.ZERO) <= 0 && $P{tax}.compareTo(java.math.BigDecimal.ZERO) > 0)]]></printWhenExpression>
+            <expression><![CDATA[$P{total}]]></expression>
+        </element>
+        <element kind="staticText" x="254" y="104" width="132" height="15" fontName="SansSerif" fontSize="8.2" bold="true" forecolor="#173B55">
+            <printWhenExpression><![CDATA[$P{discount}.compareTo(java.math.BigDecimal.ZERO) > 0 && $P{tax}.compareTo(java.math.BigDecimal.ZERO) > 0]]></printWhenExpression>
+            <text><![CDATA[INVOICE TOTAL]]></text>
+        </element>
+        <element kind="textField" x="398" y="102" width="100" height="17" fontName="SansSerif" fontSize="10.0" bold="true" forecolor="#123C5B" pattern="#,##0.00" hTextAlign="Right">
+            <printWhenExpression><![CDATA[$P{discount}.compareTo(java.math.BigDecimal.ZERO) > 0 && $P{tax}.compareTo(java.math.BigDecimal.ZERO) > 0]]></printWhenExpression>
+            <expression><![CDATA[$P{total}]]></expression>
+        </element>
+
+        <element kind="line" x="16" y="160" width="204" height="0" forecolor="#6F8B9D"/>
+        <element kind="staticText" x="16" y="165" width="204" height="12" fontName="SansSerif" fontSize="7.2" forecolor="#617B8D" hTextAlign="Center">
+            <text><![CDATA[Authorized signature / Accounts seal]]></text>
+        </element>
+        <element kind="textField" x="257" y="157" width="258" height="14" fontName="SansSerif" fontSize="8.0" bold="true" forecolor="#557488" hTextAlign="Right" textAdjust="ScaleFont">
+            <expression><![CDATA[$P{hospitalName}]]></expression>
+        </element>
+        <element kind="staticText" x="257" y="173" width="258" height="12" fontName="SansSerif" fontSize="7.0" forecolor="#8094A2" hTextAlign="Right">
+            <text><![CDATA[Thank you for choosing our care.]]></text>
+        </element>
+    </summary>
+
+    <pageFooter height="33">
+        <element kind="rectangle" x="0" y="0" width="515" height="33" mode="Opaque" backcolor="#102D46">
+            <pen lineWidth="0.0" lineColor="#102D46"/>
+        </element>
+        <element kind="rectangle" x="0" y="0" width="515" height="2" mode="Opaque" backcolor="#28B7B0">
+            <pen lineWidth="0.0" lineColor="#28B7B0"/>
+        </element>
+        <element kind="textField" x="15" y="11" width="230" height="13" fontName="SansSerif" fontSize="8.0" bold="true" forecolor="#FFFFFF" textAdjust="ScaleFont">
+            <expression><![CDATA[$P{hospitalName}]]></expression>
+        </element>
+        <element kind="staticText" x="260" y="11" width="225" height="13" fontName="SansSerif" fontSize="7.0" forecolor="#C8D8E4" hTextAlign="Right">
+            <text><![CDATA[HOSPITAL BILLING  |  THANK YOU FOR YOUR TRUST]]></text>
+        </element>
+        <element kind="textField" x="488" y="11" width="20" height="13" fontName="SansSerif" fontSize="7.0" forecolor="#C8D8E4" hTextAlign="Right">
+            <expression><![CDATA[$V{PAGE_NUMBER}]]></expression>
+        </element>
+    </pageFooter>
+</jasperReport>
